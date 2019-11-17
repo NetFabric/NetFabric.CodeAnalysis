@@ -1,2 +1,2 @@
 # NetFabric.RoslynHelpers
-Extension methods for Roslyn
+Extension methods for Roslyn.
