@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
@@ -13,7 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.7">
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -25,7 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetFabric.RoslynHelpers\NetFabric.RoslynHelpers.csproj" />
+    <ProjectReference Include="..\NetFabric.CodeAnalysis.Reflection\NetFabric.CodeAnalysis.Reflection.csproj" />
+    <ProjectReference Include="..\NetFabric.CodeAnalysis.Roslyn\NetFabric.CodeAnalysis.Roslyn.csproj" />
   </ItemGroup>
 
   <ItemGroup>

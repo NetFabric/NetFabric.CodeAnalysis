@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29512.175
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47A149B9-B64C-4DD2-AD05-EAC76BEC98EC}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Icon.png = Icon.png
+		LICENSE = LICENSE
+		NetFabric.CodeAnalysis.UnitTests\NetFabric.CodeAnalysis.UnitTests.csproj = NetFabric.CodeAnalysis.UnitTests\NetFabric.CodeAnalysis.UnitTests.csproj
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CodeAnalysis.Roslyn", "NetFabric.CodeAnalysis.Roslyn\NetFabric.CodeAnalysis.Roslyn.csproj", "{CCFD1078-E088-4355-BA18-FF6E0204E72B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CodeAnalysis.UnitTests", "NetFabric.CodeAnalysis.UnitTests\NetFabric.CodeAnalysis.UnitTests.csproj", "{77E2DB15-D6CB-4B25-B1D6-EE0FC232879D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CodeAnalysis.Reflection", "NetFabric.CodeAnalysis.Reflection\NetFabric.CodeAnalysis.Reflection.csproj", "{4D2510B1-6265-42BA-9673-4C36A6D215E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCFD1078-E088-4355-BA18-FF6E0204E72B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCFD1078-E088-4355-BA18-FF6E0204E72B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCFD1078-E088-4355-BA18-FF6E0204E72B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCFD1078-E088-4355-BA18-FF6E0204E72B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77E2DB15-D6CB-4B25-B1D6-EE0FC232879D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77E2DB15-D6CB-4B25-B1D6-EE0FC232879D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77E2DB15-D6CB-4B25-B1D6-EE0FC232879D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77E2DB15-D6CB-4B25-B1D6-EE0FC232879D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D2510B1-6265-42BA-9673-4C36A6D215E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D2510B1-6265-42BA-9673-4C36A6D215E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D2510B1-6265-42BA-9673-4C36A6D215E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D2510B1-6265-42BA-9673-4C36A6D215E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DE254D0-0A8A-4875-96F0-54B63A7238FE}
+	EndGlobalSection
+EndGlobal
