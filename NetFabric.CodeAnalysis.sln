@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47A149B9-B64C-4DD2-AD05-EAC76BEC98EC}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
 		Icon.png = Icon.png
 		LICENSE = LICENSE
 		NetFabric.CodeAnalysis.UnitTests\NetFabric.CodeAnalysis.UnitTests.csproj = NetFabric.CodeAnalysis.UnitTests\NetFabric.CodeAnalysis.UnitTests.csproj

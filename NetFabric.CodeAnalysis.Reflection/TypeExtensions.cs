@@ -1,11 +1,10 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 
 namespace NetFabric.CodeAnalysis
 {
-    static class TypeExtensions
+    public static class TypeExtensions
     {
         public static bool IsAssignableTo(this Type type, Type toType)
             => toType.IsAssignableFrom(type);
@@ -91,7 +90,7 @@ namespace NetFabric.CodeAnalysis
             return null;
         }
 
-        const BindingFlags InstancePublicFlatten = BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy;
+        const BindingFlags InstancePublicFlatten = BindingFlags.Instance | BindingFlags.Public;
 
         public static PropertyInfo GetPublicProperty(this Type type, string name)
         {
@@ -102,7 +101,12 @@ namespace NetFabric.CodeAnalysis
                 if (property.Name == name && property.GetGetMethod() is object)
                     return property;
             }
-            return null;
+
+            var baseType = type.BaseType;
+            if (baseType is null)
+                return null;
+
+            return baseType.GetPublicProperty(name);
         }
 
         public static MethodInfo GetPublicMethod(this Type type, string name, params Type[] parameters)
@@ -114,7 +118,12 @@ namespace NetFabric.CodeAnalysis
                 if (method.Name == name && SequenceEqual(method.GetParameters(), parameters))
                     return method;
             }
-            return null;
+
+            var baseType = type.BaseType;
+            if (baseType is null)
+                return null;
+
+            return baseType.GetPublicMethod(name, parameters);
         }
 
         static bool SequenceEqual(ParameterInfo[] parameters, Type[] types)

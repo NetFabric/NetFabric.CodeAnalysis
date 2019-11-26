@@ -1,12 +1,14 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using System.IO;
 
-namespace NetFabric.RoslynHelpers.UnitTests
+namespace NetFabric.CodeAnalysis.Roslyn.UnitTests
 {
     public static class Utils
     {
-        public static CSharpCompilation Compile(string text)
+        public static CSharpCompilation Compile(string path)
         {
+            var text = File.ReadAllText(path);
             var syntaxTree = CSharpSyntaxTree.ParseText(text);
             return CSharpCompilation.Create(
                 "assemblyName",

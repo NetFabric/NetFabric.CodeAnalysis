@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 
-namespace NetFabric.RoslynHelpers
+namespace NetFabric.CodeAnalysis
 {
     public static class ITypeSymbolExtensions
     {

@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace NetFabric.CodeAnalysis
 {
-    public struct EnumerableInfo
+    public readonly struct EnumerableInfo
     {
         public readonly MethodInfo GetEnumerator;
         public readonly PropertyInfo Current;
@@ -18,7 +18,7 @@ namespace NetFabric.CodeAnalysis
             Dispose = dispose;
         }
 
-        public Type ItemType
+        public readonly Type ItemType
             => Current?.PropertyType;
     }
 }

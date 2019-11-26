@@ -106,7 +106,7 @@ readonly struct RangeAsyncEnumerable
         {
             token.ThrowIfCancellationRequested();
 
-            return new ValueTask<bool>(Task.FromResult<bool>(++current < count));
+            return new ValueTask<bool>(Task.FromResult(++current < count));
         }
     }
 }
@@ -357,7 +357,7 @@ readonly struct WhereEnumerable<T>
 
 ## References
 
-- [Enumeration in .NET](https://blog.usejournal.com/enumeration-in-net-d5674921512e) by Antão Almada
+- [Enumeration in .NET](https://blog.usejournal.com/enumeration-in-net-d5674921512e) by Antï¿½o Almada
 
 ## Credits
 
