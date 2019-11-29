@@ -12,6 +12,9 @@ namespace NetFabric.CodeAnalysis.TestData
 
         void IPropertiesAndMethods.ExplicitMethod() {}
         void IPropertiesAndMethods.ExplicitMethod(int param0, string param1) {}
+
+        public static void StaticMethod() { }
+        public static void StaticMethod(int param0, string param1) { }
     }
 
     public abstract class PropertiesAndMethodsBase

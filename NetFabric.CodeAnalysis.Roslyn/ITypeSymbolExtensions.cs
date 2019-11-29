@@ -27,7 +27,8 @@ namespace NetFabric.CodeAnalysis
             {
                 foreach (var member in typeSymbol.GetMembers(name).OfType<IMethodSymbol>())
                 {
-                    if (member.DeclaredAccessibility == Accessibility.Public &&
+                    if (!member.IsStatic &&
+                        member.DeclaredAccessibility == Accessibility.Public &&
                         member.Parameters.Length == parameters.Length)
                     {
                         var isMember = true;
