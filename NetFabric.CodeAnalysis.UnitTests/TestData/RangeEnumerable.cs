@@ -5,19 +5,19 @@ using NetFabric.Hyperlinq;
 namespace NetFabric.CodeAnalysis.TestData
 {
     public readonly struct RangeEnumerable
-        : IValueEnumerable<int, RangeEnumerable.DisposableEnumerator>
+        : IValueReadOnlyCollection<int, RangeEnumerable.DisposableEnumerator>
     {    
-        readonly int count;
-        
         public RangeEnumerable(int count)
         {
-            this.count = count;
+            Count = count;
         }
+
+        public int Count { get; }
             
-        public readonly Enumerator GetEnumerator() => new Enumerator(count);
-        readonly DisposableEnumerator IValueEnumerable<int, DisposableEnumerator>.GetEnumerator() => new DisposableEnumerator(count);
-        readonly IEnumerator<int> IEnumerable<int>.GetEnumerator() => new DisposableEnumerator(count);
-        readonly IEnumerator IEnumerable.GetEnumerator() => new DisposableEnumerator(count);
+        public readonly Enumerator GetEnumerator() => new Enumerator(Count);
+        readonly DisposableEnumerator IValueEnumerable<int, DisposableEnumerator>.GetEnumerator() => new DisposableEnumerator(Count);
+        readonly IEnumerator<int> IEnumerable<int>.GetEnumerator() => new DisposableEnumerator(Count);
+        readonly IEnumerator IEnumerable.GetEnumerator() => new DisposableEnumerator(Count);
         
         public struct Enumerator
         {
