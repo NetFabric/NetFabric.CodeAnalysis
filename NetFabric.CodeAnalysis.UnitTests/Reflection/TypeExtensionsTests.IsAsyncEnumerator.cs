@@ -1,6 +1,5 @@
 ﻿using NetFabric.Assertive;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
@@ -8,37 +7,31 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<Type, Type, Type, Type> Enumerators =>
+        public static TheoryData<Type, Type, Type, Type> AsyncEnumerators =>
             new TheoryData<Type, Type, Type, Type>
             {
                 { 
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(int)
+                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(int) 
                 },
                 { 
-                    typeof(TestData.ExplicitEnumerator),
-                    typeof(IEnumerator),
-                    typeof(IEnumerator),
-                    typeof(object) 
-                },
-                { 
-                    typeof(TestData.ExplicitEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator),
+                    typeof(TestData.ExplicitAsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
                     typeof(int) 
                 },
             };
 
         [Theory]
-        [MemberData(nameof(Enumerators))]
-        public void IsEnumerator_Should_ReturnTrue(Type enumeratorType, Type currentDeclaringType, Type moveNextDeclaringType, Type itemType)
+        [MemberData(nameof(AsyncEnumerators))]
+        public void IsAsyncEnumerator_Should_ReturnTrue(Type enumeratorType, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
             // Act
-            var result = enumeratorType.IsEnumerator(out var current, out var moveNext);
+            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNext);
 
             // Assert   
             result.Must()
@@ -54,17 +47,17 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             moveNext.Must()
                 .BeNotNull()
                 .EvaluatesTrue(method =>
-                    method.Name == "MoveNext" &&
-                    method.DeclaringType == moveNextDeclaringType &&
+                    method.Name == "MoveNextAsync" &&
+                    method.DeclaringType == moveNextAsyncDeclaringType &&
                     method.GetParameters().Length == 0);
         }
 
-        public static TheoryData<Type, Type, Type, Type> InvalidEnumerators =>
+        public static TheoryData<Type, Type, Type, Type> InvalidAsyncEnumerators =>
             new TheoryData<Type, Type, Type, Type>
             {
                 { 
                     typeof(TestData.MissingCurrentAndMoveNextEnumerator), 
-                    null, 
+                    null,
                     null,
                     null
                 },
@@ -78,18 +71,18 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
                     typeof(TestData.MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
                     typeof(TestData.MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
                     null,
-                    typeof(int)
+                    typeof(int) 
                 },
             };
 
         [Theory]
-        [MemberData(nameof(InvalidEnumerators))]
-        public void IsEnumerator_With_MissingFeatures_Should_ReturnFalse(Type enumeratorType, Type currentDeclaringType, Type moveNextDeclaringType, Type itemType)
+        [MemberData(nameof(InvalidAsyncEnumerators))]
+        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type enumeratorType, Type currentDeclaringType, Type moveNextDeclaringType, Type itemType)
         {
             // Arrange
 
             // Act
-            var result = enumeratorType.IsEnumerator(out var current, out var moveNext);
+            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNext);
 
             // Assert   
             result.Must()
@@ -113,7 +106,7 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
                 moveNext.Must()
                     .BeNotNull()
                     .EvaluatesTrue(method =>
-                        method.Name == "MoveNext" &&
+                        method.Name == "MoveNextAsync" &&
                         method.DeclaringType == moveNextDeclaringType &&
                         method.GetParameters().Length == 0);
         }

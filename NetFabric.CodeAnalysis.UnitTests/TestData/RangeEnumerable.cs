@@ -5,7 +5,7 @@ using NetFabric.Hyperlinq;
 namespace NetFabric.CodeAnalysis.TestData
 {
     public readonly struct RangeEnumerable
-    : IValueEnumerable<int, RangeEnumerable.DisposableEnumerator>
+        : IValueEnumerable<int, RangeEnumerable.DisposableEnumerator>
     {    
         readonly int count;
         

@@ -6,7 +6,7 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<string, Type> Properties =>
+        public static TheoryData<string, Type> InstanceProperties =>
             new TheoryData<string, Type>
             {
                 { "Property", typeof(int) },
@@ -14,14 +14,14 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             };
 
         [Theory]
-        [MemberData(nameof(Properties))]
-        public void GetInstancePublicProperty_Should_ReturnProperty(string propertyName, Type propertyType)
+        [MemberData(nameof(InstanceProperties))]
+        public void GetPublicProperty_Should_ReturnProperty(string propertyName, Type propertyType)
         {
             // Arrange
             var type = typeof(TestData.PropertiesAndMethods);
 
             // Act
-            var result = type.GetInstancePublicProperty(propertyName);
+            var result = type.GetPublicProperty(propertyName);
 
             // Assert   
             result.Must()
@@ -31,7 +31,7 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
                     property.PropertyType == propertyType);
         }
 
-        public static TheoryData<string> ExplicitProperties =>
+        public static TheoryData<string> ExplicitInstanceProperties =>
             new TheoryData<string>
             {
                 "ExplicitProperty",
@@ -39,14 +39,14 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             };
 
         [Theory]
-        [MemberData(nameof(ExplicitProperties))]
-        public void GetInstancePublicProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
+        [MemberData(nameof(ExplicitInstanceProperties))]
+        public void GetPublicProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
         {
             // Arrange
             var type = typeof(TestData.PropertiesAndMethods);
 
             // Act
-            var result = type.GetInstancePublicProperty(propertyName);
+            var result = type.GetPublicProperty(propertyName);
 
             // Assert   
             result.Must()

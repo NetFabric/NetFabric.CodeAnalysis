@@ -1,5 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace NetFabric.CodeAnalysis
 {
@@ -40,15 +44,20 @@ namespace NetFabric.CodeAnalysis
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            getEnumerator = type.GetInstancePublicMethod("GetEnumerator");
+            getEnumerator = type.GetPublicMethod("GetEnumerator");
             if (getEnumerator is object)
                 return true;
 
-            foreach (var @interface in type.GetInterfaces())
+            if (type.ImplementsInterface(typeof(IEnumerable<>), out var genericArguments))
             {
-                getEnumerator = @interface.GetInstancePublicMethod("GetEnumerator");
-                if (getEnumerator is object)
-                    return true;
+                getEnumerator = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]).GetMethod("GetEnumerator", Array.Empty<Type>());
+                return true;
+            }
+
+            if (type.ImplementsInterface(typeof(IEnumerable), out _))
+            {
+                getEnumerator = typeof(IEnumerable).GetMethod("GetEnumerator", Array.Empty<Type>());
+                return true;
             }
 
             return false;
@@ -59,15 +68,18 @@ namespace NetFabric.CodeAnalysis
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            getAsyncEnumerator = type.GetInstancePublicMethod("GetAsyncEnumerator");
+            getAsyncEnumerator = type.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken));
             if (getAsyncEnumerator is object)
                 return true;
 
-            foreach (var @interface in type.GetInterfaces())
+            getAsyncEnumerator = type.GetPublicMethod("GetAsyncEnumerator");
+            if (getAsyncEnumerator is object)
+                return true;
+
+            if (type.ImplementsInterface(typeof(IAsyncEnumerable<>), out var genericArguments))
             {
-                getAsyncEnumerator = @interface.GetInterfacePublicMethod("GetAsyncEnumerator");
-                if (getAsyncEnumerator is object)
-                    return true;
+                getAsyncEnumerator = typeof(IAsyncEnumerable<>).MakeGenericType(genericArguments[0]).GetMethod("GetAsyncEnumerator", new[] { typeof(CancellationToken) });
+                return true;
             }
 
             return false;
@@ -78,17 +90,23 @@ namespace NetFabric.CodeAnalysis
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            current = type.GetInstancePublicProperty("Current");
-            moveNext = type.GetInstancePublicMethod("MoveNext");
+            current = type.GetPublicProperty("Current");
+            moveNext = type.GetPublicMethod("MoveNext");
             if (current is object && moveNext is object)
                 return true;
 
-            foreach (var @interface in type.GetInterfaces())
+            if (type.ImplementsInterface(typeof(IEnumerator<>), out var genericArguments))
             {
-                current = @interface.GetInterfacePublicProperty("Current");
-                moveNext = @interface.GetInterfacePublicMethod("MoveNext");
-                if (current is object && moveNext is object)
-                    return true;
+                current = typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetProperty("Current");
+                moveNext = typeof(IEnumerator).GetMethod("MoveNext", Array.Empty<Type>());
+                return true;
+            }
+
+            if (type.ImplementsInterface(typeof(IEnumerator), out _))
+            {
+                current = typeof(IEnumerator).GetProperty("Current");
+                moveNext = typeof(IEnumerator).GetMethod("MoveNext", Array.Empty<Type>());
+                return true;
             }
 
             return false;
@@ -99,24 +117,26 @@ namespace NetFabric.CodeAnalysis
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            current = type.GetInstancePublicProperty("Current");
-            moveNextAsync = type.GetInstancePublicMethod("MoveNextAsync");
+            current = type.GetPublicProperty("Current");
+            moveNextAsync = type.GetPublicMethod("MoveNextAsync");
             if (current is object && moveNextAsync is object)
                 return true;
 
-            foreach (var @interface in type.GetInterfaces())
+            if (type.ImplementsInterface(typeof(IAsyncEnumerator<>), out var genericArguments))
             {
-                current = @interface.GetInterfacePublicProperty("Current");
-                moveNextAsync = @interface.GetInterfacePublicMethod("MoveNextAsync");
-                if (current is object && moveNextAsync is object)
-                    return true;
+                var interfaceType = typeof(IAsyncEnumerator<>).MakeGenericType(genericArguments[0]);
+                current = interfaceType.GetProperty("Current");
+                moveNextAsync = interfaceType.GetMethod("MoveNextAsync", Array.Empty<Type>());
+                return true;
             }
 
             return false;
         }
 
-        public static PropertyInfo GetInstancePublicProperty(this Type type, string name)
+        public static PropertyInfo GetPublicProperty(this Type type, string name)
         {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
             if (type.IsInterface)
                 throw new ArgumentException("Type must not be an interface.", nameof(type));
             if (name is null)
@@ -134,38 +154,13 @@ namespace NetFabric.CodeAnalysis
             if (baseType is null)
                 return null;
 
-            return baseType.GetInstancePublicProperty(name);
+            return baseType.GetPublicProperty(name);
         }
 
-        public static PropertyInfo GetInterfacePublicProperty(this Type type, string name)
+        public static MethodInfo GetPublicMethod(this Type type, string name, params Type[] parameters)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
-            if (!type.IsInterface)
-                throw new ArgumentException("Type must be an interface.", nameof(type));
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            var properties = type.GetProperties();
-            for (var index = 0; index < properties.Length; index++)
-            {
-                var property = properties[index];
-                if (property.Name == name && property.GetGetMethod() is object)
-                    return property;
-            }
-
-            foreach (var @interface in type.GetInterfaces())
-            {
-                var property = @interface.GetInterfacePublicProperty(name);
-                if (property is object)
-                    return property;
-            }
-
-            return null;
-        }
-
-        public static MethodInfo GetInstancePublicMethod(this Type type, string name, params Type[] parameters)
-        {
             if (type.IsInterface)
                 throw new ArgumentException("Type must not be an interface.", nameof(type));
             if (name is null)
@@ -183,34 +178,39 @@ namespace NetFabric.CodeAnalysis
             if (baseType is null)
                 return null;
 
-            return baseType.GetInstancePublicMethod(name, parameters);
+            return baseType.GetPublicMethod(name, parameters);
         }
 
-        public static MethodInfo GetInterfacePublicMethod(this Type type, string name, params Type[] parameters)
+        static bool ImplementsInterface(this Type type, Type interfaceType, out Type[] genericArguments)
         {
-            if (type is null)
-                throw new ArgumentNullException(nameof(type));
-            if (!type.IsInterface)
-                throw new ArgumentException("Type must be an interface.", nameof(type));
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            var methods = type.GetMethods();
-            for (var index = 0; index < methods.Length; index++)
+            if (!interfaceType.IsGenericType)
             {
-                var method = methods[index];
-                if (method.Name == name && SequenceEqual(method.GetParameters(), parameters))
-                    return method;
+                genericArguments = null;
+                return type.GetAllInterfaces().Contains(interfaceType);
             }
 
+            foreach (var @interface in type.GetAllInterfaces())
+            {
+                if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == interfaceType.GetGenericTypeDefinition())
+                {
+                    genericArguments = @interface.GetGenericArguments();
+                    return true;
+                }
+            }
+
+            genericArguments = null;
+            return false;
+        }
+
+        static IEnumerable<Type> GetAllInterfaces(this Type type)
+        {
             foreach (var @interface in type.GetInterfaces())
             {
-                var method = @interface.GetInterfacePublicMethod(name);
-                if (method is object)
-                    return method;
-            }
+                yield return @interface;
 
-            return null;
+                foreach (var baseInterface in @interface.GetAllInterfaces())
+                    yield return baseInterface;
+            }
         }
 
         static bool SequenceEqual(ParameterInfo[] parameters, Type[] types)

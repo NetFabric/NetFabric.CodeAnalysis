@@ -7,7 +7,7 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<string, Type[]> Methods =>
+        public static TheoryData<string, Type[]> InstanceMethods =>
             new TheoryData<string, Type[]>
             {
                 { "Method", new Type[] { } },
@@ -17,14 +17,14 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             };
 
         [Theory]
-        [MemberData(nameof(Methods))]
-        public void GetInstancePublicMethod_Should_ReturnMethod(string methodName, Type[] parameters)
+        [MemberData(nameof(InstanceMethods))]
+        public void GetPublicMethod_Should_ReturnMethod(string methodName, Type[] parameters)
         {
             // Arrange
             var type = typeof(TestData.PropertiesAndMethods);
 
             // Act
-            var result = type.GetInstancePublicMethod(methodName, parameters);
+            var result = type.GetPublicMethod(methodName, parameters);
 
             // Assert   
             result.Must()
@@ -36,7 +36,7 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
                         .SequenceEqual(parameters));
         }
 
-        public static TheoryData<string, Type[]> ExplicitMethods =>
+        public static TheoryData<string, Type[]> ExplicitInstanceMethods =>
             new TheoryData<string, Type[]>
             {
                 { "ExplicitMethod", new Type[] { } },
@@ -46,14 +46,14 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             };
 
         [Theory]
-        [MemberData(nameof(ExplicitMethods))]
-        public void GetInstancePublicMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
+        [MemberData(nameof(ExplicitInstanceMethods))]
+        public void GetPublicMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
         {
             // Arrange
             var type = typeof(TestData.PropertiesAndMethods);
 
             // Act
-            var result = type.GetInstancePublicMethod(methodName, parameters);
+            var result = type.GetPublicMethod(methodName, parameters);
 
             // Assert   
             result.Must()

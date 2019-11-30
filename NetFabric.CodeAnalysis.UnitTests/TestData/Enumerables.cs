@@ -1,42 +1,38 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NetFabric.CodeAnalysis.TestData
 {
-    public readonly struct MissingCurrentAndMoveNextEnumerator
+    public readonly struct MissingGetEnumeratorEnumerable
     {
     }
 
-    public readonly struct MissingCurrentEnumerator
+    public readonly struct Enumerable<T>
     {
-        public bool MoveNext() => false;
+        public readonly Enumerable<T> GetEnumerator() => this;
 
-        public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(Task.FromResult(false));
-    }
-
-    public readonly struct MissingMoveNextEnumerator<T>
-    {
-        public readonly T Current => default;
-    }
-
-    public readonly struct Enumerator<T>
-    {
         public readonly T Current => default;
 
         public bool MoveNext() => false;
     }
 
-    public readonly struct AsyncEnumerator<T>
+    public readonly struct AsyncEnumerable<T>
     {
+        public readonly AsyncEnumerable<T> GetAsyncEnumerator() => this;
+
         public readonly T Current => default;
 
         public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(Task.FromResult(false));
     }
 
-    public class ExplicitEnumerator<T> : IEnumerator<T>
+    public class ExplicitEnumerable<T> : IEnumerable<T>, IEnumerator<T>
     {
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
+        IEnumerator IEnumerable.GetEnumerator() => this;
+
         T IEnumerator<T>.Current => default;
         object IEnumerator.Current => default;
 
@@ -47,8 +43,10 @@ namespace NetFabric.CodeAnalysis.TestData
         void IDisposable.Dispose() { }
     }
 
-    public class ExplicitEnumerator : IEnumerator
+    public class ExplicitEnumerable : IEnumerable, IEnumerator
     {
+        IEnumerator IEnumerable.GetEnumerator() => this;
+
         object IEnumerator.Current => default;
 
         bool IEnumerator.MoveNext() => false;
@@ -56,8 +54,10 @@ namespace NetFabric.CodeAnalysis.TestData
         void IEnumerator.Reset() { }
     }
 
-    public class ExplicitAsyncEnumerator<T> : IAsyncEnumerator<T>
+    public class ExplicitAsyncEnumerable<T> : IAsyncEnumerable<T>, IAsyncEnumerator<T>
     {
+        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken _) => this;
+
         T IAsyncEnumerator<T>.Current => default;
 
         ValueTask<bool> IAsyncEnumerator<T>.MoveNextAsync() => new ValueTask<bool>(Task.FromResult(false));
