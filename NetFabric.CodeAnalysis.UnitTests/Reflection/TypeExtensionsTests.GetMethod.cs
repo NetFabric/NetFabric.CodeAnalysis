@@ -47,7 +47,7 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(ExplicitMethods))]
-        public void GetMethod_With_ExplicitMethods_Should_ReturnNull(string methodName, Type[] parameters)
+        public void GetMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
         {
             // Arrange
             var type = typeof(TestData.PropertiesAndMethods);

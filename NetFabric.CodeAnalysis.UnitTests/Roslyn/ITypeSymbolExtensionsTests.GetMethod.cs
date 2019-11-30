@@ -50,7 +50,7 @@ namespace NetFabric.CodeAnalysis.Roslyn.UnitTests
 
         [Theory]
         [MemberData(nameof(ExplicitMethods))]
-        public void GetMethod_With_ExplicitMethods_Should_ReturnMethod(string methodName, Type[] parameters)
+        public void GetMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
