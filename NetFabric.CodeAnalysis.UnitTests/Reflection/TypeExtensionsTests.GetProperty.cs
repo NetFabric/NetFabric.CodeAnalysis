@@ -15,13 +15,13 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(Properties))]
-        public void GetProperty_Should_ReturnProperty(string propertyName, Type propertyType)
+        public void GetInstancePublicProperty_Should_ReturnProperty(string propertyName, Type propertyType)
         {
             // Arrange
             var type = typeof(TestData.PropertiesAndMethods);
 
             // Act
-            var result = type.GetPublicProperty(propertyName);
+            var result = type.GetInstancePublicProperty(propertyName);
 
             // Assert   
             result.Must()
@@ -40,13 +40,13 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(ExplicitProperties))]
-        public void GetProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
+        public void GetInstancePublicProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
         {
             // Arrange
             var type = typeof(TestData.PropertiesAndMethods);
 
             // Act
-            var result = type.GetPublicProperty(propertyName);
+            var result = type.GetInstancePublicProperty(propertyName);
 
             // Assert   
             result.Must()

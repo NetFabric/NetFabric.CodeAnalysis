@@ -1,100 +1,128 @@
 using System;
 using System.Reflection;
-using System.Threading;
 
 namespace NetFabric.CodeAnalysis
 {
     public static class TypeExtensions
     {
-        public static bool IsAssignableTo(this Type type, Type toType)
-            => toType.IsAssignableFrom(type);
-
-        public static bool IsEnumerable(this Type type, out EnumerableInfo info)
+        public static bool IsEnumerable(this Type type, out MethodInfo getEnumerator, out PropertyInfo current, out MethodInfo moveNext)
         {
-            info = type.GetEnumerableInfo();
-            return
-                info.GetEnumerator is object &&
-                info.Current is object &&
-                info.MoveNext is object;
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            if (!type.IsEnumerable(out getEnumerator))
+            {
+                current = null;
+                moveNext = null;
+                return false;
+            }
+
+            return getEnumerator.ReturnType.IsEnumerator(out current, out moveNext);
         }
 
-        public static bool IsAsyncEnumerable(this Type type, out EnumerableInfo info)
+        public static bool IsAsyncEnumerable(this Type type, out MethodInfo getAsyncEnumerator, out PropertyInfo current, out MethodInfo moveNextAsync)
         {
-            info = type.GetAsyncEnumerableInfo();
-            return
-                info.GetEnumerator is object &&
-                info.Current is object &&
-                info.MoveNext is object;
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            if (!type.IsAsyncEnumerable(out getAsyncEnumerator))
+            {
+                current = null;
+                moveNextAsync = null;
+                return false;
+            }
+
+            return getAsyncEnumerator.ReturnType.IsAsyncEnumerator(out current, out moveNextAsync);
         }
 
-        public static EnumerableInfo GetEnumerableInfo(this Type type)
+        public static bool IsEnumerable(this Type type, out MethodInfo getEnumerator)
         {
-            var getEnumerator = type.GetPublicOrExplicitMethod("GetEnumerator");
-            if (getEnumerator is null)
-                return default;
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
 
-            var enumeratorType = getEnumerator.ReturnType;
-            return new EnumerableInfo(
-                getEnumerator,
-                enumeratorType.GetPublicOrExplicitProperty("Current"),
-                enumeratorType.GetPublicOrExplicitMethod("MoveNext"),
-                enumeratorType.GetPublicOrExplicitMethod("Dispose"));
-        }
-
-        public static EnumerableInfo GetAsyncEnumerableInfo(this Type type)
-        {
-            var getEnumerator = 
-                type.GetPublicOrExplicitMethod("GetAsyncEnumerator") ??
-                type.GetPublicOrExplicitMethod("GetAsyncEnumerator", typeof(CancellationToken));
-            if (getEnumerator is null)
-                return default;
-
-            var enumeratorType = getEnumerator.ReturnType;
-            return new EnumerableInfo(
-                getEnumerator,
-                enumeratorType.GetPublicOrExplicitProperty("Current"),
-                enumeratorType.GetPublicOrExplicitMethod("MoveNextAsync"),
-                enumeratorType.GetPublicOrExplicitMethod("DisposeAsync") ??
-                    enumeratorType.GetPublicOrExplicitMethod("Dispose"));
-        }
-
-        public static PropertyInfo GetPublicOrExplicitProperty(this Type type, string name)
-        {
-            var property = type.GetPublicProperty(name);
-            if (property is object)
-                return property;
+            getEnumerator = type.GetInstancePublicMethod("GetEnumerator");
+            if (getEnumerator is object)
+                return true;
 
             foreach (var @interface in type.GetInterfaces())
             {
-                property = @interface.GetPublicProperty(name);
-                if (property is object)
-                    return property;
+                getEnumerator = @interface.GetInstancePublicMethod("GetEnumerator");
+                if (getEnumerator is object)
+                    return true;
             }
 
-            return null;
+            return false;
         }
 
-        public static MethodInfo GetPublicOrExplicitMethod(this Type type, string name, params Type[] parameters)
+        public static bool IsAsyncEnumerable(this Type type, out MethodInfo getAsyncEnumerator)
         {
-            var method = type.GetPublicMethod(name, parameters);
-            if (method is object)
-                return method;
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            getAsyncEnumerator = type.GetInstancePublicMethod("GetAsyncEnumerator");
+            if (getAsyncEnumerator is object)
+                return true;
 
             foreach (var @interface in type.GetInterfaces())
             {
-                method = @interface.GetPublicMethod(name, parameters);
-                if (method is object)
-                    return method;
+                getAsyncEnumerator = @interface.GetInterfacePublicMethod("GetAsyncEnumerator");
+                if (getAsyncEnumerator is object)
+                    return true;
             }
 
-            return null;
+            return false;
         }
 
-        const BindingFlags InstancePublicFlatten = BindingFlags.Instance | BindingFlags.Public;
-
-        public static PropertyInfo GetPublicProperty(this Type type, string name)
+        public static bool IsEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNext)
         {
-            var properties = type.GetProperties(InstancePublicFlatten);
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            current = type.GetInstancePublicProperty("Current");
+            moveNext = type.GetInstancePublicMethod("MoveNext");
+            if (current is object && moveNext is object)
+                return true;
+
+            foreach (var @interface in type.GetInterfaces())
+            {
+                current = @interface.GetInterfacePublicProperty("Current");
+                moveNext = @interface.GetInterfacePublicMethod("MoveNext");
+                if (current is object && moveNext is object)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsAsyncEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNextAsync)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            current = type.GetInstancePublicProperty("Current");
+            moveNextAsync = type.GetInstancePublicMethod("MoveNextAsync");
+            if (current is object && moveNextAsync is object)
+                return true;
+
+            foreach (var @interface in type.GetInterfaces())
+            {
+                current = @interface.GetInterfacePublicProperty("Current");
+                moveNextAsync = @interface.GetInterfacePublicMethod("MoveNextAsync");
+                if (current is object && moveNextAsync is object)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static PropertyInfo GetInstancePublicProperty(this Type type, string name)
+        {
+            if (type.IsInterface)
+                throw new ArgumentException("Type must not be an interface.", nameof(type));
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
             for (var index = 0; index < properties.Length; index++)
             {
                 var property = properties[index];
@@ -106,12 +134,44 @@ namespace NetFabric.CodeAnalysis
             if (baseType is null)
                 return null;
 
-            return baseType.GetPublicProperty(name);
+            return baseType.GetInstancePublicProperty(name);
         }
 
-        public static MethodInfo GetPublicMethod(this Type type, string name, params Type[] parameters)
+        public static PropertyInfo GetInterfacePublicProperty(this Type type, string name)
         {
-            var methods = type.GetMethods(InstancePublicFlatten);
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+            if (!type.IsInterface)
+                throw new ArgumentException("Type must be an interface.", nameof(type));
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            var properties = type.GetProperties();
+            for (var index = 0; index < properties.Length; index++)
+            {
+                var property = properties[index];
+                if (property.Name == name && property.GetGetMethod() is object)
+                    return property;
+            }
+
+            foreach (var @interface in type.GetInterfaces())
+            {
+                var property = @interface.GetInterfacePublicProperty(name);
+                if (property is object)
+                    return property;
+            }
+
+            return null;
+        }
+
+        public static MethodInfo GetInstancePublicMethod(this Type type, string name, params Type[] parameters)
+        {
+            if (type.IsInterface)
+                throw new ArgumentException("Type must not be an interface.", nameof(type));
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public);
             for (var index = 0; index < methods.Length; index++)
             {
                 var method = methods[index];
@@ -123,7 +183,34 @@ namespace NetFabric.CodeAnalysis
             if (baseType is null)
                 return null;
 
-            return baseType.GetPublicMethod(name, parameters);
+            return baseType.GetInstancePublicMethod(name, parameters);
+        }
+
+        public static MethodInfo GetInterfacePublicMethod(this Type type, string name, params Type[] parameters)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+            if (!type.IsInterface)
+                throw new ArgumentException("Type must be an interface.", nameof(type));
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            var methods = type.GetMethods();
+            for (var index = 0; index < methods.Length; index++)
+            {
+                var method = methods[index];
+                if (method.Name == name && SequenceEqual(method.GetParameters(), parameters))
+                    return method;
+            }
+
+            foreach (var @interface in type.GetInterfaces())
+            {
+                var method = @interface.GetInterfacePublicMethod(name);
+                if (method is object)
+                    return method;
+            }
+
+            return null;
         }
 
         static bool SequenceEqual(ParameterInfo[] parameters, Type[] types)
