@@ -235,6 +235,11 @@ namespace NetFabric.Reflection
 
         public static bool ImplementsInterface(this Type type, Type interfaceType, out Type[] genericArguments)
         {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+            if (interfaceType is null)
+                throw new ArgumentNullException(nameof(interfaceType));
+
             if (!interfaceType.IsGenericType)
             {
                 genericArguments = null;
@@ -256,6 +261,9 @@ namespace NetFabric.Reflection
 
         public static IEnumerable<Type> GetAllInterfaces(this Type type)
         {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
             foreach (var @interface in type.GetInterfaces())
             {
                 yield return @interface;

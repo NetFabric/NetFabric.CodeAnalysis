@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Linq;
+﻿using System;
 using Xunit;
 
 namespace NetFabric.CodeAnalysis.UnitTests
@@ -20,7 +18,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetSymbolsWithName("PropertiesAndMethods").First() as ITypeSymbol;
+            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicProperty(propertyName);
@@ -44,7 +42,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetSymbolsWithName("PropertiesAndMethods").First() as ITypeSymbol;
+            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicProperty(propertyName);

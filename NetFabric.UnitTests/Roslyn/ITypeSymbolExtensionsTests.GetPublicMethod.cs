@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
+﻿using System;
 using System.Linq;
 using Xunit;
 
@@ -22,7 +21,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetSymbolsWithName("PropertiesAndMethods").First() as ITypeSymbol;
+            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicMethod(methodName, parameters);
@@ -31,7 +30,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             Assert.NotNull(result);
             Assert.Equal(methodName, result.Name);
             Assert.True(result.Parameters
-                .Select(parameter => parameter.Type.Name)
+                .Select(parameter => parameter.Type.MetadataName)
                 .SequenceEqual(parameters
                     .Select(type => type.Name)));
         }
@@ -51,7 +50,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetSymbolsWithName("PropertiesAndMethods").First() as ITypeSymbol;
+            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicMethod(methodName, parameters);
