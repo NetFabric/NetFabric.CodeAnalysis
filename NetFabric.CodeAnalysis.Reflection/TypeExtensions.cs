@@ -5,41 +5,43 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-namespace NetFabric.CodeAnalysis
+namespace NetFabric.CodeAnalysis.Reflection
 {
     public static class TypeExtensions
     {
-        public static bool IsEnumerable(this Type type, out MethodInfo getEnumerator, out PropertyInfo current, out MethodInfo moveNext)
+        public static bool IsEnumerable(this Type type, out EnumerableInfo enumerableInfo)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            if (!type.IsEnumerable(out getEnumerator))
+            if (!type.IsEnumerableType(out var getEnumerator))
             {
-                current = null;
-                moveNext = null;
+                enumerableInfo = default;
                 return false;
             }
 
-            return getEnumerator.ReturnType.IsEnumerator(out current, out moveNext);
+            var isEnumerator = getEnumerator.ReturnType.IsEnumerator(out var current, out var moveNext, out var dispose);
+            enumerableInfo = new EnumerableInfo(getEnumerator, current, moveNext, dispose);
+            return isEnumerator;
         }
 
-        public static bool IsAsyncEnumerable(this Type type, out MethodInfo getAsyncEnumerator, out PropertyInfo current, out MethodInfo moveNextAsync)
+        public static bool IsAsyncEnumerable(this Type type, out EnumerableInfo enumerableInfo)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            if (!type.IsAsyncEnumerable(out getAsyncEnumerator))
+            if (!type.IsAsyncEnumerableType(out var getAsyncEnumerator))
             {
-                current = null;
-                moveNextAsync = null;
+                enumerableInfo = default;
                 return false;
             }
 
-            return getAsyncEnumerator.ReturnType.IsAsyncEnumerator(out current, out moveNextAsync);
+            var isEnumerator = getAsyncEnumerator.ReturnType.IsAsyncEnumerator(out var current, out var moveNextAsync, out var disposeAsync);
+            enumerableInfo = new EnumerableInfo(getAsyncEnumerator, current, moveNextAsync, disposeAsync);
+            return isEnumerator;
         }
 
-        public static bool IsEnumerable(this Type type, out MethodInfo getEnumerator)
+        static bool IsEnumerableType(this Type type, out MethodInfo getEnumerator)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -63,7 +65,7 @@ namespace NetFabric.CodeAnalysis
             return false;
         }
 
-        public static bool IsAsyncEnumerable(this Type type, out MethodInfo getAsyncEnumerator)
+        static bool IsAsyncEnumerableType(this Type type, out MethodInfo getAsyncEnumerator)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -85,10 +87,15 @@ namespace NetFabric.CodeAnalysis
             return false;
         }
 
-        public static bool IsEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNext)
+        public static bool IsEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNext, out MethodInfo dispose)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
+
+            if (type.ImplementsInterface(typeof(IDisposable), out _))
+                dispose = typeof(IDisposable).GetMethod("Dispose", Array.Empty<Type>());
+            else
+                dispose = null;
 
             current = type.GetPublicProperty("Current");
             moveNext = type.GetPublicMethod("MoveNext");
@@ -112,10 +119,15 @@ namespace NetFabric.CodeAnalysis
             return false;
         }
 
-        public static bool IsAsyncEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNextAsync)
+        public static bool IsAsyncEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNextAsync, out MethodInfo disposeAsync)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
+
+            if (type.ImplementsInterface(typeof(IAsyncDisposable), out _))
+                disposeAsync = typeof(IAsyncDisposable).GetMethod("DisposeAsync", Array.Empty<Type>());
+            else
+                disposeAsync = null;
 
             current = type.GetPublicProperty("Current");
             moveNextAsync = type.GetPublicMethod("MoveNextAsync");
@@ -137,8 +149,6 @@ namespace NetFabric.CodeAnalysis
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
-            if (type.IsInterface)
-                throw new ArgumentException("Type must not be an interface.", nameof(type));
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
 
@@ -150,19 +160,29 @@ namespace NetFabric.CodeAnalysis
                     return property;
             }
 
-            var baseType = type.BaseType;
-            if (baseType is null)
-                return null;
+            if (type.IsInterface)
+            {
+                foreach (var @interface in type.GetAllInterfaces())
+                {
+                    var property = @interface.GetPublicProperty(name);
+                    if (property is object)
+                        return property;
+                }
+            }
+            else
+            {
+                var baseType = type.BaseType;
+                if (baseType is object)
+                    return baseType.GetPublicProperty(name);
+            }
 
-            return baseType.GetPublicProperty(name);
+            return null;
         }
 
         public static MethodInfo GetPublicMethod(this Type type, string name, params Type[] parameters)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
-            if (type.IsInterface)
-                throw new ArgumentException("Type must not be an interface.", nameof(type));
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
 
@@ -174,14 +194,26 @@ namespace NetFabric.CodeAnalysis
                     return method;
             }
 
-            var baseType = type.BaseType;
-            if (baseType is null)
-                return null;
+            if (type.IsInterface)
+            {
+                foreach (var @interface in type.GetAllInterfaces())
+                {
+                    var method = @interface.GetPublicMethod(name, parameters);
+                    if (method is object)
+                        return method;
+                }
+            }
+            else
+            {
+                var baseType = type.BaseType;
+                if (baseType is object)
+                    return baseType.GetPublicMethod(name);
+            }
 
-            return baseType.GetPublicMethod(name, parameters);
+            return null;
         }
 
-        static bool ImplementsInterface(this Type type, Type interfaceType, out Type[] genericArguments)
+        public static bool ImplementsInterface(this Type type, Type interfaceType, out Type[] genericArguments)
         {
             if (!interfaceType.IsGenericType)
             {
@@ -202,7 +234,7 @@ namespace NetFabric.CodeAnalysis
             return false;
         }
 
-        static IEnumerable<Type> GetAllInterfaces(this Type type)
+        public static IEnumerable<Type> GetAllInterfaces(this Type type)
         {
             foreach (var @interface in type.GetInterfaces())
             {

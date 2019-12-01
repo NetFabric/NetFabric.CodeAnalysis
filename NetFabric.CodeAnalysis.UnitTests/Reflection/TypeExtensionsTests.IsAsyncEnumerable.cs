@@ -34,13 +34,13 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             // Arrange
 
             // Act
-            var result = enumeratorType.IsAsyncEnumerable(out var getEnumerator);
+            var result = enumeratorType.IsAsyncEnumerable(out var enumerableInfo);
 
             // Assert   
             result.Must()
                 .BeTrue();
 
-            getEnumerator.Must()
+            enumerableInfo.GetEnumerator.Must()
                 .BeNotNull()
                 .EvaluatesTrue(method =>
                     method.Name == "GetAsyncEnumerator" &&

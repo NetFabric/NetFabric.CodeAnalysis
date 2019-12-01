@@ -36,13 +36,13 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             // Arrange
 
             // Act
-            var result = enumeratorType.IsEnumerable(out var getEnumerator);
+            var result = enumeratorType.IsEnumerable(out var enumerableInfo);
 
             // Assert   
             result.Must()
                 .BeTrue();
 
-            getEnumerator.Must()
+            enumerableInfo.GetEnumerator.Must()
                 .BeNotNull()
                 .EvaluatesTrue(method =>
                     method.Name == "GetEnumerator" &&
