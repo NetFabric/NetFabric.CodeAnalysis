@@ -1,47 +1,39 @@
 ﻿using NetFabric.Assertive;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
-namespace NetFabric.CodeAnalysis.Reflection.UnitTests
+namespace NetFabric.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<Type, Type, Type, Type, Type> Enumerators =>
+        public static TheoryData<Type, Type, Type, Type, Type> AsyncEnumerators =>
             new TheoryData<Type, Type, Type, Type, Type>
             {
                 { 
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
+                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
                     null,
-                    typeof(int)
+                    typeof(int) 
                 },
                 { 
-                    typeof(TestData.ExplicitEnumerator),
-                    typeof(IEnumerator),
-                    typeof(IEnumerator),
-                    null,
-                    typeof(object) 
-                },
-                { 
-                    typeof(TestData.ExplicitEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator),
-                    typeof(IDisposable),
+                    typeof(TestData.ExplicitAsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(IAsyncDisposable),
                     typeof(int) 
                 },
             };
 
         [Theory]
-        [MemberData(nameof(Enumerators))]
-        public void IsEnumerator_Should_ReturnTrue(Type enumeratorType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        [MemberData(nameof(AsyncEnumerators))]
+        public void IsAsyncEnumerator_Should_ReturnTrue(Type enumeratorType, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
             // Act
-            var result = enumeratorType.IsEnumerator(out var current, out var moveNext, out var dispose);
+            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNext, out var disposeAsync);
 
             // Assert   
             result.Must()
@@ -57,28 +49,28 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
             moveNext.Must()
                 .BeNotNull()
                 .EvaluatesTrue(method =>
-                    method.Name == "MoveNext" &&
-                    method.DeclaringType == moveNextDeclaringType &&
+                    method.Name == "MoveNextAsync" &&
+                    method.DeclaringType == moveNextAsyncDeclaringType &&
                     method.GetParameters().Length == 0);
 
-            if (disposeDeclaringType is null)
-                dispose.Must()
+            if (disposeAsyncDeclaringType is null)
+                disposeAsync.Must()
                     .BeNull();
             else
-                dispose.Must()
+                disposeAsync.Must()
                     .BeNotNull()
                     .EvaluatesTrue(method =>
-                        method.Name == "Dispose" &&
-                        method.DeclaringType == disposeDeclaringType &&
+                        method.Name == "DisposeAsync" &&
+                        method.DeclaringType == disposeAsyncDeclaringType &&
                         method.GetParameters().Length == 0);
         }
 
-        public static TheoryData<Type, Type, Type, Type, Type> InvalidEnumerators =>
+        public static TheoryData<Type, Type, Type, Type, Type> InvalidAsyncEnumerators =>
             new TheoryData<Type, Type, Type, Type, Type>
             {
                 { 
                     typeof(TestData.MissingCurrentAndMoveNextEnumerator), 
-                    null, 
+                    null,
                     null,
                     null,
                     null
@@ -95,18 +87,18 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
                     typeof(TestData.MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int) 
                 },
             };
 
         [Theory]
-        [MemberData(nameof(InvalidEnumerators))]
-        public void IsEnumerator_With_MissingFeatures_Should_ReturnFalse(Type enumeratorType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        [MemberData(nameof(InvalidAsyncEnumerators))]
+        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type enumeratorType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
             // Act
-            var result = enumeratorType.IsEnumerator(out var current, out var moveNext, out var dispose);
+            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNext, out var disposeAsync);
 
             // Assert   
             result.Must()
@@ -130,19 +122,19 @@ namespace NetFabric.CodeAnalysis.Reflection.UnitTests
                 moveNext.Must()
                     .BeNotNull()
                     .EvaluatesTrue(method =>
-                        method.Name == "MoveNext" &&
+                        method.Name == "MoveNextAsync" &&
                         method.DeclaringType == moveNextDeclaringType &&
                         method.GetParameters().Length == 0);
 
-            if (disposeDeclaringType is null)
-                dispose.Must()
+            if (disposeAsyncDeclaringType is null)
+                disposeAsync.Must()
                     .BeNull();
             else
-                dispose.Must()
+                disposeAsync.Must()
                     .BeNotNull()
                     .EvaluatesTrue(method =>
-                        method.Name == "Dispose" &&
-                        method.DeclaringType == moveNextDeclaringType &&
+                        method.Name == "DisposeAsync" &&
+                        method.DeclaringType == disposeAsyncDeclaringType &&
                         method.GetParameters().Length == 0);
         }
     }

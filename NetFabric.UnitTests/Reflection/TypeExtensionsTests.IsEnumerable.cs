@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
-namespace NetFabric.CodeAnalysis.Reflection.UnitTests
+namespace NetFabric.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {

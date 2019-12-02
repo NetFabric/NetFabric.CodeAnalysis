@@ -1,4 +1,4 @@
-namespace NetFabric.CodeAnalysis.TestData
+namespace NetFabric.TestData
 {
     public class PropertiesAndMethods 
         : PropertiesAndMethodsBase

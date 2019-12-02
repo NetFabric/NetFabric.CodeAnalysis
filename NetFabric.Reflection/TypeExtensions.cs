@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-namespace NetFabric.CodeAnalysis.Reflection
+namespace NetFabric.Reflection
 {
     public static class TypeExtensions
     {

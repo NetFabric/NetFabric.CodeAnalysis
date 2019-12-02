@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace NetFabric.CodeAnalysis.Reflection
+namespace NetFabric.Reflection
 {
     public struct EnumerableInfo
     {

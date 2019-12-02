@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <PackageId>NetFabric.CodeAnalysis.Roslyn</PackageId>
+    <PackageId>NetFabric.CodeAnalysis</PackageId>
     <Version>1.0.0-beta1</Version>
     <Description>Extension methods for .NET reflection.</Description>
     <PackageReleaseNotes></PackageReleaseNotes>

@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Update="TestData\**\*.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\NetFabric.CodeAnalysis\NetFabric.CodeAnalysis.csproj" />
+    <ProjectReference Include="..\NetFabric.Reflection\NetFabric.Reflection.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="NetFabric.Assertive" Version="1.2.0" />
@@ -26,18 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetFabric.CodeAnalysis.Reflection\NetFabric.CodeAnalysis.Reflection.csproj" />
-    <ProjectReference Include="..\NetFabric.CodeAnalysis.Roslyn\NetFabric.CodeAnalysis.Roslyn.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <DotNetCliToolReference Include="dotnet-reportgenerator-cli" Version="4.2.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="TestData\**\*.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
   </ItemGroup>
 
 </Project>

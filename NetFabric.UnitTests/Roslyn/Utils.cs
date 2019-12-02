@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using System.IO;
 
-namespace NetFabric.CodeAnalysis.Roslyn.UnitTests
+namespace NetFabric.CodeAnalysis.UnitTests
 {
     public static class Utils
     {

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NetFabric.Hyperlinq;
 
-namespace NetFabric.CodeAnalysis.TestData
+namespace NetFabric.TestData
 {
     public readonly struct RangeAsyncEnumerable
         : IAsyncValueEnumerable<int, RangeAsyncEnumerable.DisposableAsyncEnumerator>

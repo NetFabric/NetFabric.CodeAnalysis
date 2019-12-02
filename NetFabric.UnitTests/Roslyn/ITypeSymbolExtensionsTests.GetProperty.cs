@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace NetFabric.CodeAnalysis.Roslyn.UnitTests
+namespace NetFabric.CodeAnalysis.UnitTests
 {
     public partial class ITypeSymbolExtensionsTests
     {
