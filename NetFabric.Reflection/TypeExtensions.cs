@@ -52,13 +52,13 @@ namespace NetFabric.Reflection
 
             if (type.ImplementsInterface(typeof(IEnumerable<>), out var genericArguments))
             {
-                getEnumerator = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]).GetMethod("GetEnumerator", Array.Empty<Type>());
+                getEnumerator = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]).GetMethod("GetEnumerator");
                 return true;
             }
 
             if (type.ImplementsInterface(typeof(IEnumerable), out _))
             {
-                getEnumerator = typeof(IEnumerable).GetMethod("GetEnumerator", Array.Empty<Type>());
+                getEnumerator = typeof(IEnumerable).GetMethod("GetEnumerator");
                 return true;
             }
 
@@ -93,7 +93,7 @@ namespace NetFabric.Reflection
                 throw new ArgumentNullException(nameof(type));
 
             if (type.ImplementsInterface(typeof(IDisposable), out _))
-                dispose = typeof(IDisposable).GetMethod("Dispose", Array.Empty<Type>());
+                dispose = typeof(IDisposable).GetMethod("Dispose");
             else
                 dispose = null;
 
@@ -105,14 +105,14 @@ namespace NetFabric.Reflection
             if (type.ImplementsInterface(typeof(IEnumerator<>), out var genericArguments))
             {
                 current = typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetProperty("Current");
-                moveNext = typeof(IEnumerator).GetMethod("MoveNext", Array.Empty<Type>());
+                moveNext = typeof(IEnumerator).GetMethod("MoveNext");
                 return true;
             }
 
             if (type.ImplementsInterface(typeof(IEnumerator), out _))
             {
                 current = typeof(IEnumerator).GetProperty("Current");
-                moveNext = typeof(IEnumerator).GetMethod("MoveNext", Array.Empty<Type>());
+                moveNext = typeof(IEnumerator).GetMethod("MoveNext");
                 return true;
             }
 
@@ -125,7 +125,7 @@ namespace NetFabric.Reflection
                 throw new ArgumentNullException(nameof(type));
 
             if (type.ImplementsInterface(typeof(IAsyncDisposable), out _))
-                disposeAsync = typeof(IAsyncDisposable).GetMethod("DisposeAsync", Array.Empty<Type>());
+                disposeAsync = typeof(IAsyncDisposable).GetMethod("DisposeAsync");
             else
                 disposeAsync = null;
 
@@ -138,7 +138,7 @@ namespace NetFabric.Reflection
             {
                 var interfaceType = typeof(IAsyncEnumerator<>).MakeGenericType(genericArguments[0]);
                 current = interfaceType.GetProperty("Current");
-                moveNextAsync = interfaceType.GetMethod("MoveNextAsync", Array.Empty<Type>());
+                moveNextAsync = interfaceType.GetMethod("MoveNextAsync");
                 return true;
             }
 
