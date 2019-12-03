@@ -1,5 +1,4 @@
-﻿using NetFabric.Assertive;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -33,36 +32,32 @@ namespace NetFabric.Reflection.UnitTests
             // Arrange
 
             // Act
-            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNext, out var disposeAsync);
+            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNextAsync, out var disposeAsync);
 
             // Assert   
-            result.Must()
-                .BeTrue();
+            Assert.True(result);
 
-            current.Must()
-                .BeNotNull()
-                .EvaluatesTrue(property =>
-                    property.Name == "Current" &&
-                    property.DeclaringType == currentDeclaringType &&
-                    property.PropertyType == itemType);
+            Assert.NotNull(current);
+            Assert.Equal("Current", current.Name);
+            Assert.Equal(currentDeclaringType, current.DeclaringType);
+            Assert.Equal(itemType, current.PropertyType);
 
-            moveNext.Must()
-                .BeNotNull()
-                .EvaluatesTrue(method =>
-                    method.Name == "MoveNextAsync" &&
-                    method.DeclaringType == moveNextAsyncDeclaringType &&
-                    method.GetParameters().Length == 0);
+            Assert.NotNull(moveNextAsync);
+            Assert.Equal("MoveNextAsync", moveNextAsync.Name);
+            Assert.Equal(moveNextAsyncDeclaringType, moveNextAsync.DeclaringType);
+            Assert.Empty(moveNextAsync.GetParameters());
 
             if (disposeAsyncDeclaringType is null)
-                disposeAsync.Must()
-                    .BeNull();
+            {
+                Assert.Null(disposeAsync);
+            }
             else
-                disposeAsync.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(method =>
-                        method.Name == "DisposeAsync" &&
-                        method.DeclaringType == disposeAsyncDeclaringType &&
-                        method.GetParameters().Length == 0);
+            {
+                Assert.NotNull(disposeAsync);
+                Assert.Equal("DisposeAsync", disposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType, disposeAsync.DeclaringType);
+                Assert.Empty(disposeAsync.GetParameters());
+            }
         }
 
         public static TheoryData<Type, Type, Type, Type, Type> InvalidAsyncEnumerators =>
@@ -93,49 +88,51 @@ namespace NetFabric.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(InvalidAsyncEnumerators))]
-        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type enumeratorType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type enumeratorType, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
             // Act
-            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNext, out var disposeAsync);
+            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNextAsync, out var disposeAsync);
 
             // Assert   
-            result.Must()
-                .BeFalse();
+            Assert.False(result);
 
             if (currentDeclaringType is null)
-                current.Must()
-                    .BeNull();
+            {
+                Assert.Null(current);
+            }
             else
-                current.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(property => 
-                        property.Name == "Current" &&
-                        property.DeclaringType == currentDeclaringType &&
-                        property.PropertyType == itemType);
+            {
+                Assert.NotNull(current);
+                Assert.Equal("Current", current.Name);
+                Assert.Equal(currentDeclaringType, current.DeclaringType);
+                Assert.Equal(itemType, current.PropertyType);
+            }
 
-            if (moveNextDeclaringType is null)
-                moveNext.Must()
-                    .BeNull();
+            if (moveNextAsyncDeclaringType is null)
+            {
+                Assert.Null(moveNextAsync);
+            }
             else
-                moveNext.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(method =>
-                        method.Name == "MoveNextAsync" &&
-                        method.DeclaringType == moveNextDeclaringType &&
-                        method.GetParameters().Length == 0);
+            {
+                Assert.NotNull(moveNextAsync);
+                Assert.Equal("MoveNextAsync", moveNextAsync.Name);
+                Assert.Equal(moveNextAsyncDeclaringType, moveNextAsync.DeclaringType);
+                Assert.Empty(moveNextAsync.GetParameters());
+            }
 
             if (disposeAsyncDeclaringType is null)
-                disposeAsync.Must()
-                    .BeNull();
+            {
+                Assert.Null(disposeAsync);
+            }
             else
-                disposeAsync.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(method =>
-                        method.Name == "DisposeAsync" &&
-                        method.DeclaringType == disposeAsyncDeclaringType &&
-                        method.GetParameters().Length == 0);
+            {
+                Assert.NotNull(disposeAsync);
+                Assert.Equal("DisposeAsync", disposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType, disposeAsync.DeclaringType);
+                Assert.Empty(disposeAsync.GetParameters());
+            }
         }
     }
 }

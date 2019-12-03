@@ -1,5 +1,4 @@
-﻿using NetFabric.Assertive;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
@@ -44,33 +43,29 @@ namespace NetFabric.Reflection.UnitTests
             var result = enumeratorType.IsEnumerator(out var current, out var moveNext, out var dispose);
 
             // Assert   
-            result.Must()
-                .BeTrue();
+            Assert.True(result);
 
-            current.Must()
-                .BeNotNull()
-                .EvaluatesTrue(property =>
-                    property.Name == "Current" &&
-                    property.DeclaringType == currentDeclaringType &&
-                    property.PropertyType == itemType);
+            Assert.NotNull(current);
+            Assert.Equal("Current", current.Name);
+            Assert.Equal(currentDeclaringType, current.DeclaringType);
+            Assert.Equal(itemType, current.PropertyType);
 
-            moveNext.Must()
-                .BeNotNull()
-                .EvaluatesTrue(method =>
-                    method.Name == "MoveNext" &&
-                    method.DeclaringType == moveNextDeclaringType &&
-                    method.GetParameters().Length == 0);
+            Assert.NotNull(moveNext);
+            Assert.Equal("MoveNext", moveNext.Name);
+            Assert.Equal(moveNextDeclaringType, moveNext.DeclaringType);
+            Assert.Empty(moveNext.GetParameters());
 
             if (disposeDeclaringType is null)
-                dispose.Must()
-                    .BeNull();
+            {
+                Assert.Null(dispose);
+            }
             else
-                dispose.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(method =>
-                        method.Name == "Dispose" &&
-                        method.DeclaringType == disposeDeclaringType &&
-                        method.GetParameters().Length == 0);
+            {
+                Assert.NotNull(dispose);
+                Assert.Equal("Dispose", dispose.Name);
+                Assert.Equal(disposeDeclaringType, dispose.DeclaringType);
+                Assert.Empty(dispose.GetParameters());
+            }
         }
 
         public static TheoryData<Type, Type, Type, Type, Type> InvalidEnumerators =>
@@ -109,41 +104,43 @@ namespace NetFabric.Reflection.UnitTests
             var result = enumeratorType.IsEnumerator(out var current, out var moveNext, out var dispose);
 
             // Assert   
-            result.Must()
-                .BeFalse();
+            Assert.False(result);
 
             if (currentDeclaringType is null)
-                current.Must()
-                    .BeNull();
+            {
+                Assert.Null(current);
+            }
             else
-                current.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(property => 
-                        property.Name == "Current" &&
-                        property.DeclaringType == currentDeclaringType &&
-                        property.PropertyType == itemType);
+            {
+                Assert.NotNull(current);
+                Assert.Equal("Current", current.Name);
+                Assert.Equal(currentDeclaringType, current.DeclaringType);
+                Assert.Equal(itemType, current.PropertyType);
+            }
 
             if (moveNextDeclaringType is null)
-                moveNext.Must()
-                    .BeNull();
+            {
+                Assert.Null(moveNext);
+            }
             else
-                moveNext.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(method =>
-                        method.Name == "MoveNext" &&
-                        method.DeclaringType == moveNextDeclaringType &&
-                        method.GetParameters().Length == 0);
+            {
+                Assert.NotNull(moveNext);
+                Assert.Equal("MoveNext", moveNext.Name);
+                Assert.Equal(moveNextDeclaringType, moveNext.DeclaringType);
+                Assert.Empty(moveNext.GetParameters());
+            }
 
             if (disposeDeclaringType is null)
-                dispose.Must()
-                    .BeNull();
+            {
+                Assert.Null(dispose);
+            }
             else
-                dispose.Must()
-                    .BeNotNull()
-                    .EvaluatesTrue(method =>
-                        method.Name == "Dispose" &&
-                        method.DeclaringType == moveNextDeclaringType &&
-                        method.GetParameters().Length == 0);
+            {
+                Assert.NotNull(dispose);
+                Assert.Equal("Dispose", dispose.Name);
+                Assert.Equal(disposeDeclaringType, dispose.DeclaringType);
+                Assert.Empty(dispose.GetParameters());
+            }
         }
     }
 }

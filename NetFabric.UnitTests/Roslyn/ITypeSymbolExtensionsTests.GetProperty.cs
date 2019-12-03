@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using NetFabric.Assertive;
 using System;
 using System.Linq;
 using Xunit;
@@ -27,11 +26,9 @@ namespace NetFabric.CodeAnalysis.UnitTests
             var result = typeSymbol.GetPublicProperty(propertyName);
 
             // Assert   
-            result.Must()
-                .BeNotNull()
-                .EvaluatesTrue(property =>
-                    property.Name == propertyName &&
-                    property.Type.Name == propertyType.Name);
+            Assert.NotNull(result);
+            Assert.Equal(propertyName, result.Name);
+            Assert.Equal(propertyType.Name, result.Type.Name);
         }
 
         public static TheoryData<string> ExplicitProperties =>
@@ -53,8 +50,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             var result = typeSymbol.GetPublicProperty(propertyName);
 
             // Assert   
-            result.Must()
-                .BeNull();
+            Assert.Null(result);
         }
     }
 }

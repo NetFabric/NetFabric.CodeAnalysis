@@ -1,5 +1,4 @@
-﻿using NetFabric.Assertive;
-using System;
+﻿using System;
 using Xunit;
 
 namespace NetFabric.Reflection.UnitTests
@@ -24,11 +23,9 @@ namespace NetFabric.Reflection.UnitTests
             var result = type.GetPublicProperty(propertyName);
 
             // Assert   
-            result.Must()
-                .BeNotNull()
-                .EvaluatesTrue(property =>
-                    property.Name == propertyName &&
-                    property.PropertyType == propertyType);
+            Assert.NotNull(result);
+            Assert.Equal(propertyName, result.Name);
+            Assert.Equal(propertyType, result.PropertyType);
         }
 
         public static TheoryData<string> ExplicitInstanceProperties =>
@@ -49,8 +46,7 @@ namespace NetFabric.Reflection.UnitTests
             var result = type.GetPublicProperty(propertyName);
 
             // Assert   
-            result.Must()
-                .BeNull();
+            Assert.Null(result);
         }
     }
 }

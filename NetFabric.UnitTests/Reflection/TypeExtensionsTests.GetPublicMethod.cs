@@ -1,5 +1,4 @@
-﻿using NetFabric.Assertive;
-using System;
+﻿using System;
 using System.Linq;
 using Xunit;
 
@@ -27,13 +26,11 @@ namespace NetFabric.Reflection.UnitTests
             var result = type.GetPublicMethod(methodName, parameters);
 
             // Assert   
-            result.Must()
-                .BeNotNull()
-                .EvaluatesTrue(method =>
-                    method.Name == methodName &&
-                    method.GetParameters()
-                        .Select(parameter => parameter.ParameterType)
-                        .SequenceEqual(parameters));
+            Assert.NotNull(result);
+            Assert.Equal(methodName, result.Name);
+            Assert.True(result.GetParameters()
+                .Select(parameter => parameter.ParameterType)
+                .SequenceEqual(parameters));
         }
 
         public static TheoryData<string, Type[]> ExplicitInstanceMethods =>
@@ -55,9 +52,8 @@ namespace NetFabric.Reflection.UnitTests
             // Act
             var result = type.GetPublicMethod(methodName, parameters);
 
-            // Assert   
-            result.Must()
-                .BeNull();
+            // Assert 
+            Assert.Null(result);
         }
     }
 }

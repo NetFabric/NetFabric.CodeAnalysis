@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using NetFabric.Assertive;
 using System;
 using System.Linq;
 using Xunit;
@@ -29,14 +28,12 @@ namespace NetFabric.CodeAnalysis.UnitTests
             var result = typeSymbol.GetPublicMethod(methodName, parameters);
 
             // Assert   
-            result.Must()
-                .BeNotNull()
-                .EvaluatesTrue(method =>
-                    method.Name == methodName &&
-                    method.Parameters
-                        .Select(parameter => parameter.Type.Name)
-                        .SequenceEqual(parameters
-                            .Select(type => type.Name)));
+            Assert.NotNull(result);
+            Assert.Equal(methodName, result.Name);
+            Assert.True(result.Parameters
+                .Select(parameter => parameter.Type.Name)
+                .SequenceEqual(parameters
+                    .Select(type => type.Name)));
         }
 
         public static TheoryData<string, Type[]> ExplicitMethods =>
@@ -60,8 +57,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             var result = typeSymbol.GetPublicMethod(methodName, parameters);
 
             // Assert   
-            result.Must()
-                .BeNull();
+            Assert.Null(result);
         }
     }
 }
