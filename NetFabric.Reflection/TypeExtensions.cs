@@ -20,7 +20,7 @@ namespace NetFabric.Reflection
                 return false;
             }
 
-            var isEnumerator = getEnumerator.ReturnType.IsEnumerator(out var current, out var moveNext, out var dispose);
+            var isEnumerator = getEnumerator.ReturnType.IsEnumeratorType(out var current, out var moveNext, out var dispose);
             enumerableInfo = new EnumerableInfo(getEnumerator, current, moveNext, dispose);
             return isEnumerator;
         }
@@ -36,8 +36,28 @@ namespace NetFabric.Reflection
                 return false;
             }
 
-            var isEnumerator = getAsyncEnumerator.ReturnType.IsAsyncEnumerator(out var current, out var moveNextAsync, out var disposeAsync);
+            var isEnumerator = getAsyncEnumerator.ReturnType.IsAsyncEnumeratorType(out var current, out var moveNextAsync, out var disposeAsync);
             enumerableInfo = new EnumerableInfo(getAsyncEnumerator, current, moveNextAsync, disposeAsync);
+            return isEnumerator;
+        }
+
+        public static bool IsEnumerator(this Type type, out EnumeratorInfo enumeratorInfo)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            var isEnumerator = type.IsEnumeratorType(out var current, out var moveNext, out var dispose);
+            enumeratorInfo = new EnumeratorInfo(current, moveNext, dispose);
+            return isEnumerator;
+        }
+
+        public static bool IsAsyncEnumerator(this Type type, out EnumeratorInfo enumeratorInfo)
+        {
+            if (type is null)
+                throw new ArgumentNullException(nameof(type));
+
+            var isEnumerator = type.IsAsyncEnumeratorType(out var current, out var moveNextAsync, out var disposeAsync);
+            enumeratorInfo = new EnumeratorInfo(current, moveNextAsync, disposeAsync);
             return isEnumerator;
         }
 
@@ -87,7 +107,7 @@ namespace NetFabric.Reflection
             return false;
         }
 
-        public static bool IsEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNext, out MethodInfo dispose)
+        static bool IsEnumeratorType(this Type type, out PropertyInfo current, out MethodInfo moveNext, out MethodInfo dispose)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -119,7 +139,7 @@ namespace NetFabric.Reflection
             return false;
         }
 
-        public static bool IsAsyncEnumerator(this Type type, out PropertyInfo current, out MethodInfo moveNextAsync, out MethodInfo disposeAsync)
+        static bool IsAsyncEnumeratorType(this Type type, out PropertyInfo current, out MethodInfo moveNextAsync, out MethodInfo disposeAsync)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));

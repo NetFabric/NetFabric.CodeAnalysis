@@ -27,36 +27,39 @@ namespace NetFabric.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(AsyncEnumerators))]
-        public void IsAsyncEnumerator_Should_ReturnTrue(Type enumeratorType, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerator_Should_ReturnTrue(Type type, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
             // Act
-            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNextAsync, out var disposeAsync);
+            var result = type.IsAsyncEnumerator(out var enumeratorInfo);
 
             // Assert   
             Assert.True(result);
 
-            Assert.NotNull(current);
-            Assert.Equal("Current", current.Name);
-            Assert.Equal(currentDeclaringType, current.DeclaringType);
-            Assert.Equal(itemType, current.PropertyType);
+            Assert.Equal(currentDeclaringType, enumeratorInfo.EnumeratorType);
+            Assert.Equal(itemType, enumeratorInfo.ItemType);
 
-            Assert.NotNull(moveNextAsync);
-            Assert.Equal("MoveNextAsync", moveNextAsync.Name);
-            Assert.Equal(moveNextAsyncDeclaringType, moveNextAsync.DeclaringType);
-            Assert.Empty(moveNextAsync.GetParameters());
+            Assert.NotNull(enumeratorInfo.Current);
+            Assert.Equal("Current", enumeratorInfo.Current.Name);
+            Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
+            Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
+
+            Assert.NotNull(enumeratorInfo.MoveNext);
+            Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNext.Name);
+            Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
+            Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(disposeAsync);
+                Assert.Null(enumeratorInfo.Dispose);
             }
             else
             {
-                Assert.NotNull(disposeAsync);
-                Assert.Equal("DisposeAsync", disposeAsync.Name);
-                Assert.Equal(disposeAsyncDeclaringType, disposeAsync.DeclaringType);
-                Assert.Empty(disposeAsync.GetParameters());
+                Assert.NotNull(enumeratorInfo.Dispose);
+                Assert.Equal("DisposeAsync", enumeratorInfo.Dispose.Name);
+                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.Dispose.DeclaringType);
+                Assert.Empty(enumeratorInfo.Dispose.GetParameters());
             }
         }
 
@@ -88,50 +91,53 @@ namespace NetFabric.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(InvalidAsyncEnumerators))]
-        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type enumeratorType, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type type, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
             // Act
-            var result = enumeratorType.IsAsyncEnumerator(out var current, out var moveNextAsync, out var disposeAsync);
+            var result = type.IsAsyncEnumerator(out var enumeratorInfo);
 
             // Assert   
             Assert.False(result);
 
+            Assert.Equal(currentDeclaringType, enumeratorInfo.EnumeratorType);
+            Assert.Equal(itemType, enumeratorInfo.ItemType);
+
             if (currentDeclaringType is null)
             {
-                Assert.Null(current);
+                Assert.Null(enumeratorInfo.Current);
             }
             else
             {
-                Assert.NotNull(current);
-                Assert.Equal("Current", current.Name);
-                Assert.Equal(currentDeclaringType, current.DeclaringType);
-                Assert.Equal(itemType, current.PropertyType);
+                Assert.NotNull(enumeratorInfo.Current);
+                Assert.Equal("Current", enumeratorInfo.Current.Name);
+                Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
+                Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
             }
 
             if (moveNextAsyncDeclaringType is null)
             {
-                Assert.Null(moveNextAsync);
+                Assert.Null(enumeratorInfo.MoveNext);
             }
             else
             {
-                Assert.NotNull(moveNextAsync);
-                Assert.Equal("MoveNextAsync", moveNextAsync.Name);
-                Assert.Equal(moveNextAsyncDeclaringType, moveNextAsync.DeclaringType);
-                Assert.Empty(moveNextAsync.GetParameters());
+                Assert.NotNull(enumeratorInfo.MoveNext);
+                Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNext.Name);
+                Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
+                Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
             }
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(disposeAsync);
+                Assert.Null(enumeratorInfo.Dispose);
             }
             else
             {
-                Assert.NotNull(disposeAsync);
-                Assert.Equal("DisposeAsync", disposeAsync.Name);
-                Assert.Equal(disposeAsyncDeclaringType, disposeAsync.DeclaringType);
-                Assert.Empty(disposeAsync.GetParameters());
+                Assert.NotNull(enumeratorInfo.Dispose);
+                Assert.Equal("DisposeAsync", enumeratorInfo.Dispose.Name);
+                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.Dispose.DeclaringType);
+                Assert.Empty(enumeratorInfo.Dispose.GetParameters());
             }
         }
     }
