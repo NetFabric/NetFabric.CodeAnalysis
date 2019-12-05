@@ -19,7 +19,7 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.Equal(getEnumeratorDeclaringType, enumerableInfo.EnumerableType);
+            Assert.Equal(enumerableInfo.GetEnumerator?.DeclaringType, enumerableInfo.EnumerableType);
             Assert.Equal(enumerableInfo.GetEnumerator?.ReturnType, enumerableInfo.EnumeratorType);
             Assert.Equal(itemType, enumerableInfo.ItemType);
 
@@ -63,7 +63,7 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.False(result);
 
-            Assert.Equal(getEnumeratorDeclaringType, enumerableInfo.EnumerableType);
+            Assert.Equal(enumerableInfo.GetEnumerator?.DeclaringType, enumerableInfo.EnumerableType);
             Assert.Equal(enumerableInfo.GetEnumerator?.ReturnType, enumerableInfo.EnumeratorType);
             Assert.Equal(itemType, enumerableInfo.ItemType);
 

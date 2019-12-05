@@ -8,7 +8,7 @@ namespace NetFabric.Reflection.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.AsyncEnumerables), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerable_Should_ReturnTrue(Type type, Type getAsyncEnumeratorDeclaringType, int getEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerable_Should_ReturnTrue(Type type, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
@@ -25,7 +25,7 @@ namespace NetFabric.Reflection.UnitTests
             Assert.NotNull(enumerableInfo.GetEnumerator);
             Assert.Equal("GetAsyncEnumerator", enumerableInfo.GetEnumerator.Name);
             Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.GetEnumerator.DeclaringType);
-            Assert.Equal(getEnumeratorParametersCount, enumerableInfo.GetEnumerator.GetParameters().Length);
+            Assert.Equal(getAsyncEnumeratorParametersCount, enumerableInfo.GetEnumerator.GetParameters().Length);
 
             Assert.NotNull(enumerableInfo.Current);
             Assert.Equal("Current", enumerableInfo.Current.Name);
@@ -52,7 +52,7 @@ namespace NetFabric.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidAsyncEnumerables), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type getAsyncEnumeratorDeclaringType, int getEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
@@ -75,7 +75,7 @@ namespace NetFabric.Reflection.UnitTests
                 Assert.NotNull(enumerableInfo.GetEnumerator);
                 Assert.Equal("GetAsyncEnumerator", enumerableInfo.GetEnumerator.Name);
                 Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.GetEnumerator.DeclaringType);
-                Assert.Equal(getEnumeratorParametersCount, enumerableInfo.GetEnumerator.GetParameters().Length);
+                Assert.Equal(getAsyncEnumeratorParametersCount, enumerableInfo.GetEnumerator.GetParameters().Length);
             }
 
             if (currentDeclaringType is null)
