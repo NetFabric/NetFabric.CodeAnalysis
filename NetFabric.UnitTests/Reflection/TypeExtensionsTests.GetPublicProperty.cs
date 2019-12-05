@@ -1,23 +1,17 @@
-﻿using System;
+﻿using NetFabric.TestData;
+using System;
 using Xunit;
 
 namespace NetFabric.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<string, Type> InstanceProperties =>
-            new TheoryData<string, Type>
-            {
-                { "Property", typeof(int) },
-                { "InheritedProperty", typeof(int) },
-            };
-
         [Theory]
-        [MemberData(nameof(InstanceProperties))]
+        [MemberData(nameof(DataSets.InstanceProperties), MemberType = typeof(DataSets))]
         public void GetPublicProperty_Should_ReturnProperty(string propertyName, Type propertyType)
         {
             // Arrange
-            var type = typeof(TestData.PropertiesAndMethods);
+            var type = typeof(PropertiesAndMethods);
 
             // Act
             var result = type.GetPublicProperty(propertyName);
@@ -28,19 +22,12 @@ namespace NetFabric.Reflection.UnitTests
             Assert.Equal(propertyType, result.PropertyType);
         }
 
-        public static TheoryData<string> ExplicitInstanceProperties =>
-            new TheoryData<string>
-            {
-                "ExplicitProperty",
-                "StaticProperty",
-            };
-
         [Theory]
-        [MemberData(nameof(ExplicitInstanceProperties))]
+        [MemberData(nameof(DataSets.ExplicitInstanceProperties), MemberType = typeof(DataSets))]
         public void GetPublicProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
         {
             // Arrange
-            var type = typeof(TestData.PropertiesAndMethods);
+            var type = typeof(PropertiesAndMethods);
 
             // Act
             var result = type.GetPublicProperty(propertyName);

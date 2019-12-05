@@ -1,24 +1,18 @@
-﻿using System;
+﻿using NetFabric.TestData;
+using System;
 using Xunit;
 
 namespace NetFabric.CodeAnalysis.UnitTests
 {
     public partial class ITypeSymbolExtensionsTests
     {
-        public static TheoryData<string, Type> Properties =>
-            new TheoryData<string, Type>
-            {
-                { "Property", typeof(int) },
-                { "InheritedProperty", typeof(int) },
-            };
-
         [Theory]
-        [MemberData(nameof(Properties))]
+        [MemberData(nameof(DataSets.InstanceProperties), MemberType = typeof(DataSets))]
         public void GetProperty_Should_ReturnProperty(string propertyName, Type propertyType)
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
+            var typeSymbol = compilation.GetTypeSymbol(typeof(PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicProperty(propertyName);
@@ -29,20 +23,13 @@ namespace NetFabric.CodeAnalysis.UnitTests
             Assert.Equal(propertyType.Name, result.Type.Name);
         }
 
-        public static TheoryData<string> ExplicitProperties =>
-            new TheoryData<string>
-            {
-                "ExplicitProperty",
-                "StaticProperty",
-            };
-
         [Theory]
-        [MemberData(nameof(ExplicitProperties))]
+        [MemberData(nameof(DataSets.ExplicitInstanceProperties), MemberType = typeof(DataSets))]
         public void GetProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
+            var typeSymbol = compilation.GetTypeSymbol(typeof(PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicProperty(propertyName);

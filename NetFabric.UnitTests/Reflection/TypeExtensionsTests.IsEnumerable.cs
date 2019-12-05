@@ -1,51 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using NetFabric.TestData;
+using System;
 using Xunit;
 
 namespace NetFabric.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<Type, Type, Type, Type, Type, Type> Enumerables =>
-            new TheoryData<Type, Type, Type, Type, Type, Type>
-            {
-                { 
-                    typeof(TestData.Enumerable<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.Enumerable<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.Enumerator<>).MakeGenericType(typeof(int)),
-                    null,
-                    typeof(int)
-                },
-                { 
-                    typeof(TestData.ExplicitEnumerable),
-                    typeof(IEnumerable),
-                    typeof(IEnumerator),
-                    typeof(IEnumerator),
-                    null,
-                    typeof(object)
-                },
-                { 
-                    typeof(TestData.ExplicitEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator),
-                    typeof(IDisposable),
-                    typeof(int)
-                },
-                { 
-                    typeof(TestData.RangeEnumerable),
-                    typeof(TestData.RangeEnumerable),
-                    typeof(TestData.RangeEnumerable.Enumerator),
-                    typeof(TestData.RangeEnumerable.Enumerator),
-                    null,
-                    typeof(int)
-                },
-            };
 
         [Theory]
-        [MemberData(nameof(Enumerables))]
+        [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
         public void IsEnumerable_Should_ReturnTrue(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange
@@ -88,37 +51,8 @@ namespace NetFabric.Reflection.UnitTests
             }
         }
 
-        public static TheoryData<Type, Type, Type, Type, Type, Type> InvalidEnumerables =>
-            new TheoryData<Type, Type, Type, Type, Type, Type>
-            {
-                { 
-                    typeof(TestData.MissingGetEnumeratorEnumerable),
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-                },
-                { 
-                    typeof(TestData.MissingCurrentEnumerable),
-                    typeof(TestData.MissingCurrentEnumerable),
-                    null,
-                    typeof(TestData.MissingCurrentEnumerator),
-                    null,
-                    null
-                },
-                { 
-                    typeof(TestData.MissingMoveNextEnumerable<int>),
-                    typeof(TestData.MissingMoveNextEnumerable<int>),
-                    typeof(TestData.MissingMoveNextEnumerator<int>),
-                    null,
-                    null,
-                    typeof(int)
-                },
-            };
-
         [Theory]
-        [MemberData(nameof(InvalidEnumerables))]
+        [MemberData(nameof(DataSets.InvalidEnumerables), MemberType = typeof(DataSets))]
         public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange

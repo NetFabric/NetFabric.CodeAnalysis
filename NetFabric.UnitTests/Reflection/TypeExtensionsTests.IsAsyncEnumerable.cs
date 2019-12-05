@@ -1,45 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NetFabric.TestData;
+using System;
 using Xunit;
 
 namespace NetFabric.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<Type, Type, int, Type, Type, Type, Type> AsyncEnumerables =>
-            new TheoryData<Type, Type, int, Type, Type, Type, Type>
-            {
-                { 
-                    typeof(TestData.AsyncEnumerable<>).MakeGenericType(typeof(int)), 
-                    typeof(TestData.AsyncEnumerable<>).MakeGenericType(typeof(int)), 
-                    0,
-                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    null,
-                    typeof(int)
-                },
-                { 
-                    typeof(TestData.ExplicitAsyncEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerable<>).MakeGenericType(typeof(int)),
-                    1,
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncDisposable),
-                    typeof(int)
-                },
-                { 
-                    typeof(TestData.RangeAsyncEnumerable),
-                    typeof(TestData.RangeAsyncEnumerable),
-                    0,
-                    typeof(TestData.RangeAsyncEnumerable.AsyncEnumerator),
-                    typeof(TestData.RangeAsyncEnumerable.AsyncEnumerator),
-                    null,
-                    typeof(int)
-                },
-            };
-
         [Theory]
-        [MemberData(nameof(AsyncEnumerables))]
+        [MemberData(nameof(DataSets.AsyncEnumerables), MemberType = typeof(DataSets))]
         public void IsAsyncEnumerable_Should_ReturnTrue(Type type, Type getAsyncEnumeratorDeclaringType, int getEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
@@ -82,40 +50,8 @@ namespace NetFabric.Reflection.UnitTests
             }
         }
 
-        public static TheoryData<Type, Type, int, Type, Type, Type, Type> InvalidAsyncEnumerables =>
-            new TheoryData<Type, Type, int, Type, Type, Type, Type>
-            {
-                {
-                    typeof(TestData.MissingGetEnumeratorEnumerable),
-                    null,
-                    0,
-                    null,
-                    null,
-                    null,
-                    null
-                },
-                {
-                    typeof(TestData.MissingCurrentEnumerable),
-                    typeof(TestData.MissingCurrentEnumerable),
-                    0,
-                    null,
-                    typeof(TestData.MissingCurrentEnumerator),
-                    null,
-                    null
-                },
-                {
-                    typeof(TestData.MissingMoveNextEnumerable<int>),
-                    typeof(TestData.MissingMoveNextEnumerable<int>),
-                    0,
-                    typeof(TestData.MissingMoveNextEnumerator<int>),
-                    null,
-                    null,
-                    typeof(int)
-                },
-            };
-
         [Theory]
-        [MemberData(nameof(InvalidAsyncEnumerables))]
+        [MemberData(nameof(DataSets.InvalidAsyncEnumerables), MemberType = typeof(DataSets))]
         public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type getAsyncEnumeratorDeclaringType, int getEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange

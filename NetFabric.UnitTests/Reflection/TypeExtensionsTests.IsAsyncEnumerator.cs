@@ -1,32 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NetFabric.TestData;
+using System;
 using Xunit;
 
 namespace NetFabric.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<Type, Type, Type, Type, Type> AsyncEnumerators =>
-            new TheoryData<Type, Type, Type, Type, Type>
-            {
-                { 
-                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    null,
-                    typeof(int) 
-                },
-                { 
-                    typeof(TestData.ExplicitAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncDisposable),
-                    typeof(int) 
-                },
-            };
-
         [Theory]
-        [MemberData(nameof(AsyncEnumerators))]
+        [MemberData(nameof(DataSets.AsyncEnumerators), MemberType = typeof(DataSets))]
         public void IsAsyncEnumerator_Should_ReturnTrue(Type type, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
@@ -63,34 +44,8 @@ namespace NetFabric.Reflection.UnitTests
             }
         }
 
-        public static TheoryData<Type, Type, Type, Type, Type> InvalidAsyncEnumerators =>
-            new TheoryData<Type, Type, Type, Type, Type>
-            {
-                { 
-                    typeof(TestData.MissingCurrentAndMoveNextEnumerator), 
-                    null,
-                    null,
-                    null,
-                    null
-                },
-                { 
-                    typeof(TestData.MissingCurrentEnumerator),
-                    null,
-                    typeof(TestData.MissingCurrentEnumerator),
-                    null,
-                    null
-                },
-                { 
-                    typeof(TestData.MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(TestData.MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
-                    null,
-                    null,
-                    typeof(int) 
-                },
-            };
-
         [Theory]
-        [MemberData(nameof(InvalidAsyncEnumerators))]
+        [MemberData(nameof(DataSets.InvalidAsyncEnumerators), MemberType = typeof(DataSets))]
         public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type type, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange

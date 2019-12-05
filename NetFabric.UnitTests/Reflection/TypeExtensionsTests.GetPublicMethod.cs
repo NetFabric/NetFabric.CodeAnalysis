@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetFabric.TestData;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -6,21 +7,12 @@ namespace NetFabric.Reflection.UnitTests
 {
     public partial class TypeExtensionsTests
     {
-        public static TheoryData<string, Type[]> InstanceMethods =>
-            new TheoryData<string, Type[]>
-            {
-                { "Method", new Type[] { } },
-                { "Method", new Type[] { typeof(int), typeof(string) } },
-                { "InheritedMethod", new Type[] { } },
-                { "InheritedMethod", new Type[] { typeof(int), typeof(string) } },
-            };
-
         [Theory]
-        [MemberData(nameof(InstanceMethods))]
+        [MemberData(nameof(DataSets.InstanceMethods), MemberType = typeof(DataSets))]
         public void GetPublicMethod_Should_ReturnMethod(string methodName, Type[] parameters)
         {
             // Arrange
-            var type = typeof(TestData.PropertiesAndMethods);
+            var type = typeof(PropertiesAndMethods);
 
             // Act
             var result = type.GetPublicMethod(methodName, parameters);
@@ -33,21 +25,12 @@ namespace NetFabric.Reflection.UnitTests
                 .SequenceEqual(parameters));
         }
 
-        public static TheoryData<string, Type[]> ExplicitInstanceMethods =>
-            new TheoryData<string, Type[]>
-            {
-                { "ExplicitMethod", new Type[] { } },
-                { "ExplicitMethod", new Type[] { typeof(int), typeof(string) } },
-                { "StaticMethod", new Type[] { } },
-                { "StaticMethod", new Type[] { typeof(int), typeof(string) } },
-            };
-
         [Theory]
-        [MemberData(nameof(ExplicitInstanceMethods))]
+        [MemberData(nameof(DataSets.ExplicitInstanceMethods), MemberType = typeof(DataSets))]
         public void GetPublicMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
         {
             // Arrange
-            var type = typeof(TestData.PropertiesAndMethods);
+            var type = typeof(PropertiesAndMethods);
 
             // Act
             var result = type.GetPublicMethod(methodName, parameters);
