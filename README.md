@@ -169,7 +169,7 @@ public readonly struct MyRange : IReadOnlyCollection<int>
         readonly int count;
         int current;
         
-        internal DisposableEnumerator(int count)
+        public DisposableEnumerator(int count)
         {
             this.count = count;
             current = -1;
@@ -189,7 +189,7 @@ public readonly struct MyRange : IReadOnlyCollection<int>
 
 A `foreach` loop will use the more efficient public `GetEnumerator()` and the value-type non-disposable `Enumerator`. But, when casted to `IEnumerable<>`, the `IEnumerable<>.GetEnumerator()` and the reference-type `DisposableEnumerator` will be used.
 
-The interfaces can also be implemented explicitly:
+An enumerable can contain only explicit interface implementations but these have to derive from `IEnumerable`:
 
 ``` csharp
 public class MyRange : IEnumerable<int>
@@ -203,6 +203,48 @@ public class MyRange : IEnumerable<int>
 
     IEnumerator<int> IEnumerable<int>.GetEnumerator() => new Enumerator(count);
     IEnumerator IEnumerable.GetEnumerator() => new Enumerator(count);
+    
+    class Enumerator : IEnumerator<int>
+    {
+        readonly int count;
+        int current;
+        
+        internal Enumerator(int count)
+        {
+            this.count = count;
+            current = -1;
+        }
+        
+        int IEnumerator<int>.Current => current;
+        object IEnumerator.Current => current;
+        
+        bool IEnumerator.MoveNext() => ++current < count;
+        
+        void IEnumerator.Reset() => current = -1;
+        
+        void IDisposable.Dispose() {}
+    }
+}
+```
+
+Using the following enumerable on a `foreach` will result in the error: `error CS1579: foreach statement cannot operate on variables of type 'MyRange' because 'MyRange' does not contain a public instance definition for 'GetEnumerator'`.
+
+``` csharp
+public interface MyIEnumerable<out T> 
+{
+    IEnumerator<T> GetEnumerator();
+}
+
+public class MyRange : MyIEnumerable<int>
+{    
+    readonly int count;
+    
+    public MyRange(int count)
+    {
+        this.count = count;
+    }
+
+    IEnumerator<int> MyIEnumerable<int>.GetEnumerator() => new Enumerator(count);
     
     class Enumerator : IEnumerator<int>
     {
