@@ -9,7 +9,7 @@ namespace NetFabric.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_Should_ReturnTrue(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        public void IsEnumerable_Should_ReturnTrue(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type resetDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange
 
@@ -19,41 +19,51 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.Equal(enumerableInfo.GetEnumerator?.DeclaringType, enumerableInfo.EnumerableType);
-            Assert.Equal(enumerableInfo.GetEnumerator?.ReturnType, enumerableInfo.EnumeratorType);
-            Assert.Equal(itemType, enumerableInfo.ItemType);
-
             Assert.NotNull(enumerableInfo.GetEnumerator);
             Assert.Equal("GetEnumerator", enumerableInfo.GetEnumerator.Name);
             Assert.Equal(getEnumeratorDeclaringType, enumerableInfo.GetEnumerator.DeclaringType);
             Assert.Empty(enumerableInfo.GetEnumerator.GetParameters());
 
-            Assert.NotNull(enumerableInfo.Current);
-            Assert.Equal("Current", enumerableInfo.Current.Name);
-            Assert.Equal(currentDeclaringType, enumerableInfo.Current.DeclaringType);
-            Assert.Equal(itemType, enumerableInfo.Current.PropertyType);
+            var enumeratorInfo = enumerableInfo.EnumeratorInfo;
 
-            Assert.NotNull(enumerableInfo.MoveNext);
-            Assert.Equal("MoveNext", enumerableInfo.MoveNext.Name);
-            Assert.Equal(moveNextDeclaringType, enumerableInfo.MoveNext.DeclaringType);
-            Assert.Empty(enumerableInfo.MoveNext.GetParameters());
+            Assert.NotNull(enumeratorInfo.Current);
+            Assert.Equal("Current", enumeratorInfo.Current.Name);
+            Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
+            Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
 
-            if (disposeDeclaringType is null)
+            Assert.NotNull(enumeratorInfo.MoveNext);
+            Assert.Equal("MoveNext", enumeratorInfo.MoveNext.Name);
+            Assert.Equal(moveNextDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
+            Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
+
+            if (resetDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.Dispose);
+                Assert.Null(enumeratorInfo.Reset);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.Dispose);
-                Assert.Equal("Dispose", enumerableInfo.Dispose.Name);
-                Assert.Equal(disposeDeclaringType, enumerableInfo.Dispose.DeclaringType);
-                Assert.Empty(enumerableInfo.Dispose.GetParameters());
+                Assert.NotNull(enumeratorInfo.Reset);
+                Assert.Equal("Reset", enumeratorInfo.Reset.Name);
+                Assert.Equal(resetDeclaringType, enumeratorInfo.Reset.DeclaringType);
+                Assert.Empty(enumeratorInfo.Reset.GetParameters());
+            }
+
+            if (disposeDeclaringType is null)
+            {
+                Assert.Null(enumeratorInfo.Dispose);
+            }
+            else
+            {
+                Assert.NotNull(enumeratorInfo.Dispose);
+                Assert.Equal("Dispose", enumeratorInfo.Dispose.Name);
+                Assert.Equal(disposeDeclaringType, enumeratorInfo.Dispose.DeclaringType);
+                Assert.Empty(enumeratorInfo.Dispose.GetParameters());
             }
         }
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidEnumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type resetDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange
 
@@ -62,10 +72,6 @@ namespace NetFabric.Reflection.UnitTests
 
             // Assert   
             Assert.False(result);
-
-            Assert.Equal(enumerableInfo.GetEnumerator?.DeclaringType, enumerableInfo.EnumerableType);
-            Assert.Equal(enumerableInfo.GetEnumerator?.ReturnType, enumerableInfo.EnumeratorType);
-            Assert.Equal(itemType, enumerableInfo.ItemType);
 
             if (getEnumeratorDeclaringType is null)
             {
@@ -79,40 +85,54 @@ namespace NetFabric.Reflection.UnitTests
                 Assert.Empty(enumerableInfo.GetEnumerator.GetParameters());
             }
 
+            var enumeratorInfo = enumerableInfo.EnumeratorInfo;
+
             if (currentDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.Current);
+                Assert.Null(enumeratorInfo.Current);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.Current);
-                Assert.Equal("Current", enumerableInfo.Current.Name);
-                Assert.Equal(currentDeclaringType, enumerableInfo.Current.DeclaringType);
-                Assert.Equal(itemType, enumerableInfo.Current.PropertyType);
+                Assert.NotNull(enumeratorInfo.Current);
+                Assert.Equal("Current", enumeratorInfo.Current.Name);
+                Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
+                Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
             }
 
             if (moveNextDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.MoveNext);
+                Assert.Null(enumeratorInfo.MoveNext);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.MoveNext);
-                Assert.Equal("MoveNext", enumerableInfo.MoveNext.Name);
-                Assert.Equal(moveNextDeclaringType, enumerableInfo.MoveNext.DeclaringType);
-                Assert.Empty(enumerableInfo.MoveNext.GetParameters());
+                Assert.NotNull(enumeratorInfo.MoveNext);
+                Assert.Equal("MoveNext", enumeratorInfo.MoveNext.Name);
+                Assert.Equal(moveNextDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
+                Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
+            }
+
+            if (resetDeclaringType is null)
+            {
+                Assert.Null(enumeratorInfo.Reset);
+            }
+            else
+            {
+                Assert.NotNull(enumeratorInfo.Reset);
+                Assert.Equal("Dispose", enumeratorInfo.Reset.Name);
+                Assert.Equal(resetDeclaringType, enumeratorInfo.Reset.DeclaringType);
+                Assert.Empty(enumeratorInfo.Reset.GetParameters());
             }
 
             if (disposeDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.Dispose);
+                Assert.Null(enumeratorInfo.Dispose);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.Dispose);
-                Assert.Equal("Dispose", enumerableInfo.Dispose.Name);
-                Assert.Equal(disposeDeclaringType, enumerableInfo.Dispose.DeclaringType);
-                Assert.Empty(enumerableInfo.Dispose.GetParameters());
+                Assert.NotNull(enumeratorInfo.Dispose);
+                Assert.Equal("Dispose", enumeratorInfo.Dispose.Name);
+                Assert.Equal(disposeDeclaringType, enumeratorInfo.Dispose.DeclaringType);
+                Assert.Empty(enumeratorInfo.Dispose.GetParameters());
             }
         }
     }

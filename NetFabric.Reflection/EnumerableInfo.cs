@@ -6,25 +6,29 @@ namespace NetFabric.Reflection
     public struct EnumerableInfo
     {
         public readonly MethodInfo GetEnumerator;
-        public readonly PropertyInfo Current;
-        public readonly MethodInfo MoveNext;
-        public readonly MethodInfo Dispose;
+        public readonly EnumeratorInfo EnumeratorInfo;
 
-        public EnumerableInfo(MethodInfo getEnumerator, PropertyInfo current, MethodInfo moveNext, MethodInfo dispose)
+        public EnumerableInfo(MethodInfo getEnumerator, EnumeratorInfo enumeratorInfo)
         {
             GetEnumerator = getEnumerator;
-            Current = current;
-            MoveNext = moveNext;
-            Dispose = dispose;
+            EnumeratorInfo = enumeratorInfo;
         }
 
-        public Type EnumerableType
-            => GetEnumerator?.DeclaringType;
+        public object InvokeGetEnumerator(object instance)
+        {
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+            if (GetEnumerator is null)
+                throw new Exception("GetEnumerator() is not defined.");
 
-        public Type EnumeratorType
-            => GetEnumerator?.ReturnType;
-
-        public Type ItemType
-            => Current?.PropertyType;
+            try
+            {
+                return GetEnumerator.Invoke(instance, Array.Empty<object>());
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw new Exception("Unhandled exception in GetAsyncEnumerator()", exception.InnerException);
+            }
+        }
     }
 }

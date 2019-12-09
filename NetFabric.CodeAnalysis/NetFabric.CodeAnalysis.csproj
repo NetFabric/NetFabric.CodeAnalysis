@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <PackageId>NetFabric.CodeAnalysis</PackageId>
-    <Version>1.1.0</Version>
+    <Version>2.0.0-beta1</Version>
     <Description>Extensions to System.CodeAnalysis (Roslyn).</Description>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageTags>codeanalysis, roslyn, enumerable, linq</PackageTags>

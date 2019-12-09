@@ -7,19 +7,83 @@ namespace NetFabric.Reflection
     {
         public readonly PropertyInfo Current;
         public readonly MethodInfo MoveNext;
+        public readonly MethodInfo Reset;
         public readonly MethodInfo Dispose;
 
-        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext, MethodInfo dispose)
+        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext, MethodInfo reset, MethodInfo dispose)
         {
             Current = current;
             MoveNext = moveNext;
+            Reset = reset;
             Dispose = dispose;
         }
 
-        public Type EnumeratorType
-            => Current?.DeclaringType;
+        public object GetValueCurrent(object instance)
+        {
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+            if (Current is null)
+                throw new Exception("Current is not defined.");
 
-        public Type ItemType
-            => Current?.PropertyType;
+            try
+            {
+                return Current.GetValue(instance);
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw new Exception("Unhandled exception in Current", exception.InnerException);
+            }
+        }
+
+        public bool InvokeMoveNext(object instance)
+        {
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+            if (MoveNext is null)
+                throw new Exception("MoveNext() is not defined.");
+
+            try
+            {
+                return (bool)MoveNext.Invoke(instance, Array.Empty<object>());
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw new Exception("Unhandled exception in MoveNext()", exception.InnerException);
+            }
+        }
+
+        public void InvokeReset(object instance)
+        {
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+            if (Dispose is null)
+                throw new Exception("Reset() is not defined.");
+
+            try
+            {
+                Reset.Invoke(instance, Array.Empty<object>());
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw new Exception("Unhandled exception in Reset()", exception.InnerException);
+            }
+        }
+
+        public void InvokeDispose(object instance)
+        {
+            if (instance is null)
+                throw new ArgumentNullException(nameof(instance));
+            if (Dispose is null)
+                throw new Exception("Dispose() is not defined.");
+
+            try
+            {
+                Dispose.Invoke(instance, Array.Empty<object>());
+            }
+            catch (TargetInvocationException exception)
+            {
+                throw new Exception("Unhandled exception in Dispose()", exception.InnerException);
+            }
+        }
     }
 }

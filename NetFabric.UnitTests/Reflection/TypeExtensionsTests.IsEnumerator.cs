@@ -8,7 +8,7 @@ namespace NetFabric.Reflection.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.Enumerators), MemberType = typeof(DataSets))]
-        public void IsEnumerator_Should_ReturnTrue(Type type, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        public void IsEnumerator_Should_ReturnTrue(Type type, Type currentDeclaringType, Type moveNextDeclaringType, Type resetDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange
 
@@ -17,9 +17,6 @@ namespace NetFabric.Reflection.UnitTests
 
             // Assert   
             Assert.True(result);
-
-            Assert.Equal(currentDeclaringType, enumeratorInfo.EnumeratorType);
-            Assert.Equal(itemType, enumeratorInfo.ItemType);
 
             Assert.NotNull(enumeratorInfo.Current);
             Assert.Equal("Current", enumeratorInfo.Current.Name);
@@ -30,6 +27,18 @@ namespace NetFabric.Reflection.UnitTests
             Assert.Equal("MoveNext", enumeratorInfo.MoveNext.Name);
             Assert.Equal(moveNextDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
             Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
+
+            if (resetDeclaringType is null)
+            {
+                Assert.Null(enumeratorInfo.Dispose);
+            }
+            else
+            {
+                Assert.NotNull(enumeratorInfo.Reset);
+                Assert.Equal("Reset", enumeratorInfo.Reset.Name);
+                Assert.Equal(resetDeclaringType, enumeratorInfo.Reset.DeclaringType);
+                Assert.Empty(enumeratorInfo.Reset.GetParameters());
+            }
 
             if (disposeDeclaringType is null)
             {
@@ -46,7 +55,7 @@ namespace NetFabric.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidEnumerators), MemberType = typeof(DataSets))]
-        public void IsEnumerator_With_MissingFeatures_Should_ReturnFalse(Type type, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        public void IsEnumerator_With_MissingFeatures_Should_ReturnFalse(Type type, Type currentDeclaringType, Type moveNextDeclaringType, Type resetDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange
 
@@ -55,9 +64,6 @@ namespace NetFabric.Reflection.UnitTests
 
             // Assert   
             Assert.False(result);
-
-            Assert.Equal(currentDeclaringType, enumeratorInfo.EnumeratorType);
-            Assert.Equal(itemType, enumeratorInfo.ItemType);
 
             if (currentDeclaringType is null)
             {
@@ -81,6 +87,18 @@ namespace NetFabric.Reflection.UnitTests
                 Assert.Equal("MoveNext", enumeratorInfo.MoveNext.Name);
                 Assert.Equal(moveNextDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
                 Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
+            }
+
+            if (resetDeclaringType is null)
+            {
+                Assert.Null(enumeratorInfo.Dispose);
+            }
+            else
+            {
+                Assert.NotNull(enumeratorInfo.Reset);
+                Assert.Equal("Reset", enumeratorInfo.Reset.Name);
+                Assert.Equal(resetDeclaringType, enumeratorInfo.Reset.DeclaringType);
+                Assert.Empty(enumeratorInfo.Reset.GetParameters());
             }
 
             if (disposeDeclaringType is null)
