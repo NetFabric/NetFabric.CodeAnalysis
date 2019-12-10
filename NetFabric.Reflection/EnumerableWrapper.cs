@@ -42,10 +42,7 @@ namespace NetFabric.Reflection
                 => info.InvokeMoveNext(instance);
 
             public void Reset() 
-            {
-                if (info.Reset is object)
-                    info.InvokeReset(instance);
-            }
+                => info.InvokeReset(instance);
 
             public void Dispose() 
             {
