@@ -31,7 +31,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new Exception("Unhandled exception in Current", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType}.Current", exception.InnerException);
             }
         }
 
@@ -48,7 +48,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new Exception("Unhandled exception in MoveNext()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {MoveNext.DeclaringType}.MoveNext()", exception.InnerException);
             }
         }
 
@@ -65,7 +65,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new Exception("Unhandled exception in Reset()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Reset.DeclaringType}.Reset()", exception.InnerException);
             }
         }
 
@@ -82,7 +82,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new Exception("Unhandled exception in Dispose()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Dispose.DeclaringType}.Dispose()", exception.InnerException);
             }
         }
     }

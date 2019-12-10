@@ -33,7 +33,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new Exception("Unhandled exception in GetAsyncEnumerator()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {GetAsyncEnumerator.DeclaringType}.GetAsyncEnumerator()", exception.InnerException);
             }
         }
     }
