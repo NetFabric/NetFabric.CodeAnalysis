@@ -20,7 +20,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (GetAsyncEnumerator is null)
-                throw new Exception("GetAsyncEnumerator() is not defined.");
+                throw new NotSupportedException("GetAsyncEnumerator() is not defined.");
 
             try
             {
@@ -33,7 +33,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {GetAsyncEnumerator.DeclaringType}.GetAsyncEnumerator()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {GetAsyncEnumerator.DeclaringType.Name}.GetAsyncEnumerator()", exception.InnerException);
             }
         }
     }

@@ -19,7 +19,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (GetEnumerator is null)
-                throw new Exception("GetEnumerator() is not defined.");
+                throw new NotSupportedException("GetEnumerator() is not defined.");
 
             try
             {
@@ -27,7 +27,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {GetEnumerator.DeclaringType}.GetEnumerator()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {GetEnumerator.DeclaringType.Name}.GetEnumerator()", exception.InnerException);
             }
         }
     }

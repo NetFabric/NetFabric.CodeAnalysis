@@ -22,7 +22,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (Current is null)
-                throw new Exception("Current is not defined.");
+                throw new NotSupportedException("Current is not defined.");
 
             try
             {
@@ -30,7 +30,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType}.Current", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType.Name}.Current", exception.InnerException);
             }
         }
 
@@ -39,7 +39,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (MoveNextAsync is null)
-                throw new Exception("MoveNextAsync() is not defined.");
+                throw new NotSupportedException("MoveNextAsync() is not defined.");
 
             try
             {
@@ -47,7 +47,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {MoveNextAsync.DeclaringType}.MoveNextAsync()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {MoveNextAsync.DeclaringType.Name}.MoveNextAsync()", exception.InnerException);
             }
         }
 
@@ -56,7 +56,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (DisposeAsync is null)
-                throw new Exception("DisposeAsync() is not defined.");
+                throw new NotSupportedException("DisposeAsync() is not defined.");
 
             try
             {
@@ -64,7 +64,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {DisposeAsync.DeclaringType}.DisposeAsync()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {DisposeAsync.DeclaringType.Name}.DisposeAsync()", exception.InnerException);
             }
         }
     }

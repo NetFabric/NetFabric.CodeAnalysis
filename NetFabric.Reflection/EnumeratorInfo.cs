@@ -23,7 +23,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (Current is null)
-                throw new Exception("Current is not defined.");
+                throw new NotSupportedException("Current is not defined.");
 
             try
             {
@@ -31,7 +31,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType}.Current", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType.Name}.Current", exception.InnerException);
             }
         }
 
@@ -40,7 +40,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (MoveNext is null)
-                throw new Exception("MoveNext() is not defined.");
+                throw new NotSupportedException("MoveNext() is not defined.");
 
             try
             {
@@ -48,7 +48,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {MoveNext.DeclaringType}.MoveNext()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {MoveNext.DeclaringType.Name}.MoveNext()", exception.InnerException);
             }
         }
 
@@ -57,7 +57,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (Dispose is null)
-                throw new Exception("Reset() is not defined.");
+                throw new NotSupportedException("Reset() is not defined.");
 
             try
             {
@@ -65,7 +65,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Reset.DeclaringType}.Reset()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Reset.DeclaringType.Name}.Reset()", exception.InnerException);
             }
         }
 
@@ -74,7 +74,7 @@ namespace NetFabric.Reflection
             if (instance is null)
                 throw new ArgumentNullException(nameof(instance));
             if (Dispose is null)
-                throw new Exception("Dispose() is not defined.");
+                throw new NotSupportedException("Dispose() is not defined.");
 
             try
             {
@@ -82,7 +82,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Dispose.DeclaringType}.Dispose()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Dispose.DeclaringType.Name}.Dispose()", exception.InnerException);
             }
         }
     }
