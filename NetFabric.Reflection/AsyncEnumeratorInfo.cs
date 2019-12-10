@@ -30,7 +30,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType.Name}.Current", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType.Name}.Current.", exception.InnerException);
             }
         }
 
@@ -47,7 +47,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {MoveNextAsync.DeclaringType.Name}.MoveNextAsync()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {MoveNextAsync.DeclaringType.Name}.MoveNextAsync().", exception.InnerException);
             }
         }
 
@@ -64,7 +64,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {DisposeAsync.DeclaringType.Name}.DisposeAsync()", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {DisposeAsync.DeclaringType.Name}.DisposeAsync().", exception.InnerException);
             }
         }
     }
