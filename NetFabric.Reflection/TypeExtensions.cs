@@ -8,7 +8,14 @@ using System.Threading;
 namespace NetFabric.Reflection
 {
     public static class TypeExtensions
-    {
+    {        
+        static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetMethod("GetEnumerator");
+        static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetProperty("Current");
+        static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetMethod("MoveNext");
+        static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetMethod("Reset");
+        static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetMethod("Dispose");
+        static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetMethod("DisposeAsync");
+
         public static bool IsEnumerable(this Type type, out EnumerableInfo enumerableInfo)
         {
             if (type is null)
@@ -78,7 +85,7 @@ namespace NetFabric.Reflection
 
             if (type.ImplementsInterface(typeof(IEnumerable), out _))
             {
-                getEnumerator = typeof(IEnumerable).GetMethod("GetEnumerator");
+                getEnumerator = GetEnumeratorInfo;
                 return true;
             }
 
@@ -113,7 +120,7 @@ namespace NetFabric.Reflection
                 throw new ArgumentNullException(nameof(type));
 
             if (type.ImplementsInterface(typeof(IDisposable), out _))
-                dispose = typeof(IDisposable).GetMethod("Dispose");
+                dispose = DisposeInfo;
             else
                 dispose = null;
 
@@ -126,16 +133,16 @@ namespace NetFabric.Reflection
             if (type.ImplementsInterface(typeof(IEnumerator<>), out var genericArguments))
             {
                 current = typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetProperty("Current");
-                moveNext = typeof(IEnumerator).GetMethod("MoveNext");
-                reset = typeof(IEnumerator).GetMethod("Reset");
+                moveNext = MoveNextInfo;
+                reset = ResetInfo;
                 return true;
             }
 
             if (type.ImplementsInterface(typeof(IEnumerator), out _))
             {
-                current = typeof(IEnumerator).GetProperty("Current");
-                moveNext = typeof(IEnumerator).GetMethod("MoveNext");
-                reset = typeof(IEnumerator).GetMethod("Reset");
+                current = CurrentInfo;
+                moveNext = MoveNextInfo;
+                reset = ResetInfo;
                 return true;
             }
 
@@ -148,7 +155,7 @@ namespace NetFabric.Reflection
                 throw new ArgumentNullException(nameof(type));
 
             if (type.ImplementsInterface(typeof(IAsyncDisposable), out _))
-                disposeAsync = typeof(IAsyncDisposable).GetMethod("DisposeAsync");
+                disposeAsync = DisposeAsyncInfo;
             else
                 disposeAsync = null;
 
