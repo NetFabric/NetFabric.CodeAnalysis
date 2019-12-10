@@ -15,16 +15,13 @@ namespace NetFabric.CodeAnalysis.UnitTests
         public static CSharpCompilation Compile(params string[] paths)
             => CSharpCompilation.Create(
                 Guid.NewGuid().ToString(),
-                paths
-                    .Select(path => CSharpSyntaxTree.ParseText(File.ReadAllText(path)))
-                    .ToArray(),
-                new[] {
-                    MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(IEnumerable).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(IAsyncEnumerable<>).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(IValueEnumerable<,>).Assembly.Location),
-                    MetadataReference.CreateFromFile(typeof(ValueTask).Assembly.Location),
-                },
+                paths.Select(path => CSharpSyntaxTree.ParseText(File.ReadAllText(path))),
+                GetMetadataReferences(
+                    typeof(Enumerable),
+                    typeof(IEnumerable),
+                    typeof(IAsyncEnumerable<>),
+                    typeof(IValueEnumerable<,>),
+                    typeof(ValueTask)),
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)); 
 
         public static ITypeSymbol GetTypeSymbol(this CSharpCompilation compilation, Type type)
@@ -37,12 +34,14 @@ namespace NetFabric.CodeAnalysis.UnitTests
             if (type.IsGenericType)
             {
                 var typeArguments = type.GenericTypeArguments
-                    .Select(argumentType => compilation.GetTypeSymbol(argumentType))
-                    .ToArray();
-                return symbol.Construct(typeArguments);
+                    .Select(argumentType => compilation.GetTypeSymbol(argumentType));
+                return symbol.Construct(typeArguments.ToArray());
             }
 
             return symbol;
         }
+
+        static IEnumerable<MetadataReference> GetMetadataReferences(params Type[] types)
+            => types.Select(type => MetadataReference.CreateFromFile(type.Assembly.Location));
     }
 }
