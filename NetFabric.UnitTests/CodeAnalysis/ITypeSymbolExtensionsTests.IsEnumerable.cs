@@ -8,7 +8,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_Should_ReturnTrue(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        public void IsEnumerable_Should_ReturnTrue(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type resetDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange
             var compilation = Utils.Compile(
@@ -23,41 +23,51 @@ namespace NetFabric.CodeAnalysis.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.Equal(enumerableSymbols.GetEnumerator?.ContainingType.MetadataName, enumerableSymbols.EnumerableType?.MetadataName);
-            Assert.Equal(enumerableSymbols.GetEnumerator?.ReturnType.MetadataName, enumerableSymbols.EnumeratorType?.MetadataName);
-            Assert.Equal(itemType?.Name, enumerableSymbols.ItemType?.MetadataName);
-
             Assert.NotNull(enumerableSymbols.GetEnumerator);
             Assert.Equal("GetEnumerator", enumerableSymbols.GetEnumerator.Name);
             Assert.Equal(getEnumeratorDeclaringType.Name, enumerableSymbols.GetEnumerator.ContainingType.MetadataName);
             Assert.Empty(enumerableSymbols.GetEnumerator.Parameters);
 
-            Assert.NotNull(enumerableSymbols.Current);
-            Assert.Equal("Current", enumerableSymbols.Current.Name);
-            Assert.Equal(currentDeclaringType.Name, enumerableSymbols.Current.ContainingType.MetadataName);
-            Assert.Equal(itemType.Name, enumerableSymbols.Current.Type.MetadataName);
+            var enumeratorSymbols = enumerableSymbols.EnumeratorSymbols;
 
-            Assert.NotNull(enumerableSymbols.MoveNext);
-            Assert.Equal("MoveNext", enumerableSymbols.MoveNext.Name);
-            Assert.Equal(moveNextDeclaringType.Name, enumerableSymbols.MoveNext.ContainingType.MetadataName);
-            Assert.Empty(enumerableSymbols.MoveNext.Parameters);
+            Assert.NotNull(enumeratorSymbols.Current);
+            Assert.Equal("Current", enumeratorSymbols.Current.Name);
+            Assert.Equal(currentDeclaringType.Name, enumeratorSymbols.Current.ContainingType.MetadataName);
+            Assert.Equal(itemType.Name, enumeratorSymbols.Current.Type.MetadataName);
 
-            if (disposeDeclaringType is null)
+            Assert.NotNull(enumeratorSymbols.MoveNext);
+            Assert.Equal("MoveNext", enumeratorSymbols.MoveNext.Name);
+            Assert.Equal(moveNextDeclaringType.Name, enumeratorSymbols.MoveNext.ContainingType.MetadataName);
+            Assert.Empty(enumeratorSymbols.MoveNext.Parameters);
+
+            if (resetDeclaringType is null)
             {
-                Assert.Null(enumerableSymbols.Dispose);
+                Assert.Null(enumeratorSymbols.Reset);
             }
             else
             {
-                Assert.NotNull(enumerableSymbols.Dispose);
-                Assert.Equal("Dispose", enumerableSymbols.Dispose.Name);
-                Assert.Equal(disposeDeclaringType.Name, enumerableSymbols.Dispose.ContainingType.MetadataName);
-                Assert.Empty(enumerableSymbols.Dispose.Parameters);
+                Assert.NotNull(enumeratorSymbols.Reset);
+                Assert.Equal("Reset", enumeratorSymbols.Reset.Name);
+                Assert.Equal(resetDeclaringType.Name, enumeratorSymbols.Reset.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.Reset.Parameters);
+            }
+
+            if (disposeDeclaringType is null)
+            {
+                Assert.Null(enumeratorSymbols.Dispose);
+            }
+            else
+            {
+                Assert.NotNull(enumeratorSymbols.Dispose);
+                Assert.Equal("Dispose", enumeratorSymbols.Dispose.Name);
+                Assert.Equal(disposeDeclaringType.Name, enumeratorSymbols.Dispose.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.Dispose.Parameters);
             }
         }
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidEnumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type disposeDeclaringType, Type itemType)
+        public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type resetDeclaringType, Type disposeDeclaringType, Type itemType)
         {
             // Arrange
             var compilation = Utils.Compile(
@@ -71,10 +81,6 @@ namespace NetFabric.CodeAnalysis.UnitTests
             // Assert   
             Assert.False(result);
 
-            Assert.Equal(enumerableSymbols.GetEnumerator?.ContainingType.MetadataName, enumerableSymbols.EnumerableType?.MetadataName);
-            Assert.Equal(enumerableSymbols.GetEnumerator?.ReturnType.MetadataName, enumerableSymbols.EnumeratorType?.MetadataName);
-            Assert.Equal(itemType?.Name, enumerableSymbols.ItemType?.MetadataName);
-
             if (getEnumeratorDeclaringType is null)
             {
                 Assert.Null(enumerableSymbols.GetEnumerator);
@@ -87,40 +93,54 @@ namespace NetFabric.CodeAnalysis.UnitTests
                 Assert.Empty(enumerableSymbols.GetEnumerator.Parameters);
             }
 
+            var enumeratorSymbols = enumerableSymbols.EnumeratorSymbols;
+
             if (currentDeclaringType is null)
             {
-                Assert.Null(enumerableSymbols.Current);
+                Assert.Null(enumeratorSymbols.Current);
             }
             else
             {
-                Assert.NotNull(enumerableSymbols.Current);
-                Assert.Equal("Current", enumerableSymbols.Current.Name);
-                Assert.Equal(currentDeclaringType.Name, enumerableSymbols.Current.ContainingType.MetadataName);
-                Assert.Equal(itemType.Name, enumerableSymbols.Current.Type.MetadataName);
+                Assert.NotNull(enumeratorSymbols.Current);
+                Assert.Equal("Current", enumeratorSymbols.Current.Name);
+                Assert.Equal(currentDeclaringType.Name, enumeratorSymbols.Current.ContainingType.MetadataName);
+                Assert.Equal(itemType.Name, enumeratorSymbols.Current.Type.MetadataName);
             }
 
             if (moveNextDeclaringType is null)
             {
-                Assert.Null(enumerableSymbols.MoveNext);
+                Assert.Null(enumeratorSymbols.MoveNext);
             }
             else
             {
-                Assert.NotNull(enumerableSymbols.MoveNext);
-                Assert.Equal("MoveNext", enumerableSymbols.MoveNext.Name);
-                Assert.Equal(moveNextDeclaringType.Name, enumerableSymbols.MoveNext.ContainingType.MetadataName);
-                Assert.Empty(enumerableSymbols.MoveNext.Parameters);
+                Assert.NotNull(enumeratorSymbols.MoveNext);
+                Assert.Equal("MoveNext", enumeratorSymbols.MoveNext.Name);
+                Assert.Equal(moveNextDeclaringType.Name, enumeratorSymbols.MoveNext.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.MoveNext.Parameters);
+            }
+
+            if (resetDeclaringType is null)
+            {
+                Assert.Null(enumeratorSymbols.Reset);
+            }
+            else
+            {
+                Assert.NotNull(enumeratorSymbols.Reset);
+                Assert.Equal("Reset", enumeratorSymbols.Reset.Name);
+                Assert.Equal(resetDeclaringType.Name, enumeratorSymbols.Reset.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.Reset.Parameters);
             }
 
             if (disposeDeclaringType is null)
             {
-                Assert.Null(enumerableSymbols.Dispose);
+                Assert.Null(enumeratorSymbols.Dispose);
             }
             else
             {
-                Assert.NotNull(enumerableSymbols.Dispose);
-                Assert.Equal("Dispose", enumerableSymbols.Dispose.Name);
-                Assert.Equal(disposeDeclaringType.Name, enumerableSymbols.Dispose.ContainingType.MetadataName);
-                Assert.Empty(enumerableSymbols.Dispose.Parameters);
+                Assert.NotNull(enumeratorSymbols.Dispose);
+                Assert.Equal("Dispose", enumeratorSymbols.Dispose.Name);
+                Assert.Equal(disposeDeclaringType.Name, enumeratorSymbols.Dispose.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.Dispose.Parameters);
             }
         }
     }

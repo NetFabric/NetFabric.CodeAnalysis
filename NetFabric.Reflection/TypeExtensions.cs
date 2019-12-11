@@ -8,7 +8,14 @@ using System.Threading;
 namespace NetFabric.Reflection
 {
     public static class TypeExtensions
-    {
+    {        
+        static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetMethod("GetEnumerator");
+        static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetProperty("Current");
+        static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetMethod("MoveNext");
+        static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetMethod("Reset");
+        static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetMethod("Dispose");
+        static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetMethod("DisposeAsync");
+
         public static bool IsEnumerable(this Type type, out EnumerableInfo enumerableInfo)
         {
             if (type is null)
@@ -20,12 +27,12 @@ namespace NetFabric.Reflection
                 return false;
             }
 
-            var isEnumerator = getEnumerator.ReturnType.IsEnumeratorType(out var current, out var moveNext, out var dispose);
-            enumerableInfo = new EnumerableInfo(getEnumerator, current, moveNext, dispose);
+            var isEnumerator = getEnumerator.ReturnType.IsEnumeratorType(out var current, out var moveNext, out var reset, out var dispose);
+            enumerableInfo = new EnumerableInfo(getEnumerator, new EnumeratorInfo(current, moveNext, reset, dispose));
             return isEnumerator;
         }
 
-        public static bool IsAsyncEnumerable(this Type type, out EnumerableInfo enumerableInfo)
+        public static bool IsAsyncEnumerable(this Type type, out AsyncEnumerableInfo enumerableInfo)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
@@ -37,7 +44,7 @@ namespace NetFabric.Reflection
             }
 
             var isEnumerator = getAsyncEnumerator.ReturnType.IsAsyncEnumeratorType(out var current, out var moveNextAsync, out var disposeAsync);
-            enumerableInfo = new EnumerableInfo(getAsyncEnumerator, current, moveNextAsync, disposeAsync);
+            enumerableInfo = new AsyncEnumerableInfo(getAsyncEnumerator, new AsyncEnumeratorInfo(current, moveNextAsync, disposeAsync));
             return isEnumerator;
         }
 
@@ -46,18 +53,18 @@ namespace NetFabric.Reflection
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
-            var isEnumerator = type.IsEnumeratorType(out var current, out var moveNext, out var dispose);
-            enumeratorInfo = new EnumeratorInfo(current, moveNext, dispose);
+            var isEnumerator = type.IsEnumeratorType(out var current, out var moveNext, out var reset, out var dispose);
+            enumeratorInfo = new EnumeratorInfo(current, moveNext, reset, dispose);
             return isEnumerator;
         }
 
-        public static bool IsAsyncEnumerator(this Type type, out EnumeratorInfo enumeratorInfo)
+        public static bool IsAsyncEnumerator(this Type type, out AsyncEnumeratorInfo enumeratorInfo)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             var isEnumerator = type.IsAsyncEnumeratorType(out var current, out var moveNextAsync, out var disposeAsync);
-            enumeratorInfo = new EnumeratorInfo(current, moveNextAsync, disposeAsync);
+            enumeratorInfo = new AsyncEnumeratorInfo(current, moveNextAsync, disposeAsync);
             return isEnumerator;
         }
 
@@ -78,7 +85,7 @@ namespace NetFabric.Reflection
 
             if (type.ImplementsInterface(typeof(IEnumerable), out _))
             {
-                getEnumerator = typeof(IEnumerable).GetMethod("GetEnumerator");
+                getEnumerator = GetEnumeratorInfo;
                 return true;
             }
 
@@ -107,32 +114,35 @@ namespace NetFabric.Reflection
             return false;
         }
 
-        static bool IsEnumeratorType(this Type type, out PropertyInfo current, out MethodInfo moveNext, out MethodInfo dispose)
+        static bool IsEnumeratorType(this Type type, out PropertyInfo current, out MethodInfo moveNext, out MethodInfo reset, out MethodInfo dispose)
         {
             if (type is null)
                 throw new ArgumentNullException(nameof(type));
 
             if (type.ImplementsInterface(typeof(IDisposable), out _))
-                dispose = typeof(IDisposable).GetMethod("Dispose");
+                dispose = DisposeInfo;
             else
                 dispose = null;
 
             current = type.GetPublicProperty("Current");
             moveNext = type.GetPublicMethod("MoveNext");
+            reset = type.GetPublicMethod("Reset");
             if (current is object && moveNext is object)
                 return true;
 
             if (type.ImplementsInterface(typeof(IEnumerator<>), out var genericArguments))
             {
                 current = typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetProperty("Current");
-                moveNext = typeof(IEnumerator).GetMethod("MoveNext");
+                moveNext = MoveNextInfo;
+                reset = ResetInfo;
                 return true;
             }
 
             if (type.ImplementsInterface(typeof(IEnumerator), out _))
             {
-                current = typeof(IEnumerator).GetProperty("Current");
-                moveNext = typeof(IEnumerator).GetMethod("MoveNext");
+                current = CurrentInfo;
+                moveNext = MoveNextInfo;
+                reset = ResetInfo;
                 return true;
             }
 
@@ -145,7 +155,7 @@ namespace NetFabric.Reflection
                 throw new ArgumentNullException(nameof(type));
 
             if (type.ImplementsInterface(typeof(IAsyncDisposable), out _))
-                disposeAsync = typeof(IAsyncDisposable).GetMethod("DisposeAsync");
+                disposeAsync = DisposeAsyncInfo;
             else
                 disposeAsync = null;
 

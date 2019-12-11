@@ -20,29 +20,26 @@ namespace NetFabric.CodeAnalysis.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.Equal(currentDeclaringType?.Name, enumeratorSymbols.EnumeratorType?.MetadataName);
-            Assert.Equal(itemType?.Name, enumeratorSymbols.ItemType?.MetadataName);
-
             Assert.NotNull(enumeratorSymbols.Current);
             Assert.Equal("Current", enumeratorSymbols.Current.Name);
             Assert.Equal(currentDeclaringType.Name, enumeratorSymbols.Current.ContainingType.MetadataName);
             Assert.Equal(itemType.Name, enumeratorSymbols.Current.Type.MetadataName);
 
-            Assert.NotNull(enumeratorSymbols.MoveNext);
-            Assert.Equal("MoveNextAsync", enumeratorSymbols.MoveNext.Name);
-            Assert.Equal(moveNextAsyncDeclaringType.Name, enumeratorSymbols.MoveNext.ContainingType.MetadataName);
-            Assert.Empty(enumeratorSymbols.MoveNext.Parameters);
+            Assert.NotNull(enumeratorSymbols.MoveNextAsync);
+            Assert.Equal("MoveNextAsync", enumeratorSymbols.MoveNextAsync.Name);
+            Assert.Equal(moveNextAsyncDeclaringType.Name, enumeratorSymbols.MoveNextAsync.ContainingType.MetadataName);
+            Assert.Empty(enumeratorSymbols.MoveNextAsync.Parameters);
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(enumeratorSymbols.Dispose);
+                Assert.Null(enumeratorSymbols.DisposeAsync);
             }
             else
             {
-                Assert.NotNull(enumeratorSymbols.Dispose);
-                Assert.Equal("DisposeAsync", enumeratorSymbols.Dispose.Name);
-                Assert.Equal(disposeAsyncDeclaringType.Name, enumeratorSymbols.Dispose.ContainingType.MetadataName);
-                Assert.Empty(enumeratorSymbols.Dispose.Parameters);
+                Assert.NotNull(enumeratorSymbols.DisposeAsync);
+                Assert.Equal("DisposeAsync", enumeratorSymbols.DisposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType.Name, enumeratorSymbols.DisposeAsync.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.DisposeAsync.Parameters);
             }
         }
 
@@ -60,9 +57,6 @@ namespace NetFabric.CodeAnalysis.UnitTests
             // Assert   
             Assert.False(result);
 
-            Assert.Equal(currentDeclaringType?.Name, enumeratorSymbols.EnumeratorType?.MetadataName);
-            Assert.Equal(itemType?.Name, enumeratorSymbols.ItemType?.MetadataName);
-
             if (currentDeclaringType is null)
             {
                 Assert.Null(enumeratorSymbols.Current);
@@ -77,26 +71,26 @@ namespace NetFabric.CodeAnalysis.UnitTests
 
             if (moveNextAsyncDeclaringType is null)
             {
-                Assert.Null(enumeratorSymbols.MoveNext);
+                Assert.Null(enumeratorSymbols.MoveNextAsync);
             }
             else
             {
-                Assert.NotNull(enumeratorSymbols.MoveNext);
-                Assert.Equal("MoveNextAsync", enumeratorSymbols.MoveNext.Name);
-                Assert.Equal(moveNextAsyncDeclaringType.Name, enumeratorSymbols.MoveNext.ContainingType.MetadataName);
-                Assert.Empty(enumeratorSymbols.MoveNext.Parameters);
+                Assert.NotNull(enumeratorSymbols.MoveNextAsync);
+                Assert.Equal("MoveNextAsync", enumeratorSymbols.MoveNextAsync.Name);
+                Assert.Equal(moveNextAsyncDeclaringType.Name, enumeratorSymbols.MoveNextAsync.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.MoveNextAsync.Parameters);
             }
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(enumeratorSymbols.Dispose);
+                Assert.Null(enumeratorSymbols.DisposeAsync);
             }
             else
             {
-                Assert.NotNull(enumeratorSymbols.Dispose);
-                Assert.Equal("DisposeAsync", enumeratorSymbols.Dispose.Name);
-                Assert.Equal(disposeAsyncDeclaringType.Name, enumeratorSymbols.Dispose.ContainingType.MetadataName);
-                Assert.Empty(enumeratorSymbols.Dispose.Parameters);
+                Assert.NotNull(enumeratorSymbols.DisposeAsync);
+                Assert.Equal("DisposeAsync", enumeratorSymbols.DisposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType.Name, enumeratorSymbols.DisposeAsync.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols.DisposeAsync.Parameters);
             }
         }
     }

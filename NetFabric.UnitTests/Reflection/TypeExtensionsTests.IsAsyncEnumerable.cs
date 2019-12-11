@@ -18,35 +18,33 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.EnumerableType);
-            Assert.Equal(enumerableInfo.GetEnumerator?.ReturnType, enumerableInfo.EnumeratorType);
-            Assert.Equal(itemType, enumerableInfo.ItemType);
+            Assert.NotNull(enumerableInfo.GetAsyncEnumerator);
+            Assert.Equal("GetAsyncEnumerator", enumerableInfo.GetAsyncEnumerator.Name);
+            Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.GetAsyncEnumerator.DeclaringType);
+            Assert.Equal(getAsyncEnumeratorParametersCount, enumerableInfo.GetAsyncEnumerator.GetParameters().Length);
 
-            Assert.NotNull(enumerableInfo.GetEnumerator);
-            Assert.Equal("GetAsyncEnumerator", enumerableInfo.GetEnumerator.Name);
-            Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.GetEnumerator.DeclaringType);
-            Assert.Equal(getAsyncEnumeratorParametersCount, enumerableInfo.GetEnumerator.GetParameters().Length);
+            var enumeratorInfo = enumerableInfo.EnumeratorInfo;
 
-            Assert.NotNull(enumerableInfo.Current);
-            Assert.Equal("Current", enumerableInfo.Current.Name);
-            Assert.Equal(currentDeclaringType, enumerableInfo.Current.DeclaringType);
-            Assert.Equal(itemType, enumerableInfo.Current.PropertyType);
+            Assert.NotNull(enumeratorInfo.Current);
+            Assert.Equal("Current", enumeratorInfo.Current.Name);
+            Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
+            Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
 
-            Assert.NotNull(enumerableInfo.MoveNext);
-            Assert.Equal("MoveNextAsync", enumerableInfo.MoveNext.Name);
-            Assert.Equal(moveNextAsyncDeclaringType, enumerableInfo.MoveNext.DeclaringType);
-            Assert.Empty(enumerableInfo.MoveNext.GetParameters());
+            Assert.NotNull(enumeratorInfo.MoveNextAsync);
+            Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNextAsync.Name);
+            Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNextAsync.DeclaringType);
+            Assert.Empty(enumeratorInfo.MoveNextAsync.GetParameters());
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.Dispose);
+                Assert.Null(enumeratorInfo.DisposeAsync);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.Dispose);
-                Assert.Equal("DisposeAsync", enumerableInfo.Dispose.Name);
-                Assert.Equal(disposeAsyncDeclaringType, enumerableInfo.Dispose.DeclaringType);
-                Assert.Empty(enumerableInfo.Dispose.GetParameters());
+                Assert.NotNull(enumeratorInfo.DisposeAsync);
+                Assert.Equal("DisposeAsync", enumeratorInfo.DisposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.DisposeAsync.DeclaringType);
+                Assert.Empty(enumeratorInfo.DisposeAsync.GetParameters());
             }
         }
 
@@ -62,56 +60,53 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.False(result);
 
-            Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.EnumerableType);
-            Assert.Equal(enumerableInfo.GetEnumerator?.ReturnType, enumerableInfo.EnumeratorType);
-            Assert.Equal(itemType, enumerableInfo.ItemType);
-
             if (getAsyncEnumeratorDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.GetEnumerator);
+                Assert.Null(enumerableInfo.GetAsyncEnumerator);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.GetEnumerator);
-                Assert.Equal("GetAsyncEnumerator", enumerableInfo.GetEnumerator.Name);
-                Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.GetEnumerator.DeclaringType);
-                Assert.Equal(getAsyncEnumeratorParametersCount, enumerableInfo.GetEnumerator.GetParameters().Length);
+                Assert.NotNull(enumerableInfo.GetAsyncEnumerator);
+                Assert.Equal("GetAsyncEnumerator", enumerableInfo.GetAsyncEnumerator.Name);
+                Assert.Equal(getAsyncEnumeratorDeclaringType, enumerableInfo.GetAsyncEnumerator.DeclaringType);
+                Assert.Equal(getAsyncEnumeratorParametersCount, enumerableInfo.GetAsyncEnumerator.GetParameters().Length);
             }
 
+            var enumeratorInfo = enumerableInfo.EnumeratorInfo;
             if (currentDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.Current);
+                Assert.Null(enumeratorInfo.Current);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.Current);
-                Assert.Equal("Current", enumerableInfo.Current.Name);
-                Assert.Equal(currentDeclaringType, enumerableInfo.Current.DeclaringType);
-                Assert.Equal(itemType, enumerableInfo.Current.PropertyType);
+                Assert.NotNull(enumeratorInfo.Current);
+                Assert.Equal("Current", enumeratorInfo.Current.Name);
+                Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
+                Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
             }
 
             if (moveNextAsyncDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.MoveNext);
+                Assert.Null(enumeratorInfo.MoveNextAsync);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.MoveNext);
-                Assert.Equal("MoveNextAsync", enumerableInfo.MoveNext.Name);
-                Assert.Equal(moveNextAsyncDeclaringType, enumerableInfo.MoveNext.DeclaringType);
-                Assert.Empty(enumerableInfo.MoveNext.GetParameters());
+                Assert.NotNull(enumeratorInfo.MoveNextAsync);
+                Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNextAsync.Name);
+                Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNextAsync.DeclaringType);
+                Assert.Empty(enumeratorInfo.MoveNextAsync.GetParameters());
             }
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(enumerableInfo.Dispose);
+                Assert.Null(enumeratorInfo.DisposeAsync);
             }
             else
             {
-                Assert.NotNull(enumerableInfo.Dispose);
-                Assert.Equal("DisposeAsync", enumerableInfo.Dispose.Name);
-                Assert.Equal(disposeAsyncDeclaringType, enumerableInfo.Dispose.DeclaringType);
-                Assert.Empty(enumerableInfo.Dispose.GetParameters());
+                Assert.NotNull(enumeratorInfo.DisposeAsync);
+                Assert.Equal("DisposeAsync", enumeratorInfo.DisposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.DisposeAsync.DeclaringType);
+                Assert.Empty(enumeratorInfo.DisposeAsync.GetParameters());
             }
         }
     }

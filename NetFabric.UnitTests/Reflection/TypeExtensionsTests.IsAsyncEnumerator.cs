@@ -18,29 +18,26 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.Equal(currentDeclaringType, enumeratorInfo.EnumeratorType);
-            Assert.Equal(itemType, enumeratorInfo.ItemType);
-
             Assert.NotNull(enumeratorInfo.Current);
             Assert.Equal("Current", enumeratorInfo.Current.Name);
             Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
             Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
 
-            Assert.NotNull(enumeratorInfo.MoveNext);
-            Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNext.Name);
-            Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
-            Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
+            Assert.NotNull(enumeratorInfo.MoveNextAsync);
+            Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNextAsync.Name);
+            Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNextAsync.DeclaringType);
+            Assert.Empty(enumeratorInfo.MoveNextAsync.GetParameters());
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(enumeratorInfo.Dispose);
+                Assert.Null(enumeratorInfo.DisposeAsync);
             }
             else
             {
-                Assert.NotNull(enumeratorInfo.Dispose);
-                Assert.Equal("DisposeAsync", enumeratorInfo.Dispose.Name);
-                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.Dispose.DeclaringType);
-                Assert.Empty(enumeratorInfo.Dispose.GetParameters());
+                Assert.NotNull(enumeratorInfo.DisposeAsync);
+                Assert.Equal("DisposeAsync", enumeratorInfo.DisposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.DisposeAsync.DeclaringType);
+                Assert.Empty(enumeratorInfo.DisposeAsync.GetParameters());
             }
         }
 
@@ -56,9 +53,6 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.False(result);
 
-            Assert.Equal(currentDeclaringType, enumeratorInfo.EnumeratorType);
-            Assert.Equal(itemType, enumeratorInfo.ItemType);
-
             if (currentDeclaringType is null)
             {
                 Assert.Null(enumeratorInfo.Current);
@@ -73,26 +67,26 @@ namespace NetFabric.Reflection.UnitTests
 
             if (moveNextAsyncDeclaringType is null)
             {
-                Assert.Null(enumeratorInfo.MoveNext);
+                Assert.Null(enumeratorInfo.MoveNextAsync);
             }
             else
             {
-                Assert.NotNull(enumeratorInfo.MoveNext);
-                Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNext.Name);
-                Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
-                Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
+                Assert.NotNull(enumeratorInfo.MoveNextAsync);
+                Assert.Equal("MoveNextAsync", enumeratorInfo.MoveNextAsync.Name);
+                Assert.Equal(moveNextAsyncDeclaringType, enumeratorInfo.MoveNextAsync.DeclaringType);
+                Assert.Empty(enumeratorInfo.MoveNextAsync.GetParameters());
             }
 
             if (disposeAsyncDeclaringType is null)
             {
-                Assert.Null(enumeratorInfo.Dispose);
+                Assert.Null(enumeratorInfo.DisposeAsync);
             }
             else
             {
-                Assert.NotNull(enumeratorInfo.Dispose);
-                Assert.Equal("DisposeAsync", enumeratorInfo.Dispose.Name);
-                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.Dispose.DeclaringType);
-                Assert.Empty(enumeratorInfo.Dispose.GetParameters());
+                Assert.NotNull(enumeratorInfo.DisposeAsync);
+                Assert.Equal("DisposeAsync", enumeratorInfo.DisposeAsync.Name);
+                Assert.Equal(disposeAsyncDeclaringType, enumeratorInfo.DisposeAsync.DeclaringType);
+                Assert.Empty(enumeratorInfo.DisposeAsync.GetParameters());
             }
         }
     }

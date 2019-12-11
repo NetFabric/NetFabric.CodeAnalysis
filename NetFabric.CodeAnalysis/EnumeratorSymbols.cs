@@ -6,19 +6,15 @@ namespace NetFabric.CodeAnalysis
     {
         public readonly IPropertySymbol Current;
         public readonly IMethodSymbol MoveNext;
+        public readonly IMethodSymbol Reset;
         public readonly IMethodSymbol Dispose;
 
-        public EnumeratorSymbols(IPropertySymbol current, IMethodSymbol moveNext, IMethodSymbol dispose)
+        public EnumeratorSymbols(IPropertySymbol current, IMethodSymbol moveNext, IMethodSymbol reset, IMethodSymbol dispose)
         {
             Current = current;
             MoveNext = moveNext;
+            Reset = reset;
             Dispose = dispose;
         }
-
-        public ITypeSymbol EnumeratorType
-            => Current?.ContainingSymbol as ITypeSymbol;
-
-        public ITypeSymbol ItemType
-            => Current?.Type;
     }
 }

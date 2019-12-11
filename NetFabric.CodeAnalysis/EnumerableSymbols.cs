@@ -5,25 +5,12 @@ namespace NetFabric.CodeAnalysis
     public struct EnumerableSymbols
     {
         public readonly IMethodSymbol GetEnumerator;
-        public readonly IPropertySymbol Current;
-        public readonly IMethodSymbol MoveNext;
-        public readonly IMethodSymbol Dispose;
+        public readonly EnumeratorSymbols EnumeratorSymbols;
 
-        public EnumerableSymbols(IMethodSymbol getEnumerator, IPropertySymbol current, IMethodSymbol moveNext, IMethodSymbol dispose)
+        public EnumerableSymbols(IMethodSymbol getEnumerator, EnumeratorSymbols enumeratorSymbols)
         {
             GetEnumerator = getEnumerator;
-            Current = current;
-            MoveNext = moveNext;
-            Dispose = dispose;
+            EnumeratorSymbols = enumeratorSymbols;
         }
-
-        public ITypeSymbol EnumerableType
-            => GetEnumerator?.ContainingSymbol as ITypeSymbol;
-
-        public ITypeSymbol EnumeratorType
-            => GetEnumerator?.ReturnType;
-
-        public ITypeSymbol ItemType
-            => Current?.Type;
     }
 }
