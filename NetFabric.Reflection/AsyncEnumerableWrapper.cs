@@ -20,7 +20,7 @@ namespace NetFabric.Reflection
         public IAsyncEnumerator<TItem> GetAsyncEnumerator(CancellationToken token) 
             => new Enumerator(this, token);
 
-        public sealed class Enumerator 
+        sealed class Enumerator 
             : IAsyncEnumerator<TItem>
         {
             readonly AsyncEnumeratorInfo info;

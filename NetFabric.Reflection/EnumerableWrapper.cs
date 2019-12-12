@@ -21,7 +21,7 @@ namespace NetFabric.Reflection
         IEnumerator IEnumerable.GetEnumerator() 
             => new Enumerator(this);
 
-        public sealed class Enumerator 
+        sealed class Enumerator 
             : IEnumerator<TItem>
         {
             readonly EnumeratorInfo info;
