@@ -7,7 +7,7 @@
 [![NetFabricCodeAnalysis NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.CodeAnalysis.svg?style=popout-square&logoColor=lightgray&logo=nuget&label=NetFabric.CodeAnalysis%20downloads)](https://www.nuget.org/packages/NetFabric.CodeAnalysis/)
 
 [![NetFabricReflection NuGet Version](https://img.shields.io/nuget/v/NetFabric.Reflection.svg?style=popout-square&logoColor=lightgray&logo=nuget&label=NetFabric.Reflection%20nuget)](https://www.nuget.org/packages/NetFabric.Reflection/)
-[![NetFabricReflection NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.Reflection.svg?style=popout-square&logoColor=lightgray&logo=nuget&label=NetFabric.Reflection%20downloads)](https://www.nuget.org/packages/NetFabric.Reflection/)
+[![NetFabricReflection NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.Reflection.svg?style=popout-square&logoColor=lightgray&logo=nuget&label=NetFabric.Reflection%20downloads)](https://www.nuget.org/packages/NetFabric.Reflection/) [![Join the chat at https://gitter.im/NetFabric/NetFabric.CodeAnalysis](https://badges.gitter.im/NetFabric/NetFabric.CodeAnalysis.svg)](https://gitter.im/NetFabric/NetFabric.CodeAnalysis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # NetFabric.CodeAnalysis
 
