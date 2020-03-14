@@ -275,7 +275,7 @@ namespace NetFabric.CodeAnalysis
 
             foreach (var @interface in typeSymbol.AllInterfaces)
             {
-                if (@interface.OriginalDefinition.Equals(interfaceType))
+                if (SymbolEqualityComparer.Default.Equals(@interface.OriginalDefinition, interfaceType))
                 {
                     genericArguments = @interface.TypeArguments;
                     return true;

@@ -12,13 +12,14 @@ namespace NetFabric.TestData
         readonly int count;
         
         public RangeAsyncEnumerable(int count)
-        {
-            this.count = count;
-        }
+            => this.count = count;
             
-        public readonly AsyncEnumerator GetAsyncEnumerator() => new AsyncEnumerator(count);
-        readonly DisposableAsyncEnumerator IAsyncValueEnumerable<int, DisposableAsyncEnumerator>.GetAsyncEnumerator(CancellationToken cancellationToken = default) => new DisposableAsyncEnumerator(count);
-        readonly IAsyncEnumerator<int> IAsyncEnumerable<int>.GetAsyncEnumerator(CancellationToken cancellationToken = default) => new DisposableAsyncEnumerator(count);
+        public readonly AsyncEnumerator GetAsyncEnumerator() 
+            => new AsyncEnumerator(count);
+        readonly DisposableAsyncEnumerator IAsyncValueEnumerable<int, DisposableAsyncEnumerator>.GetAsyncEnumerator(CancellationToken cancellationToken) 
+            => new DisposableAsyncEnumerator(count);
+        readonly IAsyncEnumerator<int> IAsyncEnumerable<int>.GetAsyncEnumerator(CancellationToken cancellationToken) 
+            => new DisposableAsyncEnumerator(count);
         
         public struct AsyncEnumerator
         {

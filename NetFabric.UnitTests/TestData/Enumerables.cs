@@ -50,16 +50,16 @@ namespace NetFabric.TestData
 
     static class ValidateEnumerables
     {
-        public static async Task InvalidEnumerables()
-        {
-            //foreach (var _ in new MissingGetEnumeratorEnumerable()) { }
-            //foreach (var _ in new MissingCurrentEnumerable()) { }
-            //foreach (var _ in new MissingMoveNextEnumerable<int>()) { }
+        //public static async Task InvalidEnumerables()
+        //{
+        //    foreach (var _ in new MissingGetEnumeratorEnumerable()) { }
+        //    foreach (var _ in new MissingCurrentEnumerable()) { }
+        //    foreach (var _ in new MissingMoveNextEnumerable<int>()) { }
 
-            //await foreach (var _ in new MissingGetEnumeratorEnumerable()) { }
-            //await foreach (var _ in new MissingCurrentEnumerable()) { }
-            //await foreach (var _ in new MissingMoveNextEnumerable<int>()) { }
-        }
+        //    await foreach (var _ in new MissingGetEnumeratorEnumerable()) { }
+        //    await foreach (var _ in new MissingCurrentEnumerable()) { }
+        //    await foreach (var _ in new MissingMoveNextEnumerable<int>()) { }
+        //}
 
         public static async Task ValidEnumerables()
         {
