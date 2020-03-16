@@ -32,6 +32,24 @@ namespace NetFabric.TestData
         public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new AsyncEnumerator<T>();
     }
 
+    public readonly struct CancellableAsyncEnumerable<T>
+    {
+        public readonly AsyncEnumerator<T> GetAsyncEnumerator(CancellationToken _ = default) => new AsyncEnumerator<T>();
+    }
+
+    public readonly struct HybridEnumerable<T> : IEnumerable<T>
+    {
+        public readonly Enumerator<T> GetEnumerator() => new Enumerator<T>();
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => new ExplicitEnumerator<T>();
+        IEnumerator IEnumerable.GetEnumerator() => new ExplicitEnumerator<T>();
+    }
+
+    public readonly struct HybridAsyncEnumerable<T> : IAsyncEnumerable<T>
+    {
+        public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new AsyncEnumerator<T>();
+        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken _) => new ExplicitAsyncEnumerator<T>();
+    }
+
     public class ExplicitEnumerable<T> : IEnumerable<T>
     {
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => new ExplicitEnumerator<T>();
@@ -64,10 +82,13 @@ namespace NetFabric.TestData
         public static async Task ValidEnumerables()
         {
             foreach (var _ in new Enumerable<int>()) { }
+            foreach (var _ in new HybridEnumerable<int>()) { }
             foreach (var _ in new ExplicitEnumerable<int>()) { }
             foreach (var _ in new RangeEnumerable()) { }
 
             await foreach (var _ in new AsyncEnumerable<int>()) { }
+            await foreach (var _ in new CancellableAsyncEnumerable<int>()) { }
+            await foreach (var _ in new HybridAsyncEnumerable<int>()) { }
             await foreach (var _ in new ExplicitAsyncEnumerable<int>()) { }
             await foreach (var _ in new RangeAsyncEnumerable()) { }
         }
