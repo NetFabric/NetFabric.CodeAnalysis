@@ -272,6 +272,8 @@ namespace NetFabric.CodeAnalysis
         {
             if (typeSymbol is null)
                 throw new ArgumentNullException(nameof(typeSymbol));
+            if (interfaceType is null)
+                throw new ArgumentNullException(nameof(interfaceType));
 
             foreach (var @interface in typeSymbol.AllInterfaces)
             {
