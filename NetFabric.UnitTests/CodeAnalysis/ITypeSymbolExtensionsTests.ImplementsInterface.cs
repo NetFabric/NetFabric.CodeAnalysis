@@ -27,6 +27,18 @@ namespace NetFabric.CodeAnalysis.UnitTests
                     true,
                     new[] { typeof(NetFabric.TestData.TestType) }
                 },
+                {
+                    typeof(TestData.HybridEnumerable<>).MakeGenericType(typeof(TestData.TestType)),
+                    SpecialType.System_Collections_Generic_IEnumerable_T,
+                    true,
+                    new[] { typeof(NetFabric.TestData.TestType) }
+                },
+                {
+                    typeof(TestData.HybridEnumerable<>).MakeGenericType(typeof(TestData.TestType)),
+                    SpecialType.System_Collections_Generic_IReadOnlyList_T,
+                    false,
+                    new[] { typeof(NetFabric.TestData.TestType) }
+                },
             };
 
 
