@@ -55,7 +55,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidAsyncEnumerables), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type itemType)
         {
             // Arrange
             var compilation = Utils.Compile(
@@ -64,59 +64,28 @@ namespace NetFabric.CodeAnalysis.UnitTests
             var typeSymbol = compilation.GetTypeSymbol(enumerableType);
 
             // Act
-            var result = typeSymbol.IsAsyncEnumerable(compilation, out var enumerableSymbols);
+            var result = typeSymbol.IsAsyncEnumerable(compilation, out var _, out var errors);
 
             // Assert   
             Assert.False(result);
 
             if (getAsyncEnumeratorDeclaringType is null)
             {
-                Assert.Null(enumerableSymbols.GetAsyncEnumerator);
+                Assert.True(errors.HasFlag(Errors.MissingGetEnumerable));
             }
             else
             {
-                Assert.NotNull(enumerableSymbols.GetAsyncEnumerator);
-                Assert.Equal("GetAsyncEnumerator", enumerableSymbols.GetAsyncEnumerator.Name);
-                Assert.Equal(getAsyncEnumeratorDeclaringType.Name, enumerableSymbols.GetAsyncEnumerator.ContainingType.MetadataName);
-                Assert.Equal(getAsyncEnumeratorParametersCount, enumerableSymbols.GetAsyncEnumerator.Parameters.Length);
-            }
+                Assert.False(errors.HasFlag(Errors.MissingGetEnumerable));
 
-            var enumeratorSymbols = enumerableSymbols.EnumeratorSymbols;
+                if (currentDeclaringType is null)
+                    Assert.True(errors.HasFlag(Errors.MissingCurrent));
+                else
+                    Assert.False(errors.HasFlag(Errors.MissingCurrent));
 
-            if (currentDeclaringType is null)
-            {
-                Assert.Null(enumeratorSymbols.Current);
-            }
-            else
-            {
-                Assert.NotNull(enumeratorSymbols.Current);
-                Assert.Equal("Current", enumeratorSymbols.Current.Name);
-                Assert.Equal(currentDeclaringType.Name, enumeratorSymbols.Current.ContainingType.MetadataName);
-                Assert.Equal(itemType.Name, enumeratorSymbols.Current.Type.MetadataName);
-            }
-
-            if (moveNextAsyncDeclaringType is null)
-            {
-                Assert.Null(enumeratorSymbols.MoveNextAsync);
-            }
-            else
-            {
-                Assert.NotNull(enumeratorSymbols.MoveNextAsync);
-                Assert.Equal("MoveNextAsync", enumeratorSymbols.MoveNextAsync.Name);
-                Assert.Equal(moveNextAsyncDeclaringType.Name, enumeratorSymbols.MoveNextAsync.ContainingType.MetadataName);
-                Assert.Empty(enumeratorSymbols.MoveNextAsync.Parameters);
-            }
-
-            if (disposeAsyncDeclaringType is null)
-            {
-                Assert.Null(enumeratorSymbols.DisposeAsync);
-            }
-            else
-            {
-                Assert.NotNull(enumeratorSymbols.DisposeAsync);
-                Assert.Equal("DisposeAsync", enumeratorSymbols.DisposeAsync.Name);
-                Assert.Equal(disposeAsyncDeclaringType.Name, enumeratorSymbols.DisposeAsync.ContainingType.MetadataName);
-                Assert.Empty(enumeratorSymbols.DisposeAsync.Parameters);
+                if (moveNextAsyncDeclaringType is null)
+                    Assert.True(errors.HasFlag(Errors.MissingMoveNext));
+                else
+                    Assert.False(errors.HasFlag(Errors.MissingMoveNext));
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace NetFabric.Reflection
 {
-    public struct AsyncEnumerableInfo
+    public class AsyncEnumerableInfo
     {
         public readonly MethodInfo GetAsyncEnumerator;
         public readonly AsyncEnumeratorInfo EnumeratorInfo;
@@ -17,11 +17,6 @@ namespace NetFabric.Reflection
 
         public object InvokeGetAsyncEnumerator(object instance, CancellationToken token = default)
         {
-            if (instance is null)
-                throw new ArgumentNullException(nameof(instance));
-            if (GetAsyncEnumerator is null)
-                throw new NotSupportedException("GetAsyncEnumerator() is not defined.");
-
             try
             {
                 return GetAsyncEnumerator.GetParameters().Length switch

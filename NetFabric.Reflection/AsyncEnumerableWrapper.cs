@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace NetFabric.Reflection
             Info = info;
         }
 
+        [NotNull]
         public TEnumerable Instance { get; }
         public AsyncEnumerableInfo Info { get; }
 
@@ -39,12 +41,7 @@ namespace NetFabric.Reflection
                 => info.InvokeMoveNextAsync(instance);
 
             public ValueTask DisposeAsync() 
-            {
-                if (info.DisposeAsync is object)
-                    return info.InvokeDisposeAsync(instance);
-
-                return default;
-            }
+                => info?.InvokeDisposeAsync(instance) ?? default;
         }
     }
 }

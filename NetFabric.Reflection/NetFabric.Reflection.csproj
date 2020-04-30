@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
 		<PackageId>NetFabric.Reflection</PackageId>
-		<Version>2.0.1</Version>
+		<Version>3.0.0-beta1</Version>
 		<Description>Extensions to System.Reflection.</Description>
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<PackageTags>reflection, enumerable, linq</PackageTags>
@@ -11,7 +11,8 @@
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	</PropertyGroup>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
     <ItemGroup>
         <None Include="..\Icon.png" Pack="true" PackagePath="" />
@@ -19,7 +20,11 @@
     </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+		    <PackageReference Include="Nullable" Version="1.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

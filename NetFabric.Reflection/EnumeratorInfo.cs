@@ -3,14 +3,14 @@ using System.Reflection;
 
 namespace NetFabric.Reflection
 {
-    public struct EnumeratorInfo
+    public class EnumeratorInfo
     {
         public readonly PropertyInfo Current;
         public readonly MethodInfo MoveNext;
-        public readonly MethodInfo Reset;
-        public readonly MethodInfo Dispose;
+        public readonly MethodInfo? Reset;
+        public readonly MethodInfo? Dispose;
 
-        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext, MethodInfo reset, MethodInfo dispose)
+        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext, MethodInfo? reset, MethodInfo? dispose)
         {
             Current = current;
             MoveNext = moveNext;
@@ -20,11 +20,6 @@ namespace NetFabric.Reflection
 
         public object GetValueCurrent(object instance)
         {
-            if (instance is null)
-                throw new ArgumentNullException(nameof(instance));
-            if (Current is null)
-                throw new NotSupportedException("Current is not defined.");
-
             try
             {
                 return Current.GetValue(instance);
@@ -37,11 +32,6 @@ namespace NetFabric.Reflection
 
         public bool InvokeMoveNext(object instance)
         {
-            if (instance is null)
-                throw new ArgumentNullException(nameof(instance));
-            if (MoveNext is null)
-                throw new NotSupportedException("MoveNext() is not defined.");
-
             try
             {
                 return (bool)MoveNext.Invoke(instance, Array.Empty<object>());
@@ -54,9 +44,7 @@ namespace NetFabric.Reflection
 
         public void InvokeReset(object instance)
         {
-            if (instance is null)
-                throw new ArgumentNullException(nameof(instance));
-            if (Dispose is null)
+            if (Reset is null)
                 throw new NotSupportedException("Reset() is not defined.");
 
             try
@@ -71,8 +59,6 @@ namespace NetFabric.Reflection
 
         public void InvokeDispose(object instance)
         {
-            if (instance is null)
-                throw new ArgumentNullException(nameof(instance));
             if (Dispose is null)
                 throw new NotSupportedException("Dispose() is not defined.");
 

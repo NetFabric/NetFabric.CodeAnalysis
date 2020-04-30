@@ -2,7 +2,7 @@ using Microsoft.CodeAnalysis;
 
 namespace NetFabric.CodeAnalysis
 {
-    public struct AsyncEnumerableSymbols
+    public class AsyncEnumerableSymbols
     {
         public readonly IMethodSymbol GetAsyncEnumerator;
         public readonly AsyncEnumeratorSymbols EnumeratorSymbols;

@@ -89,13 +89,11 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type, Type, Type> InvalidEnumerables =>
-            new TheoryData<Type, Type, Type, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, Type, Type, Type> InvalidEnumerables =>
+            new TheoryData<Type, Type, Type, Type, Type>
             {
                 {
                     typeof(MissingGetEnumeratorEnumerable),
-                    null,
-                    null,
                     null,
                     null,
                     null,
@@ -106,16 +104,12 @@ namespace NetFabric.TestData
                     typeof(MissingCurrentEnumerable),
                     null,
                     typeof(MissingCurrentEnumerator),
-                    null,
-                    null,
                     null
                 },
                 {
                     typeof(MissingMoveNextEnumerable<int>),
                     typeof(MissingMoveNextEnumerable<int>),
                     typeof(MissingMoveNextEnumerator<int>),
-                    null,
-                    null,
                     null,
                     typeof(int)
                 },
@@ -171,14 +165,13 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, int, Type, Type, Type, Type> InvalidAsyncEnumerables =>
-            new TheoryData<Type, Type, int, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, int, Type, Type, Type> InvalidAsyncEnumerables =>
+            new TheoryData<Type, Type, int, Type, Type, Type>
             {
                 {
                     typeof(MissingGetEnumeratorEnumerable),
                     null,
                     0,
-                    null,
                     null,
                     null,
                     null
@@ -189,7 +182,6 @@ namespace NetFabric.TestData
                     0,
                     null,
                     typeof(MissingCurrentEnumerator),
-                    null,
                     null
                 },
                 {
@@ -197,7 +189,6 @@ namespace NetFabric.TestData
                     typeof(MissingMoveNextEnumerable<int>),
                     0,
                     typeof(MissingMoveNextEnumerator<int>),
-                    null,
                     null,
                     typeof(int)
                 },
@@ -232,30 +223,24 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type, Type> InvalidEnumerators =>
-            new TheoryData<Type, Type, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, Type, Type> InvalidEnumerators =>
+            new TheoryData<Type, Type, Type, Type>
             {
                 {
                     typeof(MissingCurrentAndMoveNextEnumerator),
                     null,
                     null,
-                    null,
-                    null,
                     null
                 },
                 {
                     typeof(MissingCurrentEnumerator),
                     null,
                     typeof(MissingCurrentEnumerator),
-                    null,
-                    null,
                     null
                 },
                 {
                     typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
                     typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
-                    null,
-                    null,
                     null,
                     typeof(int)
                 },
@@ -280,27 +265,24 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type> InvalidAsyncEnumerators =>
-            new TheoryData<Type, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, Type, Type> InvalidAsyncEnumerators =>
+            new TheoryData<Type, Type, Type, Type>
             {
                 {
                     typeof(MissingCurrentAndMoveNextEnumerator),
                     null,
                     null,
-                    null,
                     null
                 },
                 {
                     typeof(MissingCurrentEnumerator),
                     null,
                     typeof(MissingCurrentEnumerator),
-                    null,
                     null
                 },
                 {
                     typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
                     typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
-                    null,
                     null,
                     typeof(int)
                 },

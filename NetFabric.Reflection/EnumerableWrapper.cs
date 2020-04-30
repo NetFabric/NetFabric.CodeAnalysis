@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NetFabric.Reflection
 {
@@ -13,6 +14,7 @@ namespace NetFabric.Reflection
             Info = info;
         }
 
+        [NotNull]
         public TEnumerable Instance { get; }
         public EnumerableInfo Info { get; }
 
@@ -45,10 +47,7 @@ namespace NetFabric.Reflection
                 => info.InvokeReset(instance);
 
             public void Dispose() 
-            {
-                if (info.Dispose is object)
-                    info.InvokeDispose(instance);
-            }
+                => info?.InvokeDispose(instance);
         }
     }
 }
