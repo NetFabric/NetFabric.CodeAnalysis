@@ -43,11 +43,17 @@ namespace NetFabric.Reflection
             public bool MoveNext() 
                 => info.InvokeMoveNext(instance);
 
-            public void Reset() 
-                => info.InvokeReset(instance);
+            public void Reset()
+            {
+                if (info.Reset is object)
+                    info.InvokeReset(instance);
+            }
 
-            public void Dispose() 
-                => info?.InvokeDispose(instance);
+            public void Dispose()
+            {
+                if (info.Dispose is object)
+                    info.InvokeDispose(instance);
+            }
         }
     }
 }

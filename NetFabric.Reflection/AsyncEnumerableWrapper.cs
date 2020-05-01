@@ -40,8 +40,10 @@ namespace NetFabric.Reflection
             public ValueTask<bool> MoveNextAsync() 
                 => info.InvokeMoveNextAsync(instance);
 
-            public ValueTask DisposeAsync() 
-                => info?.InvokeDisposeAsync(instance) ?? default;
+            public ValueTask DisposeAsync()
+                => info.DisposeAsync is object 
+                    ? info.InvokeDisposeAsync(instance) 
+                    : default;
         }
     }
 }
