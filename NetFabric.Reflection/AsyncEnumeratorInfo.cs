@@ -33,7 +33,7 @@ namespace NetFabric.Reflection
         {
             try
             {
-                return (ValueTask<bool>)MoveNextAsync.Invoke(instance, Array.Empty<object>());
+                return (ValueTask<bool>)MoveNextAsync.Invoke(instance, null);
             }
             catch (TargetInvocationException exception)
             {
@@ -48,7 +48,7 @@ namespace NetFabric.Reflection
 
             try
             {
-                return (ValueTask)DisposeAsync.Invoke(instance, Array.Empty<object>());
+                return (ValueTask)DisposeAsync.Invoke(instance, null);
             }
             catch (TargetInvocationException exception)
             {

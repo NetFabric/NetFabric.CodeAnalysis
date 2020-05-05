@@ -1,5 +1,6 @@
 ﻿using NetFabric.TestData;
 using System;
+using System.Collections;
 using Xunit;
 
 namespace NetFabric.CodeAnalysis.UnitTests
@@ -21,12 +22,12 @@ namespace NetFabric.CodeAnalysis.UnitTests
             Assert.True(result);
 
             Assert.NotNull(enumeratorSymbols.Current);
-            Assert.Equal("Current", enumeratorSymbols.Current.Name);
+            Assert.Equal(nameof(IEnumerator.Current), enumeratorSymbols.Current.Name);
             Assert.Equal(currentDeclaringType.Name, enumeratorSymbols.Current.ContainingType.MetadataName);
             Assert.Equal(itemType.Name, enumeratorSymbols.Current.Type.MetadataName);
 
             Assert.NotNull(enumeratorSymbols.MoveNext);
-            Assert.Equal("MoveNext", enumeratorSymbols.MoveNext.Name);
+            Assert.Equal(nameof(IEnumerator.MoveNext), enumeratorSymbols.MoveNext.Name);
             Assert.Equal(moveNextDeclaringType.Name, enumeratorSymbols.MoveNext.ContainingType.MetadataName);
             Assert.Empty(enumeratorSymbols.MoveNext.Parameters);
 
@@ -37,7 +38,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             else
             {
                 Assert.NotNull(enumeratorSymbols.Reset);
-                Assert.Equal("Reset", enumeratorSymbols.Reset.Name);
+                Assert.Equal(nameof(IEnumerator.Reset), enumeratorSymbols.Reset.Name);
                 Assert.Equal(resetDeclaringType.Name, enumeratorSymbols.Reset.ContainingType.MetadataName);
                 Assert.Empty(enumeratorSymbols.Reset.Parameters);
             }
@@ -49,7 +50,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             else
             {
                 Assert.NotNull(enumeratorSymbols.Dispose);
-                Assert.Equal("Dispose", enumeratorSymbols.Dispose.Name);
+                Assert.Equal(nameof(IDisposable.Dispose), enumeratorSymbols.Dispose.Name);
                 Assert.Equal(disposeDeclaringType.Name, enumeratorSymbols.Dispose.ContainingType.MetadataName);
                 Assert.Empty(enumeratorSymbols.Dispose.Parameters);
             }

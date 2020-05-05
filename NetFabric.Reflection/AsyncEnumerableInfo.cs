@@ -21,7 +21,7 @@ namespace NetFabric.Reflection
             {
                 return GetAsyncEnumerator.GetParameters().Length switch
                 {
-                    0 => GetAsyncEnumerator.Invoke(instance, Array.Empty<object>()),
+                    0 => GetAsyncEnumerator.Invoke(instance, null),
                     1 => GetAsyncEnumerator.Invoke(instance, new object[] { token }),
                     _ => throw new Exception("Unexpected number of parameters for GetAsyncEnumerator()."),
                 };

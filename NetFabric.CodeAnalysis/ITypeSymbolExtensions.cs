@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
+using System.Collections;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -160,13 +161,13 @@ namespace NetFabric.CodeAnalysis
             out IMethodSymbol? dispose)
         {
             if (typeSymbol.ImplementsInterface(SpecialType.System_IDisposable, out _))
-                dispose = compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod("Dispose");
+                dispose = compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(nameof(IDisposable.Dispose));
             else
                 dispose = default;
 
-            current = typeSymbol.GetPublicProperty("Current");
-            moveNext = typeSymbol.GetPublicMethod("MoveNext");
-            reset = typeSymbol.GetPublicMethod("Reset");
+            current = typeSymbol.GetPublicProperty(nameof(IEnumerator.Current));
+            moveNext = typeSymbol.GetPublicMethod(nameof(IEnumerator.MoveNext));
+            reset = typeSymbol.GetPublicMethod(nameof(IEnumerator.Reset));
             if (current is object && moveNext is object)
                 return true;
 
@@ -177,9 +178,9 @@ namespace NetFabric.CodeAnalysis
                     .Construct(genericArguments[0]);
                 var enumerator = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerator);
 
-                current = enumeratorOfT.GetPublicProperty("Current");
-                moveNext = enumerator.GetPublicMethod("MoveNext");
-                reset = enumerator.GetPublicMethod("Reset");
+                current = enumeratorOfT.GetPublicProperty(nameof(IEnumerator.Current));
+                moveNext = enumerator.GetPublicMethod(nameof(IEnumerator.MoveNext));
+                reset = enumerator.GetPublicMethod(nameof(IEnumerator.Reset));
 
                 return current is object && moveNext is object;
             }
@@ -188,9 +189,9 @@ namespace NetFabric.CodeAnalysis
             {
                 var enumerator = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerator);
 
-                current = enumerator.GetPublicProperty("Current");
-                moveNext = enumerator.GetPublicMethod("MoveNext");
-                reset = enumerator.GetPublicMethod("Reset");
+                current = enumerator.GetPublicProperty(nameof(IEnumerator.Current));
+                moveNext = enumerator.GetPublicMethod(nameof(IEnumerator.MoveNext));
+                reset = enumerator.GetPublicMethod(nameof(IEnumerator.Reset));
 
                 return current is object && moveNext is object;
             }

@@ -10,12 +10,12 @@ namespace NetFabric.Reflection
 {
     public static class TypeExtensions
     {        
-        static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetMethod("GetEnumerator");
-        static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetProperty("Current");
-        static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetMethod("MoveNext");
-        static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetMethod("Reset");
-        static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetMethod("Dispose");
-        static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetMethod("DisposeAsync");
+        static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetMethod(nameof(IEnumerable.GetEnumerator), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
+        static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetProperty(nameof(IEnumerator.Current), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.MoveNext), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
+        static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.Reset), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
+        static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetMethod(nameof(IDisposable.Dispose), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
+        static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetMethod(nameof(IAsyncDisposable.DisposeAsync), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
 
         public static bool IsEnumerable(this Type type, [NotNullWhen(true)] out EnumerableInfo? enumerableInfo)
             => IsEnumerable(type, out enumerableInfo, out var _);
@@ -155,9 +155,9 @@ namespace NetFabric.Reflection
             out MethodInfo? reset, 
             out MethodInfo? dispose)
         {
-            current = type.GetPublicProperty("Current");
-            moveNext = type.GetPublicMethod("MoveNext");
-            reset = type.GetPublicMethod("Reset");
+            current = type.GetPublicProperty(nameof(IEnumerator.Current));
+            moveNext = type.GetPublicMethod(nameof(IEnumerator.MoveNext));
+            reset = type.GetPublicMethod(nameof(IEnumerator.Reset));
             dispose = type.ImplementsInterface(typeof(IDisposable), out _) ? DisposeInfo : default;
             if (current is object && moveNext is object)
                 return true;

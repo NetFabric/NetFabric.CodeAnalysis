@@ -34,7 +34,7 @@ namespace NetFabric.Reflection
         {
             try
             {
-                return (bool)MoveNext.Invoke(instance, Array.Empty<object>());
+                return (bool)MoveNext.Invoke(instance, null);
             }
             catch (TargetInvocationException exception)
             {
@@ -49,7 +49,7 @@ namespace NetFabric.Reflection
 
             try
             {
-                Reset.Invoke(instance, Array.Empty<object>());
+                Reset.Invoke(instance, null);
             }
             catch (TargetInvocationException exception)
             {
@@ -64,7 +64,7 @@ namespace NetFabric.Reflection
 
             try
             {
-                Dispose.Invoke(instance, Array.Empty<object>());
+                Dispose.Invoke(instance, null);
             }
             catch (TargetInvocationException exception)
             {

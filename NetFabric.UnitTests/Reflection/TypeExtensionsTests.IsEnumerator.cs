@@ -1,5 +1,6 @@
 ﻿using NetFabric.TestData;
 using System;
+using System.Collections;
 using Xunit;
 
 namespace NetFabric.Reflection.UnitTests
@@ -19,12 +20,12 @@ namespace NetFabric.Reflection.UnitTests
             Assert.True(result);
 
             Assert.NotNull(enumeratorInfo.Current);
-            Assert.Equal("Current", enumeratorInfo.Current.Name);
+            Assert.Equal(nameof(IEnumerator.Current), enumeratorInfo.Current.Name);
             Assert.Equal(currentDeclaringType, enumeratorInfo.Current.DeclaringType);
             Assert.Equal(itemType, enumeratorInfo.Current.PropertyType);
 
             Assert.NotNull(enumeratorInfo.MoveNext);
-            Assert.Equal("MoveNext", enumeratorInfo.MoveNext.Name);
+            Assert.Equal(nameof(IEnumerator.MoveNext), enumeratorInfo.MoveNext.Name);
             Assert.Equal(moveNextDeclaringType, enumeratorInfo.MoveNext.DeclaringType);
             Assert.Empty(enumeratorInfo.MoveNext.GetParameters());
 
@@ -35,7 +36,7 @@ namespace NetFabric.Reflection.UnitTests
             else
             {
                 Assert.NotNull(enumeratorInfo.Reset);
-                Assert.Equal("Reset", enumeratorInfo.Reset.Name);
+                Assert.Equal(nameof(IEnumerator.Reset), enumeratorInfo.Reset.Name);
                 Assert.Equal(resetDeclaringType, enumeratorInfo.Reset.DeclaringType);
                 Assert.Empty(enumeratorInfo.Reset.GetParameters());
             }
@@ -47,7 +48,7 @@ namespace NetFabric.Reflection.UnitTests
             else
             {
                 Assert.NotNull(enumeratorInfo.Dispose);
-                Assert.Equal("Dispose", enumeratorInfo.Dispose.Name);
+                Assert.Equal(nameof(IDisposable.Dispose), enumeratorInfo.Dispose.Name);
                 Assert.Equal(disposeDeclaringType, enumeratorInfo.Dispose.DeclaringType);
                 Assert.Empty(enumeratorInfo.Dispose.GetParameters());
             }

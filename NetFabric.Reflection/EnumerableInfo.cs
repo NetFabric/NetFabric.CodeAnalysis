@@ -18,7 +18,7 @@ namespace NetFabric.Reflection
         {
             try
             {
-                return GetEnumerator.Invoke(instance, Array.Empty<object>());
+                return GetEnumerator.Invoke(instance, null);
             }
             catch (TargetInvocationException exception)
             {
