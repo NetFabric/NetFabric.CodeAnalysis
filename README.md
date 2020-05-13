@@ -51,7 +51,7 @@ public class AsyncEnumerable<T>
         => default;
 
     public ValueTask<bool> MoveNextAsync() 
-        => new ValueTask<bool>(Task.FromResult(false));
+        => new ValueTask<bool>(false);
 }
 ```
 
@@ -120,7 +120,7 @@ public readonly struct RangeAsyncEnumerable
         {
             token.ThrowIfCancellationRequested();
 
-            return new ValueTask<bool>(Task.FromResult(++current < count));
+            return new ValueTask<bool>(++current < count);
         }
     }
 }
