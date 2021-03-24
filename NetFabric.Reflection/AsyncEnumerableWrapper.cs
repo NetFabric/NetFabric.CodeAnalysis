@@ -15,7 +15,6 @@ namespace NetFabric.Reflection
             Info = info;
         }
 
-        [NotNull]
         public TEnumerable Instance { get; }
         public AsyncEnumerableInfo Info { get; }
 
@@ -41,7 +40,7 @@ namespace NetFabric.Reflection
                 => info.InvokeMoveNextAsync(instance);
 
             public ValueTask DisposeAsync()
-                => info.DisposeAsync is object 
+                => info.DisposeAsync is not null 
                     ? info.InvokeDisposeAsync(instance) 
                     : default;
         }

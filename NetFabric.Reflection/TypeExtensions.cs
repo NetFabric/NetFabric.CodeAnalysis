@@ -111,7 +111,7 @@ namespace NetFabric.Reflection
             [NotNullWhen(true)] out MethodInfo? getEnumerator)
         {
             getEnumerator = type.GetPublicMethod("GetEnumerator");
-            if (getEnumerator is object)
+            if (getEnumerator is not null)
                 return true;
 
             if (type.ImplementsInterface(typeof(IEnumerable<>), out var genericArguments))
@@ -133,11 +133,11 @@ namespace NetFabric.Reflection
             [NotNullWhen(true)] out MethodInfo? getAsyncEnumerator)
         {
             getAsyncEnumerator = type.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken));
-            if (getAsyncEnumerator is object)
+            if (getAsyncEnumerator is not null)
                 return true;
 
             getAsyncEnumerator = type.GetPublicMethod("GetAsyncEnumerator");
-            if (getAsyncEnumerator is object)
+            if (getAsyncEnumerator is not null)
                 return true;
 
             if (type.ImplementsInterface(typeof(IAsyncEnumerable<>), out var genericArguments))
@@ -159,7 +159,7 @@ namespace NetFabric.Reflection
             moveNext = type.GetPublicMethod(nameof(IEnumerator.MoveNext));
             reset = type.GetPublicMethod(nameof(IEnumerator.Reset));
             dispose = type.ImplementsInterface(typeof(IDisposable), out _) ? DisposeInfo : default;
-            if (current is object && moveNext is object)
+            if (current is not null && moveNext is not null)
                 return true;
 
             if (type.ImplementsInterface(typeof(IEnumerator<>), out var genericArguments))
@@ -189,7 +189,7 @@ namespace NetFabric.Reflection
             current = type.GetPublicProperty("Current");
             moveNextAsync = type.GetPublicMethod("MoveNextAsync");
             disposeAsync = type.ImplementsInterface(typeof(IAsyncDisposable), out _) ? DisposeAsyncInfo : default;
-            if (current is object && moveNextAsync is object)
+            if (current is not null && moveNextAsync is not null)
                 return true;
 
             if (type.ImplementsInterface(typeof(IAsyncEnumerator<>), out var genericArguments))
@@ -209,7 +209,7 @@ namespace NetFabric.Reflection
             for (var index = 0; index < properties.Length; index++)
             {
                 var property = properties[index];
-                if (property.Name == name && property.GetGetMethod() is object)
+                if (property.Name == name && property.GetGetMethod() is not null)
                     return property;
             }
 
@@ -218,14 +218,14 @@ namespace NetFabric.Reflection
                 foreach (var @interface in type.GetAllInterfaces())
                 {
                     var property = @interface.GetPublicProperty(name);
-                    if (property is object)
+                    if (property is not null)
                         return property;
                 }
             }
             else
             {
                 var baseType = type.BaseType;
-                if (baseType is object)
+                if (baseType is not null)
                     return baseType.GetPublicProperty(name);
             }
 
@@ -247,14 +247,14 @@ namespace NetFabric.Reflection
                 foreach (var @interface in type.GetAllInterfaces())
                 {
                     var method = @interface.GetPublicMethod(name, parameters);
-                    if (method is object)
+                    if (method is not null)
                         return method;
                 }
             }
             else
             {
                 var baseType = type.BaseType;
-                if (baseType is object)
+                if (baseType is not null)
                     return baseType.GetPublicMethod(name);
             }
 

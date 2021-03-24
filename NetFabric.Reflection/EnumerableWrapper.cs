@@ -45,13 +45,13 @@ namespace NetFabric.Reflection
 
             public void Reset()
             {
-                if (info.Reset is object)
+                if (info.Reset is not null)
                     info.InvokeReset(instance);
             }
 
             public void Dispose()
             {
-                if (info.Dispose is object)
+                if (info.Dispose is not null)
                     info.InvokeDispose(instance);
             }
         }

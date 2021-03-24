@@ -108,7 +108,7 @@ namespace NetFabric.CodeAnalysis
             [NotNullWhen(true)] out IMethodSymbol? getEnumerator)
         {
             getEnumerator = typeSymbol.GetPublicMethod("GetEnumerator");
-            if (getEnumerator is object)
+            if (getEnumerator is not null)
                 return true;
 
             if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_Generic_IEnumerable_T, out var genericArguments))
@@ -117,7 +117,7 @@ namespace NetFabric.CodeAnalysis
                     .GetSpecialType(SpecialType.System_Collections_Generic_IEnumerable_T)
                     .Construct(genericArguments[0]);
                 getEnumerator = interfaceType.GetPublicMethod("GetEnumerator");
-                return getEnumerator is object;
+                return getEnumerator is not null;
             }
 
             if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_IEnumerable, out _))
@@ -125,7 +125,7 @@ namespace NetFabric.CodeAnalysis
                 var interfaceType = compilation
                     .GetSpecialType(SpecialType.System_Collections_IEnumerable);
                 getEnumerator = interfaceType.GetPublicMethod("GetEnumerator");
-                return getEnumerator is object;
+                return getEnumerator is not null;
             }
 
             return false;
@@ -135,11 +135,11 @@ namespace NetFabric.CodeAnalysis
             [NotNullWhen(true)] out IMethodSymbol? getAsyncEnumerator)
         {
             getAsyncEnumerator = typeSymbol.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken));
-            if (getAsyncEnumerator is object)
+            if (getAsyncEnumerator is not null)
                 return true;
 
             getAsyncEnumerator = typeSymbol.GetPublicMethod("GetAsyncEnumerator");
-            if (getAsyncEnumerator is object)
+            if (getAsyncEnumerator is not null)
                 return true;
 
             var asyncEnumerableType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerable`1");
@@ -148,7 +148,7 @@ namespace NetFabric.CodeAnalysis
                 getAsyncEnumerator = asyncEnumerableType
                     .Construct(genericArguments[0])
                     .GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken));
-                return getAsyncEnumerator is object;
+                return getAsyncEnumerator is not null;
             }
 
             return false;
@@ -168,7 +168,7 @@ namespace NetFabric.CodeAnalysis
             current = typeSymbol.GetPublicProperty(nameof(IEnumerator.Current));
             moveNext = typeSymbol.GetPublicMethod(nameof(IEnumerator.MoveNext));
             reset = typeSymbol.GetPublicMethod(nameof(IEnumerator.Reset));
-            if (current is object && moveNext is object)
+            if (current is not null && moveNext is not null)
                 return true;
 
             if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_Generic_IEnumerator_T, out var genericArguments))
@@ -182,7 +182,7 @@ namespace NetFabric.CodeAnalysis
                 moveNext = enumerator.GetPublicMethod(nameof(IEnumerator.MoveNext));
                 reset = enumerator.GetPublicMethod(nameof(IEnumerator.Reset));
 
-                return current is object && moveNext is object;
+                return current is not null && moveNext is not null;
             }
 
             if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_IEnumerator, out _))
@@ -193,7 +193,7 @@ namespace NetFabric.CodeAnalysis
                 moveNext = enumerator.GetPublicMethod(nameof(IEnumerator.MoveNext));
                 reset = enumerator.GetPublicMethod(nameof(IEnumerator.Reset));
 
-                return current is object && moveNext is object;
+                return current is not null && moveNext is not null;
             }
 
             return false;
@@ -212,7 +212,7 @@ namespace NetFabric.CodeAnalysis
 
             current = typeSymbol.GetPublicProperty("Current");
             moveNextAsync = typeSymbol.GetPublicMethod("MoveNextAsync");
-            if (current is object && moveNextAsync is object)
+            if (current is not null && moveNextAsync is not null)
                 return true;
 
             var asyncEnumeratorType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerator`1");
@@ -222,7 +222,7 @@ namespace NetFabric.CodeAnalysis
                     .Construct(genericArguments[0]);
                 current = interfaceType.GetPublicProperty("Current");
                 moveNextAsync = interfaceType.GetPublicMethod("MoveNextAsync");
-                return current is object && moveNextAsync is object;
+                return current is not null && moveNextAsync is not null;
             }
 
             return false;
@@ -241,14 +241,14 @@ namespace NetFabric.CodeAnalysis
                 foreach (var @interface in typeSymbol.AllInterfaces)
                 {
                     var property = @interface.GetPublicProperty(name);
-                    if (property is object)
+                    if (property is not null)
                         return property;
                 }
             }
             else
             {
                 var baseType = typeSymbol.BaseType;
-                if (baseType is object)
+                if (baseType is not null)
                     return baseType.GetPublicProperty(name);
             }
 
@@ -272,14 +272,14 @@ namespace NetFabric.CodeAnalysis
                 foreach (var @interface in typeSymbol.AllInterfaces)
                 {
                     var method = @interface.GetPublicMethod(name, parameters);
-                    if (method is object)
+                    if (method is not null)
                         return method;
                 }
             }
             else
             {
                 var baseType = typeSymbol.BaseType;
-                if (baseType is object)
+                if (baseType is not null)
                     return baseType.GetPublicMethod(name, parameters);
             }
 
