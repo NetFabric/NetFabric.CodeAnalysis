@@ -18,8 +18,8 @@ namespace NetFabric.Reflection.UnitTests
 
             // Assert   
             Assert.NotNull(result);
-            Assert.Equal(propertyName, result.Name);
-            Assert.Equal(propertyType, result.PropertyType);
+            Assert.Equal(propertyName, result!.Name);
+            Assert.Equal(propertyType, result!.PropertyType);
         }
 
         [Theory]

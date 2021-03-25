@@ -9,7 +9,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_Should_ReturnTrue(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type resetDeclaringType, Type disposeDeclaringType, Type itemType)
+        public void IsEnumerable_Should_ReturnTrue(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType)
         {
             // Arrange
             var compilation = Utils.Compile(
@@ -24,7 +24,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.NotNull(enumerableSymbols.GetEnumerator);
+            Assert.NotNull(enumerableSymbols!.GetEnumerator);
             Assert.Equal(nameof(IEnumerable.GetEnumerator), enumerableSymbols.GetEnumerator.Name);
             Assert.Equal(getEnumeratorDeclaringType.Name, enumerableSymbols.GetEnumerator.ContainingType.MetadataName);
             Assert.Empty(enumerableSymbols.GetEnumerator.Parameters);
@@ -48,7 +48,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             else
             {
                 Assert.NotNull(enumeratorSymbols.Reset);
-                Assert.Equal(nameof(IEnumerator.Reset), enumeratorSymbols.Reset.Name);
+                Assert.Equal(nameof(IEnumerator.Reset), enumeratorSymbols!.Reset!.Name);
                 Assert.Equal(resetDeclaringType.Name, enumeratorSymbols.Reset.ContainingType.MetadataName);
                 Assert.Empty(enumeratorSymbols.Reset.Parameters);
             }
@@ -60,7 +60,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             else
             {
                 Assert.NotNull(enumeratorSymbols.Dispose);
-                Assert.Equal(nameof(IDisposable.Dispose), enumeratorSymbols.Dispose.Name);
+                Assert.Equal(nameof(IDisposable.Dispose), enumeratorSymbols!.Dispose!.Name);
                 Assert.Equal(disposeDeclaringType.Name, enumeratorSymbols.Dispose.ContainingType.MetadataName);
                 Assert.Empty(enumeratorSymbols.Dispose.Parameters);
             }
@@ -68,7 +68,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidEnumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type itemType)
+        public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type? getEnumeratorDeclaringType, Type? currentDeclaringType, Type moveNextDeclaringType, Type itemType)
         {
             // Arrange
             var compilation = Utils.Compile(

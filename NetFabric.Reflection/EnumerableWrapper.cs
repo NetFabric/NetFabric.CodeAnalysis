@@ -14,7 +14,6 @@ namespace NetFabric.Reflection
             Info = info;
         }
 
-        [NotNull]
         public TEnumerable Instance { get; }
         public EnumerableInfo Info { get; }
 

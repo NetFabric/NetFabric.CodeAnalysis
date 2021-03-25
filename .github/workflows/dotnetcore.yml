@@ -7,38 +7,23 @@ on:
     branches: [ master ]
 
 jobs:
-  linux:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Check out repository
-      uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.4.0
-      with:
-        dotnet-version: 3.1.102
-    - name: Build solution
-      run: dotnet build -c:Release
-    - name: Tests
-      run: dotnet test ./NetFabric.UnitTests/NetFabric.UnitTests.csproj -f:netcoreapp3.1 -c:Release
-      
   windows:
     runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.4.0
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.102
+        dotnet-version: 5.0.201
     - name: Build with dotnet
       run: dotnet build -c:Release
     - name: Tests
       run: dotnet test ./NetFabric.UnitTests/NetFabric.UnitTests.csproj -c:Release
     - name: Generate coverage report
-      run: dotnet test ./NetFabric.UnitTests/NetFabric.UnitTests.csproj -c:Release -f:netcoreapp3.1 -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
+      run: dotnet test ./NetFabric.UnitTests/NetFabric.UnitTests.csproj -c:Release -f:net5.0 -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./NetFabric.UnitTests/TestResults/coverage.netcoreapp3.1.info 
+        path-to-lcov: ./NetFabric.UnitTests/TestResults/coverage.net5.0.info 

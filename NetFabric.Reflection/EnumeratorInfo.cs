@@ -9,13 +9,15 @@ namespace NetFabric.Reflection
         public readonly MethodInfo MoveNext;
         public readonly MethodInfo? Reset;
         public readonly MethodInfo? Dispose;
+        public readonly bool IsByRefLike;
 
-        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext, MethodInfo? reset, MethodInfo? dispose)
+        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext, MethodInfo? reset, MethodInfo? dispose, bool isByRefLike)
         {
             Current = current;
             MoveNext = moveNext;
             Reset = reset;
             Dispose = dispose;
+            IsByRefLike = isByRefLike;
         }
 
         public object GetValueCurrent(object instance)

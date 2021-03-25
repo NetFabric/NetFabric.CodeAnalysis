@@ -19,7 +19,7 @@ namespace NetFabric.Reflection.UnitTests
 
             // Assert   
             Assert.NotNull(result);
-            Assert.Equal(methodName, result.Name);
+            Assert.Equal(methodName, result!.Name);
             Assert.True(result.GetParameters()
                 .Select(parameter => parameter.ParameterType)
                 .SequenceEqual(parameters));
