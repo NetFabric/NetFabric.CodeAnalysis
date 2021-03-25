@@ -19,8 +19,6 @@ jobs:
     - name: Build with dotnet
       run: dotnet build -c:Release
     - name: Tests
-      run: dotnet test ./NetFabric.UnitTests/NetFabric.UnitTests.csproj -c:Release
-    - name: Generate coverage report
       run: dotnet test ./NetFabric.UnitTests/NetFabric.UnitTests.csproj -c:Release -f:net5.0 -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
