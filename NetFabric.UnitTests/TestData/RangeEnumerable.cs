@@ -14,8 +14,8 @@ namespace NetFabric.TestData
 
         public int Count { get; }
             
-        public readonly Enumerator GetEnumerator() => new Enumerator(Count);
-        readonly DisposableEnumerator IValueEnumerable<int, DisposableEnumerator>.GetEnumerator() => new DisposableEnumerator(Count);
+        public readonly Enumerator GetEnumerator() => new(Count);
+        readonly DisposableEnumerator IValueEnumerable<int, DisposableEnumerator>.GetEnumerator() => new(Count);
         readonly IEnumerator<int> IEnumerable<int>.GetEnumerator() => new DisposableEnumerator(Count);
         readonly IEnumerator IEnumerable.GetEnumerator() => new DisposableEnumerator(Count);
         

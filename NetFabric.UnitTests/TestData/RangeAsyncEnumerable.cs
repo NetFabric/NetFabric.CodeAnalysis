@@ -15,9 +15,9 @@ namespace NetFabric.TestData
             => this.count = count;
             
         public readonly AsyncEnumerator GetAsyncEnumerator() 
-            => new AsyncEnumerator(count);
+            => new(count);
         readonly DisposableAsyncEnumerator IAsyncValueEnumerable<int, DisposableAsyncEnumerator>.GetAsyncEnumerator(CancellationToken cancellationToken) 
-            => new DisposableAsyncEnumerator(count);
+            => new(count);
         readonly IAsyncEnumerator<int> IAsyncEnumerable<int>.GetAsyncEnumerator(CancellationToken cancellationToken) 
             => new DisposableAsyncEnumerator(count);
         
@@ -35,7 +35,7 @@ namespace NetFabric.TestData
             public readonly int Current => current;
             
             public ValueTask<bool> MoveNextAsync()
-                => new ValueTask<bool>(Task.FromResult(++current < count));
+                => new(Task.FromResult(++current < count));
         }
         
         public struct DisposableAsyncEnumerator : IAsyncEnumerator<int>
@@ -52,9 +52,9 @@ namespace NetFabric.TestData
             public int Current => current;
             
             public ValueTask<bool> MoveNextAsync()
-                => new ValueTask<bool>(Task.FromResult(++current < count));
+                => new(Task.FromResult(++current < count));
             
-            ValueTask IAsyncDisposable.DisposeAsync() => new ValueTask();
+            ValueTask IAsyncDisposable.DisposeAsync() => new();
         }
     }
 }

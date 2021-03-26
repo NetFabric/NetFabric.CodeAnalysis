@@ -8,39 +8,39 @@ namespace NetFabric.TestData
     public static partial class DataSets
     {
         public static TheoryData<string, Type> InstanceProperties =>
-            new TheoryData<string, Type>
+            new()
             {
                 { "Property", typeof(int) },
                 { "InheritedProperty", typeof(int) },
             };
 
         public static TheoryData<string> ExplicitInstanceProperties =>
-            new TheoryData<string>
+            new()
             {
                 "ExplicitProperty",
                 "StaticProperty",
             };
 
         public static TheoryData<string, Type[]> InstanceMethods =>
-            new TheoryData<string, Type[]>
+            new()
             {
-                { "Method", new Type[] { } },
-                { "Method", new Type[] { typeof(int), typeof(string) } },
-                { "InheritedMethod", new Type[] { } },
-                { "InheritedMethod", new Type[] { typeof(int), typeof(string) } },
+                { "Method", Array.Empty<Type>() },
+                { "Method", new[] { typeof(int), typeof(string) } },
+                { "InheritedMethod", Array.Empty<Type>() },
+                { "InheritedMethod", new[] { typeof(int), typeof(string) } },
             };
 
         public static TheoryData<string, Type[]> ExplicitInstanceMethods =>
-            new TheoryData<string, Type[]>
+            new()
             {
-                { "ExplicitMethod", new Type[] { } },
-                { "ExplicitMethod", new Type[] { typeof(int), typeof(string) } },
-                { "StaticMethod", new Type[] { } },
-                { "StaticMethod", new Type[] { typeof(int), typeof(string) } },
+                { "ExplicitMethod", Array.Empty<Type>() },
+                { "ExplicitMethod", new[] { typeof(int), typeof(string) } },
+                { "StaticMethod", Array.Empty<Type>() },
+                { "StaticMethod", new[] { typeof(int), typeof(string) } },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type, Type, Type> Enumerables =>
-            new TheoryData<Type, Type, Type, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type> Enumerables =>
+            new()
             {
                 {
                     typeof(Enumerable<>).MakeGenericType(typeof(int)),
@@ -89,8 +89,8 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type> InvalidEnumerables =>
-            new TheoryData<Type, Type, Type, Type, Type>
+        public static TheoryData<Type, Type?, Type?, Type?, Type?> InvalidEnumerables =>
+            new()
             {
                 {
                     typeof(MissingGetEnumeratorEnumerable),
@@ -115,8 +115,8 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, int, Type, Type, Type, Type> AsyncEnumerables =>
-            new TheoryData<Type, Type, int, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, int, Type, Type, Type?, Type> AsyncEnumerables =>
+            new()
             {
                 {
                     typeof(AsyncEnumerable<>).MakeGenericType(typeof(int)),
@@ -165,8 +165,8 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, int, Type, Type, Type> InvalidAsyncEnumerables =>
-            new TheoryData<Type, Type, int, Type, Type, Type>
+        public static TheoryData<Type, Type?, int, Type?, Type?, Type?> InvalidAsyncEnumerables =>
+            new()
             {
                 {
                     typeof(MissingGetEnumeratorEnumerable),
@@ -194,8 +194,8 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type, Type> Enumerators =>
-            new TheoryData<Type, Type, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, Type, Type?, Type?, Type, bool> Enumerators =>
+            new()
             {
                 {
                     typeof(Enumerator<>).MakeGenericType(typeof(int)),
@@ -203,7 +203,17 @@ namespace NetFabric.TestData
                     typeof(Enumerator<>).MakeGenericType(typeof(int)),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    false
+                },
+                {
+                    typeof(DisposableEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(DisposableEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(DisposableEnumerator<>).MakeGenericType(typeof(int)),
+                    null,
+                    typeof(IDisposable),
+                    typeof(int),
+                    false
                 },
                 {
                     typeof(ExplicitEnumerator),
@@ -211,7 +221,8 @@ namespace NetFabric.TestData
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     null,
-                    typeof(object)
+                    typeof(object),
+                    false
                 },
                 {
                     typeof(ExplicitEnumerator<>).MakeGenericType(typeof(int)),
@@ -219,12 +230,31 @@ namespace NetFabric.TestData
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     typeof(IDisposable),
-                    typeof(int)
+                    typeof(int),
+                    false
+                },
+                {
+                    typeof(RefEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(RefEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(RefEnumerator<>).MakeGenericType(typeof(int)),
+                    null,
+                    null,
+                    typeof(int),
+                    true
+                },
+                {
+                    typeof(DisposableRefEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(DisposableRefEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(DisposableRefEnumerator<>).MakeGenericType(typeof(int)),
+                    null,
+                    typeof(DisposableRefEnumerator<>),
+                    typeof(int),
+                    true
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type> InvalidEnumerators =>
-            new TheoryData<Type, Type, Type, Type>
+        public static TheoryData<Type, Type?, Type?, Type?> InvalidEnumerators =>
+            new()
             {
                 {
                     typeof(MissingCurrentAndMoveNextEnumerator),
@@ -246,8 +276,8 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type> AsyncEnumerators =>
-            new TheoryData<Type, Type, Type, Type, Type>
+        public static TheoryData<Type, Type, Type, Type?, Type> AsyncEnumerators =>
+            new()
             {
                 {
                     typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
@@ -265,8 +295,8 @@ namespace NetFabric.TestData
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type> InvalidAsyncEnumerators =>
-            new TheoryData<Type, Type, Type, Type>
+        public static TheoryData<Type, Type?, Type?, Type?> InvalidAsyncEnumerators =>
+            new()
             {
                 {
                     typeof(MissingCurrentAndMoveNextEnumerator),

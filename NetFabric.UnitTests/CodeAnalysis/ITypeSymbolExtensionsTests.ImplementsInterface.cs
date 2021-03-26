@@ -6,8 +6,8 @@ namespace NetFabric.CodeAnalysis.UnitTests
 {
     public partial class ITypeSymbolExtensionsTests
     {
-        public static TheoryData<Type, SpecialType, bool, Type[]> ImplementsInterfaceData
-            => new TheoryData<Type, SpecialType, bool, Type[]>
+        public static TheoryData<Type, SpecialType, bool, Type[]?> ImplementsInterfaceData
+            => new()
             {
                 {
                     typeof(TestData.Enumerable<>).MakeGenericType(typeof(TestData.TestType)),
@@ -44,7 +44,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
 
         [Theory]
         [MemberData(nameof(ImplementsInterfaceData))]
-        public void ImplementsInterface_Should_Succeed(Type type, SpecialType @interface, bool expected, Type[] expectedGenericArguments)
+        public void ImplementsInterface_Should_Succeed(Type type, SpecialType @interface, bool expected, Type[]? expectedGenericArguments)
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/Enumerables.cs", @"TestData/TestType.cs");
@@ -59,7 +59,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
             {
                 for (var index = 0; index < genericArguments.Length; index++)
                 {
-                    Assert.Equal(expectedGenericArguments[index].Name, genericArguments[index].Name);
+                    Assert.Equal(expectedGenericArguments![index].Name, genericArguments[index].Name);
                 }
             }
         }

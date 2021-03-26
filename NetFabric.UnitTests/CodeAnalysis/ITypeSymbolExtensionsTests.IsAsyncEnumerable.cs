@@ -8,7 +8,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.AsyncEnumerables), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerable_Should_ReturnTrue(Type enumerableType, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerable_Should_ReturnTrue(Type enumerableType, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type? disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
             var compilation = Utils.Compile(
@@ -23,22 +23,22 @@ namespace NetFabric.CodeAnalysis.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.NotNull(enumerableSymbols.GetAsyncEnumerator);
-            Assert.Equal("GetAsyncEnumerator", enumerableSymbols.GetAsyncEnumerator.Name);
-            Assert.Equal(getAsyncEnumeratorDeclaringType.Name, enumerableSymbols.GetAsyncEnumerator.ContainingType.MetadataName);
-            Assert.Equal(getAsyncEnumeratorParametersCount, enumerableSymbols.GetAsyncEnumerator.Parameters.Length);
+            Assert.NotNull(enumerableSymbols!.GetAsyncEnumerator);
+            Assert.Equal("GetAsyncEnumerator", enumerableSymbols!.GetAsyncEnumerator.Name);
+            Assert.Equal(getAsyncEnumeratorDeclaringType.Name, enumerableSymbols!.GetAsyncEnumerator.ContainingType.MetadataName);
+            Assert.Equal(getAsyncEnumeratorParametersCount, enumerableSymbols!.GetAsyncEnumerator.Parameters.Length);
 
             var enumeratorSymbols = enumerableSymbols.EnumeratorSymbols;
 
             Assert.NotNull(enumeratorSymbols.Current);
-            Assert.Equal("Current", enumeratorSymbols.Current.Name);
-            Assert.Equal(currentDeclaringType.Name, enumeratorSymbols.Current.ContainingType.MetadataName);
-            Assert.Equal(itemType.Name, enumeratorSymbols.Current.Type.MetadataName);
+            Assert.Equal("Current", enumeratorSymbols!.Current!.Name);
+            Assert.Equal(currentDeclaringType.Name, enumeratorSymbols!.Current!.ContainingType.MetadataName);
+            Assert.Equal(itemType.Name, enumeratorSymbols!.Current!.Type.MetadataName);
 
             Assert.NotNull(enumeratorSymbols.MoveNextAsync);
-            Assert.Equal("MoveNextAsync", enumeratorSymbols.MoveNextAsync.Name);
-            Assert.Equal(moveNextAsyncDeclaringType.Name, enumeratorSymbols.MoveNextAsync.ContainingType.MetadataName);
-            Assert.Empty(enumeratorSymbols.MoveNextAsync.Parameters);
+            Assert.Equal("MoveNextAsync", enumeratorSymbols!.MoveNextAsync!.Name);
+            Assert.Equal(moveNextAsyncDeclaringType.Name, enumeratorSymbols!.MoveNextAsync!.ContainingType.MetadataName);
+            Assert.Empty(enumeratorSymbols!.MoveNextAsync!.Parameters);
 
             if (disposeAsyncDeclaringType is null)
             {
@@ -46,16 +46,16 @@ namespace NetFabric.CodeAnalysis.UnitTests
             }
             else
             {
-                Assert.NotNull(enumeratorSymbols.DisposeAsync);
-                Assert.Equal("DisposeAsync", enumeratorSymbols.DisposeAsync.Name);
-                Assert.Equal(disposeAsyncDeclaringType.Name, enumeratorSymbols.DisposeAsync.ContainingType.MetadataName);
-                Assert.Empty(enumeratorSymbols.DisposeAsync.Parameters);
+                Assert.NotNull(enumeratorSymbols!.DisposeAsync);
+                Assert.Equal("DisposeAsync", enumeratorSymbols!.DisposeAsync!.Name);
+                Assert.Equal(disposeAsyncDeclaringType.Name, enumeratorSymbols!.DisposeAsync!.ContainingType.MetadataName);
+                Assert.Empty(enumeratorSymbols!.DisposeAsync!.Parameters);
             }
         }
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidAsyncEnumerables), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type? getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type? currentDeclaringType, Type? moveNextAsyncDeclaringType, Type? itemType)
         {
             // Arrange
             var compilation = Utils.Compile(

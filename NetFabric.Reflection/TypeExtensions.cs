@@ -10,12 +10,13 @@ namespace NetFabric.Reflection
 {
     public static class TypeExtensions
     {        
-        static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetMethod(nameof(IEnumerable.GetEnumerator), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
-        static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetProperty(nameof(IEnumerator.Current), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-        static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.MoveNext), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
-        static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.Reset), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
-        static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetMethod(nameof(IDisposable.Dispose), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
-        static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetMethod(nameof(IAsyncDisposable.DisposeAsync), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null);
+        const BindingFlags PublicInstanceDeclaredOnly = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+        static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetMethod(nameof(IEnumerable.GetEnumerator), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
+        static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetProperty(nameof(IEnumerator.Current), PublicInstanceDeclaredOnly)!;
+        static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.MoveNext), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
+        static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.Reset), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
+        static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetMethod(nameof(IDisposable.Dispose), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
+        static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetMethod(nameof(IAsyncDisposable.DisposeAsync), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
 
         public static bool IsEnumerable(this Type type, [NotNullWhen(true)] out EnumerableInfo? enumerableInfo)
             => IsEnumerable(type, out enumerableInfo, out var _);
@@ -72,9 +73,9 @@ namespace NetFabric.Reflection
             [NotNullWhen(true)] out EnumeratorInfo? enumeratorInfo,
             out Errors errors)
         {
-            if (type.IsEnumeratorType(out var current, out var moveNext, out var reset, out var dispose))
+            if (type.IsEnumeratorType(out var current, out var moveNext, out var reset, out var dispose, out var isByReflike))
             {
-                enumeratorInfo = new EnumeratorInfo(current, moveNext, reset, dispose);
+                enumeratorInfo = new EnumeratorInfo(current, moveNext, reset, dispose, isByReflike);
                 errors = Errors.None;
                 return true;
             }
@@ -153,12 +154,19 @@ namespace NetFabric.Reflection
             [NotNullWhen(true)] out PropertyInfo? current,
             [NotNullWhen(true)] out MethodInfo? moveNext, 
             out MethodInfo? reset, 
-            out MethodInfo? dispose)
+            out MethodInfo? dispose,
+            out bool isByRefLike)
         {
             current = type.GetPublicProperty(nameof(IEnumerator.Current));
             moveNext = type.GetPublicMethod(nameof(IEnumerator.MoveNext));
             reset = type.GetPublicMethod(nameof(IEnumerator.Reset));
-            dispose = type.ImplementsInterface(typeof(IDisposable), out _) ? DisposeInfo : default;
+            isByRefLike = type.IsByRefLike();
+            dispose = isByRefLike switch
+            {
+                true => type.GetPublicMethod(nameof(IDisposable.Dispose)),
+                _ => type.ImplementsInterface(typeof(IDisposable), out _) ? DisposeInfo : default
+            };
+                
             if (current is not null && moveNext is not null)
                 return true;
 
@@ -206,9 +214,8 @@ namespace NetFabric.Reflection
         public static PropertyInfo? GetPublicProperty(this Type type, string name)
         {
             var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            for (var index = 0; index < properties.Length; index++)
+            foreach (var property in properties)
             {
-                var property = properties[index];
                 if (property.Name == name && property.GetGetMethod() is not null)
                     return property;
             }
@@ -235,9 +242,8 @@ namespace NetFabric.Reflection
         public static MethodInfo? GetPublicMethod(this Type type, string name, params Type[] parameters)
         {
             var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public);
-            for (var index = 0; index < methods.Length; index++)
+            foreach (var method in methods)
             {
-                var method = methods[index];
                 if (method.Name == name && SequenceEqual(method.GetParameters(), parameters))
                     return method;
             }
@@ -265,7 +271,7 @@ namespace NetFabric.Reflection
         {
             if (!interfaceType.IsGenericType)
             {
-                genericArguments = Array.Empty<Type>();
+                genericArguments = Type.EmptyTypes;
                 return type.GetAllInterfaces().Contains(interfaceType);
             }
 
@@ -298,7 +304,7 @@ namespace NetFabric.Reflection
             if (parameters.Length != types.Length)
                 return false;
 
-            for (var index = 0; index < parameters.Length; index++)
+            for (var index = 0; index < parameters.Length && index < types.Length; index++)
             {
                 if (parameters[index].ParameterType != types[index])
                     return false;
@@ -306,5 +312,9 @@ namespace NetFabric.Reflection
 
             return true;
         }
+
+        static bool IsByRefLike(this Type type)
+            => type.GetCustomAttributes()
+                .FirstOrDefault(attribute => attribute.GetType().Name == "IsByRefLikeAttribute") is not null;
     }
 }

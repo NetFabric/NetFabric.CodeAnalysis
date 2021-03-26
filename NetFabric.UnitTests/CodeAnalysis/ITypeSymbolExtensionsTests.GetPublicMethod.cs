@@ -20,7 +20,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
 
             // Assert   
             Assert.NotNull(result);
-            Assert.Equal(methodName, result.Name);
+            Assert.Equal(methodName, result!.Name);
             Assert.True(result.Parameters
                 .Select(parameter => parameter.Type.MetadataName)
                 .SequenceEqual(parameters

@@ -19,8 +19,8 @@ namespace NetFabric.CodeAnalysis.UnitTests
 
             // Assert   
             Assert.NotNull(result);
-            Assert.Equal(propertyName, result.Name);
-            Assert.Equal(propertyType.Name, result.Type.Name);
+            Assert.Equal(propertyName, result!.Name);
+            Assert.Equal(propertyType.Name, result!.Type.Name);
         }
 
         [Theory]

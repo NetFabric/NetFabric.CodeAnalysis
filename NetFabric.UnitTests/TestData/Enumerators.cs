@@ -13,32 +13,60 @@ namespace NetFabric.TestData
     {
         public bool MoveNext() => false;
 
-        public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(Task.FromResult(false));
+        public ValueTask<bool> MoveNextAsync() => new(Task.FromResult(false));
     }
 
     public readonly struct MissingMoveNextEnumerator<T>
     {
-        public readonly T Current => default;
+        public readonly T Current => default!;
     }
 
     public readonly struct Enumerator<T>
     {
-        public readonly T Current => default;
+        public readonly T Current => default!;
 
         public bool MoveNext() => false;
+
+        public void Dispose() { } // should not be returned
+    }
+
+    
+    public readonly struct DisposableEnumerator<T> : IDisposable
+    {
+        public readonly T Current => default!;
+
+        public bool MoveNext() => false;
+
+        public void Dispose() { }
+    }
+
+    public readonly ref struct RefEnumerator<T>
+    {
+        public readonly T Current => default!;
+
+        public bool MoveNext() => false;
+    }
+    
+    public readonly ref struct DisposableRefEnumerator<T>
+    {
+        public readonly T Current => default!;
+
+        public bool MoveNext() => false;
+
+        public void Dispose() { }
     }
 
     public readonly struct AsyncEnumerator<T>
     {
-        public readonly T Current => default;
+        public readonly T Current => default!;
 
-        public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(Task.FromResult(false));
+        public ValueTask<bool> MoveNextAsync() => new(Task.FromResult(false));
     }
 
     public class ExplicitEnumerator<T> : IEnumerator<T>
     {
-        T IEnumerator<T>.Current => default;
-        object IEnumerator.Current => default;
+        T IEnumerator<T>.Current => default!;
+        object? IEnumerator.Current => default;
 
         bool IEnumerator.MoveNext() => false;
 
@@ -49,7 +77,7 @@ namespace NetFabric.TestData
 
     public class ExplicitEnumerator : IEnumerator
     {
-        object IEnumerator.Current => default;
+        object? IEnumerator.Current => default;
 
         bool IEnumerator.MoveNext() => false;
 
@@ -58,10 +86,10 @@ namespace NetFabric.TestData
 
     public class ExplicitAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
-        T IAsyncEnumerator<T>.Current => default;
+        T IAsyncEnumerator<T>.Current => default!;
 
-        ValueTask<bool> IAsyncEnumerator<T>.MoveNextAsync() => new ValueTask<bool>(Task.FromResult(false));
+        ValueTask<bool> IAsyncEnumerator<T>.MoveNextAsync() => new(Task.FromResult(false));
 
-        ValueTask IAsyncDisposable.DisposeAsync() => new ValueTask();
+        ValueTask IAsyncDisposable.DisposeAsync() => new();
     }
 }

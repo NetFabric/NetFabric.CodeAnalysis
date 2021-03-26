@@ -68,9 +68,9 @@ namespace NetFabric.CodeAnalysis
             [NotNullWhen(true)] out EnumeratorSymbols? enumeratorSymbols,
             out Errors errors)
         {
-            if (typeSymbol.IsEnumeratorType(compilation, out var current, out var moveNext, out var reset, out var dispose))
+            if (typeSymbol.IsEnumeratorType(compilation, out var current, out var moveNext, out var reset, out var dispose, out var isRefLikeType))
             {
-                enumeratorSymbols = new EnumeratorSymbols(current, moveNext, reset, dispose);
+                enumeratorSymbols = new EnumeratorSymbols(current, moveNext, reset, dispose, isRefLikeType);
                 errors = Errors.None;
                 return true;
             }
@@ -158,12 +158,17 @@ namespace NetFabric.CodeAnalysis
             [NotNullWhen(true)] out IPropertySymbol? current, 
             [NotNullWhen(true)] out IMethodSymbol? moveNext, 
             out IMethodSymbol? reset, 
-            out IMethodSymbol? dispose)
+            out IMethodSymbol? dispose,
+            out bool isRefLikeType)
         {
-            if (typeSymbol.ImplementsInterface(SpecialType.System_IDisposable, out _))
-                dispose = compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(nameof(IDisposable.Dispose));
-            else
-                dispose = default;
+            isRefLikeType = typeSymbol.IsRefLikeType;
+            dispose = isRefLikeType switch
+            {
+                true => typeSymbol.GetPublicMethod(nameof(IDisposable.Dispose)),
+                _ => typeSymbol.ImplementsInterface(SpecialType.System_IDisposable, out _)
+                    ? compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(nameof(IDisposable.Dispose))
+                    : default
+            };
 
             current = typeSymbol.GetPublicProperty(nameof(IEnumerator.Current));
             moveNext = typeSymbol.GetPublicMethod(nameof(IEnumerator.MoveNext));

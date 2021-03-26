@@ -12,41 +12,41 @@ namespace NetFabric.TestData
 
     public readonly struct MissingCurrentEnumerable
     {
-        public MissingCurrentEnumerator GetEnumerator() => new MissingCurrentEnumerator();
-        public MissingCurrentEnumerator GetAsyncEnumerator() => new MissingCurrentEnumerator();
+        public MissingCurrentEnumerator GetEnumerator() => new();
+        public MissingCurrentEnumerator GetAsyncEnumerator() => new();
     }
 
     public readonly struct MissingMoveNextEnumerable<T>
     {
-        public MissingMoveNextEnumerator<T> GetEnumerator() => new MissingMoveNextEnumerator<T>();
-        public MissingMoveNextEnumerator<T> GetAsyncEnumerator() => new MissingMoveNextEnumerator<T>();
+        public MissingMoveNextEnumerator<T> GetEnumerator() => new();
+        public MissingMoveNextEnumerator<T> GetAsyncEnumerator() => new();
     }
 
     public readonly struct Enumerable<T>
     {
-        public readonly Enumerator<T> GetEnumerator() => new Enumerator<T>();
+        public readonly Enumerator<T> GetEnumerator() => new();
     }
 
     public readonly struct AsyncEnumerable<T>
     {
-        public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new AsyncEnumerator<T>();
+        public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new();
     }
 
     public readonly struct CancellableAsyncEnumerable<T>
     {
-        public readonly AsyncEnumerator<T> GetAsyncEnumerator(CancellationToken _ = default) => new AsyncEnumerator<T>();
+        public readonly AsyncEnumerator<T> GetAsyncEnumerator(CancellationToken _ = default) => new();
     }
 
     public readonly struct HybridEnumerable<T> : IEnumerable<T>
     {
-        public readonly Enumerator<T> GetEnumerator() => new Enumerator<T>();
+        public readonly Enumerator<T> GetEnumerator() => new();
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => new ExplicitEnumerator<T>();
         IEnumerator IEnumerable.GetEnumerator() => new ExplicitEnumerator<T>();
     }
 
     public readonly struct HybridAsyncEnumerable<T> : IAsyncEnumerable<T>
     {
-        public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new AsyncEnumerator<T>();
+        public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new();
         IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken _) => new ExplicitAsyncEnumerator<T>();
     }
 
