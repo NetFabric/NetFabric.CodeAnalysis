@@ -43,25 +43,25 @@ namespace NetFabric.TestData
             new()
             {
                 {
-                    typeof(Enumerable<>).MakeGenericType(typeof(int)),
-                    typeof(Enumerable<>).MakeGenericType(typeof(int)),
-                    typeof(Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(Enumerator<>).MakeGenericType(typeof(int)),
+                    typeof(Enumerable<int>),
+                    typeof(Enumerable<int>),
+                    typeof(Enumerator<int>),
+                    typeof(Enumerator<int>),
                     null,
                     null,
                     typeof(int)
                 },
                 {
-                    typeof(HybridEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(HybridEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(Enumerator<>).MakeGenericType(typeof(int)),
+                    typeof(HybridEnumerable<int>),
+                    typeof(HybridEnumerable<int>),
+                    typeof(Enumerator<int>),
+                    typeof(Enumerator<int>),
                     null,
                     null,
                     typeof(int)
                 },
                 {
-                    typeof(ExplicitEnumerable),
+                    typeof(ExplicitEnumerable<int>),
                     typeof(IEnumerable),
                     typeof(IEnumerator),
                     typeof(IEnumerator),
@@ -70,9 +70,9 @@ namespace NetFabric.TestData
                     typeof(object)
                 },
                 {
-                    typeof(ExplicitEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(ExplicitGenericEnumerable<int>),
+                    typeof(IEnumerable<int>),
+                    typeof(IEnumerator<int>),
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     typeof(IDisposable),
@@ -119,38 +119,38 @@ namespace NetFabric.TestData
             new()
             {
                 {
-                    typeof(AsyncEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(AsyncEnumerable<>).MakeGenericType(typeof(int)),
+                    typeof(AsyncEnumerable<int>),
+                    typeof(AsyncEnumerable<int>),
                     0,
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(AsyncEnumerator<int>),
+                    typeof(AsyncEnumerator<int>),
                     null,
                     typeof(int)
                 },
                 {
-                    typeof(CancellableAsyncEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(CancellableAsyncEnumerable<>).MakeGenericType(typeof(int)),
+                    typeof(CancellableAsyncEnumerable<int>),
+                    typeof(CancellableAsyncEnumerable<int>),
                     1,
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(AsyncEnumerator<int>),
+                    typeof(AsyncEnumerator<int>),
                     null,
                     typeof(int)
                 },
                 {
-                    typeof(HybridAsyncEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(HybridAsyncEnumerable<>).MakeGenericType(typeof(int)),
+                    typeof(HybridAsyncEnumerable<int>),
+                    typeof(HybridAsyncEnumerable<int>),
                     0,
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(AsyncEnumerator<int>),
+                    typeof(AsyncEnumerator<int>),
                     null,
                     typeof(int)
                 },
                 {
-                    typeof(ExplicitAsyncEnumerable<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerable<>).MakeGenericType(typeof(int)),
+                    typeof(ExplicitAsyncEnumerable<int>),
+                    typeof(IAsyncEnumerable<int>),
                     1,
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(IAsyncEnumerator<int>),
+                    typeof(IAsyncEnumerator<int>),
                     typeof(IAsyncDisposable),
                     typeof(int)
                 },
@@ -198,25 +198,25 @@ namespace NetFabric.TestData
             new()
             {
                 {
-                    typeof(Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(Enumerator<>).MakeGenericType(typeof(int)),
-                    typeof(Enumerator<>).MakeGenericType(typeof(int)),
+                    typeof(Enumerator<int>),
+                    typeof(Enumerator<int>),
+                    typeof(Enumerator<int>),
                     null,
                     null,
                     typeof(int),
                     false
                 },
                 {
-                    typeof(DisposableEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(DisposableEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(DisposableEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(DisposableEnumerator<int>),
+                    typeof(DisposableEnumerator<int>),
+                    typeof(DisposableEnumerator<int>),
                     null,
                     typeof(IDisposable),
                     typeof(int),
                     false
                 },
                 {
-                    typeof(ExplicitEnumerator),
+                    typeof(ExplicitEnumerator<int>),
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     typeof(IEnumerator),
@@ -225,8 +225,8 @@ namespace NetFabric.TestData
                     false
                 },
                 {
-                    typeof(ExplicitEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(ExplicitGenericEnumerator<int>),
+                    typeof(IEnumerator<int>),
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     typeof(IDisposable),
@@ -234,20 +234,20 @@ namespace NetFabric.TestData
                     false
                 },
                 {
-                    typeof(RefEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(RefEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(RefEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(RefEnumerator<int>),
+                    typeof(RefEnumerator<int>),
+                    typeof(RefEnumerator<int>),
                     null,
                     null,
                     typeof(int),
                     true
                 },
                 {
-                    typeof(DisposableRefEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(DisposableRefEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(DisposableRefEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(DisposableRefEnumerator<int>),
+                    typeof(DisposableRefEnumerator<int>),
+                    typeof(DisposableRefEnumerator<int>),
                     null,
-                    typeof(DisposableRefEnumerator<>),
+                    typeof(DisposableRefEnumerator<int>),
                     typeof(int),
                     true
                 },
@@ -269,8 +269,8 @@ namespace NetFabric.TestData
                     null
                 },
                 {
-                    typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(MissingMoveNextEnumerator<int>),
+                    typeof(MissingMoveNextEnumerator<int>),
                     null,
                     typeof(int)
                 },
@@ -280,16 +280,16 @@ namespace NetFabric.TestData
             new()
             {
                 {
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(AsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(AsyncEnumerator<int>),
+                    typeof(AsyncEnumerator<int>),
+                    typeof(AsyncEnumerator<int>),
                     null,
                     typeof(int)
                 },
                 {
-                    typeof(ExplicitAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(IAsyncEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(ExplicitAsyncEnumerator<int>),
+                    typeof(IAsyncEnumerator<int>),
+                    typeof(IAsyncEnumerator<int>),
                     typeof(IAsyncDisposable),
                     typeof(int)
                 },
@@ -311,8 +311,8 @@ namespace NetFabric.TestData
                     null
                 },
                 {
-                    typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
-                    typeof(MissingMoveNextEnumerator<>).MakeGenericType(typeof(int)),
+                    typeof(MissingMoveNextEnumerator<int>),
+                    typeof(MissingMoveNextEnumerator<int>),
                     null,
                     typeof(int)
                 },

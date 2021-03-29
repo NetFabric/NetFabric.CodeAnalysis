@@ -50,7 +50,7 @@ namespace NetFabric.Reflection.UnitTests
                 Assert.NotNull(enumeratorInfo!.Dispose);
                 Assert.Equal(nameof(IDisposable.Dispose), enumeratorInfo!.Dispose!.Name);
                 var declaringType = enumeratorInfo!.Dispose!.DeclaringType!;
-                Assert.Equal(disposeDeclaringType, declaringType.IsGenericType ? declaringType.GetGenericTypeDefinition() : declaringType);
+                Assert.Equal(disposeDeclaringType, declaringType);
                 Assert.Empty(enumeratorInfo!.Dispose!.GetParameters());
             }
             

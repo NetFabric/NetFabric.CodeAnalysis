@@ -12,58 +12,136 @@ namespace NetFabric.TestData
 
     public readonly struct MissingCurrentEnumerable
     {
-        public MissingCurrentEnumerator GetEnumerator() => new();
-        public MissingCurrentEnumerator GetAsyncEnumerator() => new();
+        public MissingCurrentEnumerator GetEnumerator() 
+            => new();
+        public MissingCurrentEnumerator GetAsyncEnumerator() 
+            => new();
     }
 
     public readonly struct MissingMoveNextEnumerable<T>
     {
-        public MissingMoveNextEnumerator<T> GetEnumerator() => new();
-        public MissingMoveNextEnumerator<T> GetAsyncEnumerator() => new();
+        public MissingMoveNextEnumerator<T> GetEnumerator() 
+            => new();
+        public MissingMoveNextEnumerator<T> GetAsyncEnumerator() 
+            => new();
     }
 
     public readonly struct Enumerable<T>
     {
-        public readonly Enumerator<T> GetEnumerator() => new();
+        readonly T[] source;
+
+        public Enumerable(T[] source)
+            => this.source = source; 
+        
+        public Enumerator<T> GetEnumerator() 
+            => new(source);
+    }
+
+    public readonly struct EnumerableRefEnumerator<T>
+    {
+        readonly T[] source;
+
+        public EnumerableRefEnumerator(T[] source)
+            => this.source = source; 
+        
+        public RefEnumerator<T> GetEnumerator() 
+            => new(source);
+    }
+
+    public readonly struct EnumerableDisposableRefEnumerator<T>
+    {
+        readonly T[] source;
+
+        public EnumerableDisposableRefEnumerator(T[] source)
+            => this.source = source; 
+        
+        public DisposableRefEnumerator<T> GetEnumerator() 
+            => new(source);
     }
 
     public readonly struct AsyncEnumerable<T>
     {
-        public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new();
+        readonly T[] source;
+
+        public AsyncEnumerable(T[] source)
+            => this.source = source; 
+        
+        public AsyncEnumerator<T> GetAsyncEnumerator() 
+            => new(source);
     }
 
     public readonly struct CancellableAsyncEnumerable<T>
     {
-        public readonly AsyncEnumerator<T> GetAsyncEnumerator(CancellationToken _ = default) => new();
+        readonly T[] source;
+
+        public CancellableAsyncEnumerable(T[] source)
+            => this.source = source; 
+        
+        public AsyncEnumerator<T> GetAsyncEnumerator(CancellationToken _ = default) 
+            => new(source);
     }
 
     public readonly struct HybridEnumerable<T> : IEnumerable<T>
     {
-        public readonly Enumerator<T> GetEnumerator() => new();
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => new ExplicitEnumerator<T>();
-        IEnumerator IEnumerable.GetEnumerator() => new ExplicitEnumerator<T>();
+        readonly T[] source;
+
+        public HybridEnumerable(T[] source)
+            => this.source = source; 
+        
+        public Enumerator<T> GetEnumerator() 
+            => new(source);
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() 
+            => new ExplicitGenericEnumerator<T>(source);
+        IEnumerator IEnumerable.GetEnumerator() 
+            => new ExplicitEnumerator<T>(source);
     }
 
     public readonly struct HybridAsyncEnumerable<T> : IAsyncEnumerable<T>
     {
-        public readonly AsyncEnumerator<T> GetAsyncEnumerator() => new();
-        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken _) => new ExplicitAsyncEnumerator<T>();
+        readonly T[] source;
+
+        public HybridAsyncEnumerable(T[] source)
+            => this.source = source; 
+        
+        public AsyncEnumerator<T> GetAsyncEnumerator() 
+            => new(source);
+        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken _) 
+            => new ExplicitAsyncEnumerator<T>(source);
     }
 
-    public class ExplicitEnumerable<T> : IEnumerable<T>
+    public class ExplicitGenericEnumerable<T> : IEnumerable<T>
     {
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => new ExplicitEnumerator<T>();
-        IEnumerator IEnumerable.GetEnumerator() => new ExplicitEnumerator<T>();
+        readonly T[] source;
+
+        public ExplicitGenericEnumerable(T[] source)
+            => this.source = source; 
+        
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() 
+            => new ExplicitGenericEnumerator<T>(source);
+        IEnumerator IEnumerable.GetEnumerator() 
+            => new ExplicitEnumerator<T>(source);
     }
 
-    public class ExplicitEnumerable : IEnumerable
+    public class ExplicitEnumerable<T> : IEnumerable
     {
-        IEnumerator IEnumerable.GetEnumerator() => new ExplicitEnumerator();
+        readonly T[] source;
+
+        public ExplicitEnumerable(T[] source)
+            => this.source = source; 
+        
+        IEnumerator IEnumerable.GetEnumerator() 
+            => new ExplicitEnumerator<T>(source);
     }
 
     public class ExplicitAsyncEnumerable<T> : IAsyncEnumerable<T>
     {
-        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken _) => new ExplicitAsyncEnumerator<T>();
+        readonly T[] source;
+
+        public ExplicitAsyncEnumerable(T[] source)
+            => this.source = source; 
+        
+        IAsyncEnumerator<T> IAsyncEnumerable<T>.GetAsyncEnumerator(CancellationToken _) 
+            => new ExplicitAsyncEnumerator<T>(source);
     }
 
     static class ValidateEnumerables
@@ -81,15 +159,15 @@ namespace NetFabric.TestData
 
         public static async Task ValidEnumerables()
         {
-            foreach (var _ in new Enumerable<int>()) { }
-            foreach (var _ in new HybridEnumerable<int>()) { }
-            foreach (var _ in new ExplicitEnumerable<int>()) { }
+            foreach (var _ in new Enumerable<int>(Array.Empty<int>())) { }
+            foreach (var _ in new HybridEnumerable<int>(Array.Empty<int>())) { }
+            foreach (var _ in new ExplicitEnumerable<int>(Array.Empty<int>())) { }
             foreach (var _ in new RangeEnumerable()) { }
 
-            await foreach (var _ in new AsyncEnumerable<int>()) { }
-            await foreach (var _ in new CancellableAsyncEnumerable<int>()) { }
-            await foreach (var _ in new HybridAsyncEnumerable<int>()) { }
-            await foreach (var _ in new ExplicitAsyncEnumerable<int>()) { }
+            await foreach (var _ in new AsyncEnumerable<int>(Array.Empty<int>())) { }
+            await foreach (var _ in new CancellableAsyncEnumerable<int>(Array.Empty<int>())) { }
+            await foreach (var _ in new HybridAsyncEnumerable<int>(Array.Empty<int>())) { }
+            await foreach (var _ in new ExplicitAsyncEnumerable<int>(Array.Empty<int>())) { }
             await foreach (var _ in new RangeAsyncEnumerable()) { }
         }
     }
