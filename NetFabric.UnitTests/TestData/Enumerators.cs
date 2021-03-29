@@ -11,85 +11,166 @@ namespace NetFabric.TestData
 
     public readonly struct MissingCurrentEnumerator
     {
-        public bool MoveNext() => false;
+        public bool MoveNext() 
+            => false;
 
-        public ValueTask<bool> MoveNextAsync() => new(Task.FromResult(false));
+        public ValueTask<bool> MoveNextAsync() 
+            => new(Task.FromResult(false));
     }
 
     public readonly struct MissingMoveNextEnumerator<T>
     {
-        public readonly T Current => default!;
+        public readonly T Current 
+            => default!;
     }
 
-    public readonly struct Enumerator<T>
+    public struct Enumerator<T>
     {
-        public readonly T Current => default!;
+        readonly T[] source;
+        int index;
 
-        public bool MoveNext() => false;
+        public Enumerator(T[] source)
+            => (this.source, index) = (source, -1);
+        
+        public readonly T Current 
+            => source[index];
 
-        public void Dispose() { } // should not be returned
+        public bool MoveNext() 
+            => ++index < source.Length;
+
+        public void Dispose() // should not be returned
+        { } 
     }
 
     
-    public readonly struct DisposableEnumerator<T> : IDisposable
+    public struct DisposableEnumerator<T> : IDisposable
     {
-        public readonly T Current => default!;
+        readonly T[] source;
+        int index;
 
-        public bool MoveNext() => false;
+        public DisposableEnumerator(T[] source)
+            => (this.source, index) = (source, -1);
+        
+        public readonly T Current 
+            => source[index];
 
-        public void Dispose() { }
+        public bool MoveNext() 
+            => ++index < source.Length;
+
+        public void Dispose() 
+        { }
     }
 
-    public readonly ref struct RefEnumerator<T>
+    public ref struct RefEnumerator<T>
     {
-        public readonly T Current => default!;
+        readonly ReadOnlySpan<T> source;
+        int index;
 
-        public bool MoveNext() => false;
+        public RefEnumerator(ReadOnlySpan<T> source)
+        {
+            this.source = source;
+            index = -1;
+        }
+        
+        public readonly T Current 
+            => source[index];
+
+        public bool MoveNext() 
+            => ++index < source.Length;
     }
     
-    public readonly ref struct DisposableRefEnumerator<T>
+    public ref struct DisposableRefEnumerator<T>
     {
-        public readonly T Current => default!;
+        readonly ReadOnlySpan<T> source;
+        int index;
 
-        public bool MoveNext() => false;
+        public DisposableRefEnumerator(ReadOnlySpan<T> source)
+        {
+            this.source = source;
+            index = -1;
+        }
+        
+        public readonly T Current 
+            => source[index];
 
-        public void Dispose() { }
+        public bool MoveNext() 
+            => ++index < source.Length;
+    
+        public void Dispose() 
+        { }
     }
 
-    public readonly struct AsyncEnumerator<T>
+    public struct AsyncEnumerator<T>
     {
-        public readonly T Current => default!;
+        readonly T[] source;
+        int index;
 
-        public ValueTask<bool> MoveNextAsync() => new(Task.FromResult(false));
+        public AsyncEnumerator(T[] source)
+            => (this.source, index) = (source, -1);
+        
+        public readonly T Current 
+            => source[index];
+
+        public ValueTask<bool> MoveNextAsync() 
+            => new(++index < source.Length);
     }
 
-    public class ExplicitEnumerator<T> : IEnumerator<T>
+    public class ExplicitGenericEnumerator<T> : IEnumerator<T>
     {
-        T IEnumerator<T>.Current => default!;
-        object? IEnumerator.Current => default;
+        readonly T[] source;
+        int index;
 
-        bool IEnumerator.MoveNext() => false;
+        public ExplicitGenericEnumerator(T[] source)
+            => (this.source, index) = (source, -1);
 
-        void IEnumerator.Reset() { }
+        T IEnumerator<T>.Current 
+            => source[index];
+        object? IEnumerator.Current 
+            => source[index];
 
-        void IDisposable.Dispose() { }
+        bool IEnumerator.MoveNext() 
+            => ++index < source.Length;
+
+        void IEnumerator.Reset() 
+        { }
+
+        void IDisposable.Dispose() 
+        { }
     }
 
-    public class ExplicitEnumerator : IEnumerator
+    public class ExplicitEnumerator<T> : IEnumerator
     {
-        object? IEnumerator.Current => default;
+        readonly T[] source;
+        int index;
 
-        bool IEnumerator.MoveNext() => false;
+        public ExplicitEnumerator(T[] source)
+            => (this.source, index) = (source, -1);
 
-        void IEnumerator.Reset() { }
+        object? IEnumerator.Current 
+            => source[index];
+
+        bool IEnumerator.MoveNext() 
+            => ++index < source.Length;
+
+        void IEnumerator.Reset() 
+        { }
     }
 
     public class ExplicitAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
-        T IAsyncEnumerator<T>.Current => default!;
+        readonly T[] source;
+        int index;
 
-        ValueTask<bool> IAsyncEnumerator<T>.MoveNextAsync() => new(Task.FromResult(false));
+        public ExplicitAsyncEnumerator(T[] source)
+            => (this.source, index) = (source, -1);
 
-        ValueTask IAsyncDisposable.DisposeAsync() => new();
+        T IAsyncEnumerator<T>.Current 
+            => source[index];
+
+        ValueTask<bool> IAsyncEnumerator<T>.MoveNextAsync() 
+            => new(++index < source.Length);
+
+        ValueTask IAsyncDisposable.DisposeAsync() 
+            => new();
     }
 }

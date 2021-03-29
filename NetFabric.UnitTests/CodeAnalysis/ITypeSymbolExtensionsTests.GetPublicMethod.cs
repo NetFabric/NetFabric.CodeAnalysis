@@ -13,7 +13,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
+            var typeSymbol = compilation.GetTypeSymbol(typeof(PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicMethod(methodName, parameters);
@@ -33,7 +33,7 @@ namespace NetFabric.CodeAnalysis.UnitTests
         {
             // Arrange
             var compilation = Utils.Compile(@"TestData/PropertiesAndMethods.cs");
-            var typeSymbol = compilation.GetTypeSymbol(typeof(TestData.PropertiesAndMethods));
+            var typeSymbol = compilation.GetTypeSymbol(typeof(PropertiesAndMethods));
 
             // Act
             var result = typeSymbol.GetPublicMethod(methodName, parameters);

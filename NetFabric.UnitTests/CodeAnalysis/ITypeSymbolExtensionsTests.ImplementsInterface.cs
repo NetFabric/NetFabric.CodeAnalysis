@@ -10,34 +10,34 @@ namespace NetFabric.CodeAnalysis.UnitTests
             => new()
             {
                 {
-                    typeof(TestData.Enumerable<>).MakeGenericType(typeof(TestData.TestType)),
+                    typeof(TestData.Enumerable<TestData.TestType>),
                     SpecialType.System_Collections_IEnumerable,
                     false,
                     null
                 },
                 {
-                    typeof(TestData.ExplicitEnumerable<>).MakeGenericType(typeof(TestData.TestType)),
+                    typeof(TestData.ExplicitEnumerable<TestData.TestType>),
                     SpecialType.System_Collections_IEnumerable,
                     true,
                     null
                 },
                 {
-                    typeof(TestData.ExplicitEnumerable<>).MakeGenericType(typeof(TestData.TestType)),
+                    typeof(TestData.ExplicitGenericEnumerable<TestData.TestType>),
                     SpecialType.System_Collections_Generic_IEnumerable_T,
                     true,
-                    new[] { typeof(NetFabric.TestData.TestType) }
+                    new[] { typeof(TestData.TestType) }
                 },
                 {
-                    typeof(TestData.HybridEnumerable<>).MakeGenericType(typeof(TestData.TestType)),
+                    typeof(TestData.HybridEnumerable<TestData.TestType>),
                     SpecialType.System_Collections_Generic_IEnumerable_T,
                     true,
-                    new[] { typeof(NetFabric.TestData.TestType) }
+                    new[] { typeof(TestData.TestType) }
                 },
                 {
-                    typeof(TestData.HybridEnumerable<>).MakeGenericType(typeof(TestData.TestType)),
+                    typeof(TestData.HybridEnumerable<TestData.TestType>),
                     SpecialType.System_Collections_Generic_IReadOnlyList_T,
                     false,
-                    new[] { typeof(NetFabric.TestData.TestType) }
+                    new[] { typeof(TestData.TestType) }
                 },
             };
 
