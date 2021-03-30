@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0;net5.0</TargetFrameworks>
     <PackageId>NetFabric.CodeAnalysis</PackageId>
     <Version>3.1.0</Version>
     <Description>Extensions to System.CodeAnalysis (Roslyn).</Description>
