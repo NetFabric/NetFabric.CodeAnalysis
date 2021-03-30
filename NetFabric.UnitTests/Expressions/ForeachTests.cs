@@ -19,6 +19,20 @@ namespace NetFabric.Expressions.UnitTests
 
         [Theory]
         [MemberData(nameof(Data))]
+        public void ForEach_With_Array_Must_Succeed(int[] source)
+        {
+            // Arrange
+            var expected = source.Sum();
+            
+            // Act
+            var result = Sum(source);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [MemberData(nameof(Data))]
         public void ForEach_With_ValueTypeEnumerator_Must_Succeed(int[] source)
         {
             // Arrange
