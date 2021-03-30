@@ -94,14 +94,14 @@ namespace NetFabric.Expressions.UnitTests
         int Sum<TEnumerable>(TEnumerable enumerable)
         {
             var enumerableParameter = Parameter(typeof(TEnumerable), "enumerable");
-            var sumParameter = Parameter(typeof(int), "sum");
+            var sumVariable = Variable(typeof(int), "sum");
             var expression = Block(
-                new[] { sumParameter },
-                Assign(sumParameter, Constant(0)),
+                new[] {sumVariable},
+                Assign(sumVariable, Constant(0)),
                 ExpressionEx.ForEach(
-                    enumerableParameter, 
-                    item => AddAssign(sumParameter, item)),
-                sumParameter);
+                    enumerableParameter,
+                    item => AddAssign(sumVariable, item)),
+                sumVariable);
             var sum = Lambda<Func<TEnumerable, int>>(expression, enumerableParameter).Compile();
 
             return sum(enumerable);

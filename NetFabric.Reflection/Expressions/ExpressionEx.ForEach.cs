@@ -1,6 +1,5 @@
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
 using NetFabric.Reflection;
 using static System.Linq.Expressions.Expression;
 
@@ -30,43 +29,67 @@ namespace NetFabric.Expressions
 
         public static Expression ForEach(EnumerableInfo enumerableInfo, Expression enumerable, Func<Expression, Expression> body)
         {
-            return enumerable.Type switch
-            {
-                { IsArray: true } => HandleArray(enumerable, body),
-                _ => HandleEnumerable(enumerableInfo, enumerable, body)
-            };
+            var enumerableType = enumerable.Type;
+            if (enumerableType.IsArray)
+                return HandleArray(enumerable, body);
 
+            if (enumerableType.FullName is not null 
+                && (enumerableType.FullName.StartsWith("System.ReadOnlySpan`1") || enumerableType.FullName.StartsWith("System.Span`1")))
+                return HandleSpan(enumerable, body);
+            
+            return HandleEnumerable(enumerableInfo, enumerable, body);
+            
             static Expression HandleArray(Expression array, Func<Expression, Expression> body)
             {
-                var indexParameter = Parameter(typeof(int), "index");
+                var indexVariable = Variable(typeof(int), "index");
                 return Block(
-                    new[] { indexParameter },
-                    Assign(indexParameter, Constant(0)),
+                    new[] { indexVariable },
+                    Assign(indexVariable, Constant(0)),
                     While(
-                        LessThan(indexParameter, Property(array, typeof(Array).GetPublicInstanceDeclaredOnlyProperty(nameof(Array.Length))!)),
+                        LessThan(indexVariable, Property(array, typeof(Array).GetPublicInstanceDeclaredOnlyProperty(nameof(Array.Length))!)),
                         Block(
-                            body(ArrayIndex(array, indexParameter)),
-                            PostIncrementAssign(indexParameter)
+                            body(ArrayIndex(array, indexVariable)),
+                            PostIncrementAssign(indexVariable)
                         )
                     )
                 );
+            }
+            
+            static Expression HandleSpan(Expression span, Func<Expression, Expression> body)
+            {
+                // throw exception because the indexer returns a reference to the item and 
+                // references are not yet supported by expression trees
+                throw new NotSupportedException("ForEach expression creation for Span<> and ReadOnlySpan<> is not supported.");
+                
+                // var indexVariable = Variable(typeof(int), "index");
+                // return Block(
+                //     new[] { indexVariable },
+                //     Assign(indexVariable, Constant(0)),
+                //     While(
+                //         LessThan(indexVariable, Property(span, span.Type.GetPublicInstanceDeclaredOnlyProperty(nameof(Array.Length))!)),
+                //         Block(
+                //             body(Property(span, span.Type.GetPublicInstanceDeclaredOnlyProperty("Item")!, indexVariable)),
+                //             PostIncrementAssign(indexVariable)
+                //         )
+                //     )
+                // );
             }
 
             static Expression HandleEnumerable(EnumerableInfo enumerableInfo, Expression enumerable, Func<Expression, Expression> body)
             {
                 var enumeratorType = enumerableInfo.GetEnumerator.ReturnType;
                 var enumeratorInfo = enumerableInfo.EnumeratorInfo;
-                var enumerator = Variable(enumeratorType, "enumerator");
+                var enumeratorVariable = Variable(enumeratorType, "enumerator");
                 return Block(
-                    new[] {enumerator},
-                    Assign(enumerator, Call(enumerable, enumerableInfo.GetEnumerator)),
+                    new[] { enumeratorVariable },
+                    Assign(enumeratorVariable, Call(enumerable, enumerableInfo.GetEnumerator)),
                     enumeratorInfo switch
                     {
-                        {Dispose: not null} => Disposable(enumeratorInfo, enumerator, body),
+                        {Dispose: not null} => Disposable(enumeratorInfo, enumeratorVariable, body),
                         _ => enumeratorType switch
                         {
-                            {IsValueType: true} => NonDisposableValueType(enumeratorInfo, enumerator, body),
-                            _ => NonDisposableReferenceType(enumeratorInfo, enumerator, body)
+                            {IsValueType: true} => NonDisposableValueType(enumeratorInfo, enumeratorVariable, body),
+                            _ => NonDisposableReferenceType(enumeratorInfo, enumeratorVariable, body)
                         }
                     });
 
@@ -84,7 +107,7 @@ namespace NetFabric.Expressions
                     return TryFinally(
                         EnumerationLoop(enumeratorInfo, enumerator, body),
                         Block(
-                            new[] {disposable, enumerator},
+                            new[] { disposable },
                             Assign(disposable, TypeAs(enumerator, typeof(IDisposable))),
                             IfThen(
                                 NotEqual(disposable, Constant(null)),
