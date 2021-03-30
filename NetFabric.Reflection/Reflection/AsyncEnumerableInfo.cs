@@ -21,14 +21,14 @@ namespace NetFabric.Reflection
             {
                 return GetAsyncEnumerator.GetParameters().Length switch
                 {
-                    0 => GetAsyncEnumerator.Invoke(instance, null),
-                    1 => GetAsyncEnumerator.Invoke(instance, new object[] { token }),
+                    0 => GetAsyncEnumerator.Invoke(instance, null)!,
+                    1 => GetAsyncEnumerator.Invoke(instance, new object[] { token })!,
                     _ => throw new Exception("Unexpected number of parameters for GetAsyncEnumerator()."),
                 };
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {GetAsyncEnumerator.DeclaringType.Name}.GetAsyncEnumerator().", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {GetAsyncEnumerator.DeclaringType!.Name}.GetAsyncEnumerator().", exception.InnerException!);
             }
         }
     }

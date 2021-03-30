@@ -18,11 +18,11 @@ namespace NetFabric.Reflection
         {
             try
             {
-                return GetEnumerator.Invoke(instance, null);
+                return GetEnumerator.Invoke(instance, null)!;
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {GetEnumerator.DeclaringType.Name}.GetEnumerator().", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {GetEnumerator.DeclaringType!.Name}.GetEnumerator().", exception.InnerException!);
             }
         }
     }

@@ -20,7 +20,7 @@ namespace NetFabric.Reflection
             IsByRefLike = isByRefLike;
         }
 
-        public object GetValueCurrent(object instance)
+        public object? GetValueCurrent(object instance)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType.Name}.Current.", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType!.Name}.Current.", exception.InnerException!);
             }
         }
 
@@ -36,11 +36,11 @@ namespace NetFabric.Reflection
         {
             try
             {
-                return (bool)MoveNext.Invoke(instance, null);
+                return (bool)MoveNext.Invoke(instance, null)!;
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {MoveNext.DeclaringType.Name}.MoveNext().", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {MoveNext.DeclaringType!.Name}.MoveNext().", exception.InnerException!);
             }
         }
 
@@ -55,7 +55,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Reset.DeclaringType.Name}.Reset().", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Reset.DeclaringType!.Name}.Reset().", exception.InnerException!);
             }
         }
 
@@ -70,7 +70,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Dispose.DeclaringType.Name}.Dispose().", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Dispose.DeclaringType!.Name}.Dispose().", exception.InnerException!);
             }
         }
     }
