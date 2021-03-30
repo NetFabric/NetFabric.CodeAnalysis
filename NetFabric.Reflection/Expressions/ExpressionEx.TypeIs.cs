@@ -6,10 +6,7 @@ namespace NetFabric.Expressions
 {
     public static partial class ExpressionEx
     {
-        public static Expression Is(Expression expression, Type type)
-            => NotEqual(TypeAs(expression, type), Constant(null));
-
-        public static Expression Is(Expression expression, Type type, ParameterExpression result)
+        public static Expression TypeIs(Expression expression, Type type, ParameterExpression result)
             => Block(
                 Assign(result, TypeAs(expression, type)),
                 NotEqual(result, Constant(null))
