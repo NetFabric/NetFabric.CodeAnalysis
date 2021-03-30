@@ -142,7 +142,7 @@ namespace NetFabric.CodeAnalysis
             if (getAsyncEnumerator is not null)
                 return true;
 
-            var asyncEnumerableType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerable`1");
+            var asyncEnumerableType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerable`1")!;
             if (typeSymbol.ImplementsInterface(asyncEnumerableType, out var genericArguments))
             {
                 getAsyncEnumerator = asyncEnumerableType
@@ -209,7 +209,7 @@ namespace NetFabric.CodeAnalysis
             [NotNullWhen(true)] out IMethodSymbol? moveNextAsync, 
             out IMethodSymbol? disposeAsync)
         {
-            var asyncDisposableType = compilation.GetTypeByMetadataName("System.IAsyncDisposable");
+            var asyncDisposableType = compilation.GetTypeByMetadataName("System.IAsyncDisposable")!;
             if (typeSymbol.ImplementsInterface(asyncDisposableType, out _))
                 disposeAsync = asyncDisposableType.GetPublicMethod("DisposeAsync");
             else
@@ -220,7 +220,7 @@ namespace NetFabric.CodeAnalysis
             if (current is not null && moveNextAsync is not null)
                 return true;
 
-            var asyncEnumeratorType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerator`1");
+            var asyncEnumeratorType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerator`1")!;
             if (typeSymbol.ImplementsInterface(asyncEnumeratorType, out var genericArguments))
             {
                 var interfaceType = asyncEnumeratorType

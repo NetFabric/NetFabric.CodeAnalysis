@@ -10,13 +10,12 @@ namespace NetFabric.Reflection
 {
     public static class TypeExtensions
     {        
-        const BindingFlags PublicInstanceDeclaredOnly = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
-        static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetMethod(nameof(IEnumerable.GetEnumerator), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
-        static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetProperty(nameof(IEnumerator.Current), PublicInstanceDeclaredOnly)!;
-        static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.MoveNext), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
-        static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetMethod(nameof(IEnumerator.Reset), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
-        static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetMethod(nameof(IDisposable.Dispose), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
-        static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetMethod(nameof(IAsyncDisposable.DisposeAsync), PublicInstanceDeclaredOnly, null, Type.EmptyTypes, null)!;
+        internal static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!;
+        internal static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyProperty(nameof(IEnumerator.Current))!;
+        internal static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!;
+        internal static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes)!;
+        internal static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes)!;
+        internal static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncDisposable.DisposeAsync), Type.EmptyTypes)!;
 
         public static bool IsEnumerable(this Type type, [NotNullWhen(true)] out EnumerableInfo? enumerableInfo)
             => IsEnumerable(type, out enumerableInfo, out var _);
@@ -117,7 +116,7 @@ namespace NetFabric.Reflection
 
             if (type.ImplementsInterface(typeof(IEnumerable<>), out var genericArguments))
             {
-                getEnumerator = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]).GetMethod("GetEnumerator");
+                getEnumerator = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!;
                 return true;
             }
 
@@ -143,7 +142,7 @@ namespace NetFabric.Reflection
 
             if (type.ImplementsInterface(typeof(IAsyncEnumerable<>), out var genericArguments))
             {
-                getAsyncEnumerator = typeof(IAsyncEnumerable<>).MakeGenericType(genericArguments[0]).GetMethod("GetAsyncEnumerator", new[] { typeof(CancellationToken) });
+                getAsyncEnumerator = typeof(IAsyncEnumerable<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyMethod("GetAsyncEnumerator", new[] { typeof(CancellationToken) })!;
                 return true;
             }
 
@@ -172,7 +171,7 @@ namespace NetFabric.Reflection
 
             if (type.ImplementsInterface(typeof(IEnumerator<>), out var genericArguments))
             {
-                current = typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetProperty("Current");
+                current = typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyProperty(nameof(IEnumerator.Current))!;
                 moveNext = MoveNextInfo;
                 reset = ResetInfo;
                 return true;
@@ -203,8 +202,8 @@ namespace NetFabric.Reflection
             if (type.ImplementsInterface(typeof(IAsyncEnumerator<>), out var genericArguments))
             {
                 var interfaceType = typeof(IAsyncEnumerator<>).MakeGenericType(genericArguments[0]);
-                current = interfaceType.GetProperty("Current");
-                moveNextAsync = interfaceType.GetMethod("MoveNextAsync");
+                current = interfaceType.GetPublicInstanceDeclaredOnlyProperty(nameof(IEnumerator.Current))!;
+                moveNextAsync = interfaceType.GetPublicInstanceDeclaredOnlyMethod("MoveNextAsync", Type.EmptyTypes)!;
                 return true;
             }
 
@@ -313,7 +312,16 @@ namespace NetFabric.Reflection
             return true;
         }
 
-        static bool IsByRefLike(this Type type)
+        const BindingFlags PublicInstanceDeclaredOnly =
+            BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+        
+        internal static PropertyInfo? GetPublicInstanceDeclaredOnlyProperty(this Type type, string name)
+            => type.GetProperty(name, PublicInstanceDeclaredOnly);
+        
+        internal static MethodInfo? GetPublicInstanceDeclaredOnlyMethod(this Type type, string name, Type[] types)
+            => type.GetMethod(name, PublicInstanceDeclaredOnly, null, types, null);
+
+        internal static bool IsByRefLike(this Type type) // this implementation works on any target framework
             => type.GetCustomAttributes()
                 .FirstOrDefault(attribute => attribute.GetType().Name == "IsByRefLikeAttribute") is not null;
     }

@@ -17,7 +17,7 @@ namespace NetFabric.Reflection
             DisposeAsync = disposeAsync;
         }
 
-        public object GetValueCurrent(object instance)
+        public object? GetValueCurrent(object instance)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType.Name}.Current.", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType!.Name}.Current.", exception.InnerException!);
             }
         }
 
@@ -33,11 +33,11 @@ namespace NetFabric.Reflection
         {
             try
             {
-                return (ValueTask<bool>)MoveNextAsync.Invoke(instance, null);
+                return (ValueTask<bool>)MoveNextAsync.Invoke(instance, null)!;
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {MoveNextAsync.DeclaringType.Name}.MoveNextAsync().", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {MoveNextAsync.DeclaringType!.Name}.MoveNextAsync().", exception.InnerException!);
             }
         }
 
@@ -48,11 +48,11 @@ namespace NetFabric.Reflection
 
             try
             {
-                return (ValueTask)DisposeAsync.Invoke(instance, null);
+                return (ValueTask)DisposeAsync.Invoke(instance, null)!;
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {DisposeAsync.DeclaringType.Name}.DisposeAsync().", exception.InnerException);
+                throw new EnumerationException($"Unhandled exception in {DisposeAsync.DeclaringType!.Name}.DisposeAsync().", exception.InnerException!);
             }
         }
     }

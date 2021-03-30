@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using NetFabric.Reflection;
 using static System.Linq.Expressions.Expression;
 
@@ -64,7 +65,7 @@ namespace NetFabric.Expressions
                         Assign(disposable, TypeAs(enumerator, typeof(IDisposable))),
                         IfThen(
                             NotEqual(disposable, Constant(null)),
-                            Call(disposable, typeof(IDisposable).GetMethod("Dispose")!)
+                            Call(disposable, Reflection.TypeExtensions.DisposeInfo)
                         )
                     )
                 );

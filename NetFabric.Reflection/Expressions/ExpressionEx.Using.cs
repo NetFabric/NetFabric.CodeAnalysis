@@ -1,3 +1,4 @@
+using NetFabric.Reflection;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -20,8 +21,7 @@ namespace NetFabric.Expressions
 
             static Expression DisposeValueType(Expression variable)
             {
-                var isByRefLike = IsByRefLike(variable.Type);
-                return isByRefLike switch
+                return variable.Type.IsByRefLike() switch
                 {
                     true => DisposeByRefLike(variable),
                     _ => Dispose(variable)
@@ -29,7 +29,7 @@ namespace NetFabric.Expressions
 
                 static Expression DisposeByRefLike(Expression variable)
                 {
-                    var disposeMethodInfo = variable.Type.GetMethod("Dispose")
+                    var disposeMethodInfo = variable.Type.GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes)
                                             ?? ThrowMustBeImplicitlyConvertibleToIDisposable<MethodInfo>(variable);
                     return Call(variable, disposeMethodInfo);
                 }
@@ -39,7 +39,7 @@ namespace NetFabric.Expressions
                     {
                         false => ThrowMustBeImplicitlyConvertibleToIDisposable<Expression>(variable),
 
-                        _ => Call(Convert(variable, typeof(IDisposable)), typeof(IDisposable).GetMethod("Dispose")!)
+                        _ => Call(Convert(variable, typeof(IDisposable)), Reflection.TypeExtensions.DisposeInfo)
                     };
             }
 
@@ -50,16 +50,12 @@ namespace NetFabric.Expressions
 
                     _ => IfThen(
                             NotEqual(variable, Constant(null)),
-                            Call(Convert(variable, typeof(IDisposable)), typeof(IDisposable).GetMethod("Dispose")!)
+                            Call(Convert(variable, typeof(IDisposable)), Reflection.TypeExtensions.DisposeInfo)
                         )
                 };
 
             static T ThrowMustBeImplicitlyConvertibleToIDisposable<T>(Expression variable)
                 => throw new Exception($"'{variable.Type.FullName}': type used in a using statement must be implicitly convertible to 'System.IDisposable'");
-
-            static bool IsByRefLike(Type type)
-                => type.GetCustomAttributes()
-                    .FirstOrDefault(attribute => attribute.GetType().Name == "IsByRefLikeAttribute") is not null;
         }
     }
 }

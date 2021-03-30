@@ -7,6 +7,7 @@ namespace NetFabric.Reflection
 {
     public sealed class EnumerableWrapper<TEnumerable, TItem>
         : IEnumerable<TItem>
+        where TEnumerable : notnull
     {
         public EnumerableWrapper(TEnumerable instance, EnumerableInfo info)
         {
@@ -35,8 +36,8 @@ namespace NetFabric.Reflection
             }
 
             public TItem Current 
-                => (TItem)info.GetValueCurrent(instance);
-            object IEnumerator.Current 
+                => (TItem)info.GetValueCurrent(instance)!;
+            object? IEnumerator.Current 
                 => info.GetValueCurrent(instance);
 
             public bool MoveNext() 

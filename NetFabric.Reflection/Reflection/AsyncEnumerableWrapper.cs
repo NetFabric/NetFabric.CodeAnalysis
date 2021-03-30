@@ -8,6 +8,7 @@ namespace NetFabric.Reflection
 {
     public sealed class AsyncEnumerableWrapper<TEnumerable, TItem>
         : IAsyncEnumerable<TItem>
+        where TEnumerable : notnull
     {
         public AsyncEnumerableWrapper(TEnumerable instance, AsyncEnumerableInfo info)
         {
@@ -34,7 +35,7 @@ namespace NetFabric.Reflection
             }
 
             public TItem Current 
-                => (TItem)info.GetValueCurrent(instance);
+                => (TItem)info.GetValueCurrent(instance)!;
 
             public ValueTask<bool> MoveNextAsync() 
                 => info.InvokeMoveNextAsync(instance);
