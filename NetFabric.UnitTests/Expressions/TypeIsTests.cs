@@ -19,12 +19,12 @@ namespace NetFabric.Expressions.UnitTests
         {
             // Arrange
             var valueParameter = Parameter(typeof(object), "value");
-            var resultParameter = Parameter(typeof(bool), "result");
-            var outputParameter = Parameter(typeof(string), "output");
+            var resultVariable = Variable(typeof(bool), "result");
+            var outputVariable = Variable(typeof(string), "output");
             var expression = Block(
-                new[] { resultParameter, outputParameter },
-                Assign(resultParameter, ExpressionEx.TypeIs(valueParameter, typeof(string), outputParameter)),
-                New(typeof(ValueTuple<bool, string>).GetConstructor(new[] {typeof(bool), typeof(string)})!, resultParameter, outputParameter));
+                new[] { resultVariable, outputVariable },
+                Assign(resultVariable, ExpressionEx.TypeIs(valueParameter, typeof(string), outputVariable)),
+                New(typeof(ValueTuple<bool, string>).GetConstructor(new[] {typeof(bool), typeof(string)})!, resultVariable, outputVariable));
             var func = Lambda<Func<object, ValueTuple<bool, string>>>(expression, valueParameter).Compile();
 
             // Act

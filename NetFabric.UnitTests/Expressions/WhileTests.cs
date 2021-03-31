@@ -23,20 +23,20 @@ namespace NetFabric.Expressions.UnitTests
             var valueParameter = Parameter(typeof(int[]), "value");
             var startParameter = Parameter(typeof(int), "start");
             var endParameter = Parameter(typeof(int), "end");
-            var sumParameter = Parameter(typeof(int), "sum");
-            var indexParameter = Parameter(typeof(int), "index");
+            var sumVariable = Variable(typeof(int), "sum");
+            var indexVariable = Variable(typeof(int), "index");
             var expression = Block(
-                new[] { indexParameter, sumParameter },
-                Assign(sumParameter, Constant(0)),
-                Assign(indexParameter, startParameter),
+                new[] { indexVariable, sumVariable },
+                Assign(sumVariable, Constant(0)),
+                Assign(indexVariable, startParameter),
                 ExpressionEx.While(
-                    LessThan(indexParameter, endParameter), 
+                    LessThan(indexVariable, endParameter), 
                     Block(
-                        AddAssign(sumParameter, ArrayIndex(valueParameter, indexParameter)),
-                        PostIncrementAssign(indexParameter)
+                        AddAssign(sumVariable, ArrayIndex(valueParameter, indexVariable)),
+                        PostIncrementAssign(indexVariable)
                     )
                 ),
-                sumParameter);
+                sumVariable);
             var sum = Lambda<Func<int[], int, int, int>>(expression, valueParameter, startParameter, endParameter).Compile();
 
             // Act

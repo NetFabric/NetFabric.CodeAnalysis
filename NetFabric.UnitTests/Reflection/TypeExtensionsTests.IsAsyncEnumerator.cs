@@ -8,7 +8,7 @@ namespace NetFabric.Reflection.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.AsyncEnumerators), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerator_Should_ReturnTrue(Type type, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerator_Should_ReturnTrue(Type type, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type? disposeAsyncDeclaringType, Type itemType)
         {
             // Arrange
 
@@ -43,7 +43,7 @@ namespace NetFabric.Reflection.UnitTests
 
         [Theory]
         [MemberData(nameof(DataSets.InvalidAsyncEnumerators), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type type, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type _)
+        public void IsAsyncEnumerator_With_MissingFeatures_Should_ReturnFalse(Type type, Type? currentDeclaringType, Type? moveNextAsyncDeclaringType, Type? _)
         {
             // Arrange
 
