@@ -10,6 +10,7 @@ namespace NetFabric.Reflection.UnitTests
     {
 
         [Theory]
+        [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
         public void IsEnumerable_Should_ReturnTrue(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType)
         {

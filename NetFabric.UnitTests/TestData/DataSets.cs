@@ -39,6 +39,38 @@ namespace NetFabric.TestData
                 { "StaticMethod", new[] { typeof(int), typeof(string) } },
             };
 
+        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type> Arrays =>
+            new()
+            {
+                {
+                    typeof(int[]),
+                    typeof(Array),
+                    typeof(IEnumerator),
+                    typeof(IEnumerator),
+                    typeof(IEnumerator),
+                    null,
+                    typeof(object)
+                },
+                {
+                    typeof(Span<int>),
+                    typeof(Span<int>),
+                    typeof(Span<int>.Enumerator),
+                    typeof(Span<int>.Enumerator),
+                    null,
+                    null,
+                    typeof(int).MakeByRefType()
+                },
+                {
+                    typeof(ReadOnlySpan<int>),
+                    typeof(ReadOnlySpan<int>),
+                    typeof(ReadOnlySpan<int>.Enumerator),
+                    typeof(ReadOnlySpan<int>.Enumerator),
+                    null,
+                    null,
+                    typeof(int).MakeByRefType()
+                },
+            };
+
         public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type> Enumerables =>
             new()
             {
