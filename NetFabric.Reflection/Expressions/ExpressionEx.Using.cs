@@ -1,5 +1,6 @@
 using NetFabric.Reflection;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using static System.Linq.Expressions.Expression;
@@ -10,51 +11,41 @@ namespace NetFabric.Expressions
     {
         public static Expression Using(Expression variable, Expression body)
         {
+            if (!variable.Type.IsDisposable(out var disposeMethodInfo, out var isByRefLike))
+                ThrowMustBeImplicitlyConvertibleToIDisposable<MethodInfo>(variable);
+                    
             return TryFinally(
                 body,
                 variable.Type switch
                 {
-                    { IsValueType: true } => DisposeValueType(variable),
-                    _ => DisposeReferenceType(variable)
+                    { IsValueType: true } => DisposeValueType(disposeMethodInfo, isByRefLike, variable),
+                    _ => DisposeReferenceType(disposeMethodInfo, variable)
                 });
 
-            static Expression DisposeValueType(Expression variable)
+            static Expression DisposeValueType(MethodInfo disposeMethodInfo, bool isByRefLike, Expression variable)
             {
-                return variable.Type.IsByRefLike() switch
+                return isByRefLike switch
                 {
-                    true => DisposeByRefLike(variable),
-                    _ => Dispose(variable)
+                    true => DisposeByRefLike(disposeMethodInfo, variable),
+                    _ => Dispose(disposeMethodInfo, variable)
                 };
 
-                static Expression DisposeByRefLike(Expression variable)
-                {
-                    var disposeMethodInfo = variable.Type.GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes)
-                                            ?? ThrowMustBeImplicitlyConvertibleToIDisposable<MethodInfo>(variable);
-                    return Call(variable, disposeMethodInfo);
-                }
+                static Expression DisposeByRefLike(MethodInfo disposeMethodInfo, Expression variable)
+                    => Call(variable, disposeMethodInfo);
 
-                static Expression Dispose(Expression variable)
-                    => typeof(IDisposable).IsAssignableFrom(variable.Type) switch
-                    {
-                        false => ThrowMustBeImplicitlyConvertibleToIDisposable<Expression>(variable),
-
-                        _ => Call(Convert(variable, typeof(IDisposable)), Reflection.TypeExtensions.DisposeInfo)
-                    };
+                static Expression Dispose(MethodInfo disposeMethodInfo, Expression variable)
+                    => Call(Convert(variable, typeof(IDisposable)), disposeMethodInfo);
             }
 
-            static Expression DisposeReferenceType(Expression variable)
-                => typeof(IDisposable).IsAssignableFrom(variable.Type) switch
-                {
-                    false => ThrowMustBeImplicitlyConvertibleToIDisposable<Expression>(variable),
+            static Expression DisposeReferenceType(MethodInfo disposeMethodInfo, Expression variable)
+                => IfThen(
+                    NotEqual(variable, Constant(null)),
+                    Call(Convert(variable, typeof(IDisposable)), disposeMethodInfo)
+                );
 
-                    _ => IfThen(
-                            NotEqual(variable, Constant(null)),
-                            Call(Convert(variable, typeof(IDisposable)), Reflection.TypeExtensions.DisposeInfo)
-                        )
-                };
-
+            [DoesNotReturn]
             static T ThrowMustBeImplicitlyConvertibleToIDisposable<T>(Expression variable)
-                => throw new Exception($"'{variable.Type.FullName}': type used in a using statement must be implicitly convertible to 'System.IDisposable'");
+                => throw new Exception($"'{variable.Type.Name}': type used in a using statement must be implicitly convertible to 'System.IDisposable'");
         }
     }
 }

@@ -7,14 +7,15 @@ namespace NetFabric.Expressions
     {
         public static Expression While(Expression condition, Expression body)
         {
-            var breakLabel = Label();
+            var label = Label();
             return Loop(
                 IfThenElse(
                     condition,
                     body,
-                    Break(breakLabel)
+                    Break(label)
                 ),
-                breakLabel);
+                label
+            );
         }
     }
 }
