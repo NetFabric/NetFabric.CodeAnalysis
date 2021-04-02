@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NetFabric.CodeAnalysis.UnitTests
+namespace NetFabric.CodeAnalysis.CSharp.UnitTests
 {
     public static class Utils
     {

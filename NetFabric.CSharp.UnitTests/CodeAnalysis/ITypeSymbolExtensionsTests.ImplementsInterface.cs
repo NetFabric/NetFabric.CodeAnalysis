@@ -1,8 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using NetFabric.CSharp.TestData;
+using Microsoft.CodeAnalysis;
 using System;
 using Xunit;
 
-namespace NetFabric.CodeAnalysis.UnitTests
+namespace NetFabric.CodeAnalysis.CSharp.UnitTests
 {
     public partial class ITypeSymbolExtensionsTests
     {
@@ -10,34 +11,34 @@ namespace NetFabric.CodeAnalysis.UnitTests
             => new()
             {
                 {
-                    typeof(TestData.Enumerable<TestData.TestType>),
+                    typeof(Enumerable<TestType>),
                     SpecialType.System_Collections_IEnumerable,
                     false,
                     null
                 },
                 {
-                    typeof(TestData.ExplicitEnumerable<TestData.TestType>),
+                    typeof(ExplicitEnumerable<TestType>),
                     SpecialType.System_Collections_IEnumerable,
                     true,
                     null
                 },
                 {
-                    typeof(TestData.ExplicitGenericEnumerable<TestData.TestType>),
+                    typeof(ExplicitGenericEnumerable<TestType>),
                     SpecialType.System_Collections_Generic_IEnumerable_T,
                     true,
-                    new[] { typeof(TestData.TestType) }
+                    new[] { typeof(TestType) }
                 },
                 {
-                    typeof(TestData.HybridEnumerable<TestData.TestType>),
+                    typeof(HybridEnumerable<TestType>),
                     SpecialType.System_Collections_Generic_IEnumerable_T,
                     true,
-                    new[] { typeof(TestData.TestType) }
+                    new[] { typeof(TestType) }
                 },
                 {
-                    typeof(TestData.HybridEnumerable<TestData.TestType>),
+                    typeof(HybridEnumerable<TestType>),
                     SpecialType.System_Collections_Generic_IReadOnlyList_T,
                     false,
-                    new[] { typeof(TestData.TestType) }
+                    new[] { typeof(TestType) }
                 },
             };
 

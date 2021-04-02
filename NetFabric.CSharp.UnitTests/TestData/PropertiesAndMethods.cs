@@ -1,4 +1,4 @@
-namespace NetFabric.TestData
+namespace NetFabric.CSharp.TestData
 {
     public class PropertiesAndMethods 
         : PropertiesAndMethodsBase

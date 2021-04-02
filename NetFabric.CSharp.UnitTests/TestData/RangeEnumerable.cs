@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NetFabric.Hyperlinq;
 
-namespace NetFabric.TestData
+namespace NetFabric.CSharp.TestData
 {
     public readonly struct RangeEnumerable
         : IValueReadOnlyCollection<int, RangeEnumerable.DisposableEnumerator>

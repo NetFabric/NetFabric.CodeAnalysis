@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CodeAnalysis", "N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.Reflection", "NetFabric.Reflection\NetFabric.Reflection.csproj", "{5C6E0F68-3A44-4D98-8145-9F6E375C093A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.UnitTests", "NetFabric.UnitTests\NetFabric.UnitTests.csproj", "{E1036685-1AA8-4A2D-81C0-386F4218C012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CSharp.UnitTests", "NetFabric.CSharp.UnitTests\NetFabric.CSharp.UnitTests.csproj", "{2EAD3D73-9067-4EC1-9E06-7D2C45E9AD84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,10 @@ Global
 		{5C6E0F68-3A44-4D98-8145-9F6E375C093A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C6E0F68-3A44-4D98-8145-9F6E375C093A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C6E0F68-3A44-4D98-8145-9F6E375C093A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1036685-1AA8-4A2D-81C0-386F4218C012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1036685-1AA8-4A2D-81C0-386F4218C012}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1036685-1AA8-4A2D-81C0-386F4218C012}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1036685-1AA8-4A2D-81C0-386F4218C012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAD3D73-9067-4EC1-9E06-7D2C45E9AD84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EAD3D73-9067-4EC1-9E06-7D2C45E9AD84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EAD3D73-9067-4EC1-9E06-7D2C45E9AD84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EAD3D73-9067-4EC1-9E06-7D2C45E9AD84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

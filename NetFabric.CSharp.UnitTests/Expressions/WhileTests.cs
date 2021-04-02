@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using static System.Linq.Expressions.Expression;
 
-namespace NetFabric.Expressions.UnitTests
+namespace NetFabric.Expressions.CSharp.UnitTests
 {
     public class WhileTests
     {

@@ -1,9 +1,9 @@
-﻿using NetFabric.TestData;
+﻿using NetFabric.CSharp.TestData;
 using System;
 using System.Collections;
 using Xunit;
 
-namespace NetFabric.CodeAnalysis.UnitTests
+namespace NetFabric.CodeAnalysis.CSharp.UnitTests
 {
     public partial class ITypeSymbolExtensionsTests
     {

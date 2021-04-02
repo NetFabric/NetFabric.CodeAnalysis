@@ -1,8 +1,8 @@
-﻿using NetFabric.TestData;
+﻿using NetFabric.CSharp.TestData;
 using System;
 using Xunit;
 
-namespace NetFabric.Reflection.UnitTests
+namespace NetFabric.Reflection.CSharp.UnitTests
 {
     public partial class TypeExtensionsTests
     {

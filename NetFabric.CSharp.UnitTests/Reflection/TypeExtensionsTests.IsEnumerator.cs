@@ -1,9 +1,9 @@
-﻿using NetFabric.TestData;
+﻿using NetFabric.CSharp.TestData;
 using System;
 using System.Collections;
 using Xunit;
 
-namespace NetFabric.Reflection.UnitTests
+namespace NetFabric.Reflection.CSharp.UnitTests
 {
     public partial class TypeExtensionsTests
     {
@@ -19,10 +19,10 @@ namespace NetFabric.Reflection.UnitTests
             // Assert   
             Assert.True(result);
 
-            Assert.NotNull(enumeratorInfo!.Current);
-            Assert.Equal(nameof(IEnumerator.Current), enumeratorInfo!.Current!.Name);
-            Assert.Equal(currentDeclaringType, enumeratorInfo!.Current!.DeclaringType);
-            Assert.Equal(itemType, enumeratorInfo!.Current!.PropertyType);
+            Assert.NotNull(enumeratorInfo!.GetCurrent);
+            Assert.Equal(nameof(IEnumerator.Current), enumeratorInfo!.GetCurrent!.Name);
+            Assert.Equal(currentDeclaringType, enumeratorInfo!.GetCurrent!.DeclaringType);
+            Assert.Equal(itemType, enumeratorInfo!.GetCurrent!.ReturnType);
 
             Assert.NotNull(enumeratorInfo!.MoveNext);
             Assert.Equal(nameof(IEnumerator.MoveNext), enumeratorInfo!.MoveNext!.Name);

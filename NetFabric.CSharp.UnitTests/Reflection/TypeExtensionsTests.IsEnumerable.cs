@@ -1,10 +1,10 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NetFabric.TestData;
+using NetFabric.CSharp.TestData;
 using System;
 using System.Collections;
 using Xunit;
 
-namespace NetFabric.Reflection.UnitTests
+namespace NetFabric.Reflection.CSharp.UnitTests
 {
     public partial class TypeExtensionsTests
     {
@@ -21,46 +21,53 @@ namespace NetFabric.Reflection.UnitTests
 
             // Assert   
             Assert.True(result);
+            Assert.NotNull(enumerableInfo);
 
-            Assert.NotNull(enumerableInfo!.GetEnumerator);
-            Assert.Equal(nameof(IEnumerable.GetEnumerator), enumerableInfo!.GetEnumerator!.Name);
-            Assert.Equal(getEnumeratorDeclaringType, enumerableInfo!.GetEnumerator!.DeclaringType);
-            Assert.Empty(enumerableInfo!.GetEnumerator!.GetParameters());
+            var getEnumerator = enumerableInfo!.GetEnumerator;
+            Assert.NotNull(getEnumerator);
+            Assert.True(getEnumerator!.Name == nameof(IEnumerable.GetEnumerator) || getEnumerator!.Name == "System.Collections.IEnumerable.GetEnumerator");
+            Assert.Equal(getEnumeratorDeclaringType, getEnumerator!.DeclaringType);
+            Assert.Empty(getEnumerator!.GetParameters());
 
             var enumeratorInfo = enumerableInfo!.EnumeratorInfo;
+            Assert.NotNull(enumeratorInfo);
 
-            Assert.NotNull(enumeratorInfo!.Current);
-            Assert.Equal(nameof(IEnumerator.Current), enumeratorInfo!.Current!.Name);
-            Assert.Equal(currentDeclaringType, enumeratorInfo!.Current!.DeclaringType);
-            Assert.Equal(itemType, enumeratorInfo!.Current!.PropertyType);
+            var getCurrent = enumeratorInfo!.GetCurrent;
+            Assert.NotNull(getCurrent);
+            Assert.Equal("get_Current", getCurrent!.Name);
+            Assert.Equal(currentDeclaringType, getCurrent!.DeclaringType);
+            Assert.Equal(itemType, getCurrent!.ReturnType);
 
-            Assert.NotNull(enumeratorInfo!.MoveNext);
-            Assert.Equal(nameof(IEnumerator.MoveNext), enumeratorInfo!.MoveNext!.Name);
-            Assert.Equal(moveNextDeclaringType, enumeratorInfo!.MoveNext!.DeclaringType);
-            Assert.Empty(enumeratorInfo!.MoveNext!.GetParameters());
+            var moveNext = enumeratorInfo!.MoveNext;
+            Assert.NotNull(moveNext);
+            Assert.Equal(nameof(IEnumerator.MoveNext), moveNext!.Name);
+            Assert.Equal(moveNextDeclaringType, moveNext!.DeclaringType);
+            Assert.Empty(moveNext!.GetParameters());
 
+            var reset = enumeratorInfo!.Reset;
             if (resetDeclaringType is null)
             {
-                Assert.Null(enumeratorInfo!.Reset);
+                Assert.Null(reset);
             }
             else
             {
-                Assert.NotNull(enumeratorInfo!.Reset);
-                Assert.Equal(nameof(IEnumerator.Reset), enumeratorInfo!.Reset!.Name);
-                Assert.Equal(resetDeclaringType, enumeratorInfo!.Reset!.DeclaringType);
-                Assert.Empty(enumeratorInfo!.Reset!.GetParameters());
+                Assert.NotNull(reset);
+                Assert.Equal(nameof(IEnumerator.Reset), reset!.Name);
+                Assert.Equal(resetDeclaringType, reset!.DeclaringType);
+                Assert.Empty(reset!.GetParameters());
             }
 
+            var dispose = enumeratorInfo!.Dispose;
             if (disposeDeclaringType is null)
             {
-                Assert.Null(enumeratorInfo!.Dispose);
+                Assert.Null(dispose);
             }
             else
             {
-                Assert.NotNull(enumeratorInfo!.Dispose);
-                Assert.Equal(nameof(IDisposable.Dispose), enumeratorInfo!.Dispose!.Name);
-                Assert.Equal(disposeDeclaringType, enumeratorInfo!.Dispose!.DeclaringType);
-                Assert.Empty(enumeratorInfo!.Dispose!.GetParameters());
+                Assert.NotNull(dispose);
+                Assert.Equal(nameof(IDisposable.Dispose), dispose!.Name);
+                Assert.Equal(disposeDeclaringType, dispose!.DeclaringType);
+                Assert.Empty(dispose!.GetParameters());
             }
         }
 

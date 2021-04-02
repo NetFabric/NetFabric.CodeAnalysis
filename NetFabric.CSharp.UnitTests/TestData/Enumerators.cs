@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NetFabric.TestData
+namespace NetFabric.CSharp.TestData
 {
     public readonly struct MissingCurrentAndMoveNextEnumerator
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
-namespace NetFabric.TestData
+namespace NetFabric.CSharp.TestData
 {
     public static partial class DataSets
     {
@@ -44,12 +44,12 @@ namespace NetFabric.TestData
             {
                 {
                     typeof(int[]),
-                    typeof(Array),
+                    typeof(IEnumerable<int>),
+                    typeof(IEnumerator<int>),
                     typeof(IEnumerator),
                     typeof(IEnumerator),
-                    typeof(IEnumerator),
-                    null,
-                    typeof(object)
+                    typeof(IDisposable),
+                    typeof(int)
                 },
                 {
                     typeof(Span<int>),

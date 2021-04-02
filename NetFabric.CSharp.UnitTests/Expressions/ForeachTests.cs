@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NetFabric.TestData;
+using NetFabric.CSharp.TestData;
 using Xunit;
 using static System.Linq.Expressions.Expression;
 
-namespace NetFabric.Expressions.UnitTests
+namespace NetFabric.Expressions.CSharp.UnitTests
 {
     public class ForeachTests
     {
