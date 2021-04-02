@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -11,203 +12,185 @@ namespace NetFabric.CodeAnalysis
     {
         public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
             [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols)
-            => IsEnumerable(typeSymbol, compilation, out enumerableSymbols, out var _);
+            => IsEnumerable(typeSymbol, compilation, out enumerableSymbols, out _);
 
         public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
             [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
             out Errors errors)
         {
-            if (!typeSymbol.IsEnumerableType(compilation, out var getEnumerator))
+            var getEnumerator = typeSymbol.GetPublicMethod("GetEnumerator");
+            if (getEnumerator is not null)
             {
-                enumerableSymbols = default;
-                errors = Errors.MissingGetEnumerable;
-                return false;
+                var enumeratorType = getEnumerator.ReturnType;
+                
+                var current = enumeratorType.GetPublicReadProperty(nameof(IEnumerator.Current));
+                if (current is null)
+                {
+                    enumerableSymbols = default;
+                    errors = Errors.MissingCurrent;
+                    return false;
+                }
+                
+                var moveNext = enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext));
+                if (moveNext is null)
+                {
+                    enumerableSymbols = default;
+                    errors = Errors.MissingMoveNext;
+                    return false;
+                }
+
+                var reset = enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset));
+                _ = enumeratorType.IsDisposable(compilation, out var dispose, out var isRefLike);
+                
+                enumerableSymbols = new EnumerableSymbols(
+                    getEnumerator,
+                    new EnumeratorSymbols(
+                        current,
+                        moveNext,
+                        reset,
+                        dispose,
+                        isRefLike
+                    )
+                );
+                errors = Errors.None; 
+                return true;
             }
 
-            if (!getEnumerator.ReturnType.IsEnumerator(compilation, out var enumeratorSymbols, out errors))
+            if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_Generic_IEnumerable_T, out var genericArguments))
             {
-                enumerableSymbols = default;
-                return false;
+                var genericEnumerableType = compilation
+                    .GetSpecialType(SpecialType.System_Collections_Generic_IEnumerable_T)
+                    .Construct(genericArguments[0]);
+                var genericEnumeratorType = compilation
+                    .GetSpecialType(SpecialType.System_Collections_Generic_IEnumerator_T)
+                    .Construct(genericArguments[0]);
+                var enumeratorType = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerator);
+                var disposableType = compilation.GetSpecialType(SpecialType.System_IDisposable);
+
+                enumerableSymbols = new EnumerableSymbols(
+                    genericEnumerableType.GetPublicMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!,
+                    new EnumeratorSymbols(
+                        genericEnumeratorType.GetPublicReadProperty(nameof(IEnumerator<int>.Current))!,
+                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
+                        enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                        disposableType.GetPublicMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
+                        false
+                    )
+                );
+                errors = Errors.None; 
+                return true;
             }
 
-            enumerableSymbols = new EnumerableSymbols(getEnumerator, enumeratorSymbols);
-            errors = Errors.None;
-            return true;
+            if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_IEnumerable, out _))
+            {
+                var enumerableType = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerable);
+                var enumeratorType = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerator);
+
+                enumerableSymbols = new EnumerableSymbols(
+                    enumerableType.GetPublicMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!,
+                    new EnumeratorSymbols(
+                        enumeratorType.GetPublicReadProperty(nameof(IEnumerator.Current))!,
+                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
+                        enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                        null,
+                        false
+                    )
+                );
+                errors = Errors.None; 
+                return true;
+            }
+
+            enumerableSymbols = default;
+            errors = Errors.MissingGetEnumerator;
+            return false;
         }
 
         public static bool IsAsyncEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
             [NotNullWhen(true)] out AsyncEnumerableSymbols? enumerableSymbols)
-            => IsAsyncEnumerable(typeSymbol, compilation, out enumerableSymbols, out var _);
+            => IsAsyncEnumerable(typeSymbol, compilation, out enumerableSymbols, out _);
 
         public static bool IsAsyncEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
             [NotNullWhen(true)] out AsyncEnumerableSymbols? enumerableSymbols,
             out Errors errors)
         {
-            if (!typeSymbol.IsAsyncEnumerableType(compilation, out var getEnumerator))
-            {
-                enumerableSymbols = default;
-                errors = Errors.MissingGetEnumerable;
-                return false;
-            }
+            var getEnumerator =
+                typeSymbol.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken))
+                ?? typeSymbol.GetPublicMethod("GetAsyncEnumerator");
 
-            if (!getEnumerator.ReturnType.IsAsyncEnumerator(compilation, out var enumeratorSymbols, out errors))
-            {
-                enumerableSymbols = default;
-                return false;
-            }
-
-            enumerableSymbols = new AsyncEnumerableSymbols(getEnumerator, enumeratorSymbols);
-            return true;
-        }
-
-        public static bool IsEnumerator(this ITypeSymbol typeSymbol, Compilation compilation,
-            [NotNullWhen(true)] out EnumeratorSymbols? enumeratorSymbols)
-            => IsEnumerator(typeSymbol, compilation, out enumeratorSymbols, out var _);
-
-        public static bool IsEnumerator(this ITypeSymbol typeSymbol, Compilation compilation,
-            [NotNullWhen(true)] out EnumeratorSymbols? enumeratorSymbols,
-            out Errors errors)
-        {
-            if (typeSymbol.IsEnumeratorType(compilation, out var current, out var moveNext, out var reset, out var dispose, out var isRefLikeType))
-            {
-                enumeratorSymbols = new EnumeratorSymbols(current, moveNext, reset, dispose, isRefLikeType);
-                errors = Errors.None;
-                return true;
-            }
-
-            enumeratorSymbols = default;
-            errors = Errors.None;
-            if (current is null) errors |= Errors.MissingCurrent;
-            if (moveNext is null) errors |= Errors.MissingMoveNext;
-            return false;
-        }
-
-        public static bool IsAsyncEnumerator(this ITypeSymbol typeSymbol, Compilation compilation,
-            [NotNullWhen(true)] out AsyncEnumeratorSymbols? enumeratorSymbols)
-            => IsAsyncEnumerator(typeSymbol, compilation, out enumeratorSymbols, out var _);
-
-        public static bool IsAsyncEnumerator(this ITypeSymbol typeSymbol, Compilation compilation,
-            [NotNullWhen(true)] out AsyncEnumeratorSymbols? enumeratorSymbols,
-            out Errors errors)
-        {
-            if (typeSymbol.IsAsyncEnumeratorType(compilation, out var current, out var moveNext, out var dispose))
-            {
-                enumeratorSymbols = new AsyncEnumeratorSymbols(current, moveNext, dispose);
-                errors = Errors.None;
-                return true;
-            }
-
-            enumeratorSymbols = default;
-            errors = Errors.None;
-            if (current is null) errors |= Errors.MissingCurrent;
-            if (moveNext is null) errors |= Errors.MissingMoveNext;
-            return false;
-        }
-
-        static bool IsEnumerableType(this ITypeSymbol typeSymbol, Compilation compilation, 
-            [NotNullWhen(true)] out IMethodSymbol? getEnumerator)
-        {
-            getEnumerator = typeSymbol.GetPublicMethod("GetEnumerator");
             if (getEnumerator is not null)
-                return true;
-
-            if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_Generic_IEnumerable_T, out var genericArguments))
             {
-                var interfaceType = compilation
-                    .GetSpecialType(SpecialType.System_Collections_Generic_IEnumerable_T)
-                    .Construct(genericArguments[0]);
-                getEnumerator = interfaceType.GetPublicMethod("GetEnumerator");
-                return getEnumerator is not null;
-            }
+                var enumeratorType = getEnumerator.ReturnType;
+                
+                var current = enumeratorType.GetPublicReadProperty("Current");
+                if (current is null)
+                {
+                    enumerableSymbols = default;
+                    errors = Errors.MissingCurrent;
+                    return false;
+                }
+                
+                var moveNext = enumeratorType.GetPublicMethod("MoveNextAsync");
+                if (moveNext is null)
+                {
+                    enumerableSymbols = default;
+                    errors = Errors.MissingMoveNext;
+                    return false;
+                }
 
-            if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_IEnumerable, out _))
-            {
-                var interfaceType = compilation
-                    .GetSpecialType(SpecialType.System_Collections_IEnumerable);
-                getEnumerator = interfaceType.GetPublicMethod("GetEnumerator");
-                return getEnumerator is not null;
-            }
-
-            return false;
-        }
-
-        static bool IsAsyncEnumerableType(this ITypeSymbol typeSymbol, Compilation compilation, 
-            [NotNullWhen(true)] out IMethodSymbol? getAsyncEnumerator)
-        {
-            getAsyncEnumerator = typeSymbol.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken));
-            if (getAsyncEnumerator is not null)
+                _ = enumeratorType.IsAsyncDisposable(compilation, out var dispose);
+                
+                enumerableSymbols = new AsyncEnumerableSymbols(
+                    getEnumerator,
+                    new AsyncEnumeratorSymbols(
+                        current,
+                        moveNext,
+                        dispose
+                    )
+                );
+                errors = Errors.None; 
                 return true;
-
-            getAsyncEnumerator = typeSymbol.GetPublicMethod("GetAsyncEnumerator");
-            if (getAsyncEnumerator is not null)
-                return true;
+            }
 
             var asyncEnumerableType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerable`1")!;
             if (typeSymbol.ImplementsInterface(asyncEnumerableType, out var genericArguments))
             {
-                getAsyncEnumerator = asyncEnumerableType
-                    .Construct(genericArguments[0])
-                    .GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken));
-                return getAsyncEnumerator is not null;
-            }
+                var asyncEnumeratorType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerator`1")!.Construct(genericArguments[0]);
+                var asyncDisposableType = compilation.GetTypeByMetadataName("System.IAsyncDisposable")!;
 
-            return false;
-        }
-
-        static bool IsEnumeratorType(this ITypeSymbol typeSymbol, Compilation compilation, 
-            [NotNullWhen(true)] out IPropertySymbol? current, 
-            [NotNullWhen(true)] out IMethodSymbol? moveNext, 
-            out IMethodSymbol? reset, 
-            out IMethodSymbol? dispose,
-            out bool isRefLikeType)
-        {
-            isRefLikeType = typeSymbol.IsRefLikeType;
-            dispose = isRefLikeType switch
-            {
-                true => typeSymbol.GetPublicMethod(nameof(IDisposable.Dispose)),
-                _ => typeSymbol.ImplementsInterface(SpecialType.System_IDisposable, out _)
-                    ? compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(nameof(IDisposable.Dispose))
-                    : default
-            };
-
-            current = typeSymbol.GetPublicProperty(nameof(IEnumerator.Current));
-            moveNext = typeSymbol.GetPublicMethod(nameof(IEnumerator.MoveNext));
-            reset = typeSymbol.GetPublicMethod(nameof(IEnumerator.Reset));
-            if (current is not null && moveNext is not null)
+                enumerableSymbols = new AsyncEnumerableSymbols(
+                    asyncEnumerableType.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken))!,
+                    new AsyncEnumeratorSymbols(
+                        asyncEnumeratorType.GetPublicReadProperty("Current")!,
+                        asyncEnumeratorType.GetPublicMethod("MoveNextAsync", Type.EmptyTypes)!,
+                        asyncDisposableType.GetPublicMethod("DisposeAsync", Type.EmptyTypes)
+                    )
+                );
+                errors = Errors.None; 
                 return true;
-
-            if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_Generic_IEnumerator_T, out var genericArguments))
-            {
-                var enumeratorOfT = compilation
-                    .GetSpecialType(SpecialType.System_Collections_Generic_IEnumerator_T)
-                    .Construct(genericArguments[0]);
-                var enumerator = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerator);
-
-                current = enumeratorOfT.GetPublicProperty(nameof(IEnumerator.Current));
-                moveNext = enumerator.GetPublicMethod(nameof(IEnumerator.MoveNext));
-                reset = enumerator.GetPublicMethod(nameof(IEnumerator.Reset));
-
-                return current is not null && moveNext is not null;
             }
 
-            if (typeSymbol.ImplementsInterface(SpecialType.System_Collections_IEnumerator, out _))
-            {
-                var enumerator = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerator);
-
-                current = enumerator.GetPublicProperty(nameof(IEnumerator.Current));
-                moveNext = enumerator.GetPublicMethod(nameof(IEnumerator.MoveNext));
-                reset = enumerator.GetPublicMethod(nameof(IEnumerator.Reset));
-
-                return current is not null && moveNext is not null;
-            }
-
+            enumerableSymbols = default;
+            errors = Errors.MissingGetEnumerator;
             return false;
         }
 
-        static bool IsAsyncEnumeratorType(this ITypeSymbol typeSymbol, Compilation compilation,
-            [NotNullWhen(true)] out IPropertySymbol? current,
-            [NotNullWhen(true)] out IMethodSymbol? moveNextAsync, 
-            out IMethodSymbol? disposeAsync)
+        public static bool IsDisposable(this ITypeSymbol typeSymbol, Compilation compilation, 
+            [NotNullWhen(true)] out IMethodSymbol? dispose,
+            out bool isRefLike)
+        {
+            isRefLike = typeSymbol.IsRefLikeType;
+            if (isRefLike)
+                dispose = typeSymbol.GetPublicMethod(nameof(IDisposable.Dispose));
+            else if (typeSymbol.ImplementsInterface(SpecialType.System_IDisposable, out _))
+                dispose = compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(nameof(IDisposable.Dispose));
+            else
+                dispose = default;
+
+            return dispose is not null;
+        }
+
+        public static bool IsAsyncDisposable(this ITypeSymbol typeSymbol, Compilation compilation,
+            [NotNullWhen(true)] out IMethodSymbol? disposeAsync)
         {
             var asyncDisposableType = compilation.GetTypeByMetadataName("System.IAsyncDisposable")!;
             if (typeSymbol.ImplementsInterface(asyncDisposableType, out _))
@@ -215,29 +198,14 @@ namespace NetFabric.CodeAnalysis
             else
                 disposeAsync = default;
 
-            current = typeSymbol.GetPublicProperty("Current");
-            moveNextAsync = typeSymbol.GetPublicMethod("MoveNextAsync");
-            if (current is not null && moveNextAsync is not null)
-                return true;
-
-            var asyncEnumeratorType = compilation.GetTypeByMetadataName("System.Collections.Generic.IAsyncEnumerator`1")!;
-            if (typeSymbol.ImplementsInterface(asyncEnumeratorType, out var genericArguments))
-            {
-                var interfaceType = asyncEnumeratorType
-                    .Construct(genericArguments[0]);
-                current = interfaceType.GetPublicProperty("Current");
-                moveNextAsync = interfaceType.GetPublicMethod("MoveNextAsync");
-                return current is not null && moveNextAsync is not null;
-            }
-
-            return false;
+            return disposeAsync is not null;
         }
 
-        public static IPropertySymbol? GetPublicProperty(this ITypeSymbol typeSymbol, string name)
+        public static IPropertySymbol? GetPublicReadProperty(this ITypeSymbol typeSymbol, string name)
         {
             foreach (var member in typeSymbol.GetMembers(name).OfType<IPropertySymbol>())
             {
-                if (!member.IsStatic && member.DeclaredAccessibility == Accessibility.Public)
+                if (!member.IsStatic && member.DeclaredAccessibility == Accessibility.Public && member.GetMethod is not null)
                     return member;
             }
 
@@ -245,7 +213,7 @@ namespace NetFabric.CodeAnalysis
             {
                 foreach (var @interface in typeSymbol.AllInterfaces)
                 {
-                    var property = @interface.GetPublicProperty(name);
+                    var property = @interface.GetPublicReadProperty(name);
                     if (property is not null)
                         return property;
                 }
@@ -254,7 +222,7 @@ namespace NetFabric.CodeAnalysis
             {
                 var baseType = typeSymbol.BaseType;
                 if (baseType is not null)
-                    return baseType.GetPublicProperty(name);
+                    return baseType.GetPublicReadProperty(name);
             }
 
             return null;

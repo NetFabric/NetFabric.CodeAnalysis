@@ -10,260 +10,182 @@ namespace NetFabric.Reflection
 {
     public static class TypeExtensions
     {        
-        internal static readonly MethodInfo GetEnumeratorInfo = typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!;
-        internal static readonly PropertyInfo CurrentInfo = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyProperty(nameof(IEnumerator.Current))!;
-        internal static readonly MethodInfo MoveNextInfo = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!;
-        internal static readonly MethodInfo ResetInfo = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes)!;
-        internal static readonly MethodInfo DisposeInfo = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes)!;
-        internal static readonly MethodInfo DisposeAsyncInfo = typeof(IAsyncDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncDisposable.DisposeAsync), Type.EmptyTypes)!;
-
         public static bool IsEnumerable(this Type type, [NotNullWhen(true)] out EnumerableInfo? enumerableInfo)
-            => IsEnumerable(type, out enumerableInfo, out var _);
+            => IsEnumerable(type, out enumerableInfo, out _);
 
         public static bool IsEnumerable(this Type type,
             [NotNullWhen(true)] out EnumerableInfo? enumerableInfo,
             out Errors errors)
         {
-            if (!type.IsEnumerableType(out var getEnumerator))
+            if (!type.IsArray && !type.IsInterface)
             {
-                enumerableInfo = default;
-                errors = Errors.MissingGetEnumerable;
-                return false;
+                var getEnumerator = type.GetPublicInstanceMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes);
+                if (getEnumerator is not null)
+                {
+                    var enumeratorType = getEnumerator.ReturnType;
+                    
+                    var current = enumeratorType.GetPublicInstanceReadProperty(nameof(IEnumerator.Current));
+                    if (current is null)
+                    {
+                        enumerableInfo = default;
+                        errors = Errors.MissingCurrent;
+                        return false;
+                    }
+                    
+                    var moveNext = enumeratorType.GetPublicInstanceMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes);
+                    if (moveNext is null)
+                    {
+                        enumerableInfo = default;
+                        errors = Errors.MissingMoveNext;
+                        return false;
+                    }
+                    
+                    var reset = enumeratorType.GetPublicInstanceMethod(nameof(IEnumerator.Reset), Type.EmptyTypes);
+                    _ = enumeratorType.IsDisposable(out var dispose, out var isByRefLike);
+
+                    enumerableInfo = new EnumerableInfo(
+                        getEnumerator,
+                        new EnumeratorInfo(
+                            current,
+                            moveNext,
+                            reset,
+                            dispose,
+                            isByRefLike
+                        )
+                    );
+                    errors = Errors.None; 
+                    return true;
+                }
             }
-
-            if (!getEnumerator.ReturnType.IsEnumerator(out var enumeratorInfo, out errors))
-            {
-                enumerableInfo = default;
-                return false;
-            }
-
-            enumerableInfo = new EnumerableInfo(getEnumerator, enumeratorInfo);
-            return true;
-        }
-
-        public static bool IsAsyncEnumerable(this Type type, [NotNullWhen(true)] out AsyncEnumerableInfo? enumerableInfo)
-            => IsAsyncEnumerable(type, out enumerableInfo, out var _);
-
-        public static bool IsAsyncEnumerable(this Type type,
-            [NotNullWhen(true)] out AsyncEnumerableInfo? enumerableInfo,
-            out Errors errors)
-        {
-            if (!type.IsAsyncEnumerableType(out var getAsyncEnumerator))
-            {
-                enumerableInfo = default;
-                errors = Errors.MissingGetEnumerable;
-                return false;
-            }
-
-            if (!getAsyncEnumerator.ReturnType.IsAsyncEnumerator(out var asyncEnumeratorInfo, out errors))
-            {
-                enumerableInfo = default;
-                return false;
-            }
-
-            enumerableInfo = new AsyncEnumerableInfo(getAsyncEnumerator, asyncEnumeratorInfo);
-            return true;
-        }
-
-        public static bool IsEnumerator(this Type type, [NotNullWhen(true)] out EnumeratorInfo? enumeratorInfo)
-            => IsEnumerator(type, out enumeratorInfo, out var _);
-
-        public static bool IsEnumerator(this Type type,
-            [NotNullWhen(true)] out EnumeratorInfo? enumeratorInfo,
-            out Errors errors)
-        {
-            if (type.IsEnumeratorType(out var current, out var moveNext, out var reset, out var dispose, out var isByReflike))
-            {
-                enumeratorInfo = new EnumeratorInfo(current, moveNext, reset, dispose, isByReflike);
-                errors = Errors.None;
-                return true;
-            }
-
-            enumeratorInfo = default;
-            errors = Errors.None;
-            if (current is null) errors |= Errors.MissingCurrent;
-            if (moveNext is null) errors |= Errors.MissingMoveNext;
-            return false;
-        }
-
-        public static bool IsAsyncEnumerator(this Type type, [NotNullWhen(true)] out AsyncEnumeratorInfo? enumeratorInfo)
-            => IsAsyncEnumerator(type, out enumeratorInfo, out var _);
-
-        public static bool IsAsyncEnumerator(this Type type,
-            [NotNullWhen(true)] out AsyncEnumeratorInfo? enumeratorInfo, 
-            out Errors errors)
-        {
-            if (type.IsAsyncEnumeratorType(out var current, out var moveNextAsync, out var disposeAsync))
-            {
-                enumeratorInfo = new AsyncEnumeratorInfo(current, moveNextAsync, disposeAsync);
-                errors = Errors.None;
-                return true;
-            }
-
-            enumeratorInfo = default;
-            errors = Errors.None;
-            if (current is null) errors |= Errors.MissingCurrent;
-            if (moveNextAsync is null) errors |= Errors.MissingMoveNext;
-            return false;
-        }
-
-        static bool IsEnumerableType(this Type type,
-            [NotNullWhen(true)] out MethodInfo? getEnumerator)
-        {
-            getEnumerator = type.GetPublicMethod("GetEnumerator");
-            if (getEnumerator is not null)
-                return true;
 
             if (type.ImplementsInterface(typeof(IEnumerable<>), out var genericArguments))
             {
-                getEnumerator = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!;
+                var genericType = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]);
+                enumerableInfo = new EnumerableInfo(
+                    genericType.GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!,
+                    new EnumeratorInfo(
+                        typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator<int>.Current))!,
+                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
+                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                        typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
+                        false
+                    )
+                );
+                errors = Errors.None; 
                 return true;
             }
 
             if (type.ImplementsInterface(typeof(IEnumerable), out _))
             {
-                getEnumerator = GetEnumeratorInfo;
+                enumerableInfo = new EnumerableInfo(
+                    typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!,
+                    new EnumeratorInfo(
+                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator.Current))!,
+                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
+                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                        null,
+                        false
+                    )
+                );
+                errors = Errors.None; 
                 return true;
             }
 
+            enumerableInfo = default;
+            errors = Errors.MissingGetEnumerator;
             return false;
         }
 
-        static bool IsAsyncEnumerableType(this Type type,
-            [NotNullWhen(true)] out MethodInfo? getAsyncEnumerator)
-        {
-            getAsyncEnumerator = type.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken));
-            if (getAsyncEnumerator is not null)
-                return true;
+        public static bool IsAsyncEnumerable(this Type type, [NotNullWhen(true)] out AsyncEnumerableInfo? enumerableInfo)
+            => IsAsyncEnumerable(type, out enumerableInfo, out _);
 
-            getAsyncEnumerator = type.GetPublicMethod("GetAsyncEnumerator");
-            if (getAsyncEnumerator is not null)
-                return true;
+        public static bool IsAsyncEnumerable(this Type type,
+            [NotNullWhen(true)] out AsyncEnumerableInfo? enumerableInfo,
+            out Errors errors)
+        {
+            if (!type.IsInterface)
+            {
+                var getAsyncEnumerator = type.GetPublicInstanceMethod(nameof(IAsyncEnumerable<int>.GetAsyncEnumerator), typeof(CancellationToken));
+                if (getAsyncEnumerator is null)
+                    getAsyncEnumerator = type.GetPublicInstanceMethod(nameof(IAsyncEnumerable<int>.GetAsyncEnumerator));
+                
+                if (getAsyncEnumerator is not null)
+                {
+                    var enumeratorType = getAsyncEnumerator.ReturnType;
+                    
+                    var current = enumeratorType.GetPublicInstanceReadProperty(nameof(IEnumerator.Current));
+                    if (current is null)
+                    {
+                        enumerableInfo = default;
+                        errors = Errors.MissingCurrent;
+                        return false;
+                    }
+                    
+                    var moveNextAsync = enumeratorType.GetPublicInstanceMethod(nameof(IAsyncEnumerator<int>.MoveNextAsync), Type.EmptyTypes);
+                    if (moveNextAsync is null)
+                    {
+                        enumerableInfo = default;
+                        errors = Errors.MissingMoveNext;
+                        return false;
+                    }
+                    
+                    _ = enumeratorType.IsAsyncDisposable(out var dispose);
+
+                    enumerableInfo = new AsyncEnumerableInfo(
+                        getAsyncEnumerator,
+                        new AsyncEnumeratorInfo(
+                            current,
+                            moveNextAsync,
+                            dispose
+                        )
+                    );
+                    errors = Errors.None; 
+                    return true;
+                }
+            }
 
             if (type.ImplementsInterface(typeof(IAsyncEnumerable<>), out var genericArguments))
             {
-                getAsyncEnumerator = typeof(IAsyncEnumerable<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyMethod("GetAsyncEnumerator", new[] { typeof(CancellationToken) })!;
+                var enumerableType = typeof(IAsyncEnumerable<>).MakeGenericType(genericArguments[0]);
+                var enumeratorType = typeof(IAsyncEnumerator<>).MakeGenericType(genericArguments[0]);
+                enumerableInfo = new AsyncEnumerableInfo(
+                    enumerableType.GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncEnumerable<int>.GetAsyncEnumerator), typeof(CancellationToken))!,
+                    new AsyncEnumeratorInfo(
+                        enumeratorType.GetPublicInstanceDeclaredOnlyReadProperty(nameof(IAsyncEnumerator<int>.Current))!,
+                        enumeratorType.GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncEnumerator<int>.MoveNextAsync), Type.EmptyTypes)!,
+                        typeof(IAsyncDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncDisposable.DisposeAsync), Type.EmptyTypes)
+                    )
+                );
+                errors = Errors.None; 
                 return true;
             }
 
+            enumerableInfo = default;
+            errors = Errors.MissingGetEnumerator;
             return false;
         }
 
-        static bool IsEnumeratorType(this Type type,
-            [NotNullWhen(true)] out PropertyInfo? current,
-            [NotNullWhen(true)] out MethodInfo? moveNext, 
-            out MethodInfo? reset, 
-            out MethodInfo? dispose,
-            out bool isByRefLike)
+        public static bool IsDisposable(this Type type, [NotNullWhen(true)] out MethodInfo? dispose, out bool isByRefLike)
         {
-            current = type.GetPublicProperty(nameof(IEnumerator.Current));
-            moveNext = type.GetPublicMethod(nameof(IEnumerator.MoveNext));
-            reset = type.GetPublicMethod(nameof(IEnumerator.Reset));
             isByRefLike = type.IsByRefLike();
-            dispose = isByRefLike switch
-            {
-                true => type.GetPublicMethod(nameof(IDisposable.Dispose)),
-                _ => type.ImplementsInterface(typeof(IDisposable), out _) ? DisposeInfo : default
-            };
-                
-            if (current is not null && moveNext is not null)
-                return true;
-
-            if (type.ImplementsInterface(typeof(IEnumerator<>), out var genericArguments))
-            {
-                current = typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyProperty(nameof(IEnumerator.Current))!;
-                moveNext = MoveNextInfo;
-                reset = ResetInfo;
-                return true;
-            }
-
-            if (type.ImplementsInterface(typeof(IEnumerator), out _))
-            {
-                current = CurrentInfo;
-                moveNext = MoveNextInfo;
-                reset = ResetInfo;
-                return true;
-            }
-
-            return false;
-        }
-
-        static bool IsAsyncEnumeratorType(this Type type,
-            [NotNullWhen(true)] out PropertyInfo? current,
-            [NotNullWhen(true)] out MethodInfo? moveNextAsync, 
-            out MethodInfo? disposeAsync)
-        {
-            current = type.GetPublicProperty("Current");
-            moveNextAsync = type.GetPublicMethod("MoveNextAsync");
-            disposeAsync = type.ImplementsInterface(typeof(IAsyncDisposable), out _) ? DisposeAsyncInfo : default;
-            if (current is not null && moveNextAsync is not null)
-                return true;
-
-            if (type.ImplementsInterface(typeof(IAsyncEnumerator<>), out var genericArguments))
-            {
-                var interfaceType = typeof(IAsyncEnumerator<>).MakeGenericType(genericArguments[0]);
-                current = interfaceType.GetPublicInstanceDeclaredOnlyProperty(nameof(IEnumerator.Current))!;
-                moveNextAsync = interfaceType.GetPublicInstanceDeclaredOnlyMethod("MoveNextAsync", Type.EmptyTypes)!;
-                return true;
-            }
-
-            return false;
-        }
-
-        public static PropertyInfo? GetPublicProperty(this Type type, string name)
-        {
-            var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-            foreach (var property in properties)
-            {
-                if (property.Name == name && property.GetGetMethod() is not null)
-                    return property;
-            }
-
-            if (type.IsInterface)
-            {
-                foreach (var @interface in type.GetAllInterfaces())
-                {
-                    var property = @interface.GetPublicProperty(name);
-                    if (property is not null)
-                        return property;
-                }
-            }
+            if (isByRefLike)
+                dispose = type.GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes);
+            else if (type.ImplementsInterface(typeof(IDisposable), out _))
+                dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes)!;
             else
-            {
-                var baseType = type.BaseType;
-                if (baseType is not null)
-                    return baseType.GetPublicProperty(name);
-            }
-
-            return default;
+                dispose = default;
+            
+            return dispose is not null;
         }
 
-        public static MethodInfo? GetPublicMethod(this Type type, string name, params Type[] parameters)
+        public static bool IsAsyncDisposable(this Type type, [NotNullWhen(true)] out MethodInfo? disposeAsync)
         {
-            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public);
-            foreach (var method in methods)
-            {
-                if (method.Name == name && SequenceEqual(method.GetParameters(), parameters))
-                    return method;
-            }
-
-            if (type.IsInterface)
-            {
-                foreach (var @interface in type.GetAllInterfaces())
-                {
-                    var method = @interface.GetPublicMethod(name, parameters);
-                    if (method is not null)
-                        return method;
-                }
-            }
+            if (type.ImplementsInterface(typeof(IAsyncDisposable), out _))
+                disposeAsync = typeof(IAsyncDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncDisposable.DisposeAsync), Type.EmptyTypes)!;
             else
-            {
-                var baseType = type.BaseType;
-                if (baseType is not null)
-                    return baseType.GetPublicMethod(name);
-            }
+                disposeAsync = default;
 
-            return default;
+            return disposeAsync is not null;
         }
 
         public static bool ImplementsInterface(this Type type, Type interfaceType, [NotNullWhen(true)] out Type[]? genericArguments)
@@ -271,7 +193,16 @@ namespace NetFabric.Reflection
             if (!interfaceType.IsGenericType)
             {
                 genericArguments = Type.EmptyTypes;
+                if (type == interfaceType)
+                    return true;
+                
                 return type.GetAllInterfaces().Contains(interfaceType);
+            }
+
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == interfaceType.GetGenericTypeDefinition())
+            {
+                genericArguments = type.GetGenericArguments();
+                return true;
             }
 
             foreach (var @interface in type.GetAllInterfaces())
@@ -298,27 +229,24 @@ namespace NetFabric.Reflection
             }
         }
 
-        static bool SequenceEqual(ParameterInfo[] parameters, Type[] types)
-        {
-            if (parameters.Length != types.Length)
-                return false;
+        const BindingFlags PublicInstance =
+            BindingFlags.Public | BindingFlags.Instance;
 
-            for (var index = 0; index < parameters.Length && index < types.Length; index++)
-            {
-                if (parameters[index].ParameterType != types[index])
-                    return false;
-            }
-
-            return true;
-        }
+        internal static PropertyInfo? GetPublicInstanceReadProperty(this Type type, string name)
+            => type.GetProperties(PublicInstance)
+                .FirstOrDefault(property => property.Name == name && property.GetGetMethod() is not null);
+        
+        internal static MethodInfo? GetPublicInstanceMethod(this Type type, string name, params Type[] types)
+            => type.GetMethod(name, PublicInstance, null, types, null);
 
         const BindingFlags PublicInstanceDeclaredOnly =
             BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
         
-        internal static PropertyInfo? GetPublicInstanceDeclaredOnlyProperty(this Type type, string name)
-            => type.GetProperty(name, PublicInstanceDeclaredOnly);
+        internal static PropertyInfo? GetPublicInstanceDeclaredOnlyReadProperty(this Type type, string name)
+            => type.GetProperties(PublicInstanceDeclaredOnly)
+                .FirstOrDefault(property => property.Name == name && property.GetGetMethod() is not null);
         
-        internal static MethodInfo? GetPublicInstanceDeclaredOnlyMethod(this Type type, string name, Type[] types)
+        internal static MethodInfo? GetPublicInstanceDeclaredOnlyMethod(this Type type, string name, params Type[] types)
             => type.GetMethod(name, PublicInstanceDeclaredOnly, null, types, null);
 
         internal static bool IsByRefLike(this Type type) // this implementation works on any target framework

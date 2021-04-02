@@ -36,9 +36,9 @@ namespace NetFabric.Reflection
             }
 
             public TItem Current 
-                => (TItem)info.GetValueCurrent(instance)!;
+                => (TItem)info.InvokeGetCurrent(instance)!;
             object? IEnumerator.Current 
-                => info.GetValueCurrent(instance);
+                => info.InvokeGetCurrent(instance);
 
             public bool MoveNext() 
                 => info.InvokeMoveNext(instance);

@@ -20,7 +20,7 @@ namespace NetFabric.Reflection
             IsByRefLike = isByRefLike;
         }
 
-        public object? GetValueCurrent(object instance)
+        public object? InvokeGetCurrent(object instance)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace NetFabric.Reflection
             }
             catch (TargetInvocationException exception)
             {
-                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType!.Name}.Current.", exception.InnerException!);
+                throw new EnumerationException($"Unhandled exception in {Current.DeclaringType!.Name}.get_Current.", exception.InnerException!);
             }
         }
 
