@@ -4,26 +4,215 @@
 [![Gitter](https://img.shields.io/gitter/room/netfabric/netfabric.hyperlinq?style=flat-square&logo=gitter)](https://gitter.im/NetFabric/NetFabric.CodeAnalysis)
 
 [![CodeAnalysis NuGet Version](https://img.shields.io/nuget/v/NetFabric.CodeAnalysis.svg?style=flat-square&label=CodeAnalysis%20nuget&logo=nuget)](https://www.nuget.org/packages/NetFabric.CodeAnalysis/)
-[![CodeAnalysis NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.CodeAnalysis?style=flat-square&label=CodeAnalysis%20downloads&logo=nuget)](https://www.nuget.org/packages/NetFabric.CodeAnalysis/) 
+[![CodeAnalysis NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.CodeAnalysis?style=flat-square&label=CodeAnalysis%20downloads&logo=nuget)](https://www.nuget.org/packages/NetFabric.CodeAnalysis/)
 
 [![Reflection NuGet Version](https://img.shields.io/nuget/v/NetFabric.Reflection.svg?style=flat-square&label=Reflection%20nuget&logo=nuget)](https://www.nuget.org/packages/NetFabric.Reflection/)
-[![Reflection NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.Reflection.svg?style=flat-square&label=Reflection%20downloads&logo=nuget)](https://www.nuget.org/packages/NetFabric.Reflection/) 
+[![Reflection NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.Reflection.svg?style=flat-square&label=Reflection%20downloads&logo=nuget)](https://www.nuget.org/packages/NetFabric.Reflection/)
 
-# NetFabric.CodeAnalysis
+# NetFabric.CodeAnalysis and NetFabric.Reflection
 
-Extensions to `System.CodeAnalysis` (Roslyn) and `System.Reflection`.
+To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>`, or `IAsyncEnumerable<>`. `foreach` and `await foreach` support several other cases as described [below](#sync-and-async-enumerables). This repository contains extension methods that take into account all these cases.
 
-## Sync and Async Enumerables
+This repository is deployed as two NuGet packages:
+- [NetFabric.CodeAnalysis](https://www.nuget.org/packages/NetFabric.CodeAnalysis/) - it can be used when parsing C# code, for example, in the development of for [Roslyn Analyzers](https://docs.microsoft.com/en-us/visualstudio/extensibility/getting-started-with-roslyn-analyzers) or [C# Code Generators](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/). Its used by the analyzer package [NetFabric.Hyperlinq.Analyzer](https://github.com/NetFabric/NetFabric.Hyperlinq.Analyzer) to implement rules for enumerables.
+- [NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/) - it can be used in the runtime, for example, to optimize performance by using [Expression Trees](https://tyrrrz.me/blog/expression-trees). Its used by the package [NetFabric.Assertive](https://github.com/NetFabric/NetFabric.Assertive) to unit test any type of enumerable.
 
-This project implements methods that validate if a type is an enumerable or async enumerable, both for `CodeAnalysis` and `Reflection`.
+# Usage
 
-It can handle any of the following enumerable implementations:
+## IsEnumerable() and IsEnumerator()
+
+- Add either [NetFabric.CodeAnalysis](https://www.nuget.org/packages/NetFabric.CodeAnalysis/) or [NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/) packages to your project.
+- Use the `IsEnumerable` or `IsEnumerator` methods as follow:
+``` csharp
+using NetFabric.CodeAnalysis;
+
+var isEnumerable = typeSymbol.IsEnumerable(compilation, out var enumerableSymbols);
+var isEnumerator = typeSymbol.IsEnumerator(compilation, out var enumeratorSymbols);
+
+var isAsyncEnumerable = typeSymbol.IsAsyncEnumerable(compilation, out var asyncEnumerableSymbols);
+var isAsyncEnumerator = typeSymbol.IsAsyncEnumerator(compilation, out var asyncEnumeratorSymbols);
+```
+
+``` csharp
+using NetFabric.Reflection;
+
+var isEnumerable = type.IsEnumerable(out var enumerableInfo);
+var isEnumerator = type.IsEnumerator(out var enumeratorInfo);
+
+var isAsyncEnumerable = type.IsAsyncEnumerable(out var asyncEnumerableInfo);
+var isAsyncEnumerator = type.IsAsyncEnumerator(out var asyncEnumeratorInfo);
+```
+
+The methods return a boolean value indicating if it's a valid enumerable or enumerator. If `true`, the output parameter contains [`MethodInfo`](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodinfo) or [`IMethodSymbol`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.imethodsymbol) for the methods `GetEnumerator`, `get_Current` and `MoveNext`, following the precedences used by Roslyn for the `foreach` and `await foreach` keywords. It may also contain for methods `Reset` and `Dispose` if defined. Otherwise, `null`. They return the equivalent methods for async enumerables and enumerators.
+
+## ExpressionEx
+
+Add the [NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/) package to your project.
+
+### ExpressionEx.ForEach
+
+Add `ExpressionEx.ForEach` to an [Expression Trees](https://tyrrrz.me/blog/expression-trees) where:
+- The first parameter defines an enumerable.
+- The second parameter is the body defined by a `Func<Expression, Expression>`. You can pass a lambda expression that, given an Expression that defines an item, returns an Expression that uses it.
+
+**WARNING:** Async enumerables are not supported.
+
+The generated Expression depends on:
+
+- The returned enumerator is an `interface`, `class`, `struct`, or `ref struct`.
+- Is disposable or not.
+- If it's an array, uses its indexer instead of `IEnumerable<>`.
+
+Throws an exception if the Expression in the first parameter does not define an enumerable. In case
+
+Here's an example that calculates the sum of the items in an enumerable:
+
+``` csharp
+using static NetFabric.Expressions.ExpressionEx;
+using static System.Linq.Expressions.Expression;
+
+int Sum<TEnumerable>(TEnumerable enumerable)
+{
+    var enumerableParameter = Parameter(typeof(TEnumerable), "enumerable");
+    var sumVariable = Variable(typeof(int), "sum");
+    var expression = Block(
+        new[] {sumVariable},
+        Assign(sumVariable, Constant(0)),
+        ForEach(
+            enumerableParameter,
+            item => AddAssign(sumVariable, item)),
+        sumVariable);
+    var sum = Lambda<Func<TEnumerable, int>>(expression, enumerableParameter).Compile();
+
+    return sum(enumerable);
+}
+```
+
+
+### ExpressionEx.For
+
+Add `ExpressionEx.For` to an [Expression Trees](https://tyrrrz.me/blog/expression-trees) where:
+
+- The first parameter defines the initialization.
+- The second parameter defines the condition.
+- The third parameter defines the iterator.
+- The fourth parameter defines the body.
+
+Here's an example that calculates the sum of the items in an array:
+
+``` csharp
+using static NetFabric.Expressions.ExpressionEx;
+using static System.Linq.Expressions.Expression;
+
+int Sum(int[] array, int start, int end)
+{
+    var arrayParameter = Parameter(typeof(int[]), "array");
+    var startParameter = Parameter(typeof(int), "start");
+    var endParameter = Parameter(typeof(int), "end");
+    var indexVariable = Variable(typeof(int), "index");
+    var sumVariable = Variable(typeof(int), "sum");
+    var expression = Block(
+        new[] { indexVariable, sumVariable },
+        Assign(sumVariable, Constant(0)),
+        For(
+            Assign(indexVariable, startParameter), 
+            LessThan(indexVariable, endParameter), 
+            PostIncrementAssign(indexVariable),
+            AddAssign(sumVariable, ArrayIndex(arrayParameter, indexVariable))),
+        sumVariable);
+    var sum = Lambda<Func<int[], int, int, int>>(expression, arrayParameter, startParameter, endParameter).Compile();
+
+    return sum(array, start, end);
+}
+```
+
+### ExpressionEx.While
+
+Add `ExpressionEx.While` to an [Expression Trees](https://tyrrrz.me/blog/expression-trees) where:
+
+- The first parameter defines condition.
+- The second parameter defines the body.
+
+Here's an example that calculates the sum of the items in an array:
+
+``` csharp
+using static NetFabric.Expressions.ExpressionEx;
+using static System.Linq.Expressions.Expression;
+
+int Sum(int[] array, int start, int end)
+{
+    var valueParameter = Parameter(typeof(int[]), "value");
+    var startParameter = Parameter(typeof(int), "start");
+    var endParameter = Parameter(typeof(int), "end");
+    var sumVariable = Variable(typeof(int), "sum");
+    var indexVariable = Variable(typeof(int), "index");
+    var expression = Block(
+        new[] { indexVariable, sumVariable },
+        Assign(sumVariable, Constant(0)),
+        Assign(indexVariable, startParameter),
+        While(
+            LessThan(indexVariable, endParameter), 
+            Block(
+                AddAssign(sumVariable, ArrayIndex(valueParameter, indexVariable)),
+                PostIncrementAssign(indexVariable)
+            )
+        ),
+        sumVariable);
+    var sum = Lambda<Func<int[], int, int, int>>(expression, valueParameter, startParameter, endParameter).Compile();
+
+    return sum(array, start, end);
+}
+```
+
+### ExpressionEx.Using
+
+Add `ExpressionEx.Using` to an [Expression Trees](https://tyrrrz.me/blog/expression-trees) where:
+
+- The first parameter defines the variable to be disposed.
+- The second parameter defines the body.
+
+Throws and exception if the variable is not disposable. To be considered disposable, if it's is a `class` or a `struct`, it has to implement the [`IDisposable`](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable) interface. If it's a `ref struct`, it only needs to have a parameterless `Dispose` method that returns `void`.
+
+**WARNING:** `IAsyncDisposable` is not supported.
+
+Here's an example that calculates the sum of the items in an enumerable:
+
+``` csharp
+int Sum<TEnumerable>(TEnumerable enumerable)
+{
+    if (!typeof(TEnumerable).IsEnumerable(out var enumerableInfo))
+        throw new Exception("Not an enumerable!");
+    
+    var enumerableParameter = Parameter(typeof(TEnumerable), "enumerable");
+    var enumeratorVariable = Variable(enumerableInfo.GetEnumerator.ReturnType, "enumerator");
+    var sumVariable = Variable(typeof(int), "sum");
+    var expression = Block(
+        new[] {enumeratorVariable, sumVariable},
+        Assign(enumeratorVariable, Call(enumerableParameter, enumerableInfo.GetEnumerator)),
+        Assign(sumVariable, Constant(0)),
+        Using(
+            enumeratorVariable,
+            While(
+                Call(enumeratorVariable, enumerableInfo.EnumeratorInfo.MoveNext),
+                AddAssign(sumVariable, Call(enumeratorVariable, enumerableInfo.EnumeratorInfo.GetCurrent))
+            )
+        ),
+        sumVariable);
+    var sum = Lambda<Func<TEnumerable, int>>(expression, enumerableParameter).Compile();
+    
+    return sum(enumerable);
+}
+```
+
+# Sync and Async Enumerables
+
+The code implemented in this repository can handle any of the following enumerable implementations:
 
 ### No enumerable interfaces
 
 A collection, to be enumerated by a `foreach` loop, does not have to implement any interface. It just needs to have a parameterless `GetEnumerator()` method that returns a type that has a property `Current` with a getter and a parameterless `MoveNext()` method that returns `bool`.
 
-The same applies to [async streams](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/generate-consume-asynchronous-stream) that, to be enumerated by an `await foreach` loop, also don't have to implement any interface. They just need to have a parameterless `GetAsyncEnumerator()` method that returns a type that has a property `Current` with a getter and a parameterless `MoveNextAsync()` method that returns `ValueTask<bool>`.
+The same applies to [async streams](https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/generate-consume-asynchronous-stream) that, to be enumerated by an `await foreach` loop, doesn't need to implement any interface. It just needs to have a `GetAsyncEnumerator()` method, with no parameters or with a `CancellationToken`parameter, that returns a type that has a property `Current` with a getter and a parameterless `MoveNextAsync()` method that returns `ValueTask<bool>`.
 
 Here's the minimal implementations for both types of enumerables:
 
@@ -269,9 +458,15 @@ public class MyRange : MyIEnumerable<int>
 }
 ```
 
+### Disposable enumerator
+
+The enumerator can be disposable and it's disposed at the end of the enumeration.
+
+If the enumerator is a `class` or a `struct`, it has to implement the [`IDisposable`](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable) interface. If it's a `ref struct`, it only needs to have a parameterless `Dispose` method that returns `void`.
+
 ### By-reference item return
 
-The `Current` property can return the item by reference. 
+The `Current` property can return the item by reference.
 
 _NOTE: In this case, you should also be careful to declare the enumeration variable as `foreach (ref var item in source)` or `foreach (ref readonly var item in source)`. If you use `foreach (var item in source)`, no warning is shown and a copy of the item is made on each iteraton. You can use [NetFabric.CodeAnalysis.Analyzer](https://www.nuget.org/packages/NetFabric.CodeAnalysis.Analyzer/) to warn you of this case._
 
@@ -329,6 +524,8 @@ public readonly struct WhereEnumerable<T>
 The following open-source projects are used to build and test this project:
 
 - [.NET](https://github.com/dotnet)
+- [coveralls](https://coveralls.io)
+- [coverlet](https://github.com/tonerdo/coverlet)
 - [xUnit.net](https://xunit.net/)
 
 ## License
