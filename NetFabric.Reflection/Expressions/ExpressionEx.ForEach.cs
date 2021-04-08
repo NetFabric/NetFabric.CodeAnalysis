@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using NetFabric.Reflection;
 using static System.Linq.Expressions.Expression;
@@ -13,7 +15,7 @@ namespace NetFabric.Expressions
             if (enumerableType.IsEnumerable(out var enumerableInfo, out var errors))
                 return ForEach(enumerableInfo, enumerable, body);
             
-            if (errors.HasFlag(Errors.MissingGetEnumerable))
+            if (errors.HasFlag(Errors.MissingGetEnumerator))
                 throw new Exception($"'{enumerableType}' does not contain a public definition for 'GetEnumerator'");
 
             if (errors.HasFlag(Errors.MissingCurrent))
@@ -44,33 +46,29 @@ namespace NetFabric.Expressions
                 var indexVariable = Variable(typeof(int), "index");
                 return Block(
                     new[] { indexVariable },
-                    Assign(indexVariable, Constant(0)),
-                    While(
-                        LessThan(indexVariable, Property(array, typeof(Array).GetPublicInstanceDeclaredOnlyProperty(nameof(Array.Length))!)),
-                        Block(
-                            body(ArrayIndex(array, indexVariable)),
-                            PostIncrementAssign(indexVariable)
-                        )
+                    For(
+                        Assign(indexVariable, Constant(0)),
+                        LessThan(indexVariable, Property(array, typeof(Array).GetPublicInstanceDeclaredOnlyReadProperty(nameof(Array.Length))!)),
+                        PostIncrementAssign(indexVariable),
+                        body(ArrayIndex(array, indexVariable))
                     )
                 );
             }
             
             static Expression HandleSpan(Expression span, Func<Expression, Expression> body)
             {
-                // throw exception because the indexer returns a reference to the item and 
+                // throws exception because the indexer returns a reference to the item and 
                 // references are not yet supported by expression trees
-                throw new NotSupportedException("ForEach expression creation for Span<> and ReadOnlySpan<> is not supported.");
+                throw new NotSupportedException("ForEach Expression creation for Span<> or ReadOnlySpan<> is not supported.");
                 
                 // var indexVariable = Variable(typeof(int), "index");
                 // return Block(
                 //     new[] { indexVariable },
-                //     Assign(indexVariable, Constant(0)),
-                //     While(
-                //         LessThan(indexVariable, Property(span, span.Type.GetPublicInstanceDeclaredOnlyProperty(nameof(Array.Length))!)),
-                //         Block(
-                //             body(Property(span, span.Type.GetPublicInstanceDeclaredOnlyProperty("Item")!, indexVariable)),
-                //             PostIncrementAssign(indexVariable)
-                //         )
+                //     For(
+                //         Assign(indexVariable, Constant(0)),
+                //         LessThan(indexVariable, Property(span, span.Type.GetPublicInstanceDeclaredOnlyProperty(nameof(Span<int>.Length))!)),
+                //         PostIncrementAssign(indexVariable),
+                //         body(Property(span, span.Type.GetPublicInstanceDeclaredOnlyProperty("Item")!, indexVariable))
                 //     )
                 // );
             }
@@ -82,42 +80,67 @@ namespace NetFabric.Expressions
                 var enumeratorVariable = Variable(enumeratorType, "enumerator");
                 return Block(
                     new[] { enumeratorVariable },
-                    Assign(enumeratorVariable, Call(enumerable, enumerableInfo.GetEnumerator)),
+                    Assign(enumeratorVariable, CallGetEnumerator(enumerableInfo, enumeratorType, enumerable)),
                     enumeratorInfo switch
                     {
-                        {Dispose: not null} => Disposable(enumeratorInfo, enumeratorVariable, body),
-                        _ => enumeratorType switch
-                        {
-                            {IsValueType: true} => NonDisposableValueType(enumeratorInfo, enumeratorVariable, body),
-                            _ => NonDisposableReferenceType(enumeratorInfo, enumeratorVariable, body)
-                        }
+                        {Dispose: null} => NotDisposable(enumeratorInfo, enumeratorVariable, body),
+                        _ => Disposable(enumeratorInfo, enumeratorVariable, body)
                     });
 
-                static Expression Disposable(EnumeratorInfo enumeratorInfo, Expression enumerator, Func<Expression, Expression> body)
+                static Expression CallGetEnumerator(EnumerableInfo enumerableInfo, Type enumeratorType, Expression enumerable)
+                {
+                    if (enumeratorType.IsGenericType && enumeratorType.GetGenericTypeDefinition() == typeof(IEnumerator<>))
+                    {
+                        var enumerableType = typeof(IEnumerable<>).MakeGenericType(enumerableInfo.GetEnumerator.ReturnType.GetGenericArguments());
+                        return Call(
+                            Convert(enumerable, enumerableType), 
+                            enumerableType.GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!);
+                    }
+
+                    if (enumeratorType == typeof(IEnumerator))
+                        return Call(
+                            Convert(enumerable, typeof(IEnumerable)), 
+                            typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!);
+                    
+                    return Call(enumerable, enumerableInfo.GetEnumerator);
+                }
+
+                static Expression Disposable(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
                     => Using(enumerator, 
                         EnumerationLoop(enumeratorInfo, enumerator, body)
                     );
 
-                static Expression NonDisposableValueType(EnumeratorInfo enumeratorInfo, Expression enumerator, Func<Expression, Expression> body)
-                    => EnumerationLoop(enumeratorInfo, enumerator, body);
-
-                static Expression NonDisposableReferenceType(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
+                static Expression NotDisposable(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
                 {
-                    var disposable = Variable(typeof(IDisposable), "disposable");
-                    return TryFinally(
-                        EnumerationLoop(enumeratorInfo, enumerator, body),
-                        Block(
-                            new[] { disposable },
-                            Assign(disposable, TypeAs(enumerator, typeof(IDisposable))),
-                            IfThen(
-                                NotEqual(disposable, Constant(null)),
-                                Call(disposable, Reflection.TypeExtensions.DisposeInfo)
+                    return enumerator.Type switch
+                    {
+                        {IsValueType: true} => NotDisposableValueType(enumeratorInfo, enumerator, body),
+                        _ => NotDisposableReferenceType(enumeratorInfo, enumerator, body)
+                    };
+
+                    static Expression NotDisposableValueType(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
+                        => EnumerationLoop(enumeratorInfo, enumerator, body);
+
+                    static Expression NotDisposableReferenceType(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
+                    {
+                        var disposable = Variable(typeof(IDisposable), "disposable");
+                        return TryFinally(
+                            EnumerationLoop(enumeratorInfo, enumerator, body),
+                            Block(
+                                new[] {disposable},
+                                Assign(disposable, TypeAs(enumerator, typeof(IDisposable))),
+                                IfThen(
+                                    NotEqual(disposable, Constant(null)),
+                                    Call(disposable,
+                                        typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(
+                                            nameof(IDisposable.Dispose), Type.EmptyTypes)!)
+                                )
                             )
-                        )
-                    );
+                        );
+                    }
                 }
 
-                static Expression EnumerationLoop(EnumeratorInfo enumeratorInfo, Expression enumerator, Func<Expression, Expression> body)
+                static Expression EnumerationLoop(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
                     => While(Call(enumerator, enumeratorInfo.MoveNext),
                         body(Property(enumerator, enumeratorInfo.Current))
                     );

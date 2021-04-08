@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>NetFabric.VisualBasic.UnitTests</RootNamespace>
+        <TargetFrameworks>net472;net5.0</TargetFrameworks>
+        <LangVersion>16.9</LangVersion>
+        
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+</Project>
