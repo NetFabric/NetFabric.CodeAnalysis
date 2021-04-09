@@ -5,8 +5,8 @@ namespace NetFabric.Reflection
 {
     public class EnumerableInfo
     {
-        public readonly MethodInfo GetEnumerator;
-        public readonly EnumeratorInfo EnumeratorInfo;
+        public MethodInfo GetEnumerator { get; }
+        public EnumeratorInfo EnumeratorInfo { get; }
 
         public EnumerableInfo(MethodInfo getEnumerator, EnumeratorInfo enumeratorInfo)
         {

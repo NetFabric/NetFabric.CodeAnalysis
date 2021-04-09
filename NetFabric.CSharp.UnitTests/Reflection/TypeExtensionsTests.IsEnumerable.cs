@@ -13,7 +13,7 @@ namespace NetFabric.Reflection.CSharp.UnitTests
         [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
         //[MemberData(nameof(DataSets.VisualBasicEnumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_Should_ReturnTrue(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType)
+        public void IsEnumerable_Should_ReturnTrue(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType, bool isValueType, bool isByRefLike)
         {
             // Arrange
 
@@ -72,7 +72,8 @@ namespace NetFabric.Reflection.CSharp.UnitTests
                 Assert.Empty(dispose!.GetParameters());
             }
             
-            // Assert.Equal(isByRefLike, enumeratorInfo!.IsByRefLike);
+            Assert.Equal(isValueType, enumeratorInfo!.IsValueType);
+            Assert.Equal(isByRefLike, enumeratorInfo!.IsByRefLike);
         }
 
         [Theory]

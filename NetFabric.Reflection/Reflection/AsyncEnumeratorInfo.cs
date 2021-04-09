@@ -6,15 +6,16 @@ namespace NetFabric.Reflection
 {
     public class AsyncEnumeratorInfo
     {
-        public readonly PropertyInfo Current;
-        public readonly MethodInfo MoveNextAsync;
-        public readonly MethodInfo? DisposeAsync;
+        public PropertyInfo Current { get; }
+        public MethodInfo MoveNextAsync { get; }
+        public MethodInfo? DisposeAsync { get; init; }
+        public bool IsValueType { get; init; }    
+        public bool IsAsyncEnumeratorInterface { get; init; }    
 
-        public AsyncEnumeratorInfo(PropertyInfo current, MethodInfo moveNextAsync, MethodInfo? disposeAsync)
+        public AsyncEnumeratorInfo(PropertyInfo current, MethodInfo moveNextAsync)
         {
             Current = current;
             MoveNextAsync = moveNextAsync;
-            DisposeAsync = disposeAsync;
         }
 
         public object? GetValueCurrent(object instance)

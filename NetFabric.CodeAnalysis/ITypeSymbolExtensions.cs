@@ -44,13 +44,18 @@ namespace NetFabric.CodeAnalysis
                 
                 enumerableSymbols = new EnumerableSymbols(
                     getEnumerator,
-                    new EnumeratorSymbols(
-                        current,
-                        moveNext,
-                        reset,
-                        dispose,
-                        isRefLike
-                    )
+                    new EnumeratorSymbols(current, moveNext)
+                    {
+                        Reset = reset,
+                        Dispose = dispose,
+                        IsValueType = getEnumerator.ReturnType.IsValueType,
+                        IsRefLikeType = isRefLike,
+                        IsGenericsEnumeratorInterface = 
+                            enumeratorType.TypeKind == TypeKind.Interface 
+                            && enumeratorType.ImplementsInterface(SpecialType.System_Collections_Generic_IEnumerable_T, out _),
+                        IsEnumeratorInterface = 
+                            enumeratorType.TypeKind == TypeKind.Interface,
+                    }
                 );
                 errors = Errors.None; 
                 return true;
@@ -71,11 +76,13 @@ namespace NetFabric.CodeAnalysis
                     genericEnumerableType.GetPublicMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!,
                     new EnumeratorSymbols(
                         genericEnumeratorType.GetPublicReadProperty(nameof(IEnumerator<int>.Current))!,
-                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
-                        enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
-                        disposableType.GetPublicMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
-                        false
-                    )
+                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
+                        {
+                            Reset = enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                            Dispose = disposableType.GetPublicMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
+                            IsGenericsEnumeratorInterface = true,
+                            IsEnumeratorInterface = true,
+                        }
                 );
                 errors = Errors.None; 
                 return true;
@@ -90,11 +97,11 @@ namespace NetFabric.CodeAnalysis
                     enumerableType.GetPublicMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!,
                     new EnumeratorSymbols(
                         enumeratorType.GetPublicReadProperty(nameof(IEnumerator.Current))!,
-                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
-                        enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
-                        null,
-                        false
-                    )
+                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
+                    {
+                        Reset = enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                        IsEnumeratorInterface = true,
+                    }                   
                 );
                 errors = Errors.None; 
                 return true;
@@ -141,11 +148,12 @@ namespace NetFabric.CodeAnalysis
                 
                 enumerableSymbols = new AsyncEnumerableSymbols(
                     getEnumerator,
-                    new AsyncEnumeratorSymbols(
-                        current,
-                        moveNext,
-                        dispose
-                    )
+                    new AsyncEnumeratorSymbols(current, moveNext)
+                    {
+                        DisposeAsync = dispose,
+                        IsValueType = getEnumerator.ReturnType.IsValueType,
+                        IsAsyncEnumeratorInterface = enumeratorType.TypeKind == TypeKind.Interface,
+                    }
                 );
                 errors = Errors.None; 
                 return true;
@@ -161,9 +169,11 @@ namespace NetFabric.CodeAnalysis
                     asyncEnumerableType.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken))!,
                     new AsyncEnumeratorSymbols(
                         asyncEnumeratorType.GetPublicReadProperty("Current")!,
-                        asyncEnumeratorType.GetPublicMethod("MoveNextAsync", Type.EmptyTypes)!,
-                        asyncDisposableType.GetPublicMethod("DisposeAsync", Type.EmptyTypes)
-                    )
+                        asyncEnumeratorType.GetPublicMethod("MoveNextAsync", Type.EmptyTypes)!)
+                    {
+                        DisposeAsync = asyncDisposableType.GetPublicMethod("DisposeAsync", Type.EmptyTypes),
+                        IsAsyncEnumeratorInterface = true,
+                    }
                 );
                 errors = Errors.None; 
                 return true;

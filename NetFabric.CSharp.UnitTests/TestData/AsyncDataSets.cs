@@ -9,7 +9,7 @@ namespace NetFabric.CSharp.TestData
     public static partial class DataSets
     {
 
-        public static TheoryData<Type, Type, int, Type, Type, Type?, Type> AsyncEnumerables =>
+        public static TheoryData<Type, Type, int, Type, Type, Type?, Type, bool> AsyncEnumerables =>
             new()
             {
                 {
@@ -19,7 +19,8 @@ namespace NetFabric.CSharp.TestData
                     typeof(ValueTypeAsyncEnumerator<int>),
                     typeof(ValueTypeAsyncEnumerator<int>),
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true
                 },
                 {
                     typeof(AsyncEnumerableWithDisposableValueTypeAsyncEnumerator<int>),
@@ -28,7 +29,8 @@ namespace NetFabric.CSharp.TestData
                     typeof(DisposableValueTypeAsyncEnumerator<int>),
                     typeof(DisposableValueTypeAsyncEnumerator<int>),
                     typeof(IAsyncDisposable),
-                    typeof(int)
+                    typeof(int),
+                    true
                 },
                 
                 {
@@ -38,7 +40,8 @@ namespace NetFabric.CSharp.TestData
                     typeof(ValueTypeAsyncEnumerator<int>),
                     typeof(ValueTypeAsyncEnumerator<int>),
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true
                 },
                 {
                     typeof(CancellableAsyncEnumerableWithDisposableValueTypeAsyncEnumerator<int>),
@@ -47,7 +50,8 @@ namespace NetFabric.CSharp.TestData
                     typeof(DisposableValueTypeAsyncEnumerator<int>),
                     typeof(DisposableValueTypeAsyncEnumerator<int>),
                     typeof(IAsyncDisposable),
-                    typeof(int)
+                    typeof(int),
+                    true
                 },
 
                 {
@@ -57,7 +61,8 @@ namespace NetFabric.CSharp.TestData
                     typeof(ValueTypeAsyncEnumerator<int>),
                     typeof(ValueTypeAsyncEnumerator<int>),
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true
                 },
                 {
                     typeof(ExplicitAsyncEnumerable<int>),
@@ -66,7 +71,8 @@ namespace NetFabric.CSharp.TestData
                     typeof(IAsyncEnumerator<int>),
                     typeof(IAsyncEnumerator<int>),
                     typeof(IAsyncDisposable),
-                    typeof(int)
+                    typeof(int),
+                    false
                 },
                 {
                     typeof(RangeAsyncEnumerable),
@@ -75,7 +81,8 @@ namespace NetFabric.CSharp.TestData
                     typeof(RangeAsyncEnumerable.AsyncEnumerator),
                     typeof(RangeAsyncEnumerable.AsyncEnumerator),
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true
                 },
             };
 

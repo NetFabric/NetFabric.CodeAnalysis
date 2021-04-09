@@ -40,7 +40,7 @@ namespace NetFabric.CSharp.TestData
                 { "StaticMethod", new[] { typeof(int), typeof(string) } },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type> Arrays =>
+        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type, bool, bool> Arrays =>
             new()
             {
                 {
@@ -50,7 +50,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     typeof(IDisposable),
-                    typeof(int)
+                    typeof(int),
+                    false,
+                    false
                 },
                 {
                     typeof(Span<int>),
@@ -59,7 +61,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(Span<int>.Enumerator),
                     null,
                     null,
-                    typeof(int).MakeByRefType()
+                    typeof(int).MakeByRefType(),
+                    true,
+                    true
                 },
                 {
                     typeof(ReadOnlySpan<int>),
@@ -68,11 +72,13 @@ namespace NetFabric.CSharp.TestData
                     typeof(ReadOnlySpan<int>.Enumerator),
                     null,
                     null,
-                    typeof(int).MakeByRefType()
+                    typeof(int).MakeByRefType(),
+                    true,
+                    true
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type> Enumerables =>
+        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type, bool, bool> Enumerables =>
             new()
             {
                 {
@@ -82,7 +88,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(ValueTypeEnumerator<int>),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    false
                 },
                 {
                     typeof(EnumerableWithDisposableValueTypeEnumerator<int>),
@@ -91,7 +99,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(DisposableValueTypeEnumerator<int>),
                     null,
                     typeof(IDisposable),
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    false
                 },
                 {
                     typeof(EnumerableWithByRefLikeEnumerator<int>),
@@ -100,7 +110,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(ByRefLikeEnumerator<int>),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    true
                 },
                 {
                     typeof(EnumerableWithDisposableByRefLikeEnumerator<int>),
@@ -109,7 +121,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(DisposableByRefLikeEnumerator<int>),
                     null,
                     typeof(DisposableByRefLikeEnumerator<int>),
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    true
                 },
                 {
                     typeof(EnumerableWithReferenceTypeEnumerator<int>),
@@ -118,7 +132,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(ReferenceTypeEnumerator<int>),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    false,
+                    false
                 },
                 {
                     typeof(EnumerableWithDisposableReferenceTypeEnumerator<int>),
@@ -127,7 +143,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(DisposableReferenceTypeEnumerator<int>),
                     null,
                     typeof(IDisposable),
-                    typeof(int)
+                    typeof(int),
+                    false,
+                    false
                 },
                 {
                     typeof(HybridEnumerable<int>),
@@ -136,7 +154,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(ValueTypeEnumerator<int>),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    false
                 },
                 {
                     typeof(ExplicitEnumerable<int>),
@@ -145,7 +165,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     null,
-                    typeof(object)
+                    typeof(object),
+                    false,
+                    false
                 },
                 {
                     typeof(ExplicitGenericEnumerable<int>),
@@ -154,7 +176,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     typeof(IDisposable),
-                    typeof(int)
+                    typeof(int),
+                    false,
+                    false
                 },
                 {
                     typeof(RangeEnumerable),
@@ -163,7 +187,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(RangeEnumerable.Enumerator),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    false
                 },
                 {
                     typeof(DerivedHybridEnumerable<int>),
@@ -172,7 +198,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(ValueTypeEnumerator<int>),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    false
                 },
                 {
                     typeof(ReadOnlyCollectionEnumerable<int>),
@@ -181,11 +209,13 @@ namespace NetFabric.CSharp.TestData
                     typeof(ValueTypeEnumerator<int>),
                     null,
                     null,
-                    typeof(int)
+                    typeof(int),
+                    true,
+                    false
                 },
             };
 
-        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type> VisualBasicEnumerables =>
+        public static TheoryData<Type, Type, Type, Type, Type?, Type?, Type, bool, bool> VisualBasicEnumerables =>
             new()
             {
                 {
@@ -195,7 +225,9 @@ namespace NetFabric.CSharp.TestData
                     typeof(IEnumerator),
                     typeof(IEnumerator),
                     typeof(IDisposable),
-                    typeof(int)
+                    typeof(int),
+                    false,
+                    false
                 },
             };
 
