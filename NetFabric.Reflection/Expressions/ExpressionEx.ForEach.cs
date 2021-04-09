@@ -80,30 +80,24 @@ namespace NetFabric.Expressions
                 var enumeratorVariable = Variable(enumeratorType, "enumerator");
                 return Block(
                     new[] { enumeratorVariable },
-                    Assign(enumeratorVariable, CallGetEnumerator(enumerableInfo, enumeratorType, enumerable)),
+                    Assign(enumeratorVariable, CallGetEnumerator(enumerableInfo, enumerable)),
                     enumeratorInfo switch
                     {
                         {Dispose: null} => NotDisposable(enumeratorInfo, enumeratorVariable, body),
                         _ => Disposable(enumeratorInfo, enumeratorVariable, body)
                     });
 
-                static Expression CallGetEnumerator(EnumerableInfo enumerableInfo, Type enumeratorType, Expression enumerable)
-                {
-                    if (enumeratorType.IsGenericType && enumeratorType.GetGenericTypeDefinition() == typeof(IEnumerator<>))
+                static Expression CallGetEnumerator(EnumerableInfo enumerableInfo, Expression enumerable)
+                    => enumerableInfo.EnumeratorInfo switch
                     {
-                        var enumerableType = typeof(IEnumerable<>).MakeGenericType(enumerableInfo.GetEnumerator.ReturnType.GetGenericArguments());
-                        return Call(
-                            Convert(enumerable, enumerableType), 
-                            enumerableType.GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!);
-                    }
-
-                    if (enumeratorType == typeof(IEnumerator))
-                        return Call(
-                            Convert(enumerable, typeof(IEnumerable)), 
-                            typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!);
-                    
-                    return Call(enumerable, enumerableInfo.GetEnumerator);
-                }
+                        {IsGenericsEnumeratorInterface: true}
+                            => Call(Convert(enumerable, enumerableInfo.GetEnumerator.DeclaringType!), enumerableInfo.GetEnumerator),
+                        
+                        {IsEnumeratorInterface: true}
+                            => Call(Convert(enumerable, typeof(IEnumerable)), enumerableInfo.GetEnumerator),
+                        
+                        _ => Call(enumerable, enumerableInfo.GetEnumerator)
+                    };
 
                 static Expression Disposable(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
                     => Using(enumerator, 
@@ -112,7 +106,7 @@ namespace NetFabric.Expressions
 
                 static Expression NotDisposable(EnumeratorInfo enumeratorInfo, ParameterExpression enumerator, Func<Expression, Expression> body)
                 {
-                    return enumerator.Type switch
+                    return enumeratorInfo switch
                     {
                         {IsValueType: true} => NotDisposableValueType(enumeratorInfo, enumerator, body),
                         _ => NotDisposableReferenceType(enumeratorInfo, enumerator, body)

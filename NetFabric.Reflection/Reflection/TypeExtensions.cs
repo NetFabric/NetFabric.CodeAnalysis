@@ -42,16 +42,18 @@ namespace NetFabric.Reflection
                     
                     var reset = enumeratorType.GetPublicInstanceMethod(nameof(IEnumerator.Reset), Type.EmptyTypes);
                     _ = enumeratorType.IsDisposable(out var dispose, out var isByRefLike);
-
+                    
                     enumerableInfo = new EnumerableInfo(
-                        getEnumerator,
-                        new EnumeratorInfo(
-                            current,
-                            moveNext,
-                            reset,
-                            dispose,
-                            isByRefLike
-                        )
+                        getEnumerator: getEnumerator,
+                        new EnumeratorInfo(current, moveNext)
+                        {
+                            Reset = reset,
+                            Dispose = dispose,
+                            IsValueType = getEnumerator.ReturnType.IsValueType,
+                            IsByRefLike = isByRefLike,
+                            IsGenericsEnumeratorInterface = enumeratorType.IsInterface && enumeratorType.ImplementsInterface(typeof(IEnumerator<>), out _),
+                            IsEnumeratorInterface = enumeratorType.IsInterface,
+                        }
                     );
                     errors = Errors.None; 
                     return true;
@@ -61,15 +63,18 @@ namespace NetFabric.Reflection
             if (type.ImplementsInterface(typeof(IEnumerable<>), out var genericArguments))
             {
                 var genericType = typeof(IEnumerable<>).MakeGenericType(genericArguments[0]);
+                var getEnumerator = genericType.GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!;
                 enumerableInfo = new EnumerableInfo(
-                    genericType.GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!,
+                    getEnumerator,
                     new EnumeratorInfo(
-                        typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator<int>.Current))!,
-                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
-                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
-                        typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
-                        false
-                    )
+                        current: typeof(IEnumerator<>).MakeGenericType(genericArguments[0]).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator<int>.Current))!,
+                        moveNext: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
+                        {
+                            Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                            Dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
+                            IsGenericsEnumeratorInterface = true,
+                            IsEnumeratorInterface = true,
+                        }
                 );
                 errors = Errors.None; 
                 return true;
@@ -77,15 +82,16 @@ namespace NetFabric.Reflection
 
             if (type.ImplementsInterface(typeof(IEnumerable), out _))
             {
+                var getEnumerator = typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!;
                 enumerableInfo = new EnumerableInfo(
-                    typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!,
+                    getEnumerator,
                     new EnumeratorInfo(
-                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator.Current))!,
-                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!,
-                        typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
-                        null,
-                        false
-                    )
+                        current: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator.Current))!,
+                        moveNext: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
+                        {
+                            Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                            IsEnumeratorInterface = true,
+                        }
                 );
                 errors = Errors.None; 
                 return true;
@@ -132,12 +138,13 @@ namespace NetFabric.Reflection
                     _ = enumeratorType.IsAsyncDisposable(out var dispose);
 
                     enumerableInfo = new AsyncEnumerableInfo(
-                        getAsyncEnumerator,
-                        new AsyncEnumeratorInfo(
-                            current,
-                            moveNextAsync,
-                            dispose
-                        )
+                        getAsyncEnumerator: getAsyncEnumerator,
+                        new AsyncEnumeratorInfo(current, moveNextAsync)
+                        {
+                            DisposeAsync = dispose,
+                            IsValueType = getAsyncEnumerator.ReturnType.IsValueType,
+                            IsAsyncEnumeratorInterface = enumeratorType.IsInterface,
+                        }
                     );
                     errors = Errors.None; 
                     return true;
@@ -149,12 +156,14 @@ namespace NetFabric.Reflection
                 var enumerableType = typeof(IAsyncEnumerable<>).MakeGenericType(genericArguments[0]);
                 var enumeratorType = typeof(IAsyncEnumerator<>).MakeGenericType(genericArguments[0]);
                 enumerableInfo = new AsyncEnumerableInfo(
-                    enumerableType.GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncEnumerable<int>.GetAsyncEnumerator), typeof(CancellationToken))!,
+                    getAsyncEnumerator: enumerableType.GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncEnumerable<int>.GetAsyncEnumerator), typeof(CancellationToken))!,
                     new AsyncEnumeratorInfo(
-                        enumeratorType.GetPublicInstanceDeclaredOnlyReadProperty(nameof(IAsyncEnumerator<int>.Current))!,
-                        enumeratorType.GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncEnumerator<int>.MoveNextAsync), Type.EmptyTypes)!,
-                        typeof(IAsyncDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncDisposable.DisposeAsync), Type.EmptyTypes)
-                    )
+                        current: enumeratorType.GetPublicInstanceDeclaredOnlyReadProperty(nameof(IAsyncEnumerator<int>.Current))!,
+                        moveNextAsync: enumeratorType.GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncEnumerator<int>.MoveNextAsync), Type.EmptyTypes)!)
+                    {
+                        DisposeAsync = typeof(IAsyncDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncDisposable.DisposeAsync), Type.EmptyTypes),
+                        IsAsyncEnumeratorInterface = true,
+                    }
                 );
                 errors = Errors.None; 
                 return true;
@@ -249,7 +258,7 @@ namespace NetFabric.Reflection
         internal static MethodInfo? GetPublicInstanceDeclaredOnlyMethod(this Type type, string name, params Type[] types)
             => type.GetMethod(name, PublicInstanceDeclaredOnly, null, types, null);
 
-        internal static bool IsByRefLike(this Type type) // this implementation works on any target framework
+        static bool IsByRefLike(this Type type) // this implementation works on any target framework
             => type.GetCustomAttributes()
                 .FirstOrDefault(attribute => attribute.GetType().Name == "IsByRefLikeAttribute") is not null;
     }

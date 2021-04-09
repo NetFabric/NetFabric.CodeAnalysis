@@ -4,19 +4,19 @@ namespace NetFabric.CodeAnalysis
 {
     public class EnumeratorSymbols
     {
-        public readonly IPropertySymbol Current;
-        public readonly IMethodSymbol MoveNext;
-        public readonly IMethodSymbol? Reset;
-        public readonly IMethodSymbol? Dispose;
-        public readonly bool IsRefLikeType;
+        public IPropertySymbol Current { get; }
+        public IMethodSymbol MoveNext { get; }
+        public IMethodSymbol? Reset { get; init; }
+        public IMethodSymbol? Dispose { get; init; }
+        public bool IsValueType { get; init; }
+        public bool IsRefLikeType { get; init; }
+        public bool IsGenericsEnumeratorInterface { get; init; }    
+        public bool IsEnumeratorInterface { get; init; }    
 
-        public EnumeratorSymbols(IPropertySymbol current, IMethodSymbol moveNext, IMethodSymbol? reset, IMethodSymbol? dispose, bool isRefLikeType)
+        public EnumeratorSymbols(IPropertySymbol current, IMethodSymbol moveNext)
         {
             Current = current;
             MoveNext = moveNext;
-            Reset = reset;
-            Dispose = dispose;
-            IsRefLikeType = isRefLikeType;
         }
     }
 }

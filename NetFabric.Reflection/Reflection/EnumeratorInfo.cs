@@ -5,19 +5,19 @@ namespace NetFabric.Reflection
 {
     public class EnumeratorInfo
     {
-        public readonly PropertyInfo Current;
-        public readonly MethodInfo MoveNext;
-        public readonly MethodInfo? Reset;
-        public readonly MethodInfo? Dispose;
-        public readonly bool IsByRefLike;
+        public PropertyInfo Current { get; }
+        public MethodInfo MoveNext { get; }
+        public MethodInfo? Reset { get; init; }
+        public MethodInfo? Dispose { get; init; }
+        public bool IsValueType { get; init; }    
+        public bool IsByRefLike { get; init; }
+        public bool IsGenericsEnumeratorInterface { get; init; }    
+        public bool IsEnumeratorInterface { get; init; }    
 
-        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext, MethodInfo? reset, MethodInfo? dispose, bool isByRefLike)
+        public EnumeratorInfo(PropertyInfo current, MethodInfo moveNext)
         {
             Current = current;
             MoveNext = moveNext;
-            Reset = reset;
-            Dispose = dispose;
-            IsByRefLike = isByRefLike;
         }
 
         public object? InvokeGetCurrent(object instance)

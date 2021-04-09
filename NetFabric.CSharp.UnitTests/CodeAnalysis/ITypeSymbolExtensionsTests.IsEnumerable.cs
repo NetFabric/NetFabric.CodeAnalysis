@@ -9,7 +9,7 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_Should_ReturnTrue(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType)
+        public void IsEnumerable_Should_ReturnTrue(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType, bool isValueType, bool isRefLikeType)
         {
             // Arrange
             var compilation = Utils.Compile(
@@ -71,6 +71,9 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
                 Assert.Equal(disposeDeclaringType.Name, dispose.ContainingType.MetadataName);
                 Assert.Empty(dispose.Parameters);
             }
+            
+            Assert.Equal(isValueType, enumeratorSymbols.IsValueType);
+            Assert.Equal(isRefLikeType, enumeratorSymbols.IsRefLikeType);
         }
 
         [Theory]

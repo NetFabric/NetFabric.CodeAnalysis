@@ -4,8 +4,8 @@ namespace NetFabric.CodeAnalysis
 {
     public class EnumerableSymbols
     {
-        public readonly IMethodSymbol GetEnumerator;
-        public readonly EnumeratorSymbols EnumeratorSymbols;
+        public IMethodSymbol GetEnumerator { get; }
+        public EnumeratorSymbols EnumeratorSymbols { get; }
 
         public EnumerableSymbols(IMethodSymbol getEnumerator, EnumeratorSymbols enumeratorSymbols)
         {

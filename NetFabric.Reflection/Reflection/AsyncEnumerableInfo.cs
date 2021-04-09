@@ -6,8 +6,8 @@ namespace NetFabric.Reflection
 {
     public class AsyncEnumerableInfo
     {
-        public readonly MethodInfo GetAsyncEnumerator;
-        public readonly AsyncEnumeratorInfo EnumeratorInfo;
+        public MethodInfo GetAsyncEnumerator { get; }
+        public AsyncEnumeratorInfo EnumeratorInfo { get; }
 
         public AsyncEnumerableInfo(MethodInfo getAsyncEnumerator, AsyncEnumeratorInfo enumeratorInfo)
         {

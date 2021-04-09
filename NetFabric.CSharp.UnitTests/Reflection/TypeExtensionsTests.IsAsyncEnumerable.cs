@@ -10,7 +10,7 @@ namespace NetFabric.Reflection.CSharp.UnitTests
     {
         [Theory]
         [MemberData(nameof(DataSets.AsyncEnumerables), MemberType = typeof(DataSets))]
-        public void IsAsyncEnumerable_Should_ReturnTrue(Type type, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type? disposeAsyncDeclaringType, Type itemType)
+        public void IsAsyncEnumerable_Should_ReturnTrue(Type type, Type getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type currentDeclaringType, Type moveNextAsyncDeclaringType, Type? disposeAsyncDeclaringType, Type itemType, bool isValueType)
         {
             // Arrange
 
@@ -54,6 +54,8 @@ namespace NetFabric.Reflection.CSharp.UnitTests
                 Assert.Equal(disposeAsyncDeclaringType, disposeAsync!.DeclaringType);
                 Assert.Empty(disposeAsync!.GetParameters());
             }
+            
+            Assert.Equal(isValueType, enumeratorInfo.IsValueType);
         }
 
         [Theory]
