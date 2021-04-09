@@ -14,36 +14,34 @@
 To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>`, or `IAsyncEnumerable<>`. `foreach` and `await foreach` support several other cases as described [below](#sync-and-async-enumerables). This repository contains extension methods that take into account all these cases.
 
 This repository is distributed as two separate NuGet packages:
-- [NetFabric.CodeAnalysis](https://www.nuget.org/packages/NetFabric.CodeAnalysis/) - it can be used when parsing C# code, for example, in the development of for [Roslyn Analyzers](https://docs.microsoft.com/en-us/visualstudio/extensibility/getting-started-with-roslyn-analyzers) or [C# Code Generators](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/). Its used by the analyzer package [NetFabric.Hyperlinq.Analyzer](https://github.com/NetFabric/NetFabric.Hyperlinq.Analyzer) to implement rules for enumerables.
-- [NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/) - it can be used in the runtime, for example, to optimize performance by using [Expression Trees](https://tyrrrz.me/blog/expression-trees). Its used by the package [NetFabric.Assertive](https://github.com/NetFabric/NetFabric.Assertive) to unit test any type of enumerable.
+- **[NetFabric.CodeAnalysis](https://www.nuget.org/packages/NetFabric.CodeAnalysis/)** - it can be used when parsing C# code, for example, in the development of for [Roslyn Analyzers](https://docs.microsoft.com/en-us/visualstudio/extensibility/getting-started-with-roslyn-analyzers) or [C# Code Generators](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/). Its used by the analyzer package [NetFabric.Hyperlinq.Analyzer](https://github.com/NetFabric/NetFabric.Hyperlinq.Analyzer) to implement rules for enumerables.
+- **[NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/)** - it can be used in the runtime, for example, to optimize performance by using [Expression Trees](https://tyrrrz.me/blog/expression-trees). Its used by the package [NetFabric.Assertive](https://github.com/NetFabric/NetFabric.Assertive) to unit test any type of enumerable.
 
 # Usage
 
-## IsEnumerable() and IsEnumerator()
+## IsEnumerable()
 
 - Add either [NetFabric.CodeAnalysis](https://www.nuget.org/packages/NetFabric.CodeAnalysis/) or [NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/) package to your project.
-- Use the `IsEnumerable` or `IsEnumerator` methods as follow:
+- Use the `IsEnumerable` method as follow:
 ``` csharp
 using NetFabric.CodeAnalysis;
 
 var isEnumerable = typeSymbol.IsEnumerable(compilation, out var enumerableSymbols);
-var isEnumerator = typeSymbol.IsEnumerator(compilation, out var enumeratorSymbols);
 
 var isAsyncEnumerable = typeSymbol.IsAsyncEnumerable(compilation, out var asyncEnumerableSymbols);
-var isAsyncEnumerator = typeSymbol.IsAsyncEnumerator(compilation, out var asyncEnumeratorSymbols);
 ```
 
 ``` csharp
 using NetFabric.Reflection;
 
 var isEnumerable = type.IsEnumerable(out var enumerableInfo);
-var isEnumerator = type.IsEnumerator(out var enumeratorInfo);
 
 var isAsyncEnumerable = type.IsAsyncEnumerable(out var asyncEnumerableInfo);
-var isAsyncEnumerator = type.IsAsyncEnumerator(out var asyncEnumeratorInfo);
 ```
 
-The methods return a boolean value indicating if it's a valid enumerable or enumerator. If `true`, the output parameter contains [`MethodInfo`](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodinfo) or [`IMethodSymbol`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.imethodsymbol) for the methods `GetEnumerator`, `get_Current` and `MoveNext`, following the precedences used by Roslyn for the `foreach` and `await foreach` keywords. It may also contain for methods `Reset` and `Dispose` if defined. Otherwise, `null`. They return the equivalent methods for async enumerables and enumerators.
+The methods return a boolean value indicating if it's a valid enumerable or enumerator. 
+
+If `true`, the output parameter contains [`MethodInfo`](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodinfo) or [`IMethodSymbol`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.imethodsymbol) for the method `GetEnumerator`/`GetAsynEnumerator` of the enumerable, the property `Current` and the method `MoveNext`/`MoveNextAsync` of the enumerator, following the precedences used by Roslyn for the `foreach` and `await foreach` keywords. It may also contain for methods `Reset` and `Dispose`/`DisposeAsync` if defined.
 
 ## ExpressionEx
 
@@ -55,14 +53,14 @@ To use these, add the [NetFabric.Reflection](https://www.nuget.org/packages/NetF
 
 Add `ExpressionEx.ForEach` to an [Expression Tree](https://tyrrrz.me/blog/expression-trees) where:
 - The first parameter defines an enumerable.
-- The second parameter is the body defined by a `Func<Expression, Expression>`. You can pass a lambda expression that, given an Expression that defines an item, returns an Expression that uses it.
+- The second parameter is the body defined by a `Func<Expression, Expression>`. You can pass a lambda expression that, given an `Expression` that defines an item, returns an `Expression` that uses it.
 
 **WARNING:** Async enumerables are not supported.
 
 The `Expression` genererated depends on:
 
 - Whether the enumerator is an `interface`, `class`, `struct`, or `ref struct`.
-- Whether the enumerator disposable or not.
+- Whether the enumerator is disposable or not.
 - Whether the enumerable is an array. In this case, it uses the array indexer instead of `IEnumerable<>` to enumerate.
 
 Throws an exception if the `Expression` in the first parameter does not define an enumerable. In case you don't want the exception to be thrown, use the other overload that takes an `EnumerableInfo` or `EnumerableSymbols` for the first parameter. Use `IsEnumerable` to get the required values.
@@ -99,6 +97,8 @@ Add `ExpressionEx.For` to an [Expression Tree](https://tyrrrz.me/blog/expression
 - The second parameter defines the condition.
 - The third parameter defines the iterator.
 - The fourth parameter defines the body.
+
+`ExpressionEx.For` does not declare the iteration variable. You may have to declare it using an `Expression.Block`.
 
 Here's an example, using `ExpressionEx.For`, that calculates the sum of the items in an array:
 
@@ -173,7 +173,9 @@ Add `ExpressionEx.Using` to an [Expression Tree](https://tyrrrz.me/blog/expressi
 - The first parameter defines the variable to be disposed.
 - The second parameter defines the body.
 
-Throws and exception if the variable is not disposable. To be considered disposable, if it's is a `class` or a `struct`, it has to implement the [`IDisposable`](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable) interface. If it's a `ref struct`, it only needs to have a parameterless `Dispose` method that returns `void`.
+Throws and exception if the variable is not disposable. To be considered disposable, if it's is a `class` or a `struct`, it has to implement the [`IDisposable`](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable) interface. If it's a `ref struct`, it only needs to have a public parameterless `Dispose`.
+
+`ExpressionEx.Using` does not declare the iteration variable. You may have to declare it using an `Expression.Block`.
 
 **WARNING:** `IAsyncDisposable` is not supported.
 
@@ -464,7 +466,7 @@ public class MyRange : MyIEnumerable<int>
 
 The enumerator can be disposable and it's disposed at the end of the enumeration.
 
-If the enumerator is a `class` or a `struct`, it has to implement the [`IDisposable`](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable) interface. If it's a `ref struct`, it only needs to have a parameterless `Dispose` method that returns `void`.
+If the enumerator is a `class` or a `struct`, it has to implement the [`IDisposable`](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable) interface. If it's a `ref struct`, it only needs to have a public parameterless `Dispose` method.
 
 ## By-reference item return
 
