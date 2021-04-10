@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using AgileObjects.ReadableExpressions;
 using NetFabric.CSharp.TestData;
-using NetFabric.VisualBasic.UnitTests.TestData;
 using Xunit;
 using static NetFabric.Expressions.ExpressionEx;
 using static System.Linq.Expressions.Expression;

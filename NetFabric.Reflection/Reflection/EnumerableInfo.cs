@@ -1,14 +1,23 @@
-using System;
 using System.Reflection;
 
 namespace NetFabric.Reflection
 {
+    /// <summary>
+    /// Contains information about methods and properties that ´foreach´ will use to enumerate a given type.
+    /// </summary>
     public class EnumerableInfo
     {
+        /// <summary>
+        /// Information on the method that 'foreach' will use to get a new instance of the enumerator.
+        /// </summary>
         public MethodInfo GetEnumerator { get; }
+        
+        /// <summary>
+        /// Information on the enumerator methods that 'foreach' will use.
+        /// </summary>
         public EnumeratorInfo EnumeratorInfo { get; }
 
-        public EnumerableInfo(MethodInfo getEnumerator, EnumeratorInfo enumeratorInfo)
+        internal EnumerableInfo(MethodInfo getEnumerator, EnumeratorInfo enumeratorInfo)
         {
             GetEnumerator = getEnumerator;
             EnumeratorInfo = enumeratorInfo;

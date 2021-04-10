@@ -1,9 +1,5 @@
 using System;
-using System.Linq;
-using System.Linq.Expressions;
 using AgileObjects.ReadableExpressions;
-using NetFabric.CSharp.TestData;
-using NetFabric.Reflection;
 using Xunit;
 using static NetFabric.Expressions.ExpressionEx;
 using static System.Linq.Expressions.Expression;
@@ -21,187 +17,250 @@ namespace NetFabric.Expressions.CSharp.UnitTests
                 new[] { 1, 2, 3, 4, 5 },
             };
 
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void Using_With_NotDisposableValueType_Must_Throw(int[] source)
+        [Fact]
+        public void Using_With_NotDisposableValueType_Must_Throw()
         {
             // Arrange
-            var enumerable = new EnumerableWithValueTypeEnumerator<int>(source);
             
             // Act
-            Action action = () => Sum(enumerable);
-
-            // Assert
-            var exception = Assert.Throws<Exception>(action);
-            Assert.Equal("'ValueTypeEnumerator`1': type used in a using statement must be implicitly convertible to 'System.IDisposable'", exception.Message);
-        }
-
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void Using_With_DisposableValueType_Must_Succeed(int[] source)
-        {
-            // Arrange
-            var enumerable = new EnumerableWithDisposableValueTypeEnumerator<int>(source);
-            var expectedSum = source.Sum();
-            const string expectedExpression = @"var enumerator = enumerable.GetEnumerator();
-var sum = 0;
-try
-{
-    while (true)
-    {
-        if (enumerator.MoveNext())
-        {
-            sum += enumerator.Current;
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-finally
-{
-    ((IDisposable)enumerator).Dispose();
-}
-
-return sum;";
-            
-            // Act
-            var (expression, _) = CreateSumExpression<EnumerableWithDisposableValueTypeEnumerator<int>>();
-            var sum = Sum(enumerable);
-
-            // Assert
-            var readableExpression = expression.ToReadableString();
-            Assert.Equal(expectedExpression, readableExpression);
-            Assert.Equal(expectedSum, sum);
-        }
-
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void Using_With_DisposableReferenceType_Must_Succeed(int[] source)
-        {
-            // Arrange
-            var enumerable = new EnumerableWithDisposableReferenceTypeEnumerator<int>(source);
-            var expectedSum = source.Sum();
-            const string expectedExpression = @"var enumerator = enumerable.GetEnumerator();
-var sum = 0;
-try
-{
-    while (true)
-    {
-        if (enumerator.MoveNext())
-        {
-            sum += enumerator.Current;
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-finally
-{
-    if (enumerator != null)
-    {
-        ((IDisposable)enumerator).Dispose();
-    }
-}
-
-return sum;";
-            
-            // Act
-            var (expression, _) = CreateSumExpression<EnumerableWithDisposableReferenceTypeEnumerator<int>>();
-            var sum = Sum(enumerable);
-
-            // Assert
-            var readableExpression = expression.ToReadableString();
-            Assert.Equal(expectedExpression, readableExpression);
-            Assert.Equal(expectedSum, sum);
-        }
-
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void Using_With_NotDisposableByRefLike_Must_Throw(int[] source)
-        {
-            // Arrange
-            var enumerable = new EnumerableWithByRefLikeEnumerator<int>(source);
-            
-            // Act
-            Action action = () => Sum(enumerable);
-
-            // Assert
-            var exception = Assert.Throws<Exception>(action);
-            Assert.Equal("'ByRefLikeEnumerator`1': type used in a using statement must be implicitly convertible to 'System.IDisposable'", exception.Message);
-        }
-
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void Using_With_DisposableByRefLike_Must_Succeed(int[] source)
-        {
-            // Arrange
-            var enumerable = new EnumerableWithDisposableByRefLikeEnumerator<int>(source);
-            var expectedSum = source.Sum();
-            const string expectedExpression = @"var enumerator = enumerable.GetEnumerator();
-var sum = 0;
-try
-{
-    while (true)
-    {
-        if (enumerator.MoveNext())
-        {
-            sum += enumerator.Current;
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-finally
-{
-    enumerator.Dispose();
-}
-
-return sum;";
-            
-            // Act
-            var (expression, _) = CreateSumExpression<EnumerableWithDisposableByRefLikeEnumerator<int>>();
-            var sum = Sum(enumerable);
-
-            // Assert
-            var readableExpression = expression.ToReadableString();
-            Assert.Equal(expectedExpression, readableExpression);
-            Assert.Equal(expectedSum, sum);
-        }
-
-        static (Expression, ParameterExpression) CreateSumExpression<TEnumerable>()
-        {
-            if (!typeof(TEnumerable).IsEnumerable(out var enumerableInfo))
-                throw new Exception("Not an enumerable!");
-            
-            var enumerableParameter = Parameter(typeof(TEnumerable), "enumerable");
-            var enumeratorVariable = Variable(enumerableInfo.GetEnumerator.ReturnType, "enumerator");
-            var sumVariable = Variable(typeof(int), "sum");
-            var expression = Block(
-                new[] {enumeratorVariable, sumVariable},
-                Assign(enumeratorVariable, Call(enumerableParameter, enumerableInfo.GetEnumerator)),
-                Assign(sumVariable, Constant(0)),
-                Using(
-                    enumeratorVariable,
-                    While(
-                        Call(enumeratorVariable, enumerableInfo.EnumeratorInfo.MoveNext),
-                        AddAssign(sumVariable, Property(enumeratorVariable, enumerableInfo.EnumeratorInfo.Current))
+            Action action = () =>
+            {
+                var disposable = Variable(typeof(NotDisposableValueType), "disposable");
+                var label = Label(typeof(int));
+                _ = Block(
+                    new[] {disposable},
+                    Using(
+                        disposable, 
+                        Empty()
                     )
-                ),
-                sumVariable);
-            return (expression, enumerableParameter);
+                );
+            };
+
+            // Assert
+            var exception = Assert.Throws<Exception>(action);
+            Assert.Equal("'NotDisposableValueType': type used in a using statement must be implicitly convertible to 'System.IDisposable'", exception.Message);
         }
 
-        static int Sum<TEnumerable>(TEnumerable enumerable)
+        [Fact]
+        public void Using_With_DisposableValueType_Must_Succeed()
         {
-            var (expression, enumerableParameter) = CreateSumExpression<TEnumerable>();
-            var sum = Lambda<Func<TEnumerable, int>>(expression, enumerableParameter).Compile();
-            return sum(enumerable);
+            // Arrange
+            const string expectedExpression = @"UsingTests.DisposableValueType disposable;
+try
+{
+    return true;
+}
+finally
+{
+    ((IDisposable)disposable).Dispose();
+}
+
+return false;";
+            
+            // Act
+            var disposable = Variable(typeof(DisposableValueType), "disposable");
+            var label = Label(typeof(bool));
+            var expression = Block(
+                new[] {disposable},
+                Using(
+                    disposable, 
+                    Return(label, Constant(true))
+                ),
+                Label(label, Constant(false))
+            );
+
+            // Assert
+            var readableExpression = expression.ToReadableString();
+            Assert.Equal(expectedExpression, readableExpression);
+        }
+        
+        [Fact]
+        public void Using_With_NotDisposableReferenceType_Must_Throw()
+        {
+            // Arrange
+            
+            // Act
+            Action action = () =>
+            {
+                var disposable = Variable(typeof(NotDisposableReferenceType), "disposable");
+                _ = Block(
+                    new[] {disposable},
+                    Using(
+                        disposable, 
+                        Empty()
+                    )
+                );
+            };
+
+            // Assert
+            var exception = Assert.Throws<Exception>(action);
+            Assert.Equal("'NotDisposableReferenceType': type used in a using statement must be implicitly convertible to 'System.IDisposable'", exception.Message);
+        }
+
+        [Fact]
+        public void Using_With_DisposableReferenceType_Must_Succeed()
+        {
+            // Arrange
+            const string expectedExpression = @"UsingTests.DisposableReferenceType disposable;
+try
+{
+    return true;
+}
+finally
+{
+    if (disposable != null)
+    {
+        ((IDisposable)disposable).Dispose();
+    }
+}
+
+return false;";
+            
+            // Act
+            var disposable = Variable(typeof(DisposableReferenceType), "disposable");
+            var label = Label(typeof(bool));
+            var expression = Block(
+                new[] {disposable},
+                Using(
+                    disposable, 
+                    Return(label, Constant(true))
+                ),
+                Label(label, Constant(false))
+            );
+
+            // Assert
+            var readableExpression = expression.ToReadableString();
+            Assert.Equal(expectedExpression, readableExpression);
+        }
+
+        [Fact]
+        public void Using_With_NotDisposableByRefLikeType_Must_Throw()
+        {
+            // Arrange
+            
+            // Act
+            Action action = () =>
+            {
+                var disposable = Variable(typeof(NotDisposableByRefLikeType), "disposable");
+                _ = Block(
+                    new[] {disposable},
+                    Using(
+                        disposable, 
+                        Empty()
+                    )
+                );
+            };
+
+            // Assert
+            var exception = Assert.Throws<Exception>(action);
+            Assert.Equal("'NotDisposableByRefLikeType': type used in a using statement must be implicitly convertible to 'System.IDisposable'", exception.Message);
+        }
+
+        [Fact]
+        public void Using_With_DisposableByRefLike_Must_Succeed()
+        {
+            // Arrange
+            const string expectedExpression = @"UsingTests.DisposableByRefLikeType disposable;
+try
+{
+    return true;
+}
+finally
+{
+    disposable.Dispose();
+}
+
+return false;";
+            
+            // Act
+            var disposable = Variable(typeof(DisposableByRefLikeType), "disposable");
+            var label = Label(typeof(bool));
+            var expression = Block(
+                new[] {disposable},
+                Using(
+                    disposable, 
+                    Return(label, Constant(true))
+                ),
+                Label(label, Constant(false))
+            );
+
+            // Assert
+            var readableExpression = expression.ToReadableString();
+            Assert.Equal(expectedExpression, readableExpression);
+        }
+
+        [Fact]
+        public void Using_With_EnumerableOfExpression_Must_Succeed()
+        {
+            // Arrange
+            var expectedExpression = @"UsingTests.DisposableValueType disposableValueType;
+UsingTests.DisposableReferenceType disposableReferenceType;
+try
+{
+    try
+    {
+        return true;
+    }
+    finally
+    {
+        ((IDisposable)disposableValueType).Dispose();
+    }
+}
+finally
+{
+    if (disposableReferenceType != null)
+    {
+        ((IDisposable)disposableReferenceType).Dispose();
+    }
+}
+
+return false;";
+            
+            // Act
+            var disposableValueType = Variable(typeof(DisposableValueType), "disposableValueType");
+            var disposableReferenceType = Variable(typeof(DisposableReferenceType), "disposableReferenceType");
+            var label = Label(typeof(bool));
+            var expression = Block(
+                new[] {disposableValueType, disposableReferenceType},
+                Using(
+                    new[] {disposableValueType, disposableReferenceType} , 
+                    Return(label, Constant(true))
+                ),
+                Label(label, Constant(false))
+            );
+
+            // Assert
+            var readableExpression = expression.ToReadableString();
+            Assert.Equal(expectedExpression, readableExpression);
+        }
+
+        struct NotDisposableValueType
+        {
+            public void Dispose() {}
+        }
+
+        ref struct NotDisposableByRefLikeType
+        {
+        }
+
+        class NotDisposableReferenceType
+        {
+            public void Dispose() {}
+        }
+
+        struct DisposableValueType : IDisposable
+        {
+            public void Dispose() {}
+        }
+
+        ref struct DisposableByRefLikeType
+        {
+            public void Dispose() {}
+        }
+
+        class DisposableReferenceType : IDisposable
+        {
+            public void Dispose() {}
         }
         
     }
