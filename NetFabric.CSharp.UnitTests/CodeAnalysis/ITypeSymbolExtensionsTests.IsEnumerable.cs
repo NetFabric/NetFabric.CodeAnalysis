@@ -8,6 +8,7 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
     public partial class ITypeSymbolExtensionsTests
     {
         [Theory]
+        [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
         public void IsEnumerable_Should_ReturnTrue(Type enumerableType, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType, bool isValueType, bool isRefLikeType)
         {
@@ -38,7 +39,10 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
             Assert.NotNull(current);
             Assert.Equal(nameof(IEnumerator.Current), current.Name);
             Assert.Equal(currentDeclaringType.Name, current.ContainingType.MetadataName);
-            Assert.Equal(itemType.Name, current.Type.MetadataName);
+            if (current is {ReturnsByRef:true} or {ReturnsByRefReadonly:true})
+                Assert.Equal(itemType.Name, current.Type.MetadataName + '&');
+            else
+                Assert.Equal(itemType.Name, current.Type.MetadataName);
 
             var moveNext = enumeratorSymbols.MoveNext;
             Assert.NotNull(moveNext);

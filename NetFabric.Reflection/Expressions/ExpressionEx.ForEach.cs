@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using NetFabric.Reflection;
 using static System.Linq.Expressions.Expression;
@@ -9,6 +8,22 @@ namespace NetFabric.Expressions
 {
     public static partial class ExpressionEx
     {
+        /// <summary>
+        /// Creates a <see cref="System.Linq.Expressions.Expression"/> with behaviour similar to the <c>foreach</c> statement in C#.
+        /// </summary>
+        /// <param name="enumerable">An <see cref="System.Linq.Expressions.Expression"/> that defines the enumerator.</param>
+        /// <param name="body">
+        /// A <see cref="System.Func&lt;Expression, Expression&gt;"/> that returns the body, given an
+        /// <see cref="System.Linq.Expressions.Expression"/> that defines the item on each loop iteration.
+        /// </param>
+        /// <returns>The created <see cref="System.Linq.Expressions.Expression"/>.</returns>
+        /// <exception cref="Exception">Object is not enumerable.</exception>
+        /// <remarks>
+        /// <p>
+        /// The created <see cref="System.Linq.Expressions.Expression"/> depends on if the object defined in <paramref name="enumerable"/>
+        /// is an <c>interface</c>, <c>class</c>, <c>struct</c>, <c>ref struct</c>, and if is disposable.
+        /// </p>
+        /// </remarks>
         public static Expression ForEach(Expression enumerable, Func<Expression, Expression> body)
         {
             var enumerableType = enumerable.Type;
@@ -29,6 +44,22 @@ namespace NetFabric.Expressions
             throw new Exception("Unhandled error!");
         }
 
+        /// <summary>
+        /// Creates a <see cref="System.Linq.Expressions.Expression"/> with behaviour similar to the <c>foreach</c> statement in C#.
+        /// </summary>
+        /// <param name="enumerableInfo">The information returned by a call to <see cref="NetFabric.Reflection.TypeExtensions.IsEnumerable(Type, out EnumerableInfo)"/>.</param>
+        /// <param name="enumerable">An <see cref="System.Linq.Expressions.Expression"/> that defines the enumerator.</param>
+        /// <param name="body">
+        /// A <see cref="System.Func&lt;Expression, Expression&gt;"/> that returns the body, given an
+        /// <see cref="System.Linq.Expressions.Expression"/> that defines the item on each loop iteration.
+        /// </param>
+        /// <returns>The created <see cref="System.Linq.Expressions.Expression"/>.</returns>
+        /// <remarks>
+        /// <p>
+        /// The created <see cref="System.Linq.Expressions.Expression"/> depends on if the object defined in <paramref name="enumerable"/>
+        /// is an <c>interface</c>, <c>class</c>, <c>struct</c>, <c>ref struct</c>, and if is disposable.
+        /// </p>
+        /// </remarks>
         public static Expression ForEach(EnumerableInfo enumerableInfo, Expression enumerable, Func<Expression, Expression> body)
         {
             var enumerableType = enumerable.Type;

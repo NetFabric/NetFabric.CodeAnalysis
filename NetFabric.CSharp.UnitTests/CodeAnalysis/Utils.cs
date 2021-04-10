@@ -20,22 +20,32 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
                     typeof(Enumerable),
                     typeof(IEnumerable),
                     typeof(IAsyncEnumerable<>),
-                    typeof(IValueEnumerable<,>),
-                    typeof(ValueTask)),
+                    typeof(ReadOnlySpan<>),
+                    typeof(ValueTask),
+                    typeof(IValueEnumerable<,>)),
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)); 
 
         public static ITypeSymbol GetTypeSymbol(this CSharpCompilation compilation, Type type)
         {
             if (type == typeof(int))
                 return compilation.GetSpecialType(SpecialType.System_Int32);
+            if (type == typeof(string))
+                return compilation.GetSpecialType(SpecialType.System_String);
 
-            var symbol = compilation.GetTypeByMetadataName($"{type.Namespace}.{type.Name}");
+            if (type.IsArray)
+                return compilation.CreateArrayTypeSymbol(compilation.GetTypeSymbol(type.GetElementType()!));
+
+            var qualifiedName = $"{type.Namespace}.{type.Name}";
+            var symbol = compilation.GetTypeByMetadataName(qualifiedName);
+            if (symbol is null)
+                throw new Exception($"'{qualifiedName}' not found!");
 
             if (type.IsGenericType)
             {
                 var typeArguments = type.GenericTypeArguments
-                    .Select(argumentType => compilation.GetTypeSymbol(argumentType));
-                return symbol.Construct(typeArguments.ToArray());
+                    .Select(compilation.GetTypeSymbol)
+                    .ToArray();
+                return symbol.Construct(typeArguments);
             }
 
             return symbol;

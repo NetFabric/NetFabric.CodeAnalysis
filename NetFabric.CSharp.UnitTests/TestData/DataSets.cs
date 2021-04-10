@@ -263,5 +263,58 @@ namespace NetFabric.CSharp.TestData
                     typeof(int)
                 },
             };
+
+        public static TheoryData<Type> Enumerators =>
+            new()
+            {
+                typeof(ValueTypeEnumerator<int>),
+                typeof(DisposableValueTypeEnumerator<int>),
+                typeof(ByRefLikeEnumerator<int>),
+                typeof(DisposableByRefLikeEnumerator<int>),
+                typeof(ReferenceTypeEnumerator<int>),
+                typeof(DisposableReferenceTypeEnumerator<int>),
+                typeof(ExplicitGenericEnumerator<int>),
+                typeof(ExplicitEnumerator<int>),
+            };
+
+        public static TheoryData<Type, bool, bool> InvalidEnumerators =>
+            new()
+            {
+                {
+                    typeof(EnumeratorWithMissingCurrent),
+                    true,
+                    false
+                },
+                {
+                    typeof(EnumeratorWithMissingMoveNext<int>),
+                    false,
+                    true
+                },
+            };
+
+        public static TheoryData<Type> AsyncEnumerators =>
+            new()
+            {
+                typeof(ValueTypeAsyncEnumerator<int>),
+                typeof(DisposableValueTypeAsyncEnumerator<int>),
+                typeof(ReferenceTypeAsyncEnumerator<int>),
+                typeof(DisposableReferenceTypeAsyncEnumerator<int>),
+                typeof(ExplicitAsyncEnumerator<int>),
+            };
+
+        public static TheoryData<Type, bool, bool> InvalidAsyncEnumerators =>
+            new()
+            {
+                {
+                    typeof(AsyncEnumeratorWithMissingCurrent),
+                    true,
+                    false
+                },
+                {
+                    typeof(AsyncEnumeratorWithMissingMoveNextAsync<int>),
+                    false,
+                    true
+                },
+            };
     }
 }

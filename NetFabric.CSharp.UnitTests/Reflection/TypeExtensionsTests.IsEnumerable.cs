@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NetFabric.CSharp.TestData;
+﻿using NetFabric.CSharp.TestData;
 using System;
 using System.Collections;
 using Xunit;

@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFrameworks>net461;netstandard2.0;netstandard2.1;net5.0</TargetFrameworks>
         <PackageId>NetFabric.Reflection</PackageId>
-        <Version>4.0.0-beta03</Version>
+        <Version>4.0.0-beta05</Version>
         <Description>Extensions to System.Reflection.</Description>
         <PackageReleaseNotes></PackageReleaseNotes>
         <PackageTags>reflection, enumerable, expression, expressiontree</PackageTags>
@@ -11,6 +11,17 @@
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
