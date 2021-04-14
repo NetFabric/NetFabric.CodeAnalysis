@@ -11,7 +11,14 @@ namespace NetFabric.Reflection
     public static partial class TypeExtensions
     {
 
-        static bool ImplementsInterface(this Type type, Type interfaceType, [NotNullWhen(true)] out Type[]? genericArguments)
+        /// <summary>
+        /// Gets a value indicating whether <see cref="System.Type"/> implements the given interface <see cref="System.Type"/>.
+        /// </summary>
+        /// <param name="type">The <see cref="System.Type"/> to test.</param>
+        /// <param name="interfaceType">The interface <see cref="System.Type"/> to test.</param>
+        /// <param name="genericArguments">If methods returns <c>true</c> and interface <see cref="System.Type"/> is generic, contains the generic arguments of the implemented interface.</param>
+        /// <returns><c>true</c> if <see cref="System.Type"/> implements interface <see cref="System.Type"/>; otherwise, <c>false</c>.</returns>
+        public static bool ImplementsInterface(this Type type, Type interfaceType, [NotNullWhen(true)] out Type[]? genericArguments)
         {
             if (!interfaceType.IsGenericType)
             {

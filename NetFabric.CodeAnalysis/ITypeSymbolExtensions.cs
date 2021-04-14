@@ -1,12 +1,59 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Immutable;
+// ReSharper disable InvertIf
 
 namespace NetFabric.CodeAnalysis
 {
     public static partial class ITypeSymbolExtensions
     {
         
+        /// <summary>
+        /// Gets a value indicating whether <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> implements the given interface type.
+        /// </summary>
+        /// <param name="typeSymbol">The <see cref="System.Type"/> to test.</param>
+        /// <param name="interfaceType">The interface <see cref="System.Type"/> to test.</param>
+        /// <param name="genericArguments">If methods returns <c>true</c> and interface type is generic, contains the generic arguments of the implemented interface.</param>
+        /// <returns><c>true</c> if <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> implements interface type; otherwise, <c>false</c>.</returns>
+        public static bool ImplementsInterface(this ITypeSymbol typeSymbol, SpecialType interfaceType, out ImmutableArray<ITypeSymbol> genericArguments)
+        {
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var @interface in typeSymbol.AllInterfaces)
+            {
+                if (@interface.OriginalDefinition.SpecialType == interfaceType)
+                {
+                    genericArguments = @interface.TypeArguments;
+                    return true;
+                }
+            }
+
+            genericArguments = default;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> implements the given interface type.
+        /// </summary>
+        /// <param name="typeSymbol">The <see cref="System.Type"/> to test.</param>
+        /// <param name="interfaceType">The interface <see cref="System.Type"/> to test.</param>
+        /// <param name="genericArguments">If methods returns <c>true</c> and interface type is generic, contains the generic arguments of the implemented interface.</param>
+        /// <returns><c>true</c> if <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> implements interface type; otherwise, <c>false</c>.</returns>
+        public static bool ImplementsInterface(this ITypeSymbol typeSymbol, INamedTypeSymbol interfaceType, out ImmutableArray<ITypeSymbol> genericArguments)
+        {
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var @interface in typeSymbol.AllInterfaces)
+            {
+                if (SymbolEqualityComparer.Default.Equals(@interface.OriginalDefinition, interfaceType))
+                {
+                    genericArguments = @interface.TypeArguments;
+                    return true;
+                }
+            }
+
+            genericArguments = default;
+            return false;
+        }
+
         internal static IPropertySymbol? GetPublicReadProperty(this ITypeSymbol typeSymbol, string name)
         {
             foreach (var member in typeSymbol.GetMembers(name).OfType<IPropertySymbol>())
@@ -17,6 +64,7 @@ namespace NetFabric.CodeAnalysis
 
             if (typeSymbol.TypeKind == TypeKind.Interface)
             {
+                // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
                 foreach (var @interface in typeSymbol.AllInterfaces)
                 {
                     var property = @interface.GetPublicReadProperty(name);
@@ -48,6 +96,7 @@ namespace NetFabric.CodeAnalysis
 
             if (typeSymbol.TypeKind == TypeKind.Interface)
             {
+                // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
                 foreach (var @interface in typeSymbol.AllInterfaces)
                 {
                     var method = @interface.GetPublicMethod(name, parameters);
@@ -65,42 +114,12 @@ namespace NetFabric.CodeAnalysis
             return null;
         }
 
-        internal static bool ImplementsInterface(this ITypeSymbol typeSymbol, SpecialType interfaceType, out ImmutableArray<ITypeSymbol> genericArguments)
-        {
-            foreach (var @interface in typeSymbol.AllInterfaces)
-            {
-                if (@interface.OriginalDefinition.SpecialType == interfaceType)
-                {
-                    genericArguments = @interface.TypeArguments;
-                    return true;
-                }
-            }
-
-            genericArguments = default;
-            return false;
-        }
-
-        static bool ImplementsInterface(this ITypeSymbol typeSymbol, INamedTypeSymbol interfaceType, out ImmutableArray<ITypeSymbol> genericArguments)
-        {
-            foreach (var @interface in typeSymbol.AllInterfaces)
-            {
-                if (SymbolEqualityComparer.Default.Equals(@interface.OriginalDefinition, interfaceType))
-                {
-                    genericArguments = @interface.TypeArguments;
-                    return true;
-                }
-            }
-
-            genericArguments = default;
-            return false;
-        }
-
-
         static bool SequenceEqual(ImmutableArray<IParameterSymbol> parameters, Type[] types)
         {
             if (parameters.Length != types.Length)
                 return false;
 
+            // ReSharper disable once LoopCanBeConvertedToQuery
             for (var index = 0; index < parameters.Length; index++)
             {
                 if (parameters[index].Type.MetadataName != types[index].Name)
