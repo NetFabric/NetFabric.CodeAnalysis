@@ -82,6 +82,39 @@ namespace NetFabric.CSharp.TestData
             new()
             {
                 {
+                    typeof(IEnumerable),
+                    typeof(IEnumerable),
+                    typeof(IEnumerator),
+                    typeof(IEnumerator),
+                    typeof(IEnumerator),
+                    null,
+                    typeof(object),
+                    false,
+                    false
+                },
+                {
+                    typeof(IEnumerable<int>),
+                    typeof(IEnumerable<int>),
+                    typeof(IEnumerator<int>),
+                    typeof(IEnumerator),
+                    typeof(IEnumerator),
+                    typeof(IDisposable),
+                    typeof(int),
+                    false,
+                    false
+                },
+                {
+                    typeof(IReadOnlyCollection<int>),
+                    typeof(IEnumerable<int>),
+                    typeof(IEnumerator<int>),
+                    typeof(IEnumerator),
+                    typeof(IEnumerator),
+                    typeof(IDisposable),
+                    typeof(int),
+                    false,
+                    false
+                },
+                {
                     typeof(EnumerableWithValueTypeEnumerator<int>),
                     typeof(EnumerableWithValueTypeEnumerator<int>),
                     typeof(ValueTypeEnumerator<int>),
@@ -267,6 +300,8 @@ namespace NetFabric.CSharp.TestData
         public static TheoryData<Type> Enumerators =>
             new()
             {
+                typeof(IEnumerator),
+                typeof(IEnumerator<int>),
                 typeof(ValueTypeEnumerator<int>),
                 typeof(DisposableValueTypeEnumerator<int>),
                 typeof(ByRefLikeEnumerator<int>),
@@ -287,31 +322,6 @@ namespace NetFabric.CSharp.TestData
                 },
                 {
                     typeof(EnumeratorWithMissingMoveNext<int>),
-                    false,
-                    true
-                },
-            };
-
-        public static TheoryData<Type> AsyncEnumerators =>
-            new()
-            {
-                typeof(ValueTypeAsyncEnumerator<int>),
-                typeof(DisposableValueTypeAsyncEnumerator<int>),
-                typeof(ReferenceTypeAsyncEnumerator<int>),
-                typeof(DisposableReferenceTypeAsyncEnumerator<int>),
-                typeof(ExplicitAsyncEnumerator<int>),
-            };
-
-        public static TheoryData<Type, bool, bool> InvalidAsyncEnumerators =>
-            new()
-            {
-                {
-                    typeof(AsyncEnumeratorWithMissingCurrent),
-                    true,
-                    false
-                },
-                {
-                    typeof(AsyncEnumeratorWithMissingMoveNextAsync<int>),
                     false,
                     true
                 },

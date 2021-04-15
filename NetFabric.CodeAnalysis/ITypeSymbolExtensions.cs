@@ -17,6 +17,13 @@ namespace NetFabric.CodeAnalysis
         /// <returns><c>true</c> if <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> implements interface type; otherwise, <c>false</c>.</returns>
         public static bool ImplementsInterface(this ITypeSymbol typeSymbol, SpecialType interfaceType, out ImmutableArray<ITypeSymbol> genericArguments)
         {
+            if (typeSymbol is INamedTypeSymbol namedTypeSymbol 
+                && namedTypeSymbol.OriginalDefinition.SpecialType == interfaceType)
+            {
+                genericArguments = namedTypeSymbol.TypeArguments;
+                return true;
+            }
+            
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var @interface in typeSymbol.AllInterfaces)
             {
@@ -40,6 +47,13 @@ namespace NetFabric.CodeAnalysis
         /// <returns><c>true</c> if <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> implements interface type; otherwise, <c>false</c>.</returns>
         public static bool ImplementsInterface(this ITypeSymbol typeSymbol, INamedTypeSymbol interfaceType, out ImmutableArray<ITypeSymbol> genericArguments)
         {
+            if (typeSymbol is INamedTypeSymbol namedTypeSymbol 
+                && SymbolEqualityComparer.Default.Equals(namedTypeSymbol.OriginalDefinition, interfaceType))
+            {
+                genericArguments = namedTypeSymbol.TypeArguments;
+                return true;
+            }
+            
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var @interface in typeSymbol.AllInterfaces)
             {

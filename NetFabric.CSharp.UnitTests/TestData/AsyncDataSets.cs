@@ -11,6 +11,16 @@ namespace NetFabric.CSharp.TestData
             new()
             {
                 {
+                    typeof(IAsyncEnumerable<int>),
+                    typeof(IAsyncEnumerable<int>),
+                    1,
+                    typeof(IAsyncEnumerator<int>),
+                    typeof(IAsyncEnumerator<int>),
+                    typeof(IAsyncDisposable),
+                    typeof(int),
+                    false
+                },
+                {
                     typeof(AsyncEnumerableWithValueTypeAsyncEnumerator<int>),
                     typeof(AsyncEnumerableWithValueTypeAsyncEnumerator<int>),
                     0,
@@ -110,6 +120,32 @@ namespace NetFabric.CSharp.TestData
                     typeof(AsyncEnumeratorWithMissingMoveNextAsync<int>),
                     null,
                     typeof(int)
+                },
+            };
+
+        public static TheoryData<Type> AsyncEnumerators =>
+            new()
+            {
+                typeof(IAsyncEnumerator<int>),
+                typeof(ValueTypeAsyncEnumerator<int>),
+                typeof(DisposableValueTypeAsyncEnumerator<int>),
+                typeof(ReferenceTypeAsyncEnumerator<int>),
+                typeof(DisposableReferenceTypeAsyncEnumerator<int>),
+                typeof(ExplicitAsyncEnumerator<int>),
+            };
+
+        public static TheoryData<Type, bool, bool> InvalidAsyncEnumerators =>
+            new()
+            {
+                {
+                    typeof(AsyncEnumeratorWithMissingCurrent),
+                    true,
+                    false
+                },
+                {
+                    typeof(AsyncEnumeratorWithMissingMoveNextAsync<int>),
+                    false,
+                    true
                 },
             };
     }
