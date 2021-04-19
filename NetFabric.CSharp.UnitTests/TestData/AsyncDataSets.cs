@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NetFabric.Reflection;
 using Xunit;
 
 namespace NetFabric.CSharp.TestData
@@ -91,6 +92,16 @@ namespace NetFabric.CSharp.TestData
                     null,
                     typeof(int),
                     true
+                },
+                {
+                    typeof(AsyncEnumerableWrapper<int, int>),
+                    typeof(AsyncEnumerableWrapper<int, int>),
+                    1,
+                    typeof(IAsyncEnumerator<int>),
+                    typeof(IAsyncEnumerator<int>),
+                    typeof(IAsyncDisposable),
+                    typeof(int),
+                    false
                 },
             };
 

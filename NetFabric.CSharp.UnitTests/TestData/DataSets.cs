@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NetFabric.Reflection;
 using Xunit;
 
 namespace NetFabric.CSharp.TestData
@@ -244,6 +245,17 @@ namespace NetFabric.CSharp.TestData
                     null,
                     typeof(int),
                     true,
+                    false
+                },
+                {
+                    typeof(EnumerableWrapper<int, int>),
+                    typeof(EnumerableWrapper<int, int>),
+                    typeof(IEnumerator<int>),
+                    typeof(IEnumerator),
+                    typeof(IEnumerator),
+                    typeof(IDisposable),
+                    typeof(int),
+                    false,
                     false
                 },
             };
