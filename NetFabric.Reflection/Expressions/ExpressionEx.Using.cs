@@ -34,27 +34,33 @@ namespace NetFabric.Expressions
         {
             if (!instance.Type.IsDisposable(out var disposeMethodInfo, out var isByRefLike))
                 throw new Exception($"'{instance.Type.Name}': type used in a using statement must be implicitly convertible to 'System.IDisposable'");
-                    
+
             return TryFinally(
                 body,
-                instance.Type switch
+                Dispose(disposeMethodInfo, instance, isByRefLike)
+            );
+
+            static Expression Dispose(MethodInfo disposeMethodInfo, ParameterExpression instance, bool isByRefLike)
+            {
+                return instance.Type switch
                 {
-                    { IsValueType: true } when isByRefLike => DisposeByRefLikeType(disposeMethodInfo, instance),
-                    { IsValueType: true } => DisposeValueType(disposeMethodInfo, instance),
+                    {IsValueType: true} when isByRefLike => DisposeByRefLikeType(disposeMethodInfo, instance),
+                    {IsValueType: true} => DisposeValueType(disposeMethodInfo, instance),
                     _ => DisposeReferenceType(disposeMethodInfo, instance)
-                });
+                };
 
-            static Expression DisposeByRefLikeType(MethodInfo disposeMethodInfo, ParameterExpression instance)
-                => Call(instance, disposeMethodInfo);
+                static Expression DisposeByRefLikeType(MethodInfo disposeMethodInfo, ParameterExpression instance)
+                    => Call(instance, disposeMethodInfo);
 
-            static Expression DisposeValueType(MethodInfo disposeMethodInfo, Expression instance)
-                => Call(Convert(instance, typeof(IDisposable)), disposeMethodInfo);
+                static Expression DisposeValueType(MethodInfo disposeMethodInfo, Expression instance)
+                    => Call(Convert(instance, typeof(IDisposable)), disposeMethodInfo);
 
-            static Expression DisposeReferenceType(MethodInfo disposeMethodInfo, ParameterExpression instance)
-                => IfThen(
-                    NotEqual(instance, Constant(null)),
-                    Call(Convert(instance, typeof(IDisposable)), disposeMethodInfo)
-                );
+                static Expression DisposeReferenceType(MethodInfo disposeMethodInfo, ParameterExpression instance)
+                    => IfThen(
+                        NotEqual(instance, Constant(null)),
+                        Call(Convert(instance, typeof(IDisposable)), disposeMethodInfo)
+                    );
+            }
         }
 
         /// <summary>
@@ -77,6 +83,7 @@ namespace NetFabric.Expressions
         public static TryExpression Using(IEnumerable<ParameterExpression> instances, Expression body)
         {
             TryExpression? result = default;
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach(var instance in instances)
             {
                 result = Using(instance, result ?? body);
