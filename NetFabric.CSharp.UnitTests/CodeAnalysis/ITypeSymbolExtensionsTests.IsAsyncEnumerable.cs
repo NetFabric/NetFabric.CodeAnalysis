@@ -14,7 +14,8 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
             var compilation = Utils.Compile(
                 @"TestData/AsyncEnumerables.cs",
                 @"TestData/AsyncEnumerators.cs",
-                @"TestData/RangeAsyncEnumerable.cs");
+                @"TestData/RangeAsyncEnumerable.cs",
+                @"../../../../NetFabric.Reflection/Reflection/AsyncEnumerableWrapper.cs");
             var typeSymbol = compilation.GetTypeSymbol(enumerableType);
 
             // Act

@@ -432,47 +432,7 @@ public class MyRange : IEnumerable<int>
 }
 ```
 
-Using the following enumerable on a `foreach` will result in the error: `error CS1579: foreach statement cannot operate on variables of type 'MyRange' because 'MyRange' does not contain a public instance definition for 'GetEnumerator'`.
-
-``` csharp
-public interface MyIEnumerable<out T> 
-{
-    IEnumerator<T> GetEnumerator();
-}
-
-public class MyRange : MyIEnumerable<int>
-{    
-    readonly int count;
-    
-    public MyRange(int count)
-    {
-        this.count = count;
-    }
-
-    IEnumerator<int> MyIEnumerable<int>.GetEnumerator() => new Enumerator(count);
-    
-    class Enumerator : IEnumerator<int>
-    {
-        readonly int count;
-        int current;
-        
-        internal Enumerator(int count)
-        {
-            this.count = count;
-            current = -1;
-        }
-        
-        int IEnumerator<int>.Current => current;
-        object IEnumerator.Current => current;
-        
-        bool IEnumerator.MoveNext() => ++current < count;
-        
-        void IEnumerator.Reset() => current = -1;
-        
-        void IDisposable.Dispose() {}
-    }
-}
-```
+`foreach` only accepts interfaces derived from `IEnumerable` or `IAsyncEnumerable<>`. Using another interface results in an error, even if it implements the same contract. You can check the result in [SharpLab](https://sharplab.io/#v2:EYLgxg9gTgpgtADwGwBYA0AXEUCuA7AHwAEAmABgFgAoUgRmqLIAIjaA6AYQgBtuYwMASwh4AzgG4GzViklVqAM2gwAhmAAWACgBuKqE0EYYAWwN4meGAHcmAJRV4A5jACieHMZhQVwPptpkAJSB1ExhLLQAnJqGJoFyDADMZkZQCmowTACyAJ6siQA8EDgYTAAqAHxM1ADeoeEAkm4eXioY0AWVTADiMBjNnt7tUJrx1AC+1EksJHYOzgOtvpn1YSDZebSFgngYFbXh1VSHsCoAJiLcOSlMkPgYcoerLMn2Tq7ugz5+O6V3uyFjodwgBeKoYdSCURsf6lEG3Yq7BJAsJNT6tYYFX5VXL5LG7CpsXr9dFDaCjI7A0FVSw2RZkkawsYoynhUhMeltaCsqnrNEtBn4vbPOosk6qC54K43WGPKkynBQWBI55PMXhX5ePAqbgc0lcka/BH3QHy4FgpiaCFQmGIjBoW6K5UYQJMeGaWEOuC0Zlm1Ua3ZMflfTHYzhOmCB/1Ui1gCMq9VhCDAABW/FKwYx0HDSsjpWj5qqcdzCb9iaYwAgPCDnOGbCyEG0MAAcjAEBgKQXDhaANQ94vOpgFY2l+UFogoGv6uu2GCiPqd8vdovxuFMb1yqnjycNAAiUIADhBRN8YGx96Ij/PF2aapMWffxkA===).
 
 ## Disposable enumerator
 
@@ -500,7 +460,8 @@ public readonly struct WhereEnumerable<T>
         this.predicate = predicate;
     }
     
-    public Enumerator GetEnumerator() => new Enumerator(this);
+    public Enumerator GetEnumerator() 
+        => new Enumerator(this);
     
     public struct Enumerator
     {
@@ -515,7 +476,8 @@ public readonly struct WhereEnumerable<T>
             index = -1;
         }
         
-        public readonly ref readonly T Current => ref source[index];
+        public readonly ref readonly T Current 
+            => ref source[index];
         
         public bool MoveNext()
         {
@@ -545,6 +507,7 @@ The following open-source projects are used to build and test this project:
 - [IsExternalInit](https://github.com/manuelroemer/IsExternalInit)
 - [Nullable](https://github.com/manuelroemer/Nullable)
 - [ReadableExpressions](https://github.com/agileobjects/ReadableExpressions)
+- [ReflectionAnalyzers](https://github.com/DotNetAnalyzers/ReflectionAnalyzers)
 - [xUnit.net](https://xunit.net/)
 
 # License

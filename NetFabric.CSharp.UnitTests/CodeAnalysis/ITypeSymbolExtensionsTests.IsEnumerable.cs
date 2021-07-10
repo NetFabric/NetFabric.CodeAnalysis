@@ -16,7 +16,8 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
             var compilation = Utils.Compile(
                 @"TestData/Enumerables.cs",
                 @"TestData/Enumerators.cs",
-                @"TestData/RangeEnumerable.cs");
+                @"TestData/RangeEnumerable.cs",
+                @"../../../../NetFabric.Reflection/Reflection/EnumerableWrapper.cs");
             var typeSymbol = compilation.GetTypeSymbol(enumerableType);
 
             // Act
