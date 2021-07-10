@@ -52,7 +52,7 @@ try
 }
 finally
 {
-    ((IDisposable)disposable).Dispose();
+    disposable.Dispose();
 }
 
 return false;";
@@ -203,7 +203,7 @@ try
     }
     finally
     {
-        ((IDisposable)disposableValueType).Dispose();
+        disposableValueType.Dispose();
     }
 }
 finally

@@ -110,7 +110,7 @@ try
 }
 finally
 {
-    ((IDisposable)enumerator).Dispose();
+    enumerator.Dispose();
 }
 
 return sum;";

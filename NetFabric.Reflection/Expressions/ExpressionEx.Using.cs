@@ -53,7 +53,7 @@ namespace NetFabric.Expressions
                     => Call(instance, disposeMethodInfo);
 
                 static Expression DisposeValueType(MethodInfo disposeMethodInfo, Expression instance)
-                    => Call(Convert(instance, typeof(IDisposable)), disposeMethodInfo);
+                    => Call(instance, disposeMethodInfo);
 
                 static Expression DisposeReferenceType(MethodInfo disposeMethodInfo, ParameterExpression instance)
                     => IfThen(
