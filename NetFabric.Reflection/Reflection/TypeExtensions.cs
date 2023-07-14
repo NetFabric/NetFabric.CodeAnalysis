@@ -84,11 +84,6 @@ namespace NetFabric.Reflection
             => type.GetMethod(name, PublicInstanceDeclaredOnly, null, types, null);
 
         static bool IsByRefLike(this Type type)
-        #if NETSTANDARD2_1 || NETCOREAPP3_1_OR_GREATER
             => type.IsByRefLike;
-        #else
-            => type.GetCustomAttributes()
-                .FirstOrDefault(attribute => attribute.GetType().Name == "IsByRefLikeAttribute") is not null;
-        #endif
     }
 }
