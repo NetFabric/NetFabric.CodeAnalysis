@@ -75,13 +75,15 @@ namespace NetFabric.Expressions
             static Expression HandleArray(Expression array, Func<Expression, Expression> body)
             {
                 var indexVariable = Variable(typeof(int), "index");
+                var arrayVariable = Variable(array.Type, "__local_array__");
                 return Block(
-                    new[] { indexVariable },
+                    new[] { indexVariable, arrayVariable },
+                    Assign(arrayVariable, array), // local array for JIT compiler to remove bounds check
                     For(
                         Assign(indexVariable, Constant(0)),
-                        LessThan(indexVariable, Property(array, typeof(Array).GetPublicInstanceDeclaredOnlyReadProperty(nameof(Array.Length))!)),
+                        LessThan(indexVariable, Property(arrayVariable, typeof(Array).GetPublicInstanceDeclaredOnlyReadProperty(nameof(Array.Length))!)),
                         PostIncrementAssign(indexVariable),
-                        body(ArrayIndex(array, indexVariable))
+                        body(ArrayIndex(arrayVariable, indexVariable))
                     )
                 );
             }

@@ -26,12 +26,13 @@ namespace NetFabric.Expressions.CSharp.UnitTests
             // Arrange
             var expectedSum = source.Sum();
             const string expectedExpression = @"var sum = 0;
+var __local_array__ = enumerable;
 var index = 0;
 while (true)
 {
-    if (index < enumerable.Length)
+    if (index < __local_array__.Length)
     {
-        sum += enumerable[index];
+        sum += __local_array__[index];
         index++;
     }
     else
