@@ -3,12 +3,13 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netstandard2.0;net6.0</TargetFrameworks>
     <PackageId>NetFabric.CodeAnalysis</PackageId>
-    <Version>4.0.2</Version>
-    <Description>Extensions to System.CodeAnalysis.</Description>
+    <Version>4.1.0</Version>
+    <Description>Extensions to Microsoft.CodeAnalysis.</Description>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageTags>codeanalysis, roslyn, enumerable</PackageTags>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -27,6 +28,7 @@
   <ItemGroup>
     <None Include="..\Icon.png" Pack="true" PackagePath="" />
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include=".\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
