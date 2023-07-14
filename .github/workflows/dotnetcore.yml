@@ -7,17 +7,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
+
     - name: Build with dotnet
       run: dotnet build -c:Release
+
     - name: Tests
-      run: dotnet test ./NetFabric.CSharp.UnitTests/NetFabric.CSharp.UnitTests.csproj -c:Release -f:net5.0 -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
+      run: dotnet test ./NetFabric.CSharp.UnitTests/NetFabric.CSharp.UnitTests.csproj -c:Release -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
+
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./NetFabric.CSharp.UnitTests/TestResults/coverage.net5.0.info 
+        path-to-lcov: ./NetFabric.CSharp.UnitTests/TestResults/coverage.net6.0.info 
