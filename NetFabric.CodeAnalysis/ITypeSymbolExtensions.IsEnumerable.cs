@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace NetFabric.CodeAnalysis
 {
@@ -31,50 +32,14 @@ namespace NetFabric.CodeAnalysis
             [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
             out Errors errors)
         {
-            if (typeSymbol.TypeKind != TypeKind.Array && typeSymbol.TypeKind != TypeKind.Interface)
+            var forEachUsesIndexer = typeSymbol.TypeKind == TypeKind.Array || typeSymbol.IsSpanOrReadOnlySpanType();
+
+            if (typeSymbol.TypeKind != TypeKind.Interface)
             {
-                var getEnumerator = typeSymbol.GetPublicMethod("GetEnumerator");
+                var getEnumerator = typeSymbol.GetPublicMethod(NameOf.GetEnumerator);
                 if (getEnumerator is not null)
                 {
-                    var enumeratorType = getEnumerator.ReturnType;
-
-                    var current = enumeratorType.GetPublicReadProperty(nameof(IEnumerator.Current));
-                    if (current is null)
-                    {
-                        enumerableSymbols = default;
-                        errors = Errors.MissingCurrent;
-                        return false;
-                    }
-
-                    var moveNext = enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext));
-                    if (moveNext is null)
-                    {
-                        enumerableSymbols = default;
-                        errors = Errors.MissingMoveNext;
-                        return false;
-                    }
-
-                    var reset = enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset));
-                    _ = enumeratorType.IsDisposable(compilation, out var dispose, out var isRefLike);
-
-                    enumerableSymbols = new EnumerableSymbols(
-                        getEnumerator,
-                        new EnumeratorSymbols(current, moveNext)
-                        {
-                            Reset = reset,
-                            Dispose = dispose,
-                            IsValueType = getEnumerator.ReturnType.IsValueType,
-                            IsRefLikeType = isRefLike,
-                            IsGenericsEnumeratorInterface =
-                                enumeratorType.TypeKind == TypeKind.Interface
-                                && enumeratorType.ImplementsInterface(
-                                    SpecialType.System_Collections_Generic_IEnumerable_T, out _),
-                            IsEnumeratorInterface =
-                                enumeratorType.TypeKind == TypeKind.Interface,
-                        }
-                    );
-                    errors = Errors.None;
-                    return true;
+                    return HandleGetEnumerator(getEnumerator, compilation, out enumerableSymbols, out errors);
                 }
             }
 
@@ -90,13 +55,14 @@ namespace NetFabric.CodeAnalysis
                 var disposableType = compilation.GetSpecialType(SpecialType.System_IDisposable);
 
                 enumerableSymbols = new EnumerableSymbols(
-                    genericEnumerableType.GetPublicMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!,
+                    forEachUsesIndexer,
+                    genericEnumerableType.GetPublicMethod(NameOf.GetEnumerator, Type.EmptyTypes)!,
                     new EnumeratorSymbols(
-                        genericEnumeratorType.GetPublicReadProperty(nameof(IEnumerator<int>.Current))!,
-                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
+                        genericEnumeratorType.GetPublicReadProperty(NameOf.Current)!,
+                        enumeratorType.GetPublicMethod(NameOf.MoveNext, Type.EmptyTypes)!)
                         {
-                            Reset = enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
-                            Dispose = disposableType.GetPublicMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
+                            Reset = enumeratorType.GetPublicMethod(NameOf.Reset, Type.EmptyTypes),
+                            Dispose = disposableType.GetPublicMethod(NameOf.Dispose, Type.EmptyTypes),
                             IsGenericsEnumeratorInterface = true,
                             IsEnumeratorInterface = true,
                         }
@@ -111,12 +77,13 @@ namespace NetFabric.CodeAnalysis
                 var enumeratorType = compilation.GetSpecialType(SpecialType.System_Collections_IEnumerator);
 
                 enumerableSymbols = new EnumerableSymbols(
-                    enumerableType.GetPublicMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!,
+                    forEachUsesIndexer,
+                    enumerableType.GetPublicMethod(NameOf.GetEnumerator, Type.EmptyTypes)!,
                     new EnumeratorSymbols(
-                        enumeratorType.GetPublicReadProperty(nameof(IEnumerator.Current))!,
-                        enumeratorType.GetPublicMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
+                        enumeratorType.GetPublicReadProperty(NameOf.Current)!,
+                        enumeratorType.GetPublicMethod(NameOf.MoveNext, Type.EmptyTypes)!)
                     {
-                        Reset = enumeratorType.GetPublicMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                        Reset = enumeratorType.GetPublicMethod(NameOf.Reset, Type.EmptyTypes),
                         IsEnumeratorInterface = true,
                     }                   
                 );
@@ -124,9 +91,63 @@ namespace NetFabric.CodeAnalysis
                 return true;
             }
 
+            var extensionMethod = compilation.GetExtensionMethodsWithName(typeSymbol, NameOf.GetEnumerator)
+                .FirstOrDefault(methodSymbol => methodSymbol.Parameters.Length == 1);
+            if (extensionMethod is not null)
+            {
+                return HandleGetEnumerator(extensionMethod, compilation, out enumerableSymbols, out errors);
+            }
+
             enumerableSymbols = default;
             errors = Errors.MissingGetEnumerator;
             return false;
+        }
+
+        static bool HandleGetEnumerator(IMethodSymbol getEnumerator, 
+            Compilation compilation,
+            [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
+            out Errors errors)
+        {
+            var enumeratorType = getEnumerator.ReturnType;
+
+            var current = enumeratorType.GetPublicReadProperty(NameOf.Current);
+            if (current is null)
+            {
+                enumerableSymbols = default;
+                errors = Errors.MissingCurrent;
+                return false;
+            }
+
+            var moveNext = enumeratorType.GetPublicMethod(NameOf.MoveNext);
+            if (moveNext is null)
+            {
+                enumerableSymbols = default;
+                errors = Errors.MissingMoveNext;
+                return false;
+            }
+
+            var reset = enumeratorType.GetPublicMethod("Reset");
+            _ = enumeratorType.IsDisposable(compilation, out var dispose, out var isRefLike);
+
+            enumerableSymbols = new EnumerableSymbols(
+                false,
+                getEnumerator,
+                new EnumeratorSymbols(current, moveNext)
+                {
+                    Reset = reset,
+                    Dispose = dispose,
+                    IsValueType = enumeratorType.IsValueType,
+                    IsRefLikeType = isRefLike,
+                    IsGenericsEnumeratorInterface =
+                        enumeratorType.TypeKind == TypeKind.Interface
+                        && enumeratorType.ImplementsInterface(
+                            SpecialType.System_Collections_Generic_IEnumerable_T, out _),
+                    IsEnumeratorInterface =
+                        enumeratorType.TypeKind == TypeKind.Interface,
+                }
+            );
+            errors = Errors.None;
+            return true;
         }
     }
 }

@@ -22,9 +22,9 @@ namespace NetFabric.Reflection
         {
             isByRefLike = type.IsByRefLike();
             if (isByRefLike)
-                dispose = type.GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes);
+                dispose = type.GetPublicInstanceDeclaredOnlyMethod(NameOf.Dispose, Type.EmptyTypes);
             else if (type.ImplementsInterface(typeof(IDisposable), out _))
-                dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes)!;
+                dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(NameOf.Dispose, Type.EmptyTypes)!;
             else
                 dispose = default;
             

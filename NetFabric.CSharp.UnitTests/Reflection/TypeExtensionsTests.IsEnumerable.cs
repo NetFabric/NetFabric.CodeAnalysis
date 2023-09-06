@@ -11,42 +11,46 @@ namespace NetFabric.Reflection.CSharp.UnitTests
         [Theory]
         [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
         [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
-        //[MemberData(nameof(DataSets.VisualBasicEnumerables), MemberType = typeof(DataSets))]
-        public void IsEnumerable_Should_ReturnTrue(Type type, Type getEnumeratorDeclaringType, Type currentDeclaringType, Type moveNextDeclaringType, Type? resetDeclaringType, Type? disposeDeclaringType, Type itemType, bool isValueType, bool isByRefLike)
+        public void IsEnumerable_Should_ReturnTrue(Type type, DataSets.EnumerableTestData enumerableTestData)
         {
             // Arrange
 
             // Act
-            var result = type.IsEnumerable(out var enumerableInfo);
+            var result = type.IsEnumerable(out var enumerableInfo, out var errors);
 
             // Assert   
             Assert.True(result);
             Assert.NotNull(enumerableInfo);
+            Assert.Equal(Errors.None, errors);
+
             Assert.NotNull(enumerableInfo!.EnumeratorInfo);
 
             var getEnumerator = enumerableInfo!.GetEnumerator;
             Assert.NotNull(getEnumerator);
             Assert.Equal(nameof(IEnumerable.GetEnumerator), getEnumerator!.Name);
-            Assert.Equal(getEnumeratorDeclaringType, getEnumerator!.DeclaringType);
+            Assert.Equal(enumerableTestData.GetEnumeratorDeclaringType, getEnumerator!.DeclaringType);
             Assert.Empty(getEnumerator!.GetParameters());
             
 
             var enumeratorInfo = enumerableInfo!.EnumeratorInfo;
+            Assert.NotNull(enumeratorInfo);
 
+            var enumeratorTestData = enumerableTestData.EnumeratorTestData;
+            
             var current = enumeratorInfo!.Current;
             Assert.NotNull(current);
             Assert.Equal(nameof(IEnumerator.Current), current!.Name);
-            Assert.Equal(currentDeclaringType, current!.DeclaringType);
-            Assert.Equal(itemType, current!.PropertyType);
+            Assert.Equal(enumeratorTestData.CurrentDeclaringType, current!.DeclaringType);
+            Assert.Equal(enumeratorTestData.ItemType, current!.PropertyType);
 
             var moveNext = enumeratorInfo!.MoveNext;
             Assert.NotNull(moveNext);
             Assert.Equal(nameof(IEnumerator.MoveNext), moveNext!.Name);
-            Assert.Equal(moveNextDeclaringType, moveNext!.DeclaringType);
+            Assert.Equal(enumeratorTestData.MoveNextDeclaringType, moveNext!.DeclaringType);
             Assert.Empty(moveNext!.GetParameters());
 
             var reset = enumeratorInfo!.Reset;
-            if (resetDeclaringType is null)
+            if (enumeratorTestData.ResetDeclaringType is null)
             {
                 Assert.Null(reset);
             }
@@ -54,12 +58,12 @@ namespace NetFabric.Reflection.CSharp.UnitTests
             {
                 Assert.NotNull(reset);
                 Assert.Equal(nameof(IEnumerator.Reset), reset!.Name);
-                Assert.Equal(resetDeclaringType, reset!.DeclaringType);
+                Assert.Equal(enumeratorTestData.ResetDeclaringType, reset!.DeclaringType);
                 Assert.Empty(reset!.GetParameters());
             }
 
             var dispose = enumeratorInfo!.Dispose;
-            if (disposeDeclaringType is null)
+            if (enumeratorTestData.DisposeDeclaringType is null)
             {
                 Assert.Null(dispose);
             }
@@ -67,12 +71,12 @@ namespace NetFabric.Reflection.CSharp.UnitTests
             {
                 Assert.NotNull(dispose);
                 Assert.Equal(nameof(IDisposable.Dispose), dispose!.Name);
-                Assert.Equal(disposeDeclaringType, dispose!.DeclaringType);
+                Assert.Equal(enumeratorTestData.DisposeDeclaringType, dispose!.DeclaringType);
                 Assert.Empty(dispose!.GetParameters());
             }
             
-            Assert.Equal(isValueType, enumeratorInfo!.IsValueType);
-            Assert.Equal(isByRefLike, enumeratorInfo!.IsByRefLike);
+            Assert.Equal(enumeratorTestData.IsValueType, enumeratorInfo!.IsValueType);
+            Assert.Equal(enumeratorTestData.IsByRefLikeType, enumeratorInfo!.IsByRefLike);
         }
 
         [Theory]

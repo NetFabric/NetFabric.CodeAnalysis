@@ -29,9 +29,6 @@ namespace NetFabric.CSharp.TestData
 
         public bool MoveNext() 
             => ++index < source.Length;
-
-        public void Dispose() // should not be called
-            => throw new NotSupportedException();
     }
     
     public struct DisposableValueTypeEnumerator<T> 

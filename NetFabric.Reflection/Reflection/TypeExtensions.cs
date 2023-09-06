@@ -85,5 +85,16 @@ namespace NetFabric.Reflection
 
         static bool IsByRefLike(this Type type)
             => type.IsByRefLike;
+
+        public static bool IsSpanOrReadOnlySpan(this Type type)
+        {
+            if (type.IsGenericType)
+            {
+                var genericTypeDefinition = type.GetGenericTypeDefinition();
+                return genericTypeDefinition == typeof(Span<>) || genericTypeDefinition == typeof(ReadOnlySpan<>);
+            }
+
+            return false;
+        }
     }
 }

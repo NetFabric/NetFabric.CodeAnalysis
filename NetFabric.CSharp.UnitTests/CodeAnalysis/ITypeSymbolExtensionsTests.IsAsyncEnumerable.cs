@@ -36,7 +36,7 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
 
             var current = enumeratorSymbols.Current;
             Assert.NotNull(current);
-            Assert.Equal("Current", current!.Name);
+            Assert.Equal(NameOf.Current, current!.Name);
             Assert.Equal(currentDeclaringType.Name, current!.ContainingType.MetadataName);
             Assert.Equal(itemType.Name, current!.Type.MetadataName);
 

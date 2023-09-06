@@ -56,6 +56,7 @@ namespace NetFabric.CodeAnalysis
         {
             Current = current;
             MoveNext = moveNext;
+
         }
     }
 }
