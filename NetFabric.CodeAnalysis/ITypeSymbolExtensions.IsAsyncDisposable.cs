@@ -21,7 +21,7 @@ namespace NetFabric.CodeAnalysis
         {
             var asyncDisposableType = compilation.GetTypeByMetadataName("System.IAsyncDisposable")!;
             if (typeSymbol.ImplementsInterface(asyncDisposableType, out _))
-                disposeAsync = asyncDisposableType.GetPublicMethod("DisposeAsync");
+                disposeAsync = asyncDisposableType.GetPublicMethod(NameOf.DisposeAsync);
             else
                 disposeAsync = default;
 

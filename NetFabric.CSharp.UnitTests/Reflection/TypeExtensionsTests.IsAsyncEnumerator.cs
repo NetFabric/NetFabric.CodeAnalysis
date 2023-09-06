@@ -2,7 +2,7 @@
 using NetFabric.CSharp.TestData;
 using Xunit;
 
-namespace NetFabric.Reflection.UnitTests
+namespace NetFabric.Reflection.CSharp.UnitTests
 {
     public partial class TypeExtensionsTests
     {

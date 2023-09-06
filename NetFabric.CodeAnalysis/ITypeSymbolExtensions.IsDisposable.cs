@@ -27,9 +27,9 @@ namespace NetFabric.CodeAnalysis
         {
             isRefLike = typeSymbol.IsRefLikeType;
             if (isRefLike)
-                dispose = typeSymbol.GetPublicMethod(nameof(IDisposable.Dispose));
+                dispose = typeSymbol.GetPublicMethod(NameOf.Dispose);
             else if (typeSymbol.ImplementsInterface(SpecialType.System_IDisposable, out _))
-                dispose = compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(nameof(IDisposable.Dispose));
+                dispose = compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(NameOf.Dispose);
             else
                 dispose = default;
 

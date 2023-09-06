@@ -142,5 +142,18 @@ namespace NetFabric.CodeAnalysis
 
             return true;
         }
+
+        public static bool IsSpanOrReadOnlySpanType(this ITypeSymbol typeSymbol)
+        {
+            if (typeSymbol.Name == "Span" || typeSymbol.Name == "ReadOnlySpan")
+            {
+                var containingNamespace = typeSymbol.ContainingNamespace.ToDisplayString();
+                return containingNamespace == "System" && 
+                    typeSymbol is INamedTypeSymbol namedType && 
+                    namedType.TypeArguments.Length == 1;
+            }
+
+            return false;
+        }
     }
 }

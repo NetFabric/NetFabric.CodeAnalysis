@@ -160,7 +160,7 @@ namespace NetFabric.Expressions
                                     NotEqual(disposable, Constant(null)),
                                     Call(disposable,
                                         typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(
-                                            nameof(IDisposable.Dispose), Type.EmptyTypes)!)
+                                            NameOf.Dispose, Type.EmptyTypes)!)
                                 )
                             )
                         );

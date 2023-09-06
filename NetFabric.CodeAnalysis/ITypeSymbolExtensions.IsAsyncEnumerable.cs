@@ -34,14 +34,14 @@ namespace NetFabric.CodeAnalysis
             if (typeSymbol.TypeKind != TypeKind.Interface)
             {
                 var getEnumerator =
-                    typeSymbol.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken))
-                    ?? typeSymbol.GetPublicMethod("GetAsyncEnumerator");
+                    typeSymbol.GetPublicMethod(NameOf.GetAsyncEnumerator, typeof(CancellationToken))
+                    ?? typeSymbol.GetPublicMethod(NameOf.GetAsyncEnumerator);
 
                 if (getEnumerator is not null)
                 {
                     var enumeratorType = getEnumerator.ReturnType;
 
-                    var current = enumeratorType.GetPublicReadProperty("Current");
+                    var current = enumeratorType.GetPublicReadProperty(NameOf.Current);
                     if (current is null)
                     {
                         enumerableSymbols = default;
@@ -49,7 +49,7 @@ namespace NetFabric.CodeAnalysis
                         return false;
                     }
 
-                    var moveNext = enumeratorType.GetPublicMethod("MoveNextAsync");
+                    var moveNext = enumeratorType.GetPublicMethod(NameOf.MoveNextAsync);
                     if (moveNext is null)
                     {
                         enumerableSymbols = default;
@@ -80,12 +80,12 @@ namespace NetFabric.CodeAnalysis
                 var asyncDisposableType = compilation.GetTypeByMetadataName("System.IAsyncDisposable")!;
 
                 enumerableSymbols = new AsyncEnumerableSymbols(
-                    asyncEnumerableType.GetPublicMethod("GetAsyncEnumerator", typeof(CancellationToken))!,
+                    asyncEnumerableType.GetPublicMethod(NameOf.GetAsyncEnumerator, typeof(CancellationToken))!,
                     new AsyncEnumeratorSymbols(
-                        asyncEnumeratorType.GetPublicReadProperty("Current")!,
-                        asyncEnumeratorType.GetPublicMethod("MoveNextAsync", Type.EmptyTypes)!)
+                        asyncEnumeratorType.GetPublicReadProperty(NameOf.Current)!,
+                        asyncEnumeratorType.GetPublicMethod(NameOf.MoveNextAsync, Type.EmptyTypes)!)
                     {
-                        DisposeAsync = asyncDisposableType.GetPublicMethod("DisposeAsync", Type.EmptyTypes),
+                        DisposeAsync = asyncDisposableType.GetPublicMethod(NameOf.DisposeAsync, Type.EmptyTypes),
                         IsAsyncEnumeratorInterface = true,
                     }
                 );

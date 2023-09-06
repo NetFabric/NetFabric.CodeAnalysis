@@ -26,14 +26,14 @@ namespace NetFabric.CodeAnalysis
             errors = Errors.None; 
             if (typeSymbol.TypeKind != TypeKind.Interface)
             {
-                var current = typeSymbol.GetPublicReadProperty("Current");
+                var current = typeSymbol.GetPublicReadProperty(NameOf.Current);
                 if (current is null)
                 {
                     errors = Errors.MissingCurrent;
                 }
                 else
                 {
-                    var moveNext = typeSymbol.GetPublicMethod("MoveNextAsync");
+                    var moveNext = typeSymbol.GetPublicMethod(NameOf.MoveNextAsync);
                     if (moveNext is not null)
                         return true;
 

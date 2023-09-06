@@ -21,6 +21,20 @@ namespace NetFabric.CSharp.TestData
             => new();
     }
 
+    public readonly struct EnumerableWithExtensionMethod<T>
+    {
+        public readonly T[] Source;
+
+        public EnumerableWithExtensionMethod(T[] source)
+            => Source = source;         
+    }
+
+    public static class MyExtensions
+    {
+        public static ValueTypeEnumerator<T> GetEnumerator<T>(this EnumerableWithExtensionMethod<T> source)
+            => new(source.Source);
+    }
+
     public readonly struct EnumerableWithValueTypeEnumerator<T>
     {
         readonly T[] source;

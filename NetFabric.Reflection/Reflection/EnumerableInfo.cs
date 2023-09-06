@@ -8,6 +8,11 @@ namespace NetFabric.Reflection
     public class EnumerableInfo
     {
         /// <summary>
+        /// Indicates if 'foreach' will use the indexer instead of the enumerator.
+        /// </summary>
+        public bool ForEachUsesIndexer { get; }
+
+        /// <summary>
         /// Information on the method that 'foreach' will use to get a new instance of the enumerator.
         /// </summary>
         public MethodInfo GetEnumerator { get; }
@@ -17,8 +22,9 @@ namespace NetFabric.Reflection
         /// </summary>
         public EnumeratorInfo EnumeratorInfo { get; }
 
-        internal EnumerableInfo(MethodInfo getEnumerator, EnumeratorInfo enumeratorInfo)
+        internal EnumerableInfo(bool forEachUsesIndexer, MethodInfo getEnumerator, EnumeratorInfo enumeratorInfo)
         {
+            ForEachUsesIndexer = forEachUsesIndexer;
             GetEnumerator = getEnumerator;
             EnumeratorInfo = enumeratorInfo;
         }

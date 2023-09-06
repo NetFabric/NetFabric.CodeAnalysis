@@ -27,7 +27,9 @@ namespace NetFabric.Reflection
             [NotNullWhen(true)] out EnumerableInfo? enumerableInfo,
             out Errors errors)
         {
-            if (!type.IsArray && !type.IsInterface)
+            var forEachUsesIndexer = type.IsArray || type.IsSpanOrReadOnlySpan();
+
+            if (!type.IsInterface)
             {
                 var getEnumerator = type.GetPublicInstanceMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes);
                 if (getEnumerator is not null)
@@ -38,13 +40,14 @@ namespace NetFabric.Reflection
                         if (enumeratorType.ImplementsInterface(typeof(IEnumerator<>), out var enumeratorGenericArguments))
                         {
                             enumerableInfo = new EnumerableInfo(
-                                getEnumerator: getEnumerator,
+                                forEachUsesIndexer,
+                                getEnumerator,
                                 new EnumeratorInfo(
                                     current: typeof(IEnumerator<>).MakeGenericType(enumeratorGenericArguments[0]).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator<int>.Current))!,
                                     moveNext: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
                                 {
-                                    Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
-                                    Dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
+                                    Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(NameOf.Reset, Type.EmptyTypes),
+                                    Dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(NameOf.Dispose, Type.EmptyTypes),
                                     IsGenericsEnumeratorInterface = true,
                                 }
                             );                            
@@ -53,12 +56,13 @@ namespace NetFabric.Reflection
                         {
                             _ = enumeratorType.IsDisposable(out var dispose, out _);
                             enumerableInfo = new EnumerableInfo(
-                                getEnumerator: getEnumerator,
+                                forEachUsesIndexer,
+                                getEnumerator,
                                 new EnumeratorInfo(
                                     current: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator<int>.Current))!,
                                     moveNext: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
                                 {
-                                    Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                                    Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(NameOf.Reset, Type.EmptyTypes),
                                     Dispose = dispose,
                                     IsEnumeratorInterface = true,
                                 }
@@ -90,10 +94,11 @@ namespace NetFabric.Reflection
                             return false;
                         }
 
-                        var reset = enumeratorType.GetPublicInstanceMethod(nameof(IEnumerator.Reset), Type.EmptyTypes);
+                        var reset = enumeratorType.GetPublicInstanceMethod(NameOf.Reset, Type.EmptyTypes);
                         _ = enumeratorType.IsDisposable(out var dispose, out var isByRefLike);
                         enumerableInfo = new EnumerableInfo(
-                            getEnumerator: getEnumerator,
+                            forEachUsesIndexer,
+                            getEnumerator,
                             new EnumeratorInfo(current, moveNext)
                             {
                                 Reset = reset,
@@ -114,13 +119,14 @@ namespace NetFabric.Reflection
                 var genericType = typeof(IEnumerable<>).MakeGenericType(enumerableGenericArguments[0]);
                 var getEnumerator = genericType.GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable<int>.GetEnumerator), Type.EmptyTypes)!;
                 enumerableInfo = new EnumerableInfo(
+                    forEachUsesIndexer,
                     getEnumerator,
                     new EnumeratorInfo(
                         current: typeof(IEnumerator<>).MakeGenericType(enumerableGenericArguments[0]).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator<int>.Current))!,
                         moveNext: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
                         {
-                            Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
-                            Dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IDisposable.Dispose), Type.EmptyTypes),
+                            Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(NameOf.Reset, Type.EmptyTypes),
+                            Dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(NameOf.Dispose, Type.EmptyTypes),
                             IsGenericsEnumeratorInterface = true,
                         }
                 );
@@ -133,12 +139,13 @@ namespace NetFabric.Reflection
                 var getEnumerator = typeof(IEnumerable).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerable.GetEnumerator), Type.EmptyTypes)!;
                 _ = getEnumerator.ReturnType.IsDisposable(out var dispose, out _);
                 enumerableInfo = new EnumerableInfo(
+                    forEachUsesIndexer,
                     getEnumerator,
                     new EnumeratorInfo(
                         current: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyReadProperty(nameof(IEnumerator.Current))!,
                         moveNext: typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.MoveNext), Type.EmptyTypes)!)
                         {
-                            Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(nameof(IEnumerator.Reset), Type.EmptyTypes),
+                            Reset = typeof(IEnumerator).GetPublicInstanceDeclaredOnlyMethod(NameOf.Reset, Type.EmptyTypes),
                             Dispose = dispose,
                             IsEnumeratorInterface = true,
                         }
