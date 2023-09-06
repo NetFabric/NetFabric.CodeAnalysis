@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace NetFabric.CodeAnalysis
 {
@@ -90,8 +91,9 @@ namespace NetFabric.CodeAnalysis
                 return true;
             }
 
-            var extensionMethod = compilation.GetExtensionMethodWithName(typeSymbol, NameOf.GetEnumerator);
-            if (extensionMethod is not null && extensionMethod.Parameters.Length == 1)
+            var extensionMethod = compilation.GetExtensionMethodsWithName(typeSymbol, NameOf.GetEnumerator)
+                .FirstOrDefault(methodSymbol => methodSymbol.Parameters.Length == 1);
+            if (extensionMethod is not null)
             {
                 return HandleGetEnumerator(extensionMethod, compilation, out enumerableSymbols, out errors);
             }

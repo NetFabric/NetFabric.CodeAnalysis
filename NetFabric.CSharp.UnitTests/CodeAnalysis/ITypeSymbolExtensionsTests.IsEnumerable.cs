@@ -8,8 +8,8 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests
     public partial class ITypeSymbolExtensionsTests
     {
         [Theory]
-        // [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
-        // [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
+        [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
+        [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
         [MemberData(nameof(DataSets.CodeAnalysisEnumerables), MemberType = typeof(DataSets))]
         public void IsEnumerable_Should_ReturnTrue(Type enumerableType, DataSets.EnumerableTestData enumerableTestData)
         {
