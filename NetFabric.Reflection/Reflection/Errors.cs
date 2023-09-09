@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace NetFabric.Reflection
+namespace NetFabric.Reflection;
+
+[Flags]
+public enum Errors
 {
-    [Flags]
-    public enum Errors
-    {
-        None = 0x0000,
-        MissingGetEnumerator = 0x0001,
-        MissingCurrent = 0x0010,
-        MissingMoveNext = 0x0100,
-    }
+    None = 0x0000,
+    MissingGetEnumerator = 0x0001,
+    MissingCurrent = 0x0010,
+    MissingMoveNext = 0x0100,
 }

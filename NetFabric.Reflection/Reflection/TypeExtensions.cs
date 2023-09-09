@@ -6,95 +6,94 @@ using System.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 
-namespace NetFabric.Reflection
+namespace NetFabric.Reflection;
+
+public static partial class TypeExtensions
 {
-    public static partial class TypeExtensions
+
+    /// <summary>
+    /// Gets a value indicating whether <see cref="System.Type"/> implements the given interface <see cref="System.Type"/>.
+    /// </summary>
+    /// <param name="type">The <see cref="System.Type"/> to test.</param>
+    /// <param name="interfaceType">The interface <see cref="System.Type"/> to test.</param>
+    /// <param name="genericArguments">If methods returns <c>true</c> and interface <see cref="System.Type"/> is generic, contains the generic arguments of the implemented interface.</param>
+    /// <returns><c>true</c> if <see cref="System.Type"/> implements interface <see cref="System.Type"/>; otherwise, <c>false</c>.</returns>
+    public static bool ImplementsInterface(this Type type, Type interfaceType, [NotNullWhen(true)] out Type[]? genericArguments)
     {
-
-        /// <summary>
-        /// Gets a value indicating whether <see cref="System.Type"/> implements the given interface <see cref="System.Type"/>.
-        /// </summary>
-        /// <param name="type">The <see cref="System.Type"/> to test.</param>
-        /// <param name="interfaceType">The interface <see cref="System.Type"/> to test.</param>
-        /// <param name="genericArguments">If methods returns <c>true</c> and interface <see cref="System.Type"/> is generic, contains the generic arguments of the implemented interface.</param>
-        /// <returns><c>true</c> if <see cref="System.Type"/> implements interface <see cref="System.Type"/>; otherwise, <c>false</c>.</returns>
-        public static bool ImplementsInterface(this Type type, Type interfaceType, [NotNullWhen(true)] out Type[]? genericArguments)
+        if (!interfaceType.IsGenericType)
         {
-            if (!interfaceType.IsGenericType)
-            {
-                genericArguments = Type.EmptyTypes;
-                return interfaceType.IsAssignableFrom(type);
-            }
+            genericArguments = Type.EmptyTypes;
+            return interfaceType.IsAssignableFrom(type);
+        }
 
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == interfaceType.GetGenericTypeDefinition())
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == interfaceType.GetGenericTypeDefinition())
+        {
+            genericArguments = type.GetGenericArguments();
+            return true;
+        }
+
+        foreach (var @interface in type.GetAllInterfaces())
+        {
+            if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == interfaceType.GetGenericTypeDefinition())
             {
-                genericArguments = type.GetGenericArguments();
+                genericArguments = @interface.GetGenericArguments();
                 return true;
             }
-
-            foreach (var @interface in type.GetAllInterfaces())
-            {
-                if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == interfaceType.GetGenericTypeDefinition())
-                {
-                    genericArguments = @interface.GetGenericArguments();
-                    return true;
-                }
-            }
-
-            genericArguments = default;
-            return false;
         }
 
-        static IEnumerable<Type> GetAllInterfaces(this Type type)
+        genericArguments = default;
+        return false;
+    }
+
+    static IEnumerable<Type> GetAllInterfaces(this Type type)
+    {
+        foreach (var @interface in type.GetInterfaces())
         {
-            foreach (var @interface in type.GetInterfaces())
-            {
-                yield return @interface;
+            yield return @interface;
 
-                foreach (var baseInterface in @interface.GetAllInterfaces())
-                    yield return baseInterface;
-            }
+            foreach (var baseInterface in @interface.GetAllInterfaces())
+                yield return baseInterface;
         }
+    }
 
-        const BindingFlags PublicInstance =
-            BindingFlags.Public | BindingFlags.Instance;
+    const BindingFlags PublicInstance =
+        BindingFlags.Public | BindingFlags.Instance;
 
-        internal static PropertyInfo? GetPublicInstanceReadProperty(this Type type, string name)
+    internal static PropertyInfo? GetPublicInstanceReadProperty(this Type type, string name)
+    {
+        foreach (var property in type.GetProperties(PublicInstance))
         {
-            foreach (var property in type.GetProperties(PublicInstance))
-            {
-                if (property.Name == name && property.GetGetMethod() is not null)
-                    return property;
-            }
-
-            return null;
+            if (property.Name == name && property.GetGetMethod() is not null)
+                return property;
         }
 
-        internal static MethodInfo? GetPublicInstanceMethod(this Type type, string name, params Type[] types)
-            => type.GetMethod(name, PublicInstance, null, types, null);
+        return null;
+    }
 
-        const BindingFlags PublicInstanceDeclaredOnly =
-            BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
-        
-        internal static PropertyInfo? GetPublicInstanceDeclaredOnlyReadProperty(this Type type, string name)
-            => type.GetProperties(PublicInstanceDeclaredOnly)
-                .FirstOrDefault(property => property.Name == name && property.GetGetMethod() is not null);
-        
-        internal static MethodInfo? GetPublicInstanceDeclaredOnlyMethod(this Type type, string name, params Type[] types)
-            => type.GetMethod(name, PublicInstanceDeclaredOnly, null, types, null);
+    internal static MethodInfo? GetPublicInstanceMethod(this Type type, string name, params Type[] types)
+        => type.GetMethod(name, PublicInstance, null, types, null);
 
-        static bool IsByRefLike(this Type type)
-            => type.IsByRefLike;
+    const BindingFlags PublicInstanceDeclaredOnly =
+        BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+    
+    internal static PropertyInfo? GetPublicInstanceDeclaredOnlyReadProperty(this Type type, string name)
+        => type.GetProperties(PublicInstanceDeclaredOnly)
+            .FirstOrDefault(property => property.Name == name && property.GetGetMethod() is not null);
+    
+    internal static MethodInfo? GetPublicInstanceDeclaredOnlyMethod(this Type type, string name, params Type[] types)
+        => type.GetMethod(name, PublicInstanceDeclaredOnly, null, types, null);
 
-        public static bool IsSpanOrReadOnlySpan(this Type type)
+    static bool IsByRefLike(this Type type)
+        => type.IsByRefLike;
+
+    public static bool IsSpanOrReadOnlySpan(this Type type)
+    {
+        if (type.IsGenericType)
         {
-            if (type.IsGenericType)
-            {
-                var genericTypeDefinition = type.GetGenericTypeDefinition();
-                return genericTypeDefinition == typeof(Span<>) || genericTypeDefinition == typeof(ReadOnlySpan<>);
-            }
-
-            return false;
+            var genericTypeDefinition = type.GetGenericTypeDefinition();
+            return genericTypeDefinition == typeof(Span<>) || genericTypeDefinition == typeof(ReadOnlySpan<>);
         }
+
+        return false;
     }
 }
