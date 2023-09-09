@@ -3,40 +3,39 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace NetFabric.Reflection.CSharp.UnitTests
+namespace NetFabric.Reflection.CSharp.UnitTests;
+
+public partial class TypeExtensionsTests
 {
-    public partial class TypeExtensionsTests
+    [Theory]
+    [MemberData(nameof(DataSets.InstanceMethods), MemberType = typeof(DataSets))]
+    public void GetPublicMethod_Should_ReturnMethod(string methodName, Type[] parameters)
     {
-        [Theory]
-        [MemberData(nameof(DataSets.InstanceMethods), MemberType = typeof(DataSets))]
-        public void GetPublicMethod_Should_ReturnMethod(string methodName, Type[] parameters)
-        {
-            // Arrange
-            var type = typeof(PropertiesAndMethods);
+        // Arrange
+        var type = typeof(PropertiesAndMethods);
 
-            // Act
-            var result = type.GetPublicInstanceMethod(methodName, parameters);
+        // Act
+        var result = type.GetPublicInstanceMethod(methodName, parameters);
 
-            // Assert   
-            Assert.NotNull(result);
-            Assert.Equal(methodName, result!.Name);
-            Assert.True(result.GetParameters()
-                .Select(parameter => parameter.ParameterType)
-                .SequenceEqual(parameters));
-        }
+        // Assert   
+        Assert.NotNull(result);
+        Assert.Equal(methodName, result!.Name);
+        Assert.True(result.GetParameters()
+            .Select(parameter => parameter.ParameterType)
+            .SequenceEqual(parameters));
+    }
 
-        [Theory]
-        [MemberData(nameof(DataSets.ExplicitInstanceMethods), MemberType = typeof(DataSets))]
-        public void GetPublicMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
-        {
-            // Arrange
-            var type = typeof(PropertiesAndMethods);
+    [Theory]
+    [MemberData(nameof(DataSets.ExplicitInstanceMethods), MemberType = typeof(DataSets))]
+    public void GetPublicMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
+    {
+        // Arrange
+        var type = typeof(PropertiesAndMethods);
 
-            // Act
-            var result = type.GetPublicInstanceMethod(methodName, parameters);
+        // Act
+        var result = type.GetPublicInstanceMethod(methodName, parameters);
 
-            // Assert 
-            Assert.Null(result);
-        }
+        // Assert 
+        Assert.Null(result);
     }
 }

@@ -1,14 +1,13 @@
 using System;
 
-namespace NetFabric.Reflection
+namespace NetFabric.Reflection;
+
+public class EnumerationException
+    : Exception
 {
-    public class EnumerationException
-        : Exception
+    public EnumerationException(string message, Exception innerException)
+        : base (message, innerException)
     {
-        public EnumerationException(string message, Exception innerException)
-            : base (message, innerException)
-        {
-            
-        }
+        
     }
 }

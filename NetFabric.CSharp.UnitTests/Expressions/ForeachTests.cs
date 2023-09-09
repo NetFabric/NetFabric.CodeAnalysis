@@ -14,9 +14,9 @@ namespace NetFabric.Expressions.CSharp.UnitTests
         public static TheoryData<int[]> Data =>
             new()
             {
-                Array.Empty<int>(),
-                new[] { 1 },
-                new[] { 1, 2, 3, 4, 5 },
+                { Array.Empty<int>() },
+                { new[] { 1 } },
+                { new[] { 1, 2, 3, 4, 5 } },
             };
 
         [Theory]
@@ -25,21 +25,22 @@ namespace NetFabric.Expressions.CSharp.UnitTests
         {
             // Arrange
             var expectedSum = source.Sum();
-            const string expectedExpression = @"var sum = 0;
-var __local_array__ = enumerable;
+            var localVariableName = $"__local_array_{ExpressionEx.localVariableCounter}__";
+            string expectedExpression = $@"var sum = 0;
+var {localVariableName} = enumerable;
 var index = 0;
 while (true)
-{
-    if (index < __local_array__.Length)
-    {
-        sum += __local_array__[index];
+{{
+    if (index < {localVariableName}.Length)
+    {{
+        sum += {localVariableName}[index];
         index++;
-    }
+    }}
     else
-    {
+    {{
         break;
-    }
-}
+    }}
+}}
 
 return sum;";
             

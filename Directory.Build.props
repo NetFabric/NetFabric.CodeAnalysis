@@ -2,8 +2,8 @@
 <Project>
   <PropertyGroup>
     <Authors>Antao Almada</Authors>
-    <Copyright>Copyright 2019-2021 Antao Almada</Copyright>
-    <LangVersion>9.0</LangVersion>
+    <Copyright>Copyright 2019-2023 Antao Almada</Copyright>
+    <LangVersion>10.0</LangVersion>
     <Features>strict</Features>
     <Nullable>enable</Nullable>
   </PropertyGroup>

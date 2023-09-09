@@ -3,10 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netstandard2.0;net6.0</TargetFrameworks>
     <PackageId>NetFabric.CodeAnalysis</PackageId>
-    <Version>4.1.0</Version>
+    <Version>4.2.1</Version>
     <Description>Extensions to Microsoft.CodeAnalysis.</Description>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageTags>codeanalysis, roslyn, enumerable</PackageTags>
+    <PackageReleaseNotes>
+    Various small fixes
+    </PackageReleaseNotes>
+    <PackageTags>codeanalysis, roslyn, enumerable, asyncenumerable</PackageTags>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -24,6 +26,12 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+    <_Parameter1>NetFabric.CSharp.UnitTests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
   
   <ItemGroup>
     <None Include="..\Icon.png" Pack="true" PackagePath="" />

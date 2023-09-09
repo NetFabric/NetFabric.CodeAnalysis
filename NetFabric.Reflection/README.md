@@ -1,26 +1,24 @@
 ﻿# NetFabric.Reflection
 
-To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>`, or `IAsyncEnumerable<>`. 
-`foreach` and `await foreach` support several other cases. 
-This module contains extension methods that take into account all these cases.
+This package extends the reflection API.
 
-# Usage
+## IsEnumerable() and IsAsyncEnumerable()
 
-## IsEnumerable()
+To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>`, or `IAsyncEnumerable<>`. `foreach` and `await foreach` support several other cases. Use the methods `IsEnumerable` and `IsAsyncEnumerable` instead:
 
-- Add [NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/) package to your project.
-- Use the `IsEnumerable` method as follow:
-``` csharp
+```csharp
 using NetFabric.Reflection;
 
-var isEnumerable = type.IsEnumerable(out var enumerableInfo);
+var isEnumerable = type.IsEnumerable(out var enumerableInfo, out var errors);
 
-var isAsyncEnumerable = type.IsAsyncEnumerable(out var asyncEnumerableInfo);
+var isAsyncEnumerable = type.IsAsyncEnumerable(out var asyncEnumerableInfo, out var errors);
 ```
 
-The methods return a boolean value indicating if it's a valid enumerable or enumerator. 
+The methods return a boolean value indicating if it's a valid enumerable or enumerator. It does not support the cases where `GetEnumerator()` or `GetAsyncEnumerator()` are provided as extension methods as it's not possible to find extension methods by using reflection.
 
-If `true`, the output parameter contains [`MethodInfo`](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodinfo) for the method `GetEnumerator`/`GetAsynEnumerator` of the enumerable, the property `Current` and the method `MoveNext`/`MoveNextAsync` of the enumerator, following the precedences used by Roslyn for the `foreach` and `await foreach` keywords. It may also contain for methods `Reset` and `Dispose`/`DisposeAsync` if defined.
+If `true`, the first output parameter contains [`MethodInfo`](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodinfo) for the method `GetEnumerator`/`GetAsynEnumerator` of the enumerable, the property `Current` and the method `MoveNext`/`MoveNextAsync` of the enumerator, following the precedences used by Roslyn for the `foreach` and `await foreach` keywords. It may also contain for methods `Reset` and `Dispose`/`DisposeAsync` if defined.
+
+If `false`, the second output parameter indicates what error was found. It can be a missing `GetEnumerator()`, missing `Current`, or missing `MoveNext()`.
 
 ## ExpressionEx
 
@@ -30,26 +28,26 @@ To use these, add the [NetFabric.Reflection](https://www.nuget.org/packages/NetF
 
 ### ExpressionEx.ForEach
 
-``` csharp
+```csharp
 public static Expression ForEach(Expression enumerable, Func<Expression, Expression> body)
 ```
 
-- `enumerable` - Defines an enumerable.
-- `body` - Defines the body containing the code performed for each item. Pass a lambda expression that, given an `Expression` that defines an item, returns an `Expression` that uses it.
+-   `enumerable` - Defines an enumerable.
+-   `body` - Defines the body containing the code performed for each item. Pass a lambda expression that, given an `Expression` that defines an item, returns an `Expression` that uses it.
 
 **WARNING:** Async enumerables are not supported.
 
 The `Expression` generated depends on:
 
-- Whether the enumerator is an `interface`, `class`, `struct`, or `ref struct`.
-- Whether the enumerator is disposable or not.
-- Whether the enumerable is an array. In this case, it uses the array indexer instead of `IEnumerable<>` to enumerate.
+-   Whether the enumerator is an `interface`, `class`, `struct`, or `ref struct`.
+-   Whether the enumerator is disposable or not.
+-   Whether the enumerable is an array. In this case, it uses the array indexer instead of `IEnumerable<>` to enumerate.
 
 Throws an exception if the `Expression` in the first parameter does not define an enumerable. In case you don't want the exception to be thrown, use the other overload that takes an `EnumerableInfo` or `EnumerableSymbols` for the first parameter. Use `IsEnumerable` to get the required values.
 
 Here's an example, using `ExpressionEx.ForEach`, that calculates the sum of the items in an enumerable:
 
-``` csharp
+```csharp
 using static NetFabric.Expressions.ExpressionEx;
 using static System.Linq.Expressions.Expression;
 
@@ -70,23 +68,22 @@ int Sum<TEnumerable>(TEnumerable enumerable)
 }
 ```
 
-
 ### ExpressionEx.For
 
-``` csharp
-public static Expression For(Expression initialization, Expression condition, Expression iterator, Expression body) 
+```csharp
+public static Expression For(Expression initialization, Expression condition, Expression iterator, Expression body)
 ```
 
-- `initialization` - Defines the initialization. Performed before starting the loop iteration.
-- `condition` - Defines the condition. Performed before each loop iteration.
-- `iterator` - Defines the iterator. Performed after each loop iteration.
-- `body` - Defines the body. Performed in each loop iteration. 
+-   `initialization` - Defines the initialization. Performed before starting the loop iteration.
+-   `condition` - Defines the condition. Performed before each loop iteration.
+-   `iterator` - Defines the iterator. Performed after each loop iteration.
+-   `body` - Defines the body. Performed in each loop iteration.
 
 `ExpressionEx.For` does not declare the iteration variable. You may have to declare it using an `Expression.Block`.
 
 Here's an example, using `ExpressionEx.For`, that calculates the sum of the items in an array:
 
-``` csharp
+```csharp
 using static NetFabric.Expressions.ExpressionEx;
 using static System.Linq.Expressions.Expression;
 
@@ -101,8 +98,8 @@ int Sum(int[] array, int start, int end)
         new[] { indexVariable, sumVariable },
         Assign(sumVariable, Constant(0)),
         For(
-            Assign(indexVariable, startParameter), 
-            LessThan(indexVariable, endParameter), 
+            Assign(indexVariable, startParameter),
+            LessThan(indexVariable, endParameter),
             PostIncrementAssign(indexVariable),
             AddAssign(sumVariable, ArrayIndex(arrayParameter, indexVariable))),
         sumVariable);
@@ -114,16 +111,16 @@ int Sum(int[] array, int start, int end)
 
 ### ExpressionEx.While
 
-``` csharp
-public static LoopExpression While(Expression condition, Expression body) 
+```csharp
+public static LoopExpression While(Expression condition, Expression body)
 ```
 
-- `condition` - Defines the condition. Performed before each loop iteration.
-- `body` - Defines the body. Performed in each loop iteration.
+-   `condition` - Defines the condition. Performed before each loop iteration.
+-   `body` - Defines the body. Performed in each loop iteration.
 
 Here's an example, using `ExpressionEx.While`, that calculates the sum of the items in an array:
 
-``` csharp
+```csharp
 using static NetFabric.Expressions.ExpressionEx;
 using static System.Linq.Expressions.Expression;
 
@@ -139,7 +136,7 @@ int Sum(int[] array, int start, int end)
         Assign(sumVariable, Constant(0)),
         Assign(indexVariable, startParameter),
         While(
-            LessThan(indexVariable, endParameter), 
+            LessThan(indexVariable, endParameter),
             Block(
                 AddAssign(sumVariable, ArrayIndex(valueParameter, indexVariable)),
                 PostIncrementAssign(indexVariable)
@@ -154,12 +151,12 @@ int Sum(int[] array, int start, int end)
 
 ### ExpressionEx.Using
 
-``` csharp
-public static TryExpression Using(ParameterExpression instance, Expression body) 
+```csharp
+public static TryExpression Using(ParameterExpression instance, Expression body)
 ```
 
-- `instance` - Defines the variable to be disposed.
-- `body` - Defines the body after which the variable is disposed.
+-   `instance` - Defines the variable to be disposed.
+-   `body` - Defines the body after which the variable is disposed.
 
 Throws and exception if the variable is not disposable. To be considered disposable, if it's is a `class` or a `struct`, it has to implement the [`IDisposable`](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable) interface. If it's a `ref struct`, it only needs to have a public parameterless `Dispose`.
 
@@ -169,7 +166,7 @@ Throws and exception if the variable is not disposable. To be considered disposa
 
 Here's an example, using `ExpressionEx.Using`, that calculates the sum of the items in an enumerable:
 
-``` csharp
+```csharp
 using static NetFabric.Expressions.ExpressionEx;
 using static System.Linq.Expressions.Expression;
 
@@ -177,7 +174,7 @@ int Sum<TEnumerable>(TEnumerable enumerable)
 {
     if (!typeof(TEnumerable).IsEnumerable(out var enumerableInfo))
         throw new Exception("Not an enumerable!");
-    
+
     var enumerableParameter = Parameter(typeof(TEnumerable), "enumerable");
     var enumeratorVariable = Variable(enumerableInfo.GetEnumerator.ReturnType, "enumerator");
     var sumVariable = Variable(typeof(int), "sum");
@@ -194,7 +191,7 @@ int Sum<TEnumerable>(TEnumerable enumerable)
         ),
         sumVariable);
     var sum = Lambda<Func<TEnumerable, int>>(expression, enumerableParameter).Compile();
-    
+
     return sum(enumerable);
 }
 ```

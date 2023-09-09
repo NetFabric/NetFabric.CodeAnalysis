@@ -1,6 +1,5 @@
-﻿namespace NetFabric.CSharp.TestData
+﻿namespace NetFabric.CSharp.TestData;
+
+public class TestType
 {
-    public class TestType
-    {
-    }
 }
