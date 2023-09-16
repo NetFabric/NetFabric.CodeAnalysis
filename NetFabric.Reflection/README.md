@@ -2,25 +2,67 @@
 
 This package extends the reflection API.
 
-## IsEnumerable() and IsAsyncEnumerable()
+## Enumerable type checking
 
-To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>`, or `IAsyncEnumerable<>`. `foreach` and `await foreach` support several other cases. Use the methods `IsEnumerable` and `IsAsyncEnumerable` instead:
+To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>` or `IAsyncEnumerable<>`. The `foreach` and `await foreach` statements support several other cases.
+
+> NOTE: Check the article ["Efficient Data Processing: Leveraging C#'s foreach Loop"](https://www.linkedin.com/pulse/efficient-data-processing-leveraging-cs-foreach-loop-ant%C3%A3o-almada/) to understand all the possible cases supported by the `foreach` statement.
+
+This package provides extension methods for the type `Type` that can correctly validate if the type it represents can be used as the source in `foreach` or `await foreach` statements.
+
+### IsEnumerable and IsEnumerator
 
 ```csharp
-using NetFabric.Reflection;
+public static bool IsEnumerable(this Type type,
+    [NotNullWhen(true)] out EnumerableInfo? enumerableInfo,
+    out Errors errors);
 
-var isEnumerable = type.IsEnumerable(out var enumerableInfo, out var errors);
-
-var isAsyncEnumerable = type.IsAsyncEnumerable(out var asyncEnumerableInfo, out var errors);
+public static bool IsEnumerator(this Type type,
+    out Errors errors);
 ```
 
-The methods return a boolean value indicating if it's a valid enumerable or enumerator. It does not support the cases where `GetEnumerator()` or `GetAsyncEnumerator()` are provided as extension methods as it's not possible to find extension methods by using reflection.
+The methods return `true` if the type represented by `Type` can be used in a `foreach` statement; otherwise `false`.
 
-If `true`, the first output parameter contains [`MethodInfo`](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodinfo) for the method `GetEnumerator`/`GetAsynEnumerator` of the enumerable, the property `Current` and the method `MoveNext`/`MoveNextAsync` of the enumerator, following the precedences used by Roslyn for the `foreach` and `await foreach` keywords. It may also contain for methods `Reset` and `Dispose`/`DisposeAsync` if defined.
+> NOTE: It does not support the case when `GetEnumerator()` is defined as an extension method. It's not possible to find extension methods using reflection.
 
-If `false`, the second output parameter indicates what error was found. It can be a missing `GetEnumerator()`, missing `Current`, or missing `MoveNext()`.
+`IsEnumerable()` calls `IsEnumerator()` internally to validate the type returned by `GetEnumerator()`. The method `IsEnumerable()` only returns `true` if both the enumerable and the enumerator are valid.
 
-## ExpressionEx
+If the method `IsEnumerable()` returns `true`, the `enumerableInfo` output parameter contains all the `MethodInfo` and `PropertySymbol` for the methods and properties that are going to be actually used by the `foreach` statement. The `GetEnumerator()` of the enumerable, the property `Current` and the method `MoveNext()` of the enumerator. It may also contain info for methods `Reset()` and `Dispose()` of the enumerator, if defined.
+
+Is the methods return `false`, the `errors` output parameter indicates why the type is not considered an enumerable. It can be a combination of `Error.MissingGetEnumerator`, `Error.MissingCurrent` and `Error.MissingMoveNext`.
+
+The output parameter also includes a `ForEachUsesIndexer` boolean property that indicates that, although the collection provides an enumerator, `foreach` will use the indexer instead. That's the case for arrays and spans.
+
+You can use these info values to further validate the enumerable and its respective enumerator. For example, use the following to find if the `Current` property of the enumerator returns by reference:
+
+```csharp
+enumerableInfo.EnumeratorSymbols.Current.ReturnsByRef;
+```
+
+### IsAsyncEnumerable and IsAsyncEnumerator
+
+```csharp
+public static bool IsAsyncEnumerable(this Type type,
+    [NotNullWhen(true)] out AsyncEnumerableInfo? enumerableInfo,
+    out Errors errors);
+
+public static bool IsAsyncEnumerator(this Type type,
+    out Errors errors)
+```
+
+The methods return `true` if the type represented by `Type` can be used in an `await foreach` statement; otherwise `false`.
+
+> NOTE: It does not support the case when `GetAsyncEnumerator()` is defined as an extension method. It's not possible to find extension methods using reflection.
+
+`IsAsyncEnumerable()` calls `IsAsyncEnumerator()` internally to validate the type returned by `GetAsyncEnumerator()`. The method `IsAsyncEnumerable()` only returns `true` if both the enumerable and the enumerator are valid.
+
+If the method `IsAsyncEnumerable()` returns `true`, the `enumerableInfo` output parameter contains all the `MethodInfo` and `PropertySymbol` for the methods and properties that are going to be actually used by the `await foreach` statement. The `GetAsyncEnumerator()` of the enumerable, the property `Current` and the method `MoveNextAsync()` of the enumerator. It may also contain info for method `DisposeAsync()` of the enumerator, if defined.
+
+Is the methods return `false`, the `errors` output parameter indicates why the type is not considered an enumerable. It can be a combination of `Error.MissingGetEnumerator`, `Error.MissingCurrent` and `Error.MissingMoveNext`.
+
+You can use these info values to further validate the async enumerable or its respective enumerator.
+
+## Expression trees
 
 [NetFabric.Reflection](https://www.nuget.org/packages/NetFabric.Reflection/) contains high level `Expression` generators that makes it easier to handle enumerables in [Expression Trees](https://tyrrrz.me/blog/expression-trees). The code generated is as similar as possible to the one generated by Roslyn for the equivalent keywords.
 

@@ -2,20 +2,62 @@
 
 This package extends the API provided by [Roslyn](https://github.com/dotnet/roslyn/blob/main/docs/wiki/Roslyn-Overview.md). It can be used in the development of [Roslyn Analyzers](https://learn.microsoft.com/en-us/visualstudio/code-quality/roslyn-analyzers-overview) and [Source Generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview).
 
-## IsEnumerable() and IsAsyncEnumerable()
+## Enumerable type checking
 
-To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>`, or `IAsyncEnumerable<>`. `foreach` and `await foreach` support several other cases. Use the methods `IsEnumerable` and `IsAsyncEnumerable` instead:
+To find if a type is enumerable, it's not enough to check if it implements `IEnumerable`, `IEnumerable<>` or `IAsyncEnumerable<>`. The `foreach` and `await foreach` statements support several other cases.
+
+> NOTE: Check the article ["Efficient Data Processing: Leveraging C#'s foreach Loop"](https://www.linkedin.com/pulse/efficient-data-processing-leveraging-cs-foreach-loop-ant%C3%A3o-almada/) to understand all the possible cases supported by the `foreach` statement.
+
+This package provides extension methods for the interface `ITypeSymbol` that can correctly validate if the type it represents can be used as the source in `foreach` or `await foreach` statements.
+
+### IsEnumerable and IsEnumerator
 
 ```csharp
-using NetFabric.CodeAnalysis;
+public static bool IsEnumerable(this ITypeSymbol typeSymbol,
+    Compilation compilation,
+    [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
+    out Errors errors);
 
-var isEnumerable = typeSymbol.IsEnumerable(compilation, out var enumerableSymbols, out var errors);
-
-var isAsyncEnumerable = typeSymbol.IsAsyncEnumerable(compilation, out var asyncEnumerableSymbols, out var errors);
+public static bool IsEnumerator(this ITypeSymbol typeSymbol,
+    Compilation compilation,
+    out Errors errors);
 ```
 
-The methods return a boolean value indicating if it's an enumerable or enumerator accepted by `foreach`. It supports the cases where `GetEnumerator()` or `GetAsyncEnumerator()` are provided as extension methods.
+The methods return `true` if the type represented by `ITypeSymbol` can be used in a `foreach` statement; otherwise `false`. It supports all the cases including when `GetEnumerator()` is defined as an extension method.
 
-If `true`, the first output parameter contains [`IMethodSymbol`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.imethodsymbol) for the method `GetEnumerator`/`GetAsynEnumerator` of the enumerable, the property `Current` and the method `MoveNext`/`MoveNextAsync` of the enumerator, following the precedences used by Roslyn for the `foreach` and `await foreach` keywords. It may also contain for methods `Reset` and `Dispose`/`DisposeAsync` if defined.
+`IsEnumerable()` calls `IsEnumerator()` internally to validate the type returned by `GetEnumerator()`. The method `IsEnumerable()` only returns `true` if both the enumerable and the enumerator are valid.
 
-If `false`, the second output parameter indicates what error was found. It can be a missing `GetEnumerator()`, missing `Current`, or missing `MoveNext()`.
+If the method `IsEnumerable()` returns `true`, the `enumerableSymbols` output parameter contains all the `IMethodInfo` and `IPropertySymbol` for the methods and properties that are going to be actually used by the `foreach` statement. The `GetEnumerator()` of the enumerable, the property `Current` and the method `MoveNext()` of the enumerator. It may also contain info for methods `Reset()` and `Dispose()` of the enumerator, if defined.
+
+Is the methods return `false`, the `errors` output parameter indicates why the type is not considered an enumerable. It can be a combination of `Error.MissingGetEnumerator`, `Error.MissingCurrent` and `Error.MissingMoveNext`.
+
+The output parameter also includes a `ForEachUsesIndexer` boolean property that indicates that, although the collection provides an enumerator, `foreach` will use the indexer instead. That's the case for arrays and spans.
+
+You can use these info values to further validate the enumerable and its respective enumerator. For example, use the following to find if the `Current` property of the enumerator returns by reference:
+
+```csharp
+enumerableSymbols.EnumeratorSymbols.Current.ReturnsByRef;
+```
+
+### IsAsyncEnumerable and IsAsyncEnumerator
+
+```csharp
+public static bool IsAsyncEnumerable(this ITypeSymbol typeSymbol,
+    Compilation compilation,
+    [NotNullWhen(true)] out AsyncEnumerableSymbols? enumerableSymbols,
+    out Errors errors);
+
+public static bool IsAsyncEnumerator(this ITypeSymbol typeSymbol,
+    Compilation compilation,
+    out Errors errors);
+```
+
+The methods return `true` if the type represented by `ITypeSymbol` can be used in an `await foreach` statement; otherwise `false`. It supports all the cases including when `GetAsyncEnumerator()` is defined as an extension method.
+
+`IsAsyncEnumerable()` calls `IsAsyncEnumerator()` internally to validate the type returned by `GetAsyncEnumerator()`. The method `IsAsyncEnumerable()` only returns `true` if both the enumerable and the enumerator are valid.
+
+If the method `IsAsyncEnumerable()` returns `true`, the `enumerableSymbols` output parameter contains all the `IMethodInfo` and `IPropertySymbol` for the methods and properties that are going to be actually used by the `await foreach` statement. The `GetAsyncEnumerator()` of the enumerable, the property `Current` and the method `MoveNextAsync()` of the enumerator. It may also contain info for method `DisposeAsync()` of the enumerator, if defined.
+
+Is the methods return `false`, the `errors` output parameter indicates why the type is not considered an enumerable. It can be a combination of `Error.MissingGetEnumerator`, `Error.MissingCurrent` and `Error.MissingMoveNext`.
+
+You can use these info values to further validate the async enumerable or its respective enumerator.
