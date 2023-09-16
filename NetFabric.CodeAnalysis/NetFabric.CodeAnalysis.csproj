@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netstandard2.0;net6.0</TargetFrameworks>
     <PackageId>NetFabric.CodeAnalysis</PackageId>
-    <Version>4.2.1</Version>
+    <Version>4.2.2</Version>
     <Description>Extensions to Microsoft.CodeAnalysis.</Description>
     <PackageReleaseNotes>
     Various small fixes
