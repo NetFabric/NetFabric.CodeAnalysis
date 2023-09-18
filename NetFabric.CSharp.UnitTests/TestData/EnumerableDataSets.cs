@@ -1,5 +1,4 @@
-﻿using NetFabric.VisualBasic.UnitTests.TestData;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using NetFabric.Reflection;
@@ -7,7 +6,7 @@ using Xunit;
 
 namespace NetFabric.CSharp.TestData;
 
-public static partial class DataSets
+public static class EnumerableDataSets
 {
     public static TheoryData<string, Type> InstanceProperties =>
         new()
@@ -32,13 +31,18 @@ public static partial class DataSets
             { "InheritedMethod", new[] { typeof(int), typeof(string) } },
         };
 
+    public static TheoryData<string, Type[]> StaticInstanceMethods =>
+        new()
+        {
+            { "StaticMethod", Array.Empty<Type>() },
+            { "StaticMethod", new[] { typeof(int), typeof(string) } },
+        };
+
     public static TheoryData<string, Type[]> ExplicitInstanceMethods =>
         new()
         {
             { "ExplicitMethod", Array.Empty<Type>() },
             { "ExplicitMethod", new[] { typeof(int), typeof(string) } },
-            { "StaticMethod", Array.Empty<Type>() },
-            { "StaticMethod", new[] { typeof(int), typeof(string) } },
         };
 
     public class EnumerableTestData 
@@ -284,6 +288,42 @@ public static partial class DataSets
                 }
             },
             {
+                typeof(EnumerableWithExplicitEnumerator<int>),
+                new EnumerableTestData 
+                {
+                    ForEachUsesIndexer = false,
+                    GetEnumeratorDeclaringType = typeof(EnumerableWithExplicitEnumerator<int>),
+                    EnumeratorTestData = new EnumeratorTestData 
+                    {
+                        CurrentDeclaringType = typeof(IEnumerator),
+                        MoveNextDeclaringType = typeof(IEnumerator),
+                        ResetDeclaringType = typeof(IEnumerator),
+                        DisposeDeclaringType = null,
+                        ItemType = typeof(object),
+                        IsValueType = false,
+                        IsByRefLikeType = false
+                    }
+                }
+            },
+            {
+                typeof(EnumerableWithExplicitGenericEnumerator<int>),
+                new EnumerableTestData
+                {
+                    ForEachUsesIndexer = false,
+                    GetEnumeratorDeclaringType = typeof(EnumerableWithExplicitGenericEnumerator<int>),
+                    EnumeratorTestData = new EnumeratorTestData
+                    {
+                        CurrentDeclaringType = typeof(IEnumerator<int>),
+                        MoveNextDeclaringType = typeof(IEnumerator),
+                        ResetDeclaringType = typeof(IEnumerator),
+                        DisposeDeclaringType = typeof(IDisposable),
+                        ItemType = typeof(int),
+                        IsValueType = false,
+                        IsByRefLikeType = false
+                    }
+                }
+            },
+            {
                 typeof(HybridEnumerable<int>),
                 new EnumerableTestData {
                     ForEachUsesIndexer = false,
@@ -432,66 +472,28 @@ public static partial class DataSets
             },
         };
 
-    public static TheoryData<Type, Type?, Type?, Type?, Type?> InvalidEnumerables =>
+    public static TheoryData<Type, IsEnumerableError> InvalidEnumerables =>
         new()
         {
             {
                 typeof(EnumerableWithMissingGetEnumerator),
-                null,
-                null,
-                null,
-                null
+                IsEnumerableError.MissingGetEnumerator
             },
             {
                 typeof(EnumerableWithMissingCurrent),
-                typeof(EnumerableWithMissingCurrent),
-                null,
-                typeof(EnumeratorWithMissingCurrent),
-                null
+                IsEnumerableError.MissingCurrent
             },
             {
                 typeof(EnumerableWithMissingMoveNext<int>),
-                typeof(EnumerableWithMissingMoveNext<int>),
-                typeof(EnumeratorWithMissingMoveNext<int>),
-                null,
-                typeof(int)
+                IsEnumerableError.MissingMoveNext
+            },
+            {
+                typeof(EnumerableWithMoveNextWithWrongReturnType<int>),
+                IsEnumerableError.MissingMoveNext
             },
             {
                 typeof(HybridEnumerableWithExplicitEnumerator<int>),
-                typeof(HybridEnumerableWithExplicitEnumerator<int>),
-                null,
-                typeof(HybridEnumerableWithExplicitEnumerator<int>),
-                typeof(int)
-            },
-        };
-
-    public static TheoryData<Type> Enumerators =>
-        new()
-        {
-            typeof(IEnumerator),
-            typeof(IEnumerator<int>),
-            typeof(ValueTypeEnumerator<int>),
-            typeof(DisposableValueTypeEnumerator<int>),
-            typeof(ByRefLikeEnumerator<int>),
-            typeof(DisposableByRefLikeEnumerator<int>),
-            typeof(ReferenceTypeEnumerator<int>),
-            typeof(DisposableReferenceTypeEnumerator<int>),
-            typeof(ExplicitGenericEnumerator<int>),
-            typeof(ExplicitEnumerator<int>),
-        };
-
-    public static TheoryData<Type, bool, bool> InvalidEnumerators =>
-        new()
-        {
-            {
-                typeof(EnumeratorWithMissingCurrent),
-                true,
-                false
-            },
-            {
-                typeof(EnumeratorWithMissingMoveNext<int>),
-                false,
-                true
+                IsEnumerableError.MissingCurrent
             },
         };
 }

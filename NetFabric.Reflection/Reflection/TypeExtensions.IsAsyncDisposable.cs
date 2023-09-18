@@ -17,10 +17,9 @@ public static partial class TypeExtensions
     /// </remarks>
     public static bool IsAsyncDisposable(this Type type, [NotNullWhen(true)] out MethodInfo? disposeAsync)
     {
-        if (type.ImplementsInterface(typeof(IAsyncDisposable), out _))
-            disposeAsync = typeof(IAsyncDisposable).GetPublicInstanceDeclaredOnlyMethod(nameof(IAsyncDisposable.DisposeAsync), Type.EmptyTypes)!;
-        else
-            disposeAsync = default;
+        disposeAsync = type.ImplementsInterface(typeof(IAsyncDisposable), out _)
+            ? typeof(IAsyncDisposable).GetPublicMethod(NameOf.DisposeAsync)
+            : default;
 
         return disposeAsync is not null;
     }

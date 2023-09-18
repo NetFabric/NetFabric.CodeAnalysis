@@ -7,7 +7,7 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests;
 public partial class ITypeSymbolExtensionsTests
 {
     [Theory]
-    [MemberData(nameof(DataSets.InstanceProperties), MemberType = typeof(DataSets))]
+    [MemberData(nameof(EnumerableDataSets.InstanceProperties), MemberType = typeof(EnumerableDataSets))]
     public void GetProperty_Should_ReturnProperty(string propertyName, Type propertyType)
     {
         // Arrange
@@ -24,7 +24,7 @@ public partial class ITypeSymbolExtensionsTests
     }
 
     [Theory]
-    [MemberData(nameof(DataSets.ExplicitInstanceProperties), MemberType = typeof(DataSets))]
+    [MemberData(nameof(EnumerableDataSets.ExplicitInstanceProperties), MemberType = typeof(EnumerableDataSets))]
     public void GetProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
     {
         // Arrange

@@ -16,18 +16,13 @@ public static partial class TypeExtensions
     /// The 'foreach' statement uses a 'using' internally so the same rules apply.
     /// </remarks>
     public static bool IsDisposable(this Type type, [NotNullWhen(true)] out MethodInfo? dispose)
-        => type.IsDisposable(out dispose, out _);
-    
-    internal static bool IsDisposable(this Type type, [NotNullWhen(true)] out MethodInfo? dispose, out bool isByRefLike)
-    {
-        isByRefLike = type.IsByRefLike();
-        if (isByRefLike)
-            dispose = type.GetPublicInstanceDeclaredOnlyMethod(NameOf.Dispose, Type.EmptyTypes);
-        else if (type.ImplementsInterface(typeof(IDisposable), out _))
-            dispose = typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(NameOf.Dispose, Type.EmptyTypes)!;
-        else
-            dispose = default;
-        
+    {   
+        dispose = type.IsByRefLike
+            ? type.GetPublicMethod(NameOf.Dispose)
+            : type.ImplementsInterface(typeof(IDisposable), out _) 
+                ? typeof(IDisposable).GetPublicMethod(NameOf.Dispose) 
+                : default;
+
         return dispose is not null;
     }
 }

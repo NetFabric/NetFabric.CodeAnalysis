@@ -19,14 +19,8 @@ public static partial class ITypeSymbolExtensions
     /// </remarks>
     public static bool IsDisposable(this ITypeSymbol typeSymbol, Compilation compilation,
         [NotNullWhen(true)] out IMethodSymbol? dispose)
-        => typeSymbol.IsDisposable(compilation, out dispose, out _);
-    
-    static bool IsDisposable(this ITypeSymbol typeSymbol, Compilation compilation, 
-        [NotNullWhen(true)] out IMethodSymbol? dispose,
-        out bool isRefLike)
     {
-        isRefLike = typeSymbol.IsRefLikeType;
-        if (isRefLike)
+        if (typeSymbol.IsRefLikeType)
             dispose = typeSymbol.GetPublicMethod(NameOf.Dispose);
         else if (typeSymbol.ImplementsInterface(SpecialType.System_IDisposable, out _))
             dispose = compilation.GetSpecialType(SpecialType.System_IDisposable).GetPublicMethod(NameOf.Dispose);

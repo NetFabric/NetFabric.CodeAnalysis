@@ -11,6 +11,35 @@ namespace NetFabric.Expressions.CSharp.UnitTests
 {
     public class ForeachTests
     {
+
+        [Fact]
+        public void ForEach_With_Span_Must_Throw_Exception()
+        {
+            // Arrange
+            var enumerableParameter = Parameter(typeof(Span<int>), "span");
+
+            // Act
+            var action = new Action(() => ForEach(enumerableParameter, _ => Empty()));
+
+            // Assert
+            var exception = Assert.Throws<NotSupportedException>(action);
+            Assert.Equal("ForEach Expression creation for Span<> or ReadOnlySpan<> is not supported.", exception.Message);
+        }
+
+        [Fact]
+        public void ForEach_With_ReadOnlySpan_Must_Throw_Exception()
+        {
+            // Arrange
+            var enumerableParameter = Parameter(typeof(ReadOnlySpan<int>), "span");
+
+            // Act
+            var action = new Action(() => ForEach(enumerableParameter, _ => Empty()));
+
+            // Assert
+            var exception = Assert.Throws<NotSupportedException>(action);
+            Assert.Equal("ForEach Expression creation for Span<> or ReadOnlySpan<> is not supported.", exception.Message);
+        }
+
         public static TheoryData<int[]> Data =>
             new()
             {
@@ -25,16 +54,15 @@ namespace NetFabric.Expressions.CSharp.UnitTests
         {
             // Arrange
             var expectedSum = source.Sum();
-            var localVariableName = $"__local_array_{ExpressionEx.localVariableCounter}__";
             string expectedExpression = $@"var sum = 0;
-var {localVariableName} = enumerable;
-var index = 0;
+var __array__ = enumerable;
+var __index__ = 0;
 while (true)
 {{
-    if (index < {localVariableName}.Length)
+    if (__index__ < __array__.Length)
     {{
-        sum += {localVariableName}[index];
-        index++;
+        sum += __array__[__index__];
+        __index__++;
     }}
     else
     {{
@@ -43,7 +71,7 @@ while (true)
 }}
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<int[]>();
             var sum = Sum(source);
@@ -76,7 +104,7 @@ while (true)
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<EnumerableWithValueTypeEnumerator<int>>();
             var sum = Sum(enumerable);
@@ -116,7 +144,7 @@ finally
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<EnumerableWithDisposableValueTypeEnumerator<int>>();
             var sum = Sum(enumerable);
@@ -161,7 +189,7 @@ finally
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<EnumerableWithReferenceTypeEnumerator<int>>();
             var sum = Sum(enumerable);
@@ -204,7 +232,7 @@ finally
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<EnumerableWithDisposableReferenceTypeEnumerator<int>>();
             var sum = Sum(enumerable);
@@ -237,7 +265,7 @@ while (true)
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<EnumerableWithByRefLikeEnumerator<int>>();
             var sum = Sum(enumerable);
@@ -277,7 +305,7 @@ finally
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<EnumerableWithDisposableByRefLikeEnumerator<int>>();
             var sum = Sum(enumerable);
@@ -322,7 +350,7 @@ finally
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumWithCastExpression<ExplicitEnumerable<int>>();
             var sum = SumWithCast(enumerable);
@@ -365,7 +393,7 @@ finally
 }
 
 return sum;";
-            
+
             // Act
             var (expression, _) = CreateSumExpression<ExplicitGenericEnumerable<int>>();
             var sum = Sum(enumerable);
@@ -381,7 +409,7 @@ return sum;";
             var enumerableParameter = Parameter(typeof(TEnumerable), "enumerable");
             var sumVariable = Variable(typeof(int), "sum");
             var expression = Block(
-                new[] {sumVariable},
+                new[] { sumVariable },
                 Assign(sumVariable, Constant(0)),
                 ForEach(
                     enumerableParameter,
@@ -402,7 +430,7 @@ return sum;";
             var enumerableParameter = Parameter(typeof(TEnumerable), "enumerable");
             var sumVariable = Variable(typeof(int), "sum");
             var expression = Block(
-                new[] {sumVariable},
+                new[] { sumVariable },
                 Assign(sumVariable, Constant(0)),
                 ForEach(
                     enumerableParameter,

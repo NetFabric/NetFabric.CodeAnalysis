@@ -16,6 +16,15 @@ public readonly struct AsyncEnumeratorWithMissingMoveNextAsync<T>
         => default!;
 }
 
+public readonly struct AsyncEnumeratorWithMoveNextAsyncWithWrongReturnType<T>
+{
+    public readonly T Current 
+        => default!;
+
+    public ValueTask<int> MoveNextAsync() 
+        => default;
+}
+
 public struct ValueTypeAsyncEnumerator<T>
 {
     readonly T[] source;

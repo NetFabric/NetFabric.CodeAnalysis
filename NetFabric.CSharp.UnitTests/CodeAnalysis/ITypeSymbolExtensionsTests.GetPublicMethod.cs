@@ -8,7 +8,7 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests;
 public partial class ITypeSymbolExtensionsTests
 {
     [Theory]
-    [MemberData(nameof(DataSets.InstanceMethods), MemberType = typeof(DataSets))]
+    [MemberData(nameof(EnumerableDataSets.InstanceMethods), MemberType = typeof(EnumerableDataSets))]
     public void GetMethod_Should_ReturnMethod(string methodName, Type[] parameters)
     {
         // Arrange
@@ -28,7 +28,8 @@ public partial class ITypeSymbolExtensionsTests
     }
 
     [Theory]
-    [MemberData(nameof(DataSets.ExplicitInstanceMethods), MemberType = typeof(DataSets))]
+    [MemberData(nameof(EnumerableDataSets.StaticInstanceMethods), MemberType = typeof(EnumerableDataSets))]
+    [MemberData(nameof(EnumerableDataSets.ExplicitInstanceMethods), MemberType = typeof(EnumerableDataSets))]
     public void GetMethod_With_ExplicitOrStaticMethods_Should_ReturnNull(string methodName, Type[] parameters)
     {
         // Arrange

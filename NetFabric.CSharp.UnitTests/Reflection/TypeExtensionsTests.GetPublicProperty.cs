@@ -7,14 +7,14 @@ namespace NetFabric.Reflection.CSharp.UnitTests;
 public partial class TypeExtensionsTests
 {
     [Theory]
-    [MemberData(nameof(DataSets.InstanceProperties), MemberType = typeof(DataSets))]
+    [MemberData(nameof(EnumerableDataSets.InstanceProperties), MemberType = typeof(EnumerableDataSets))]
     public void GetPublicProperty_Should_ReturnProperty(string propertyName, Type propertyType)
     {
         // Arrange
         var type = typeof(PropertiesAndMethods);
 
         // Act
-        var result = type.GetPublicInstanceReadProperty(propertyName);
+        var result = type.GetPublicReadProperty(propertyName);
 
         // Assert   
         Assert.NotNull(result);
@@ -23,14 +23,14 @@ public partial class TypeExtensionsTests
     }
 
     [Theory]
-    [MemberData(nameof(DataSets.ExplicitInstanceProperties), MemberType = typeof(DataSets))]
+    [MemberData(nameof(EnumerableDataSets.ExplicitInstanceProperties), MemberType = typeof(EnumerableDataSets))]
     public void GetPublicProperty_With_ExplicitOrStaticProperties_Should_ReturnNull(string propertyName)
     {
         // Arrange
         var type = typeof(PropertiesAndMethods);
 
         // Act
-        var result = type.GetPublicInstanceReadProperty(propertyName);
+        var result = type.GetPublicReadProperty(propertyName);
 
         // Assert   
         Assert.Null(result);

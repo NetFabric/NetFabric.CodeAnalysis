@@ -21,6 +21,12 @@ public readonly struct EnumerableWithMissingMoveNext<T>
         => new();
 }
 
+public readonly struct EnumerableWithMoveNextWithWrongReturnType<T>
+{
+    public EnumeratorWithMoveNextWithWrongReturnType<T> GetEnumerator() 
+        => new();
+}
+
 public readonly struct EnumerableWithExtensionMethod<T>
 {
     public readonly T[] Source;
@@ -99,6 +105,28 @@ public readonly struct EnumerableWithDisposableReferenceTypeEnumerator<T>
     
     public DisposableReferenceTypeEnumerator<T> GetEnumerator() 
         => new(source);
+}
+
+public readonly struct EnumerableWithExplicitEnumerator<T>
+{
+    readonly T[] source;
+
+    public EnumerableWithExplicitEnumerator(T[] source)
+        => this.source = source;
+
+    public IEnumerator GetEnumerator()
+        => new ExplicitEnumerator<T>(source);
+}
+
+public readonly struct EnumerableWithExplicitGenericEnumerator<T>
+{
+    readonly T[] source;
+
+    public EnumerableWithExplicitGenericEnumerator(T[] source)
+        => this.source = source;
+
+    public IEnumerator<T> GetEnumerator()
+        => new ExplicitGenericEnumerator<T>(source);
 }
 
 public class HybridEnumerable<T> : IEnumerable<T>
@@ -194,14 +222,18 @@ static class ValidateEnumerables
         // foreach (var _ in new HybridEnumerableWithExplicitEnumerator<int>(Array.Empty<int>())) { }
     }
 
+    // if this compiles then the type is enumerable
     public static void ValidEnumerables()
     {
+        foreach (var _ in new EnumerableWithExtensionMethod<int>(Array.Empty<int>())) { }
         foreach (var _ in new EnumerableWithValueTypeEnumerator<int>(Array.Empty<int>())) { }
         foreach (var _ in new EnumerableWithDisposableValueTypeEnumerator<int>(Array.Empty<int>())) { }
         foreach (var _ in new EnumerableWithByRefLikeEnumerator<int>(Array.Empty<int>())) { }
         foreach (var _ in new EnumerableWithDisposableByRefLikeEnumerator<int>(Array.Empty<int>())) { }
         foreach (var _ in new EnumerableWithReferenceTypeEnumerator<int>(Array.Empty<int>())) { }
         foreach (var _ in new EnumerableWithDisposableReferenceTypeEnumerator<int>(Array.Empty<int>())) { }
+        foreach (var _ in new EnumerableWithExplicitEnumerator<int>(Array.Empty<int>())) { }
+        foreach (var _ in new EnumerableWithExplicitGenericEnumerator<int>(Array.Empty<int>())) { }
         foreach (var _ in new HybridEnumerable<int>(Array.Empty<int>())) { }
         foreach (var _ in new ExplicitEnumerable<int>(Array.Empty<int>())) { }
         foreach (var _ in new ExplicitGenericEnumerable<int>(Array.Empty<int>())) { }
