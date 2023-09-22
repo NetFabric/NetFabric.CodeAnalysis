@@ -262,5 +262,23 @@ return false;";
     {
         public void Dispose() {}
     }
-    
+
+    static class ValidateDisposables
+    {
+        public static void InvalidEnumerables()
+        {
+            //using var a = new NotDisposableValueType();
+            //using var b = new NotDisposableByRefLikeType();
+            //using var c = new NotDisposableReferenceType();
+        }
+
+        // if this compiles then the type is disposable
+        public static void ValidDisposables()
+        {
+            using var a = new DisposableValueType();
+            using var b = new DisposableByRefLikeType();
+            using var c = new DisposableReferenceType();
+        }
+    }
 }
+

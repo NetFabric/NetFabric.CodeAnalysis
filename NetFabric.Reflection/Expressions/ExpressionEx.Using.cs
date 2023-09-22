@@ -32,19 +32,19 @@ public static partial class ExpressionEx
     /// </remarks>
     public static TryExpression Using(ParameterExpression instance, Expression body)
     {
-        if (!instance.Type.IsDisposable(out var disposeMethodInfo, out var isByRefLike))
+        if (!instance.Type.IsDisposable(out var disposeMethodInfo))
             throw new Exception($"'{instance.Type.Name}': type used in a using statement must be implicitly convertible to 'System.IDisposable'");
 
         return TryFinally(
             body,
-            Dispose(disposeMethodInfo, instance, isByRefLike)
+            Dispose(disposeMethodInfo, instance)
         );
 
-        static Expression Dispose(MethodInfo disposeMethodInfo, ParameterExpression instance, bool isByRefLike)
+        static Expression Dispose(MethodInfo disposeMethodInfo, ParameterExpression instance)
         {
             return instance.Type switch
             {
-                {IsValueType: true} when isByRefLike => DisposeByRefLikeType(disposeMethodInfo, instance),
+                {IsByRefLike: true} => DisposeByRefLikeType(disposeMethodInfo, instance),
                 {IsValueType: true} => DisposeValueType(disposeMethodInfo, instance),
                 _ => DisposeReferenceType(disposeMethodInfo, instance)
             };

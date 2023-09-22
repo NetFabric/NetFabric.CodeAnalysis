@@ -8,27 +8,89 @@ namespace NetFabric.CodeAnalysis;
 public static partial class ITypeSymbolExtensions
 {
     /// <summary>
-    /// Gets a value indicating whether 'foreach' considers <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> to be enumerable.
+    /// Checks if the provided <paramref name="typeSymbol"/> can be used as a source in a <c>foreach</c>
+    /// statement, indicating whether it is enumerable.
     /// </summary>
-    /// <param name="typeSymbol">The <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> to test.</param>
-    /// <param name="compilation">The <see cref="Microsoft.CodeAnalysis.Compilation"/> context.</param>
-    /// <param name="enumerableSymbols">If methods returns <c>true</c>, contains information on the methods 'foreach' will use to enumerate.</param>
-    /// <returns><c>true</c> if 'foreach' considers <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> to be enumerable; otherwise, <c>false</c>.</returns>
+    /// <param name="typeSymbol">The <see cref="ITypeSymbol"/> to be checked for enumerability.</param>
+    /// <param name="compilation">The <see cref="Compilation"/> representing the current
+    /// compilation context.</param>
+    /// <returns>
+    /// <c>true</c> if the <paramref name="typeSymbol"/> is enumerable; otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method examines the provided <paramref name="typeSymbol"/> to determine if it can be
+    /// used as a source in a <c>foreach</c> statement, indicating whether it is enumerable. To be
+    /// considered enumerable, the type should support iteration, typically by implementing the
+    /// <see cref="System.Collections.IEnumerable"/> or <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// interface, or by providing a suitable GetEnumerator method.
+    /// </remarks>
+    public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation)
+        => IsEnumerable(typeSymbol, compilation, out _, out _);
+
+    /// <summary>
+    /// Checks if the provided <paramref name="typeSymbol"/> can be used as a source in a <c>foreach</c>
+    /// statement, indicating whether it is enumerable, and if so, retrieves information about
+    /// the enumerable symbols.
+    /// </summary>
+    /// <param name="typeSymbol">The <see cref="ITypeSymbol"/> to be checked for enumerability.</param>
+    /// <param name="compilation">The <see cref="Compilation"/> representing the current
+    /// compilation context.</param>
+    /// <param name="enumerableSymbols">
+    /// When the method returns <c>true</c>, this parameter will contain information about the
+    /// enumerable symbols associated with the <paramref name="typeSymbol"/>. If the method returns
+    /// <c>false</c>, this parameter will be <c>null</c>.
+    /// </param>
+    /// <returns>
+    /// <c>true</c> if the <paramref name="typeSymbol"/> is enumerable; otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method examines the provided <paramref name="typeSymbol"/> to determine if it can be
+    /// used as a source in a <c>foreach</c> statement, indicating whether it is enumerable. To be
+    /// considered enumerable, the type should support iteration, typically by implementing the
+    /// <see cref="System.Collections.IEnumerable"/> or <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// interface, or by providing a suitable GetEnumerator method.
+    /// 
+    /// If the type is enumerable, the method provides information about the enumerable symbols
+    /// associated with it, which can be useful for various code analysis tasks.
+    /// </remarks>
     public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
         [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols)
         => IsEnumerable(typeSymbol, compilation, out enumerableSymbols, out _);
 
     /// <summary>
-    /// Gets a value indicating whether 'foreach' considers <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> to be enumerable.
+    /// Checks if the provided <paramref name="typeSymbol"/> can be used as a source in a <c>foreach</c>
+    /// statement, indicating whether it is enumerable, and if so, retrieves information about
+    /// the enumerable symbols and any potential error.
     /// </summary>
-    /// <param name="typeSymbol">The <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> to test.</param>
-    /// <param name="compilation">The <see cref="Microsoft.CodeAnalysis.Compilation"/> context.</param>
-    /// <param name="enumerableSymbols">If methods returns <c>true</c>, contains information on the methods 'foreach' will use to enumerate.</param>
-    /// <param name="errors">Gets information on what error caused the method to return <c>false</c>.</param>
-    /// <returns><c>true</c> if 'foreach' considers <see cref="Microsoft.CodeAnalysis.ITypeSymbol"/> to be enumerable; otherwise, <c>false</c>.</returns>
+    /// <param name="typeSymbol">The <see cref="ITypeSymbol"/> to be checked for enumerability.</param>
+    /// <param name="compilation">The <see cref="Compilation"/> representing the current
+    /// compilation context.</param>
+    /// <param name="enumerableSymbols">
+    /// When the method returns <c>true</c>, this parameter will contain information about the
+    /// enumerable symbols associated with the <paramref name="typeSymbol"/>. If the method returns
+    /// <c>false</c>, this parameter will be <c>null</c>.
+    /// </param>
+    /// <param name="error">
+    /// When the method returns <c>false</c>, this parameter will contain information about any
+    /// error encountered while determining enumerability. If the method returns <c>true</c>, this
+    /// parameter will be <see cref="IsEnumerableError.None"/>.
+    /// </param>
+    /// <returns>
+    /// <c>true</c> if the <paramref name="typeSymbol"/> is enumerable; otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method examines the provided <paramref name="typeSymbol"/> to determine if it can be
+    /// used as a source in a <c>foreach</c> statement, indicating whether it is enumerable. To be
+    /// considered enumerable, the type should support iteration, typically by implementing the
+    /// <see cref="System.Collections.IEnumerable"/> or <see cref="System.Collections.Generic.IEnumerable{T}"/>
+    /// interface, or by providing a suitable GetEnumerator method.
+    /// 
+    /// If the type is enumerable, the method provides information about the enumerable symbols
+    /// associated with it, which can be useful for various code analysis tasks.
+    /// </remarks>
     public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
-        [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
-        out Errors errors)
+    [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
+        out IsEnumerableError error)
     {
         var forEachUsesIndexer = typeSymbol.TypeKind == TypeKind.Array || typeSymbol.IsSpanOrReadOnlySpanType();
 
@@ -37,14 +99,14 @@ public static partial class ITypeSymbolExtensions
             var getEnumerator = typeSymbol.GetPublicMethod(NameOf.GetEnumerator);
             if (getEnumerator is not null)
             {
-                return HandleGetEnumerator(getEnumerator, compilation, out enumerableSymbols, out errors);
+                return HandleGetEnumerator(getEnumerator, compilation, out enumerableSymbols, out error);
             }
 
             getEnumerator = compilation.GetExtensionMethodsWithName(typeSymbol, NameOf.GetEnumerator)
                 .FirstOrDefault(methodSymbol => methodSymbol.Parameters.Length == 1);
             if (getEnumerator is not null)
             {
-                return HandleGetEnumerator(getEnumerator, compilation, out enumerableSymbols, out errors);
+                return HandleGetEnumerator(getEnumerator, compilation, out enumerableSymbols, out error);
             }
         }
 
@@ -72,7 +134,7 @@ public static partial class ITypeSymbolExtensions
                         IsEnumeratorInterface = true,
                     }
             );
-            errors = Errors.None; 
+            error = IsEnumerableError.None; 
             return true;
         }
 
@@ -92,19 +154,19 @@ public static partial class ITypeSymbolExtensions
                     IsEnumeratorInterface = true,
                 }                   
             );
-            errors = Errors.None; 
+            error = IsEnumerableError.None; 
             return true;
         }
 
         enumerableSymbols = default;
-        errors = Errors.MissingGetEnumerator;
+        error = IsEnumerableError.MissingGetEnumerator;
         return false;
     }
 
     static bool HandleGetEnumerator(IMethodSymbol getEnumerator, 
         Compilation compilation,
         [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
-        out Errors errors)
+        out IsEnumerableError error)
     {
         var enumeratorType = getEnumerator.ReturnType;
 
@@ -112,20 +174,20 @@ public static partial class ITypeSymbolExtensions
         if (current is null)
         {
             enumerableSymbols = default;
-            errors = Errors.MissingCurrent;
+            error = IsEnumerableError.MissingCurrent;
             return false;
         }
 
         var moveNext = enumeratorType.GetPublicMethod(NameOf.MoveNext);
-        if (moveNext is null)
-        {
+        if (moveNext is null || moveNext.ReturnType.ToDisplayString() != "bool")
+        {   
             enumerableSymbols = default;
-            errors = Errors.MissingMoveNext;
+            error = IsEnumerableError.MissingMoveNext;
             return false;
         }
 
         var reset = enumeratorType.GetPublicMethod("Reset");
-        _ = enumeratorType.IsDisposable(compilation, out var dispose, out var isRefLike);
+        _ = enumeratorType.IsDisposable(compilation, out var dispose);
 
         enumerableSymbols = new EnumerableSymbols(
             false,
@@ -135,7 +197,7 @@ public static partial class ITypeSymbolExtensions
                 Reset = reset,
                 Dispose = dispose,
                 IsValueType = enumeratorType.IsValueType,
-                IsRefLikeType = isRefLike,
+                IsRefLikeType = enumeratorType.IsRefLikeType,
                 IsGenericsEnumeratorInterface =
                     enumeratorType.TypeKind == TypeKind.Interface
                     && enumeratorType.ImplementsInterface(
@@ -144,7 +206,7 @@ public static partial class ITypeSymbolExtensions
                     enumeratorType.TypeKind == TypeKind.Interface,
             }
         );
-        errors = Errors.None;
+        error = IsEnumerableError.None;
         return true;
     }
 }

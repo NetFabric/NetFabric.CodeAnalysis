@@ -21,6 +21,12 @@ public readonly struct AsyncEnumerableWithMissingMoveNextAsync<T>
         => new();
 }
 
+public readonly struct AsyncEnumerableWithMoveNextAsyncWithWrongReturnType<T>
+{
+    public AsyncEnumeratorWithMoveNextAsyncWithWrongReturnType<T> GetAsyncEnumerator() 
+        => new();
+}
+
 public readonly struct AsyncEnumerableWithExtensionMethod<T>
 {
     public readonly T[] Source;

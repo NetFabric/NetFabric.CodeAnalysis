@@ -7,13 +7,22 @@ namespace NetFabric.CSharp.TestData;
 public readonly struct EnumeratorWithMissingCurrent
 {
     public bool MoveNext() 
-        => false;
+        => default;
 }
 
 public readonly struct EnumeratorWithMissingMoveNext<T>
 {
     public readonly T Current 
         => default!;
+}
+
+public readonly struct EnumeratorWithMoveNextWithWrongReturnType<T>
+{
+    public readonly T Current 
+        => default!;
+
+    public int MoveNext() 
+        => default;
 }
 
 public struct ValueTypeEnumerator<T>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Linq.Expressions;
+using System.Reflection;
 using NetFabric.Reflection;
 using static System.Linq.Expressions.Expression;
 
@@ -27,24 +28,17 @@ public static partial class ExpressionEx
     public static Expression ForEach(Expression enumerable, Func<Expression, Expression> body)
     {
         var enumerableType = enumerable.Type;
-        if (enumerableType.IsEnumerable(out var enumerableInfo, out var errors))
+        if (enumerableType.IsEnumerable(out var enumerableInfo, out var error))
             return ForEach(enumerableInfo, enumerable, body);
-        
-        if (errors.HasFlag(Errors.MissingGetEnumerator))
-            throw new Exception($"'{enumerableType}' does not contain a public definition for 'GetEnumerator'");
 
-        if (errors.HasFlag(Errors.MissingCurrent))
-            throw new Exception(
-                $"'{enumerableInfo!.GetEnumerator.ReturnType.Name}' does not contain a public definition for 'Current'");
-
-        if (errors.HasFlag(Errors.MissingMoveNext))
-            throw new Exception(
-                $"'{enumerableInfo!.GetEnumerator.ReturnType.Name}' does not contain a public definition for 'MoveNext'");
-
-        throw new Exception("Unhandled error!");
+        return error switch
+        {
+            IsEnumerableError.MissingGetEnumerator => throw new Exception($"'{enumerableType}' does not contain a public definition for 'GetEnumerator'"),
+            IsEnumerableError.MissingCurrent => throw new Exception($"'{enumerableInfo!.GetEnumerator.ReturnType}' does not contain a public definition for 'Current'"),
+            IsEnumerableError.MissingMoveNext => throw new Exception($"'{enumerableInfo!.GetEnumerator.ReturnType}' does not contain a public definition for 'MoveNext'"),
+            _ => throw new Exception("Unhandled error!"),
+        };
     }
-
-    internal static int localVariableCounter = 0;
 
     /// <summary>
     /// Creates a <see cref="System.Linq.Expressions.Expression"/> with behaviour similar to the <c>foreach</c> statement in C#.
@@ -67,7 +61,7 @@ public static partial class ExpressionEx
         if(enumerableInfo.ForEachUsesIndexer)
         {
             if (enumerable.Type.IsSpanOrReadOnlySpan())
-            {                
+            {
                 // throws exception because the indexer returns a reference to the item and 
                 // references are not yet supported by expression trees
                 throw new NotSupportedException("ForEach Expression creation for Span<> or ReadOnlySpan<> is not supported.");
@@ -80,18 +74,15 @@ public static partial class ExpressionEx
         
         static Expression UseIndexer(Expression array, Func<Expression, Expression> body)
         {
-            var indexVariable = Variable(typeof(int), "index");
-            var arrayVariable = Variable(array.Type, $"__local_array_{localVariableCounter++}__");
-            return Block(
-                new[] { indexVariable, arrayVariable },
-                Assign(arrayVariable, array), // local array for JIT compiler to remove bounds check
-                For(
-                    Assign(indexVariable, Constant(0)),
-                    LessThan(indexVariable, Property(arrayVariable, typeof(Array).GetPublicInstanceDeclaredOnlyReadProperty(nameof(Array.Length))!)),
-                    PostIncrementAssign(indexVariable),
-                    body(ArrayIndex(arrayVariable, indexVariable))
-                )
-            );
+            var arrayType = array.Type;
+            return arrayType.IsIndexable(out var indexableInfo, out var error)
+                ? For(array, indexableInfo, body)
+                : error switch
+                {
+                    IsIndexableError.MissingIndexer => throw new Exception($"'{arrayType}' does not contain a public definition for 'this'"),
+                    IsIndexableError.MissingCountOrLength => throw new Exception($"'{arrayType}' does not contain a public definition for 'Count' or 'Length'"),
+                    _ => throw new Exception("Unhandled error!"),
+                };
         }
 
         static Expression UseEnumerable(EnumerableInfo enumerableInfo, Expression enumerable, Func<Expression, Expression> body)
@@ -147,8 +138,7 @@ public static partial class ExpressionEx
                             IfThen(
                                 NotEqual(disposable, Constant(null)),
                                 Call(disposable,
-                                    typeof(IDisposable).GetPublicInstanceDeclaredOnlyMethod(
-                                        NameOf.Dispose, Type.EmptyTypes)!)
+                                    typeof(IDisposable).GetPublicMethod(NameOf.Dispose)!)
                             )
                         )
                     );

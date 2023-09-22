@@ -1,6 +1,5 @@
 ﻿using NetFabric.CSharp.TestData;
 using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace NetFabric.Reflection.CSharp.UnitTests;
@@ -8,22 +7,22 @@ namespace NetFabric.Reflection.CSharp.UnitTests;
 public partial class TypeExtensionsTests
 {
     [Theory]
-    [MemberData(nameof(DataSets.AsyncEnumerables), MemberType = typeof(DataSets))]
-    public void IsAsyncEnumerable_Should_ReturnTrue(Type type, DataSets.AsyncEnumerableTestData enumerableTestData)
+    [MemberData(nameof(AsyncEnumerableDataSets.AsyncEnumerables), MemberType = typeof(AsyncEnumerableDataSets))]
+    public void IsAsyncEnumerable_Should_ReturnTrue(Type type, AsyncEnumerableDataSets.AsyncEnumerableTestData enumerableTestData)
     {
         // Arrange
 
         // Act
-        var result = type.IsAsyncEnumerable(out var enumerableInfo, out var errors);
+        var result = type.IsAsyncEnumerable(out var enumerableInfo, out var error);
 
         // Assert   
-        Assert.True(result, errors.ToString());
+        Assert.True(result, error.ToString());
         Assert.NotNull(enumerableInfo);
-        Assert.Equal(Errors.None, errors);
+        Assert.True(error == IsAsyncEnumerableError.None);
 
         var getAsyncEnumerator = enumerableInfo!.GetAsyncEnumerator;
         Assert.NotNull(getAsyncEnumerator);
-        Assert.Equal(nameof(IAsyncEnumerable<int>.GetAsyncEnumerator), getAsyncEnumerator.Name);
+        Assert.EndsWith(NameOf.GetAsyncEnumerator, getAsyncEnumerator.Name);
         Assert.Equal(enumerableTestData.GetAsyncEnumeratorDeclaringType, getAsyncEnumerator.DeclaringType);
         Assert.Equal(enumerableTestData.GetAsyncEnumeratorParametersCount, getAsyncEnumerator.GetParameters().Length);
 
@@ -34,13 +33,13 @@ public partial class TypeExtensionsTests
         
         var current = enumeratorInfo!.Current;
         Assert.NotNull(current);
-        Assert.Equal(nameof(IAsyncEnumerator<int>.Current), current!.Name);
+        Assert.EndsWith(NameOf.Current, current!.Name);
         Assert.Equal(enumeratorTestData.CurrentDeclaringType, current.DeclaringType);
         Assert.Equal(enumeratorTestData.ItemType, current!.PropertyType);
 
         var moveNextAsync = enumeratorInfo!.MoveNextAsync;
         Assert.NotNull(moveNextAsync);
-        Assert.Equal(nameof(IAsyncEnumerator<int>.MoveNextAsync), moveNextAsync.Name);
+        Assert.EndsWith(NameOf.MoveNextAsync, moveNextAsync.Name);
         Assert.Equal(enumeratorTestData.MoveNextAsyncDeclaringType, moveNextAsync.DeclaringType);
         Assert.Empty(moveNextAsync.GetParameters());
 
@@ -52,7 +51,7 @@ public partial class TypeExtensionsTests
         else
         {
             Assert.NotNull(disposeAsync);
-            Assert.Equal(nameof(IAsyncDisposable.DisposeAsync), disposeAsync!.Name);
+            Assert.EndsWith(NameOf.DisposeAsync, disposeAsync!.Name);
             Assert.Equal(enumeratorTestData.DisposeAsyncDeclaringType, disposeAsync!.DeclaringType);
             Assert.Empty(disposeAsync!.GetParameters());
         }
@@ -61,34 +60,16 @@ public partial class TypeExtensionsTests
     }
 
     [Theory]
-    [MemberData(nameof(DataSets.InvalidAsyncEnumerables), MemberType = typeof(DataSets))]
-    public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type? getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type? currentDeclaringType, Type? moveNextAsyncDeclaringType, Type? itemType)
+    [MemberData(nameof(AsyncEnumerableDataSets.InvalidAsyncEnumerables), MemberType = typeof(AsyncEnumerableDataSets))]
+    public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, IsAsyncEnumerableError expectedError)
     {
         // Arrange
 
         // Act
-        var result = type.IsAsyncEnumerable(out _, out var errors);
+        var result = type.IsAsyncEnumerable(out _, out var error);
 
         // Assert   
         Assert.False(result);
-
-        if (getAsyncEnumeratorDeclaringType is null)
-        {
-            Assert.True(errors.HasFlag(Errors.MissingGetEnumerator));
-        }
-        else
-        {
-            Assert.False(errors.HasFlag(Errors.MissingGetEnumerator));
-
-            if (currentDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingCurrent));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingCurrent));
-
-            if (moveNextAsyncDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingMoveNext));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingMoveNext));
-        }
+        Assert.Equal(expectedError, error);
     }
 }

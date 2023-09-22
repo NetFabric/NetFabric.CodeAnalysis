@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Immutable;
+using System.Linq;
 // ReSharper disable InvertIf
 
 namespace NetFabric.CodeAnalysis;
@@ -68,11 +69,81 @@ public static partial class ITypeSymbolExtensions
         return false;
     }
 
+    internal static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params ITypeSymbol[] parameterTypes)
+    {
+        foreach (var member in typeSymbol.GetMembers().OfType<IPropertySymbol>())
+        {
+            if (member.IsIndexer && 
+                !member.IsStatic && 
+                member.DeclaredAccessibility == Accessibility.Public && 
+                member.GetMethod is not null && 
+                SequenceEqual(member.Parameters, parameterTypes))
+            {
+                return member;
+            }
+        }
+
+        if (typeSymbol.TypeKind == TypeKind.Interface)
+        {
+            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var @interface in typeSymbol.AllInterfaces)
+            {
+                var property = @interface.GetPublicReadIndexer(parameterTypes);
+                if (property is not null)
+                    return property;
+            }
+        }
+        else
+        {
+            var baseType = typeSymbol.BaseType;
+            if (baseType is not null)
+                return baseType.GetPublicReadIndexer(parameterTypes);
+        }
+
+        return null;
+    }
+
+    internal static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params Type[] parameterTypes)
+    {
+        foreach (var member in typeSymbol.GetMembers().OfType<IPropertySymbol>())
+        {
+            if (member.IsIndexer && 
+                !member.IsStatic && 
+                member.DeclaredAccessibility == Accessibility.Public && 
+                member.GetMethod is not null && 
+                SequenceEqual(member.Parameters, parameterTypes))
+            {
+                return member;
+            }
+        }
+
+        if (typeSymbol.TypeKind == TypeKind.Interface)
+        {
+            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var @interface in typeSymbol.AllInterfaces)
+            {
+                var property = @interface.GetPublicReadIndexer(parameterTypes);
+                if (property is not null)
+                    return property;
+            }
+        }
+        else
+        {
+            var baseType = typeSymbol.BaseType;
+            if (baseType is not null)
+                return baseType.GetPublicReadIndexer(parameterTypes);
+        }
+
+        return null;
+    }
+
     internal static IPropertySymbol? GetPublicReadProperty(this ITypeSymbol typeSymbol, string name)
     {
         foreach (var member in typeSymbol.GetMembers(name).OfType<IPropertySymbol>())
         {
-            if (!member.IsStatic && member.DeclaredAccessibility == Accessibility.Public && member.GetMethod is not null)
+            if (!member.IsStatic && 
+                member.DeclaredAccessibility == Accessibility.Public && 
+                member.GetMethod is not null)
                 return member;
         }
 
@@ -143,9 +214,24 @@ public static partial class ITypeSymbolExtensions
         return true;
     }
 
+    static bool SequenceEqual(ImmutableArray<IParameterSymbol> parameters, ITypeSymbol[] types)
+    {
+        if (parameters.Length != types.Length)
+            return false;
+
+        // ReSharper disable once LoopCanBeConvertedToQuery
+        for (var index = 0; index < parameters.Length; index++)
+        {
+            if (parameters[index].Type.MetadataName != types[index].MetadataName)
+                return false;
+        }
+
+        return true;
+    }
+
     public static bool IsSpanOrReadOnlySpanType(this ITypeSymbol typeSymbol)
     {
-        if (typeSymbol.Name == "Span" || typeSymbol.Name == "ReadOnlySpan")
+        if (typeSymbol.MetadataName == "System.Span" || typeSymbol.MetadataName == "System.ReadOnlySpan")
         {
             var containingNamespace = typeSymbol.ContainingNamespace.ToDisplayString();
             return containingNamespace == "System" && 
@@ -155,4 +241,81 @@ public static partial class ITypeSymbolExtensions
 
         return false;
     }
+
+    /// <summary>
+    /// Determines whether the specified <see cref="ITypeSymbol"/> represents an integer type within the given <see cref="Compilation"/>.
+    /// </summary>
+    /// <param name="typeSymbol">The <see cref="ITypeSymbol"/> to check for an integer type.</param>
+    /// <param name="compilation">The <see cref="Compilation"/> containing the semantic information about the code.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified <see cref="ITypeSymbol"/> represents an integer type; otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method checks if the <see cref="ITypeSymbol"/> represents an integer type within the context of the provided <see cref="Compilation"/>.
+    /// Starting from .NET 7, it also checks if the <see cref="ITypeSymbol"/> implements the <see cref="System.Numerics.IBinaryInteger{T}"/> interface,
+    /// which indicates support for binary integer operations.
+    /// </remarks>
+    public static bool IsIntegerType(this ITypeSymbol typeSymbol, Compilation compilation)
+    {
+        if (typeSymbol.MetadataName == "System.SByte" || 
+            typeSymbol.MetadataName == "System.Byte" || 
+            typeSymbol.MetadataName == "System.Int16" || 
+            typeSymbol.MetadataName == "System.UInt16" || 
+            typeSymbol.MetadataName == "System.Int32" || 
+            typeSymbol.MetadataName == "System.UInt32" || 
+            typeSymbol.MetadataName == "System.Int64" || 
+            typeSymbol.MetadataName == "System.UInt64")
+        {
+            return true;
+        }
+
+        // supported starting from .NET 7
+        var binaryIntegerType = compilation.GetTypeByMetadataName("System.Numerics.IBinaryInteger`1")!;
+        if (binaryIntegerType is not null &&
+            typeSymbol.ImplementsInterface(binaryIntegerType, out var arguments) && 
+            arguments.Length == 1 &&
+            arguments[0].MetadataName == typeSymbol.MetadataName)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Determines whether the specified <see cref="ITypeSymbol"/> represents a floating-point numeric type within the context of the provided <see cref="Compilation"/>.
+    /// </summary>
+    /// <param name="typeSymbol">The <see cref="ITypeSymbol"/> to check for a floating-point numeric type.</param>
+    /// <param name="compilation">The <see cref="Compilation"/> containing the semantic information about the code.</param>
+    /// <returns>
+    ///   <c>true</c> if the specified <see cref="ITypeSymbol"/> represents a floating-point numeric type; otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// Starting from .NET 7, this method checks if the <see cref="ITypeSymbol"/> represents a floating-point numeric type within the context of the provided <see cref="Compilation"/>.
+    /// It also compares the <see cref="ITypeSymbol"/> to the <see cref="System.Numerics.IFloatingPoint{T}"/> interface,
+    /// which indicates support for floating-point numeric operations.
+    /// </remarks>
+    public static bool IsFloatingPointType(this ITypeSymbol typeSymbol, Compilation compilation)
+    {
+        if (typeSymbol.MetadataName == "System.Half" || 
+            typeSymbol.MetadataName == "System.Float" || 
+            typeSymbol.MetadataName == "System.Double" || 
+            typeSymbol.MetadataName == "System.Decimal")
+        {
+            return true;
+        }
+
+        // supported starting from .NET 7
+        var floatingPointType = compilation.GetTypeByMetadataName("System.Numerics.IFloatingPoint`1")!;
+        if (floatingPointType is not null &&
+            typeSymbol.ImplementsInterface(floatingPointType, out var arguments) && 
+            arguments.Length == 1 &&
+            arguments[0].MetadataName == typeSymbol.MetadataName)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

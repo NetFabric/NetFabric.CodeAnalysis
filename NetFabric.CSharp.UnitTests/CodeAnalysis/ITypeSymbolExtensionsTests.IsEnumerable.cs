@@ -1,6 +1,5 @@
 ﻿using NetFabric.CSharp.TestData;
 using System;
-using System.Collections;
 using Xunit;
 
 namespace NetFabric.CodeAnalysis.CSharp.UnitTests;
@@ -8,10 +7,10 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests;
 public partial class ITypeSymbolExtensionsTests
 {
     [Theory]
-    [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
-    [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
-    [MemberData(nameof(DataSets.CodeAnalysisEnumerables), MemberType = typeof(DataSets))]
-    public void IsEnumerable_Should_ReturnTrue(Type enumerableType, DataSets.EnumerableTestData enumerableTestData)
+    [MemberData(nameof(EnumerableDataSets.Arrays), MemberType = typeof(EnumerableDataSets))]
+    [MemberData(nameof(EnumerableDataSets.Enumerables), MemberType = typeof(EnumerableDataSets))]
+    [MemberData(nameof(EnumerableDataSets.CodeAnalysisEnumerables), MemberType = typeof(EnumerableDataSets))]
+    public void IsEnumerable_Should_ReturnTrue(Type enumerableType, EnumerableDataSets.EnumerableTestData enumerableTestData)
     {
         // Arrange
         var compilation = Utils.Compile(
@@ -22,16 +21,16 @@ public partial class ITypeSymbolExtensionsTests
         var typeSymbol = compilation.GetTypeSymbol(enumerableType);
 
         // Act
-        var result = typeSymbol.IsEnumerable(compilation, out var enumerableSymbols, out var errors);
+        var result = typeSymbol.IsEnumerable(compilation, out var enumerableSymbols, out var error);
 
         // Assert   
-        Assert.True(result, errors.ToString());
+        Assert.True(result, error.ToString());
         Assert.NotNull(enumerableSymbols);
-        Assert.Equal(Errors.None, errors);
+        Assert.Equal(IsEnumerableError.None, error);
 
         var getEnumerator = enumerableSymbols!.GetEnumerator;
         Assert.NotNull(getEnumerator);
-        Assert.Equal(nameof(IEnumerable.GetEnumerator), getEnumerator.Name);
+        Assert.Equal(NameOf.GetEnumerator, getEnumerator.Name);
         Assert.Equal(enumerableTestData.GetEnumeratorDeclaringType.Name, getEnumerator.ContainingType.MetadataName);
 
         var enumeratorSymbols = enumerableSymbols.EnumeratorSymbols;
@@ -41,7 +40,7 @@ public partial class ITypeSymbolExtensionsTests
 
         var current = enumeratorSymbols.Current;
         Assert.NotNull(current);
-        Assert.Equal(nameof(IEnumerator.Current), current.Name);
+        Assert.Equal(NameOf.Current, current.Name);
         Assert.Equal(enumeratorTestData.CurrentDeclaringType.Name, current.ContainingType.MetadataName);
         if (current is {ReturnsByRef:true} or {ReturnsByRefReadonly:true})
             Assert.Equal(enumeratorTestData.ItemType.Name, current.Type.MetadataName + '&');
@@ -50,7 +49,7 @@ public partial class ITypeSymbolExtensionsTests
 
         var moveNext = enumeratorSymbols.MoveNext;
         Assert.NotNull(moveNext);
-        Assert.Equal(nameof(IEnumerator.MoveNext), moveNext.Name);
+        Assert.Equal(NameOf.MoveNext, moveNext.Name);
         Assert.Equal(enumeratorTestData.MoveNextDeclaringType.Name, moveNext.ContainingType.MetadataName);
         Assert.Empty(enumeratorSymbols.MoveNext.Parameters);
 
@@ -62,7 +61,7 @@ public partial class ITypeSymbolExtensionsTests
         else
         {
             Assert.NotNull(reset);
-            Assert.Equal(nameof(IEnumerator.Reset), reset!.Name);
+            Assert.Equal(NameOf.Reset, reset!.Name);
             Assert.Equal(enumeratorTestData.ResetDeclaringType.Name, reset.ContainingType.MetadataName);
             Assert.Empty(reset.Parameters);
         }
@@ -75,7 +74,7 @@ public partial class ITypeSymbolExtensionsTests
         else
         {
             Assert.NotNull(dispose);
-            Assert.Equal(nameof(IDisposable.Dispose), dispose!.Name);
+            Assert.Equal(NameOf.Dispose, dispose!.Name);
             Assert.Equal(enumeratorTestData.DisposeDeclaringType.Name, dispose.ContainingType.MetadataName);
             Assert.Empty(dispose.Parameters);
         }
@@ -85,8 +84,8 @@ public partial class ITypeSymbolExtensionsTests
     }
 
     [Theory]
-    [MemberData(nameof(DataSets.InvalidEnumerables), MemberType = typeof(DataSets))]
-    public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type? getEnumeratorDeclaringType, Type? currentDeclaringType, Type moveNextDeclaringType, Type itemType)
+    [MemberData(nameof(EnumerableDataSets.InvalidEnumerables), MemberType = typeof(EnumerableDataSets))]
+    public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, IsEnumerableError expectedError)
     {
         // Arrange
         var compilation = Utils.Compile(
@@ -95,28 +94,10 @@ public partial class ITypeSymbolExtensionsTests
         var typeSymbol = compilation.GetTypeSymbol(enumerableType);
 
         // Act
-        var result = typeSymbol.IsEnumerable(compilation, out _, out var errors);
+        var result = typeSymbol.IsEnumerable(compilation, out _, out var error);
 
         // Assert   
         Assert.False(result);
-
-        if (getEnumeratorDeclaringType is null)
-        {
-            Assert.True(errors.HasFlag(Errors.MissingGetEnumerator));
-        }
-        else
-        {
-            Assert.False(errors.HasFlag(Errors.MissingGetEnumerator));
-
-            if (currentDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingCurrent));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingCurrent));
-
-            if (moveNextDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingMoveNext));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingMoveNext));
-        }
+        Assert.Equal(expectedError, error);
     }
 }

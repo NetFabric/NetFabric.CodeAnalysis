@@ -5,7 +5,7 @@ using Xunit;
 
 namespace NetFabric.CSharp.TestData;
 
-public static partial class DataSets
+public static class AsyncEnumerableDataSets
 {
 
     public class AsyncEnumerableTestData 
@@ -210,58 +210,24 @@ public static partial class DataSets
             },
         };
 
-    public static TheoryData<Type, Type?, int, Type?, Type?, Type?> InvalidAsyncEnumerables =>
+    public static TheoryData<Type, IsAsyncEnumerableError> InvalidAsyncEnumerables =>
         new()
         {
             {
                 typeof(AsyncEnumerableWithMissingGetAsyncEnumerator),
-                null,
-                0,
-                null,
-                null,
-                null
+                IsAsyncEnumerableError.MissingGetAsyncEnumerator
             },
             {
                 typeof(AsyncEnumerableWithMissingCurrent),
-                typeof(AsyncEnumerableWithMissingCurrent),
-                0,
-                null,
-                typeof(AsyncEnumeratorWithMissingCurrent),
-                null
+                IsAsyncEnumerableError.MissingCurrent
             },
             {
                 typeof(AsyncEnumerableWithMissingMoveNextAsync<int>),
-                typeof(AsyncEnumerableWithMissingMoveNextAsync<int>),
-                0,
-                typeof(AsyncEnumeratorWithMissingMoveNextAsync<int>),
-                null,
-                typeof(int)
-            },
-        };
-
-    public static TheoryData<Type> AsyncEnumerators =>
-        new()
-        {
-            typeof(IAsyncEnumerator<int>),
-            typeof(ValueTypeAsyncEnumerator<int>),
-            typeof(DisposableValueTypeAsyncEnumerator<int>),
-            typeof(ReferenceTypeAsyncEnumerator<int>),
-            typeof(DisposableReferenceTypeAsyncEnumerator<int>),
-            typeof(ExplicitAsyncEnumerator<int>),
-        };
-
-    public static TheoryData<Type, bool, bool> InvalidAsyncEnumerators =>
-        new()
-        {
-            {
-                typeof(AsyncEnumeratorWithMissingCurrent),
-                true,
-                false
+                IsAsyncEnumerableError.MissingMoveNextAsync
             },
             {
-                typeof(AsyncEnumeratorWithMissingMoveNextAsync<int>),
-                false,
-                true
+                typeof(AsyncEnumerableWithMoveNextAsyncWithWrongReturnType<int>),
+                IsAsyncEnumerableError.MissingMoveNextAsync
             },
         };
 }

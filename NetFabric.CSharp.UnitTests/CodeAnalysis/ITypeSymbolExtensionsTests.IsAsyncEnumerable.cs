@@ -7,9 +7,9 @@ namespace NetFabric.CodeAnalysis.CSharp.UnitTests;
 public partial class ITypeSymbolExtensionsTests
 {
     [Theory]
-    [MemberData(nameof(DataSets.AsyncEnumerables), MemberType = typeof(DataSets))]
-    [MemberData(nameof(DataSets.CodeAnalysisAsyncEnumerables), MemberType = typeof(DataSets))]
-    public void IsAsyncEnumerable_Should_ReturnTrue(Type enumerableType, DataSets.AsyncEnumerableTestData enumerableTestData)
+    [MemberData(nameof(AsyncEnumerableDataSets.AsyncEnumerables), MemberType = typeof(AsyncEnumerableDataSets))]
+    [MemberData(nameof(AsyncEnumerableDataSets.CodeAnalysisAsyncEnumerables), MemberType = typeof(AsyncEnumerableDataSets))]
+    public void IsAsyncEnumerable_Should_ReturnTrue(Type enumerableType, AsyncEnumerableDataSets.AsyncEnumerableTestData enumerableTestData)
     {
         // Arrange
         var compilation = Utils.Compile(
@@ -20,12 +20,12 @@ public partial class ITypeSymbolExtensionsTests
         var typeSymbol = compilation.GetTypeSymbol(enumerableType);
 
         // Act
-        var result = typeSymbol.IsAsyncEnumerable(compilation, out var enumerableSymbols, out var errors);
+        var result = typeSymbol.IsAsyncEnumerable(compilation, out var enumerableSymbols, out var error);
 
         // Assert   
-        Assert.True(result, errors.ToString());
+        Assert.True(result, error.ToString());
         Assert.NotNull(enumerableSymbols);
-        Assert.Equal(Errors.None, errors);
+        Assert.Equal(IsAsyncEnumerableError.None, error);
 
         var getAsyncEnumerator = enumerableSymbols!.GetAsyncEnumerator;
         Assert.NotNull(getAsyncEnumerator);
@@ -66,8 +66,8 @@ public partial class ITypeSymbolExtensionsTests
     }
 
     [Theory]
-    [MemberData(nameof(DataSets.InvalidAsyncEnumerables), MemberType = typeof(DataSets))]
-    public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, Type? getAsyncEnumeratorDeclaringType, int getAsyncEnumeratorParametersCount, Type? currentDeclaringType, Type? moveNextAsyncDeclaringType, Type? itemType)
+    [MemberData(nameof(AsyncEnumerableDataSets.InvalidAsyncEnumerables), MemberType = typeof(AsyncEnumerableDataSets))]
+    public void IsAsyncEnumerable_With_MissingFeatures_Should_ReturnFalse(Type enumerableType, IsAsyncEnumerableError expectedError)
     {
         // Arrange
         var compilation = Utils.Compile(
@@ -76,28 +76,10 @@ public partial class ITypeSymbolExtensionsTests
         var typeSymbol = compilation.GetTypeSymbol(enumerableType);
 
         // Act
-        var result = typeSymbol.IsAsyncEnumerable(compilation, out _, out var errors);
+        var result = typeSymbol.IsAsyncEnumerable(compilation, out _, out var error);
 
         // Assert   
         Assert.False(result);
-
-        if (getAsyncEnumeratorDeclaringType is null)
-        {
-            Assert.True(errors.HasFlag(Errors.MissingGetEnumerator));
-        }
-        else
-        {
-            Assert.False(errors.HasFlag(Errors.MissingGetEnumerator));
-
-            if (currentDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingCurrent));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingCurrent));
-
-            if (moveNextAsyncDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingMoveNext));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingMoveNext));
-        }
+        Assert.Equal(expectedError, error);
     }
 }

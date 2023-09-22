@@ -1,6 +1,5 @@
 ﻿using NetFabric.CSharp.TestData;
 using System;
-using System.Collections;
 using Xunit;
 
 namespace NetFabric.Reflection.CSharp.UnitTests;
@@ -9,43 +8,43 @@ public partial class TypeExtensionsTests
 {
 
     [Theory]
-    [MemberData(nameof(DataSets.Arrays), MemberType = typeof(DataSets))]
-    [MemberData(nameof(DataSets.Enumerables), MemberType = typeof(DataSets))]
-    public void IsEnumerable_Should_ReturnTrue(Type type, DataSets.EnumerableTestData enumerableTestData)
+    [MemberData(nameof(EnumerableDataSets.Arrays), MemberType = typeof(EnumerableDataSets))]
+    [MemberData(nameof(EnumerableDataSets.Enumerables), MemberType = typeof(EnumerableDataSets))]
+    public void IsEnumerable_Should_ReturnTrue(Type type, EnumerableDataSets.EnumerableTestData testData)
     {
         // Arrange
 
         // Act
-        var result = type.IsEnumerable(out var enumerableInfo, out var errors);
+        var result = type.IsEnumerable(out var enumerableInfo, out var error);
 
         // Assert   
-        Assert.True(result, errors.ToString());
+        Assert.True(result, error.ToString());
         Assert.NotNull(enumerableInfo);
-        Assert.Equal(Errors.None, errors);
+        Assert.Equal(IsEnumerableError.None, error);
 
         Assert.NotNull(enumerableInfo!.EnumeratorInfo);
 
         var getEnumerator = enumerableInfo!.GetEnumerator;
         Assert.NotNull(getEnumerator);
-        Assert.Equal(nameof(IEnumerable.GetEnumerator), getEnumerator!.Name);
-        Assert.Equal(enumerableTestData.GetEnumeratorDeclaringType, getEnumerator!.DeclaringType);
+        Assert.EndsWith(NameOf.GetEnumerator, getEnumerator!.Name);
+        Assert.Equal(testData.GetEnumeratorDeclaringType, getEnumerator!.DeclaringType);
         Assert.Empty(getEnumerator!.GetParameters());
         
 
         var enumeratorInfo = enumerableInfo!.EnumeratorInfo;
         Assert.NotNull(enumeratorInfo);
 
-        var enumeratorTestData = enumerableTestData.EnumeratorTestData;
+        var enumeratorTestData = testData.EnumeratorTestData;
         
         var current = enumeratorInfo!.Current;
         Assert.NotNull(current);
-        Assert.Equal(nameof(IEnumerator.Current), current!.Name);
+        Assert.EndsWith(NameOf.Current, current!.Name);
         Assert.Equal(enumeratorTestData.CurrentDeclaringType, current!.DeclaringType);
         Assert.Equal(enumeratorTestData.ItemType, current!.PropertyType);
 
         var moveNext = enumeratorInfo!.MoveNext;
         Assert.NotNull(moveNext);
-        Assert.Equal(nameof(IEnumerator.MoveNext), moveNext!.Name);
+        Assert.EndsWith(NameOf.MoveNext, moveNext!.Name);
         Assert.Equal(enumeratorTestData.MoveNextDeclaringType, moveNext!.DeclaringType);
         Assert.Empty(moveNext!.GetParameters());
 
@@ -57,7 +56,7 @@ public partial class TypeExtensionsTests
         else
         {
             Assert.NotNull(reset);
-            Assert.Equal(nameof(IEnumerator.Reset), reset!.Name);
+            Assert.EndsWith(NameOf.Reset, reset!.Name);
             Assert.Equal(enumeratorTestData.ResetDeclaringType, reset!.DeclaringType);
             Assert.Empty(reset!.GetParameters());
         }
@@ -70,7 +69,7 @@ public partial class TypeExtensionsTests
         else
         {
             Assert.NotNull(dispose);
-            Assert.Equal(nameof(IDisposable.Dispose), dispose!.Name);
+            Assert.EndsWith(NameOf.Dispose, dispose!.Name);
             Assert.Equal(enumeratorTestData.DisposeDeclaringType, dispose!.DeclaringType);
             Assert.Empty(dispose!.GetParameters());
         }
@@ -80,34 +79,16 @@ public partial class TypeExtensionsTests
     }
 
     [Theory]
-    [MemberData(nameof(DataSets.InvalidEnumerables), MemberType = typeof(DataSets))]
-    public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, Type? getEnumeratorDeclaringType, Type? currentDeclaringType, Type? moveNextDeclaringType, Type itemType)
+    [MemberData(nameof(EnumerableDataSets.InvalidEnumerables), MemberType = typeof(EnumerableDataSets))]
+    public void IsEnumerable_With_MissingFeatures_Should_ReturnFalse(Type type, IsEnumerableError expectedError)
     {
         // Arrange
 
         // Act
-        var result = type.IsEnumerable(out _, out var errors);
+        var result = type.IsEnumerable(out _, out var error);
 
         // Assert   
         Assert.False(result);
-
-        if (getEnumeratorDeclaringType is null)
-        {
-            Assert.True(errors.HasFlag(Errors.MissingGetEnumerator));
-        }
-        else
-        {
-            Assert.False(errors.HasFlag(Errors.MissingGetEnumerator));
-
-            if (currentDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingCurrent));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingCurrent));
-
-            if (moveNextDeclaringType is null)
-                Assert.True(errors.HasFlag(Errors.MissingMoveNext));
-            else
-                Assert.False(errors.HasFlag(Errors.MissingMoveNext));
-        }
+        Assert.Equal(expectedError, error);
     }
 }

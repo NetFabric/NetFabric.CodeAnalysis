@@ -1,12 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
         <PackageId>NetFabric.Reflection</PackageId>
-        <Version>4.2.1</Version>
+        <Version>5.0.0</Version>
         <Description>Extensions to System.Reflection.</Description>
         <PackageReleaseNotes>
-        Various small fixes
+        Removed IsEnumerator() and IsAsyncEnumerator.
+        Error enums defined discrete values, not flags.
+        Added IsIndexable();
+        Fixed miscelaneous bugs.
         </PackageReleaseNotes>
         <PackageTags>reflection, enumerable, asyncenumerable, expression, expressiontree</PackageTags>
         <PackageIcon>Icon.png</PackageIcon>
