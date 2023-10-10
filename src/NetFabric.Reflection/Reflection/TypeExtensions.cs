@@ -117,7 +117,7 @@ public static partial class TypeExtensions
 
     internal static MethodInfo? GetPublicMethod(this Type type, string name, params Type[] types)
     {
-        var method = type.GetMethod(name, PublicInstance, types);
+        var method = type.GetMethod(name, PublicInstance, null, types, null);
         if (method is not null)
             return method;
 
@@ -235,7 +235,10 @@ public static partial class TypeExtensions
     /// </remarks>
     public static bool IsFloatingPointType(this Type type)
     {
-        if (type == typeof(Half) || 
+        if (
+#if NET5_0_OR_GREATER
+            type == typeof(Half) ||
+#endif
             type == typeof(float) || 
             type == typeof(double) || 
             type == typeof(decimal))
