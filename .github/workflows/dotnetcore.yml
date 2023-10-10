@@ -17,10 +17,10 @@ jobs:
       run: dotnet build -c:Release
 
     - name: Tests
-      run: dotnet test ./NetFabric.CSharp.UnitTests/NetFabric.CSharp.UnitTests.csproj -c:Release -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
+      run: dotnet test ./src/NetFabric.CSharp.UnitTests/NetFabric.CSharp.UnitTests.csproj -c:Release -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
 
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ./NetFabric.CSharp.UnitTests/TestResults/coverage.net6.0.info 
+        path-to-lcov: ./src/NetFabric.CSharp.UnitTests/TestResults/coverage.net6.0.info 

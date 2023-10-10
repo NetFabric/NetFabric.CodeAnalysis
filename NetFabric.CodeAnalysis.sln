@@ -1,25 +1,37 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29512.175
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34004.107
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47A149B9-B64C-4DD2-AD05-EAC76BEC98EC}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
-		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
 		Icon.png = Icon.png
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CodeAnalysis", "NetFabric.CodeAnalysis\NetFabric.CodeAnalysis.csproj", "{7127B72B-9EFF-4619-9105-AF4EDFF6A37B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CodeAnalysis", "src\NetFabric.CodeAnalysis\NetFabric.CodeAnalysis.csproj", "{F60F569A-9440-4601-B44A-7C9391032B2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.Reflection", "NetFabric.Reflection\NetFabric.Reflection.csproj", "{5C6E0F68-3A44-4D98-8145-9F6E375C093A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.Reflection", "src\NetFabric.Reflection\NetFabric.Reflection.csproj", "{96AE24E8-0050-4BB7-8563-B6339BD51FA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFabric.CSharp.UnitTests", "NetFabric.CSharp.UnitTests\NetFabric.CSharp.UnitTests.csproj", "{48DB2EC2-65AB-4523-9D2B-1872A48C5F88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetFabric.CSharp.UnitTests", "src\NetFabric.CSharp.UnitTests\NetFabric.CSharp.UnitTests.csproj", "{18011DA8-5383-453D-AD2A-C9C0A8C7A663}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "NetFabric.VisualBasic.UnitTests", "NetFabric.VisualBasic.UnitTests\NetFabric.VisualBasic.UnitTests.vbproj", "{EB6D4751-0ADD-40BD-BA13-7BA19323DF2A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "NetFabric.VisualBasic.UnitTests", "src\NetFabric.VisualBasic.UnitTests\NetFabric.VisualBasic.UnitTests.vbproj", "{30692A38-79D9-4CD3-8C45-81CEAA8F5284}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{CDACB1E2-4D3D-49D6-BA13-D0337B3C4A7C}"
+	ProjectSection(SolutionItems) = preProject
+		docs\docfx.json = docs\docfx.json
+		docs\index.md = docs\index.md
+		docs\toc.yml = docs\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{F3A2900C-86C5-456C-9893-9519FBA09E94}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\docs.yml = .github\workflows\docs.yml
+		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,22 +39,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7127B72B-9EFF-4619-9105-AF4EDFF6A37B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7127B72B-9EFF-4619-9105-AF4EDFF6A37B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7127B72B-9EFF-4619-9105-AF4EDFF6A37B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7127B72B-9EFF-4619-9105-AF4EDFF6A37B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C6E0F68-3A44-4D98-8145-9F6E375C093A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C6E0F68-3A44-4D98-8145-9F6E375C093A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C6E0F68-3A44-4D98-8145-9F6E375C093A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C6E0F68-3A44-4D98-8145-9F6E375C093A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48DB2EC2-65AB-4523-9D2B-1872A48C5F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48DB2EC2-65AB-4523-9D2B-1872A48C5F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48DB2EC2-65AB-4523-9D2B-1872A48C5F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48DB2EC2-65AB-4523-9D2B-1872A48C5F88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB6D4751-0ADD-40BD-BA13-7BA19323DF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB6D4751-0ADD-40BD-BA13-7BA19323DF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB6D4751-0ADD-40BD-BA13-7BA19323DF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB6D4751-0ADD-40BD-BA13-7BA19323DF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F60F569A-9440-4601-B44A-7C9391032B2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F60F569A-9440-4601-B44A-7C9391032B2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F60F569A-9440-4601-B44A-7C9391032B2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F60F569A-9440-4601-B44A-7C9391032B2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96AE24E8-0050-4BB7-8563-B6339BD51FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96AE24E8-0050-4BB7-8563-B6339BD51FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96AE24E8-0050-4BB7-8563-B6339BD51FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96AE24E8-0050-4BB7-8563-B6339BD51FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18011DA8-5383-453D-AD2A-C9C0A8C7A663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18011DA8-5383-453D-AD2A-C9C0A8C7A663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18011DA8-5383-453D-AD2A-C9C0A8C7A663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18011DA8-5383-453D-AD2A-C9C0A8C7A663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30692A38-79D9-4CD3-8C45-81CEAA8F5284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30692A38-79D9-4CD3-8C45-81CEAA8F5284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30692A38-79D9-4CD3-8C45-81CEAA8F5284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30692A38-79D9-4CD3-8C45-81CEAA8F5284}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
