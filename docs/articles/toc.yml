@@ -1,2 +1,8 @@
 - name: Introduction
   href: intro.md
+- name: Efficient Data Processing: Leveraging C#'s foreach Loop
+  href: foreach.md
+- name: Handling enumerables when using reflection
+  href: reflection.md
+- name: Handling enumerables in Roslyn Analyzers and Code Generators
+  href: codeanalysis.md
