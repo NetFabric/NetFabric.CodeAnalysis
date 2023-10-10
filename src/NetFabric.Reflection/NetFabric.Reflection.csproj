@@ -5,7 +5,7 @@
       <PackageId>NetFabric.Reflection</PackageId>
       <Version>5.0.0</Version>
       <Description>Extensions to System.Reflection.</Description>
-      <PackageProjectUrl>https://netfabric.github.io/NetFabric.CodeAnalisys/</PackageProjectUrl>
+      <PackageProjectUrl>https://netfabric.github.io/NetFabric.CodeAnalysis/</PackageProjectUrl>
       <PackageReleaseNotes>
         Removed IsEnumerator() and IsAsyncEnumerator.
         Error enums defined discrete values, not flags.

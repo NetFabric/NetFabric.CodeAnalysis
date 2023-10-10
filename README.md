@@ -1,6 +1,6 @@
-[![GitHub last commit (master)](https://img.shields.io/github/last-commit/NetFabric/NetFabric.CodeAnalysis/master.svg?style=flat-square&logo=github)](https://github.com/NetFabric/NetFabric.CodeAnalysis/commits/master)
-[![Build (master)](https://img.shields.io/github/workflow/status/NetFabric/NetFabric.CodeAnalysis/.NET%20Core/master.svg?style=flat-square&logo=github)](https://github.com/NetFabric/NetFabric.CodeAnalysis/actions)
-[![Coverage](https://img.shields.io/coveralls/github/NetFabric/NetFabric.CodeAnalysis/master?style=flat-square&logo=coveralls)](https://coveralls.io/github/NetFabric/NetFabric.CodeAnalysis)
+[![GitHub last commit (main)](https://img.shields.io/github/last-commit/NetFabric/NetFabric.CodeAnalysis/main.svg?style=flat-square&logo=github)](https://github.com/NetFabric/NetFabric.CodeAnalysis/commits/main)
+[![Build (main)](https://img.shields.io/github/actions/workflow/status/NetFabric/NetFabric.CodeAnalysis/Test?style=flat-square&logo=github)](https://github.com/NetFabric/NetFabric.CodeAnalysis/actions)
+[![Coverage](https://img.shields.io/coveralls/github/NetFabric/NetFabric.CodeAnalysis/main?style=flat-square&logo=coveralls)](https://coveralls.io/github/NetFabric/NetFabric.CodeAnalysis)
 
 [![CodeAnalysis NuGet Version](https://img.shields.io/nuget/v/NetFabric.CodeAnalysis.svg?style=flat-square&label=CodeAnalysis%20nuget&logo=nuget)](https://www.nuget.org/packages/NetFabric.CodeAnalysis/)
 [![CodeAnalysis NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.CodeAnalysis?style=flat-square&label=CodeAnalysis%20downloads&logo=nuget)](https://www.nuget.org/packages/NetFabric.CodeAnalysis/)
