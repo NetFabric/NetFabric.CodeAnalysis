@@ -1,25 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-        <PackageId>NetFabric.Reflection</PackageId>
-        <Version>5.0.0</Version>
-        <Description>Extensions to System.Reflection.</Description>
-        <PackageReleaseNotes>
+      <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+      <PackageId>NetFabric.Reflection</PackageId>
+      <Version>5.0.0</Version>
+      <Description>Extensions to System.Reflection.</Description>
+      <PackageProjectUrl>https://netfabric.github.io/NetFabric.CodeAnalisys/</PackageProjectUrl>
+      <PackageReleaseNotes>
         Removed IsEnumerator() and IsAsyncEnumerator.
         Error enums defined discrete values, not flags.
         Added IsIndexable();
         Fixed miscelaneous bugs.
-        </PackageReleaseNotes>
-        <PackageTags>reflection, enumerable, asyncenumerable, expression, expressiontree</PackageTags>
-        <PackageIcon>Icon.png</PackageIcon>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+      </PackageReleaseNotes>
+      <PackageTags>reflection, enumerable, asyncenumerable, expression, expressiontree</PackageTags>
+      <PackageIcon>Icon.png</PackageIcon>
+      <PackageLicenseFile>LICENSE</PackageLicenseFile>
+      <PackageReadmeFile>README.md</PackageReadmeFile>
+      <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+      <PublishRepositoryUrl>true</PublishRepositoryUrl>
+      <EmbedUntrackedSources>true</EmbedUntrackedSources>
+      <IncludeSymbols>true</IncludeSymbols>
+      <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
     
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">

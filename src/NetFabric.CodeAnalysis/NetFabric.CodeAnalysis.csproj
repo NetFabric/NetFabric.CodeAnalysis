@@ -5,6 +5,7 @@
     <PackageId>NetFabric.CodeAnalysis</PackageId>
     <Version>5.0.0</Version>
     <Description>Extensions to Microsoft.CodeAnalysis.</Description>
+    <PackageProjectUrl>https://netfabric.github.io/NetFabric.CodeAnalisys/</PackageProjectUrl>
     <PackageReleaseNotes>
     Removed IsEnumerator() and IsAsyncEnumerator.
     Error enums defined discrete values, not flags.
