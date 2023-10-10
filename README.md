@@ -1,5 +1,5 @@
 [![GitHub last commit (main)](https://img.shields.io/github/last-commit/NetFabric/NetFabric.CodeAnalysis/main.svg?style=flat-square&logo=github)](https://github.com/NetFabric/NetFabric.CodeAnalysis/commits/main)
-[![Build (main)](https://img.shields.io/github/actions/workflow/status/NetFabric/NetFabric.CodeAnalysis/Test?style=flat-square&logo=github)](https://github.com/NetFabric/NetFabric.CodeAnalysis/actions)
+[![Build (main)](https://img.shields.io/github/actions/workflow/status/NetFabric/NetFabric.CodeAnalysis/dotnetcore.yml?style=flat-square&logo=github)](https://github.com/NetFabric/NetFabric.CodeAnalysis/actions)
 [![Coverage](https://img.shields.io/coveralls/github/NetFabric/NetFabric.CodeAnalysis/main?style=flat-square&logo=coveralls)](https://coveralls.io/github/NetFabric/NetFabric.CodeAnalysis)
 
 [![CodeAnalysis NuGet Version](https://img.shields.io/nuget/v/NetFabric.CodeAnalysis.svg?style=flat-square&label=CodeAnalysis%20nuget&logo=nuget)](https://www.nuget.org/packages/NetFabric.CodeAnalysis/)
@@ -11,6 +11,8 @@
 # NetFabric.CodeAnalysis and NetFabric.Reflection Documentation
 
 This documentation covers both the NetFabric.CodeAnalysis and NetFabric.Reflection packages. These packages offer overlapping functionality designed for different phases of code execution.
+
+Having both packages within the same repository facilitates the sharing of common data sets among unit tests.
 
 ## NetFabric.CodeAnalysis
 
@@ -30,7 +32,7 @@ Hence, merely checking if a type implements `IEnumerable` or `IEnumerable<T>` is
 
 # Documentation
 
-Documentation is available in the [netfabriccodeanalysis.git]().
+Documentation is available [here](https://netfabric.github.io/NetFabric.CodeAnalysis/).
 
 # References
 
