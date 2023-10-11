@@ -1,0 +1,2 @@
+
+{"items":[{"name":"Introduction","href":"intro.html","topicHref":"intro.html"},{"name":"Efficient Data Processing: Leveraging C#'s foreach Loop","href":"foreach.html","topicHref":"foreach.html"},{"name":"Handling enumerables when using reflection","href":"reflection.html","topicHref":"reflection.html"},{"name":"Handling enumerables in Roslyn Analyzers and Code Generators","href":"codeanalysis.html","topicHref":"codeanalysis.html"}]}

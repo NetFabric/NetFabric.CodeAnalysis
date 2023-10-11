@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Handling enumerables when using reflection </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Handling enumerables when using reflection ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/docs/articles/reflection.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="handling-enumerables-when-using-reflection">Handling enumerables when using reflection</h1>
+
+<p>.NET Reflection is a dynamic mechanism that allows developers to inspect and interact with the metadata and behaviour of types, objects, and assemblies at runtime. This enables tasks like discovering types, accessing their properties and methods, and creating instances without having explicit compile-time knowledge. Reflection is a powerful tool for scenarios where you need to work with code in a flexible and adaptive manner.</p>
+<p>The requirement for an enumerable to be traversed using a <code>foreach</code> is that the type must provide a public parameterless method named <code>GetEnumerator()</code> that returns an instance of an enumerator. The returned enumerator type must provide a public parameterless method named <code>MoveNext()</code> that returns <code>bool</code>, and also a public readable property named <code>Current</code>. Alternatively, the <code>GetEnumerator()</code> method can be defined as an extension method.</p>
+<p>It's not correct to simply check if the type derives from <code>IEnumerable&lt;T&gt;</code> or <code>IAsyncEnumerable&lt;T&gt;</code>.</p>
+<p>The compiler generates different code for the <code>foreach</code> statement depending on the type of collection provided. Handling all these cases correctly makes the use of reflection very complicated.</p>
+<h2 id="netfabricreflection">NetFabric.Reflection</h2>
+<p><code>NetFabric.Reflection</code> provides extension methods for the type <code>System.Type</code> that can correctly validate if the type it represents can be used as the source in <code>foreach</code> or <code>await foreach</code> statements.</p>
+<h3 id="isenumerable">IsEnumerable()</h3>
+<pre><code class="lang-csharp">public static bool IsEnumerable(this Type type,
+    [NotNullWhen(true)] out EnumerableInfo? enumerableInfo,
+    out IsEnumerableError error)
+</code></pre>
+<p>The method returns <code>true</code> if the type represented by <code>Type</code> can be used in a <code>foreach</code> statement; otherwise <code>false</code>.</p>
+<blockquote>
+<p>It does not support the case when <code>GetEnumerator()</code> is defined as an extension method. It's not possible to find extension methods using reflection.</p>
+</blockquote>
+<p>The method <code>IsEnumerable()</code> only returns <code>true</code> if both the enumerable and the enumerator are valid.</p>
+<p>If the method <code>IsEnumerable()</code> returns true, the <code>enumerableInfo</code> output parameter contains all the <code>MethodInfo</code> and <code>PropertyInfo</code> for the methods and properties that are going to be actually used by the <code>foreach</code> statement. The <code>GetEnumerator()</code> of the enumerable, the property <code>Current</code> and the method <code>MoveNext()</code> of the enumerator. It may also contain info for methods <code>Reset()</code> and <code>Dispose()</code> of the enumerator, if defined.</p>
+<p>If the methods return <code>false</code>, the <code>errors</code> output parameter indicates why the type is not considered an enumerable. It can be <code>Error.MissingGetEnumerator</code>, <code>Error.MissingCurrent</code> or <code>Error.MissingMoveNext</code>.</p>
+<p>The output parameter also includes a <code>ForEachUsesIndexer</code> boolean property that indicates that, although the collection provides an enumerator, <code>foreach</code> will use the indexer instead. That's the case for arrays and spans.</p>
+<p>You can use these info values to further validate the enumerable and its respective enumerator. For example, use the following to find if the <code>Current</code> property of the enumerator returns by reference:</p>
+<pre><code class="lang-csharp">enumerableInfo.EnumeratorSymbols.Current.ReturnsByRef;
+</code></pre>
+<h3 id="isasyncenumerable">IsAsyncEnumerable</h3>
+<pre><code class="lang-csharp">public static bool IsAsyncEnumerable(this Type type,
+    [NotNullWhen(true)] out AsyncEnumerableInfo? enumerableInfo,
+    out IsAsyncEnumerableError error)
+</code></pre>
+<p>The method returns <code>true</code> if the type represented by <code>Type</code> can be used in an <code>await foreach</code> statement; otherwise <code>false</code>.</p>
+<blockquote>
+<p>It does not support the case when GetAsyncEnumerator() is defined as an extension method. It's not possible to find extension methods using reflection.</p>
+</blockquote>
+<p>The method <code>IsAsyncEnumerable()</code> only returns <code>true</code> if both the enumerable and the enumerator are valid.</p>
+<p>If the method <code>IsAsyncEnumerable()</code> returns <code>true</code>, the enumerableInfo output parameter contains all the <code>MethodInfo</code> and <code>PropertyInfo</code> for the methods and properties that are going to be actually used by the <code>await foreach</code> statement. The <code>GetAsyncEnumerator()</code> of the enumerable, the property <code>Current</code> and the method <code>MoveNextAsync()</code> of the enumerator. It may also contain info for method <code>DisposeAsync()</code> of the enumerator, if defined.</p>
+<p>If the methods return <code>false</code>, the errors output parameter indicates why the type is not considered an enumerable. It can be <code>Error.MissingGetAsyncEnumerator</code>, <code>Error.MissingCurrent</code> or <code>Error.MissingMoveNextAsync</code>.</p>
+<p>You can use these info values to further validate the async enumerable or its respective enumerator.</p>
+<h3 id="expression-trees">Expression Trees</h3>
+<p>When using reflection you most certainly want to dynamically execute code. Given the <code>MethodInfo</code> and <code>PropertyInfo</code> provided, reflection can be used to call the methods and property accessors.</p>
+<p>One other way to do it is to use expression trees. These are a tree structure of expressions that represent code statements. Expression trees can be compiled at runtime and then executed as many times as needed.</p>
+<p>The .NET Framework does not provide an expression element that represents a <code>foreach</code> statement. This doesn't make it easy to deal with collections the way the Roslyn compiler does for the <code>foreach</code> statement. Roslyn generates different code depending on the the type of enumerable.</p>
+<p>The <code>NetFabric.Reflection</code> package provides a <code>ExpressionEx.ForEach()</code> that does that. This makes handling enumerables when using reflection, simple and reusable.</p>
+<p>To dynamically generate the code that calculates the sum all the items of a collection, you can use the following:</p>
+<pre><code class="lang-csharp">using static NetFabric.Expressions.ExpressionEx;
+using static System.Linq.Expressions.Expression;
+
+int Sum&lt;TEnumerable&gt;(TEnumerable enumerable)
+{
+    var enumerableParameter = Parameter(typeof(TEnumerable), &quot;enumerable&quot;);
+    var sumVariable = Variable(typeof(int), &quot;sum&quot;);
+    var expression = Block(
+        new[] {sumVariable},
+        Assign(sumVariable, Constant(0)),
+        ForEach(
+            enumerableParameter,
+            item =&gt; AddAssign(sumVariable, item)),
+        sumVariable);
+    var sum = Lambda&lt;Func&lt;TEnumerable, int&gt;&gt;(expression, enumerableParameter).Compile();
+
+    return sum(enumerable);
+}
+</code></pre>
+<p>Notice that the generics parameter <code>TEnumerable</code> doesn't have any constraints. This method can be used to sum the items of a collection that doesn't implement any interface. It throws an exception if the collection does not comply with the <code>foreach</code> minimum requirements.</p>
+<p>The issues with this code is that it compiles the expression tree every time it's called. This is a very slow operation. The following code solves this by using <code>Lazy&lt;T&gt;</code> to cache the result of the compilation. As an example, it also uses a collection that only implements the minimum requirements of foreach, i.e. doesn't implement <code>IEnumerable</code> or <code>IEnumerable&lt;T&gt;</code>:</p>
+<pre><code class="lang-csharp">using static NetFabric.Expressions.ExpressionEx;
+using static System.Linq.Expressions.Expression;
+
+var source = new MyCollection(new[] { 0, 1, 2 });
+var sumFunc = Sum&lt;MyCollection&gt;.Func;
+
+Console.WriteLine(sumFunc(source));
+
+
+static class Sum&lt;TEnumerable&gt;
+{
+    static Lazy&lt;Func&lt;TEnumerable, int&gt;&gt; Cache
+        = new (Compile, LazyThreadSafetyMode.ExecutionAndPublication);
+
+    public static Func&lt;TEnumerable, int&gt; Func
+        =&gt; Cache.Value;
+
+    static Func&lt;TEnumerable, int&gt; Compile()
+    {
+        var enumerableParameter = Parameter(typeof(TEnumerable), &quot;enumerable&quot;);
+        var sumVariable = Variable(typeof(int), &quot;sum&quot;);
+        var expression = Block(
+            new[] {sumVariable},
+            Assign(sumVariable, Constant(0)),
+            ForEach(
+                enumerableParameter,
+                item =&gt; AddAssign(sumVariable, item)),
+            sumVariable);
+        return Lambda&lt;Func&lt;TEnumerable, int&gt;&gt;(expression, enumerableParameter).Compile();
+    }
+}
+
+class MyCollection
+{
+    readonly int[] source;
+
+    public MyCollection(int[] source)
+        =&gt; this.source = source;
+
+    public Enumerator GetEnumerator()
+        =&gt; new Enumerator(this);
+
+    public struct Enumerator
+    {
+        readonly int[] source;
+        int index;
+
+        public Enumerator(MyCollection enumerable)
+        {
+            source = enumerable.source;
+            index = -1;
+        }
+
+        public int Current
+            =&gt; source[index];
+
+        public bool MoveNext()
+            =&gt; ++index &lt; source.Length;
+    }
+}
+</code></pre>
+<p><code>ExpressionEx.ForEach()</code> generates code as much as possible similar to the code generated by Roslyn.</p>
+<blockquote>
+<p>ExpressionEx.ForEach() does not support Span<t> or ReadOnlySpan<t> as its source because they return the items by reference and unfortunately expression trees still do not support return by reference.</t></t></p>
+</blockquote>
+<blockquote>
+<p>NetFabric.Reflection does not provide an expression to traverse async enumerables because, reproducing the state machine code generation as Roslyn does it, is a lot of work...</p>
+</blockquote>
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/docs/articles/reflection.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

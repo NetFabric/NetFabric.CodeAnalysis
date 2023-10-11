@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Handling enumerables in Roslyn Analyzers and Code Generators </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Handling enumerables in Roslyn Analyzers and Code Generators ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/docs/articles/codeanalysis.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="handling-enumerables-in-roslyn-analyzers-and-code-generators">Handling enumerables in Roslyn Analyzers and Code Generators</h1>
+
+<p>Roslyn Analyzers and Code Generators are essential tools in the world of .NET development. Analyzers offer real-time code analysis at compile time, catching issues and promoting best practices by interpreting the code before compilation. This ensures that potential problems are identified early in the development process. Code Generators, also operating at compile time, automate the creation of repetitive code snippets. By doing so, they enhance code quality, boost efficiency, and streamline the development process.</p>
+<p>The requirement for an enumerable to be traversed using a <code>foreach</code> is that the type must provide a public parameterless method named <code>GetEnumerator()</code> that returns an instance of an enumerator. The returned enumerator type must provide a public parameterless method named <code>MoveNext()</code> that returns <code>bool</code>, and also a public readable property named <code>Current</code>. Alternatively, the <code>GetEnumerator()</code> method can be defined as an extension method.</p>
+<p>It's not correct to simply check if the type derives from <code>IEnumerable&lt;T&gt;</code> or <code>IAsyncEnumerable&lt;T&gt;</code>.</p>
+<p>This makes the correct handling of enumerables in Roslyn Analyzers and Code Generators very complicated.</p>
+<h2 id="netfabriccodeanalysis">NetFabric.CodeAnalysis</h2>
+<p><code>NetFabric.CodeAnalysis</code> provides extension methods for the interface <code>ITypeSymbol</code> that can correctly validate if the type it represents can be used as the source in <code>foreach</code> or <code>await foreach</code> statements.</p>
+<h3 id="isenumerable">IsEnumerable</h3>
+<pre><code class="lang-csharp">public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
+[NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
+    out IsEnumerableError error)
+</code></pre>
+<p>The methods return <code>true</code> if the type represented by <code>ITypeSymbol</code> can be used in a <code>foreach</code> statement; otherwise <code>false</code>. It supports all the cases including when <code>GetEnumerator()</code> is defined as an extension method.</p>
+<p>The method <code>IsEnumerable()</code> only returns <code>true</code> if both the enumerable and the enumerator are valid.</p>
+<p>If the method <code>IsEnumerable()</code> returns <code>true</code>, the <code>enumerableSymbols</code> output parameter contains all the <code>IMethodSymbol&gt;</code> and <code>IPropertySymbol</code> for the methods and properties that are going to be actually used by the <code>foreach</code> statement. The <code>GetEnumerator()</code> of the enumerable, the property <code>Current</code> and the method <code>MoveNext()</code> of the enumerator. It may also contain info for methods <code>Reset()</code> and <code>Dispose()</code> of the enumerator, if defined.</p>
+<p>Is the methods return false, the errors output parameter indicates why the type is not considered an enumerable. It can be <code>Error.MissingGetEnumerator</code>, <code>Error.MissingCurrent</code> or <code>Error.MissingMoveNext</code>.</p>
+<p>The output parameter also includes a <code>ForEachUsesIndexer</code> boolean property that indicates that, although the collection provides an enumerator, <code>foreach</code> will use the indexer instead. That's the case for arrays and spans.</p>
+<p>You can use these info values to further validate the enumerable and its respective enumerator. For example, use the following to find if the <code>Current</code> property of the enumerator returns by reference:</p>
+<pre><code class="lang-csharp">enumerableSymbols.EnumeratorSymbols.Current.ReturnsByRef;
+</code></pre>
+<h3 id="isasyncenumerable">IsAsyncEnumerable</h3>
+<pre><code class="lang-csharp">public static bool IsAsyncEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
+    [NotNullWhen(true)] out AsyncEnumerableSymbols? enumerableSymbols,
+    out IsAsyncEnumerableError error)
+</code></pre>
+<p>The methods return <code>true</code> if the type represented by <code>ITypeSymbol</code> can be used in an <code>await foreach</code> statement; otherwise <code>false</code>. It supports all the cases including when <code>GetAsyncEnumerator()</code> is defined as an extension method.</p>
+<p>The method <code>IsAsyncEnumerable()</code> only returns true if both the enumerable and the enumerator are valid.</p>
+<p>If the method <code>IsAsyncEnumerable()</code> returns <code>true</code>, the <code>enumerableSymbols</code> output parameter contains all the <code>IMethodSymbol</code> and <code>IPropertySymbol</code> for the methods and properties that are going to be actually used by the <code>await foreach</code> statement. The <code>GetAsyncEnumerator()</code> of the enumerable, the property <code>Current</code> and the method <code>MoveNextAsync()</code> of the enumerator. It may also contain info for method <code>DisposeAsync()</code> of the enumerator, if defined.</p>
+<p>Is the methods return <code>false</code>, the errors output parameter indicates why the type is not considered an enumerable. It can be <code>Error.MissingGetAsyncEnumerator</code>, <code>Error.MissingCurrent</code> or <code>Error.MissingMoveNextAsync</code>.</p>
+<p>You can use these info values to further validate the async enumerable or its respective enumerator.</p>
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/docs/articles/codeanalysis.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

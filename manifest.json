@@ -1,0 +1,370 @@
+{
+  "source_base_path": "/home/runner/work/NetFabric.CodeAnalysis/NetFabric.CodeAnalysis/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.AsyncEnumerableSymbols.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.CompilationExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.CompilationExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.EnumerableSymbols.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.EnumerableSymbols.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.EnumeratorSymbols.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.EnumeratorSymbols.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.IndexableSymbols.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.IndexableSymbols.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.IsAsyncEnumerableError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.IsAsyncEnumerableError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.IsEnumerableError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.IsEnumerableError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.IsIndexableError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.IsIndexableError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.CodeAnalysis.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.CodeAnalysis.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Expressions.ExpressionEx.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Expressions.ExpressionEx.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Expressions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Expressions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.AsyncEnumerableInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.AsyncEnumerableInfo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.AsyncEnumerableWrapper-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.AsyncEnumeratorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.AsyncEnumeratorInfo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.EnumerableInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.EnumerableInfo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.EnumerableWrapper-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.EnumerableWrapper-2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.EnumerationException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.EnumerationException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.EnumeratorInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.EnumeratorInfo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.IndexableInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.IndexableInfo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.IsAsyncEnumerableError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.IsAsyncEnumerableError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.IsEnumerableError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.IsEnumerableError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.IsIndexableError.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.IsIndexableError.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.TypeExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.TypeExtensions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/NetFabric.Reflection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NetFabric.Reflection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/codeanalysis.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/codeanalysis.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/foreach.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/foreach.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/reflection.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/reflection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html"
+        },
+        ".json": {
+          "relative_path": "articles/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

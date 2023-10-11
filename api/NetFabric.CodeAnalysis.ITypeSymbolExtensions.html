@@ -1,0 +1,1196 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ITypeSymbolExtensions
+ </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ITypeSymbolExtensions
+ ">
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/NetFabric/NetFabric.CodeAnalysis/new/main/apiSpec/new?filename=NetFabric_CodeAnalysis_ITypeSymbolExtensions.md&amp;value=---%0Auid%3A%20NetFabric.CodeAnalysis.ITypeSymbolExtensions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+  </head>
+
+  <script type="module">
+    import options from './../public/main.js'
+    import { init } from './../public/docfx.min.js'
+    init(options)
+  </script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions">
+
+
+
+  <h1 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions" class="text-break">
+    Class ITypeSymbolExtensions
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsIndexable.cs/#L7"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="NetFabric.html">NetFabric</a>.<a class="xref" href="NetFabric.CodeAnalysis.html">CodeAnalysis</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>NetFabric.CodeAnalysis.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ITypeSymbolExtensions</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ITypeSymbolExtensions</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist derived">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicMethod_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicMethod_Microsoft_CodeAnalysis_ITypeSymbol_System_String_System_Type___" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod(Microsoft.CodeAnalysis.ITypeSymbol,System.String,System.Type[])">
+  GetPublicMethod(ITypeSymbol, string, params Type[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a public method with the specified name and parameter types from the given type symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IMethodSymbol? GetPublicMethod(this ITypeSymbol typeSymbol, string name, params Type[] parameters)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The type symbol from which to retrieve the method.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the method to search for.</p>
+</dd>
+    <dt><code>parameters</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>[]</dt>
+    <dd><p>An array of parameter types that the method should accept (empty array for parameterless).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.imethodsymbol">IMethodSymbol</a></dt>
+    <dd><p>An <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.imethodsymbol">IMethodSymbol</a> representing the public method if found; otherwise, returns <code>null</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicMethod_Microsoft_CodeAnalysis_ITypeSymbol_System_String_System_Type____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method searches for a public method with the specified name and parameter types within the given type symbol.
+If a matching method is found, it returns an <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.imethodsymbol">IMethodSymbol</a> that represents the method;
+otherwise, it returns <code>null</code>.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_ITypeSymbol___" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.ITypeSymbol[])">
+  GetPublicReadIndexer(ITypeSymbol, params ITypeSymbol[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a public readable indexer property with the specified parameter types from the given type symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params ITypeSymbol[] parameterTypes)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The type symbol from which to retrieve the indexer property.</p>
+</dd>
+    <dt><code>parameterTypes</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a>[]</dt>
+    <dd><p>An array of parameter types, represented by <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a>, that the indexer should accept (empty array for parameterless).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a></dt>
+    <dd><p>An <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a> representing the public readable indexer property if found; otherwise, returns <code>null</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_ITypeSymbol____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method searches for a public readable indexer property within the given type symbol with the specified parameter types.
+If a matching indexer property is found, and it has a getter, it returns an <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a> representing the indexer;
+otherwise, it returns <code>null</code>.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_Microsoft_CodeAnalysis_ITypeSymbol_System_Type___" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol,System.Type[])">
+  GetPublicReadIndexer(ITypeSymbol, params Type[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a public readable indexer property with the specified parameter types from the given type symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params Type[] parameterTypes)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The type symbol from which to retrieve the indexer property.</p>
+</dd>
+    <dt><code>parameterTypes</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>[]</dt>
+    <dd><p>An array of parameter types that the indexer should accept (empty array for parameterless).</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a></dt>
+    <dd><p>An <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a> representing the public readable indexer property if found; otherwise, returns <code>null</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_Microsoft_CodeAnalysis_ITypeSymbol_System_Type____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method searches for a public readable indexer property within the given type symbol with the specified parameter types.
+If a matching indexer property is found, and it has a getter, it returns an <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a> representing the indexer;
+otherwise, it returns <code>null</code>.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadProperty_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadProperty_Microsoft_CodeAnalysis_ITypeSymbol_System_String_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty(Microsoft.CodeAnalysis.ITypeSymbol,System.String)">
+  GetPublicReadProperty(ITypeSymbol, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a public readable property with the specified name from the given type symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IPropertySymbol? GetPublicReadProperty(this ITypeSymbol typeSymbol, string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The type symbol from which to retrieve the property.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>The name of the property to search for.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a></dt>
+    <dd><p>An <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a> representing the public readable property if found; otherwise, returns <code>null</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadProperty_Microsoft_CodeAnalysis_ITypeSymbol_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method searches for a public readable property with the specified name within the given type symbol.
+If a matching property is found and it has a getter, it returns an <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.ipropertysymbol">IPropertySymbol</a> representing the property;
+otherwise, it returns <code>null</code>.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_ImplementsInterface_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_ImplementsInterface_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_INamedTypeSymbol_System_Collections_Immutable_ImmutableArray_Microsoft_CodeAnalysis_ITypeSymbol___" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.ITypeSymbol}@)">
+  ImplementsInterface(ITypeSymbol, INamedTypeSymbol, out ImmutableArray&lt;ITypeSymbol&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a value indicating whether <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> implements the given interface type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ImplementsInterface(this ITypeSymbol typeSymbol, INamedTypeSymbol interfaceType, out ImmutableArray&lt;ITypeSymbol&gt; genericArguments)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a> to test.</p>
+</dd>
+    <dt><code>interfaceType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.inamedtypesymbol">INamedTypeSymbol</a></dt>
+    <dd><p>The interface <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a> to test.</p>
+</dd>
+    <dt><code>genericArguments</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1">ImmutableArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a>&gt;</dt>
+    <dd><p>If methods returns <code>true</code> and interface type is generic, contains the generic arguments of the implemented interface.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> implements interface type; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_ImplementsInterface_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_ImplementsInterface_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_SpecialType_System_Collections_Immutable_ImmutableArray_Microsoft_CodeAnalysis_ITypeSymbol___" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.SpecialType,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.ITypeSymbol}@)">
+  ImplementsInterface(ITypeSymbol, SpecialType, out ImmutableArray&lt;ITypeSymbol&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a value indicating whether <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> implements the given interface type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ImplementsInterface(this ITypeSymbol typeSymbol, SpecialType interfaceType, out ImmutableArray&lt;ITypeSymbol&gt; genericArguments)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a> to test.</p>
+</dd>
+    <dt><code>interfaceType</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.specialtype">SpecialType</a></dt>
+    <dd><p>The interface <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a> to test.</p>
+</dd>
+    <dt><code>genericArguments</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.immutable.immutablearray-1">ImmutableArray</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a>&gt;</dt>
+    <dd><p>If methods returns <code>true</code> and interface type is generic, contains the generic arguments of the implemented interface.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> implements interface type; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncDisposable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncDisposable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_Microsoft_CodeAnalysis_IMethodSymbol__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.IMethodSymbol@)">
+  IsAsyncDisposable(ITypeSymbol, Compilation, out IMethodSymbol?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsAsyncDisposable.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a value indicating whether 'await using' considers <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be disposable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsAsyncDisposable(this ITypeSymbol typeSymbol, Compilation compilation, out IMethodSymbol? disposeAsync)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to test.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> context.</p>
+</dd>
+    <dt><code>disposeAsync</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.imethodsymbol">IMethodSymbol</a></dt>
+    <dd><p>If methods returns <code>true</code>, contains information on the disposed method 'await using' will use.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if 'await using' considers <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be disposable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncDisposable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_Microsoft_CodeAnalysis_IMethodSymbol___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The 'await foreach' statement uses a 'await using' internally so the same rules apply.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)">
+  IsAsyncEnumerable(ITypeSymbol, Compilation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsAsyncEnumerable.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> can be used as a source in an <code>await foreach</code>
+statement, indicating whether it is an async enumerable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsAsyncEnumerable(this ITypeSymbol typeSymbol, Compilation compilation)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for async enumerability.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> representing the current
+compilation context.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is an async enumerable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+used as a source in an <code>await foreach</code> statement, indicating whether it is an async enumerable.
+To be considered an async enumerable, the type should support asynchronous iteration,
+typically by implementing the IAsyncEnumerable&lt;T&gt; interface or providing
+a suitable asynchronous <code>GetAsyncEnumerator</code> method.</p>
+<p>If the type is an async enumerable, it is considered an async source for an <code>await foreach</code> statement.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_AsyncEnumerableSymbols__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.AsyncEnumerableSymbols@)">
+  IsAsyncEnumerable(ITypeSymbol, Compilation, out AsyncEnumerableSymbols?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsAsyncEnumerable.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> can be used as a source in an <code>await foreach</code>
+statement, indicating whether it is an async enumerable, and if so, retrieves information about
+the async enumerable symbols.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsAsyncEnumerable(this ITypeSymbol typeSymbol, Compilation compilation, out AsyncEnumerableSymbols? enumerableSymbols)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for async enumerability.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> representing the current
+compilation context.</p>
+</dd>
+    <dt><code>enumerableSymbols</code> <a class="xref" href="NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html">AsyncEnumerableSymbols</a></dt>
+    <dd><p>When the method returns <code>true</code>, this parameter will contain information about the
+async enumerable symbols associated with the <code class="paramref">typeSymbol</code>. If the method returns
+<code>false</code>, this parameter will be <code>null</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is an async enumerable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_AsyncEnumerableSymbols___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+used as a source in an <code>await foreach</code> statement, indicating whether it is an async enumerable.
+To be considered an async enumerable, the type should support asynchronous iteration,
+typically by implementing the IAsyncEnumerable&lt;T&gt; interface or providing
+a suitable asynchronous <code>GetAsyncEnumerator</code> method.</p>
+<p>If the type is an async enumerable, the method provides information about the async
+enumerable symbols associated with it, which can be useful for various code analysis tasks.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_AsyncEnumerableSymbols__NetFabric_CodeAnalysis_IsAsyncEnumerableError__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.AsyncEnumerableSymbols@,NetFabric.CodeAnalysis.IsAsyncEnumerableError@)">
+  IsAsyncEnumerable(ITypeSymbol, Compilation, out AsyncEnumerableSymbols?, out IsAsyncEnumerableError)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsAsyncEnumerable.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> can be used as a source in an <code>await foreach</code>
+statement, indicating whether it is an async enumerable, and if so, retrieves information about
+the async enumerable symbols.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsAsyncEnumerable(this ITypeSymbol typeSymbol, Compilation compilation, out AsyncEnumerableSymbols? enumerableSymbols, out IsAsyncEnumerableError error)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for async enumerability.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> representing the current
+compilation context.</p>
+</dd>
+    <dt><code>enumerableSymbols</code> <a class="xref" href="NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html">AsyncEnumerableSymbols</a></dt>
+    <dd><p>When the method returns <code>true</code>, this parameter will contain information about the
+async enumerable symbols associated with the <code class="paramref">typeSymbol</code>. If the method returns
+<code>false</code>, this parameter will be <code>null</code>.</p>
+</dd>
+    <dt><code>error</code> <a class="xref" href="NetFabric.CodeAnalysis.IsAsyncEnumerableError.html">IsAsyncEnumerableError</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is an async enumerable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_AsyncEnumerableSymbols__NetFabric_CodeAnalysis_IsAsyncEnumerableError___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+used as a source in an <code>await foreach</code> statement, indicating whether it is an async enumerable.
+To be considered an async enumerable, the type should support asynchronous iteration,
+typically by implementing the IAsyncEnumerable&lt;T&gt; interface or providing
+a suitable asynchronous <code>GetAsyncEnumerator</code> method.</p>
+<p>If the type is an async enumerable, the method provides information about the async
+enumerable symbols associated with it, which can be useful for various code analysis tasks.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsDisposable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsDisposable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_Microsoft_CodeAnalysis_IMethodSymbol__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.IMethodSymbol@)">
+  IsDisposable(ITypeSymbol, Compilation, out IMethodSymbol?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsDisposable.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets a value indicating whether 'using' considers <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be disposable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsDisposable(this ITypeSymbol typeSymbol, Compilation compilation, out IMethodSymbol? dispose)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to test.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> context.</p>
+</dd>
+    <dt><code>dispose</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.imethodsymbol">IMethodSymbol</a></dt>
+    <dd><p>If methods returns <code>true</code>, contains information on the disposed method 'using' will use.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if 'using' considers <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be disposable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsDisposable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_Microsoft_CodeAnalysis_IMethodSymbol___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The 'foreach' statement uses a 'using' internally so the same rules apply.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)">
+  IsEnumerable(ITypeSymbol, Compilation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsEnumerable.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> can be used as a source in a <code>foreach</code>
+statement, indicating whether it is enumerable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for enumerability.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> representing the current
+compilation context.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is enumerable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+used as a source in a <code>foreach</code> statement, indicating whether it is enumerable. To be
+considered enumerable, the type should support iteration, typically by implementing the
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a> or <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a>
+interface, or by providing a suitable GetEnumerator method.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_EnumerableSymbols__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.EnumerableSymbols@)">
+  IsEnumerable(ITypeSymbol, Compilation, out EnumerableSymbols?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsEnumerable.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> can be used as a source in a <code>foreach</code>
+statement, indicating whether it is enumerable, and if so, retrieves information about
+the enumerable symbols.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation, out EnumerableSymbols? enumerableSymbols)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for enumerability.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> representing the current
+compilation context.</p>
+</dd>
+    <dt><code>enumerableSymbols</code> <a class="xref" href="NetFabric.CodeAnalysis.EnumerableSymbols.html">EnumerableSymbols</a></dt>
+    <dd><p>When the method returns <code>true</code>, this parameter will contain information about the
+enumerable symbols associated with the <code class="paramref">typeSymbol</code>. If the method returns
+<code>false</code>, this parameter will be <code>null</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is enumerable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_EnumerableSymbols___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+used as a source in a <code>foreach</code> statement, indicating whether it is enumerable. To be
+considered enumerable, the type should support iteration, typically by implementing the
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a> or <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a>
+interface, or by providing a suitable GetEnumerator method.</p>
+<p>If the type is enumerable, the method provides information about the enumerable symbols
+associated with it, which can be useful for various code analysis tasks.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_EnumerableSymbols__NetFabric_CodeAnalysis_IsEnumerableError__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.EnumerableSymbols@,NetFabric.CodeAnalysis.IsEnumerableError@)">
+  IsEnumerable(ITypeSymbol, Compilation, out EnumerableSymbols?, out IsEnumerableError)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsEnumerable.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> can be used as a source in a <code>foreach</code>
+statement, indicating whether it is enumerable, and if so, retrieves information about
+the enumerable symbols and any potential error.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation, out EnumerableSymbols? enumerableSymbols, out IsEnumerableError error)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for enumerability.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> representing the current
+compilation context.</p>
+</dd>
+    <dt><code>enumerableSymbols</code> <a class="xref" href="NetFabric.CodeAnalysis.EnumerableSymbols.html">EnumerableSymbols</a></dt>
+    <dd><p>When the method returns <code>true</code>, this parameter will contain information about the
+enumerable symbols associated with the <code class="paramref">typeSymbol</code>. If the method returns
+<code>false</code>, this parameter will be <code>null</code>.</p>
+</dd>
+    <dt><code>error</code> <a class="xref" href="NetFabric.CodeAnalysis.IsEnumerableError.html">IsEnumerableError</a></dt>
+    <dd><p>When the method returns <code>false</code>, this parameter will contain information about any
+error encountered while determining enumerability. If the method returns <code>true</code>, this
+parameter will be <a class="xref" href="NetFabric.CodeAnalysis.IsEnumerableError.html#NetFabric_CodeAnalysis_IsEnumerableError_None">None</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is enumerable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_EnumerableSymbols__NetFabric_CodeAnalysis_IsEnumerableError___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+used as a source in a <code>foreach</code> statement, indicating whether it is enumerable. To be
+considered enumerable, the type should support iteration, typically by implementing the
+<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a> or <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable&lt;T&gt;</a>
+interface, or by providing a suitable GetEnumerator method.</p>
+<p>If the type is enumerable, the method provides information about the enumerable symbols
+associated with it, which can be useful for various code analysis tasks.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsFloatingPointType_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsFloatingPointType_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)">
+  IsFloatingPointType(ITypeSymbol, Compilation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L359"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> represents a floating-point numeric type within the context of the provided <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsFloatingPointType(this ITypeSymbol typeSymbol, Compilation compilation)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to check for a floating-point numeric type.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> containing the semantic information about the code.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> represents a floating-point numeric type; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsFloatingPointType_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Starting from .NET 7, this method checks if the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> represents a floating-point numeric type within the context of the provided <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a>.
+It also compares the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to the System.Numerics.IFloatingPoint&lt;T&gt; interface,
+which indicates support for floating-point numeric operations.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol)">
+  IsIndexable(ITypeSymbol)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsIndexable.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> is indexable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsIndexable(this ITypeSymbol typeSymbol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for indexability.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is indexable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+indexed. To be considered indexable, the type must have an indexer with a single dimension
+of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a> and a readable property named <code>Count</code> or <code>Length</code> of
+type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_NetFabric_CodeAnalysis_IndexableSymbols__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol,NetFabric.CodeAnalysis.IndexableSymbols@)">
+  IsIndexable(ITypeSymbol, out IndexableSymbols?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsIndexable.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> is indexable, and if so, retrieves
+information about the indexable symbols.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsIndexable(this ITypeSymbol typeSymbol, out IndexableSymbols? indexableSymbols)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for indexability.</p>
+</dd>
+    <dt><code>indexableSymbols</code> <a class="xref" href="NetFabric.CodeAnalysis.IndexableSymbols.html">IndexableSymbols</a></dt>
+    <dd><p>When the method returns <code>true</code>, this parameter will contain information about the
+indexable symbols associated with the <code class="paramref">typeSymbol</code>. If the method returns
+<code>false</code>, this parameter will be <code>null</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is indexable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_NetFabric_CodeAnalysis_IndexableSymbols___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+indexed. To be considered indexable, the type must have an indexer with a single dimension
+of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a> and a readable property named <code>Count</code> or <code>Length</code> of
+type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>.</p>
+<p>If the type is indexable, the method provides information about the indexable symbols
+associated with it, which can be useful for various code analysis tasks.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_NetFabric_CodeAnalysis_IndexableSymbols__NetFabric_CodeAnalysis_IsIndexableError__" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol,NetFabric.CodeAnalysis.IndexableSymbols@,NetFabric.CodeAnalysis.IsIndexableError@)">
+  IsIndexable(ITypeSymbol, out IndexableSymbols?, out IsIndexableError)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsIndexable.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Checks if the provided <code class="paramref">typeSymbol</code> is indexable, and if so, retrieves
+information about the indexable symbols and any potential error.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsIndexable(this ITypeSymbol typeSymbol, out IndexableSymbols? indexableSymbols, out IsIndexableError error)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to be checked for indexability.</p>
+</dd>
+    <dt><code>indexableSymbols</code> <a class="xref" href="NetFabric.CodeAnalysis.IndexableSymbols.html">IndexableSymbols</a></dt>
+    <dd><p>When the method returns <code>true</code>, this parameter will contain information about the
+indexable symbols associated with the <code class="paramref">typeSymbol</code>. If the method returns
+<code>false</code>, this parameter will be <code>null</code>.</p>
+</dd>
+    <dt><code>error</code> <a class="xref" href="NetFabric.CodeAnalysis.IsIndexableError.html">IsIndexableError</a></dt>
+    <dd><p>When the method returns <code>false</code>, this parameter will contain information about any
+error encountered while determining indexability. If the method returns <code>true</code>, this
+parameter will be <a class="xref" href="NetFabric.CodeAnalysis.IsIndexableError.html#NetFabric_CodeAnalysis_IsIndexableError_None">None</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the <code class="paramref">typeSymbol</code> is indexable; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_NetFabric_CodeAnalysis_IndexableSymbols__NetFabric_CodeAnalysis_IsIndexableError___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method examines the provided <code class="paramref">typeSymbol</code> to determine if it can be
+indexed. To be considered indexable, the type must have an indexer with a single dimension
+of type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a> and a readable property named <code>Count</code> or <code>Length</code> of
+type <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a>.</p>
+<p>If the type is indexable, the method provides information about the indexable symbols
+associated with it, which can be useful for various code analysis tasks.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIntegerType_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIntegerType_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)">
+  IsIntegerType(ITypeSymbol, Compilation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L319"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> represents an integer type within the given <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsIntegerType(this ITypeSymbol typeSymbol, Compilation compilation)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> to check for an integer type.</p>
+</dd>
+    <dt><code>compilation</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a></dt>
+    <dd><p>The <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a> containing the semantic information about the code.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the specified <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> represents an integer type; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIntegerType_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method checks if the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> represents an integer type within the context of the provided <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.compilation">Compilation</a>.
+Starting from .NET 7, it also checks if the <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a> implements the System.Numerics.IBinaryInteger&lt;T&gt; interface,
+which indicates support for binary integer operations.</p>
+</div>
+
+
+
+
+  <a id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsSpanOrReadOnlySpanType_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType*"></a>
+
+  <h3 id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsSpanOrReadOnlySpanType_Microsoft_CodeAnalysis_ITypeSymbol_" data-uid="NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType(Microsoft.CodeAnalysis.ITypeSymbol)">
+  IsSpanOrReadOnlySpanType(ITypeSymbol)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Determines whether the given type symbol represents a Span or ReadOnlySpan type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsSpanOrReadOnlySpanType(this ITypeSymbol typeSymbol)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>typeSymbol</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.codeanalysis.itypesymbol">ITypeSymbol</a></dt>
+    <dd><p>The type symbol to be checked.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd><p><code>true</code> if the type symbol represents a Span or ReadOnlySpan; otherwise, <code>false</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsSpanOrReadOnlySpanType_Microsoft_CodeAnalysis_ITypeSymbol__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This method checks whether the provided <code class="paramref">typeSymbol</code> corresponds to a type that is compatible with
+the Span and ReadOnlySpan types, which are used for efficient and safe data access in .NET.</p>
+</div>
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/NetFabric/NetFabric.CodeAnalysis/blob/main/src/NetFabric.CodeAnalysis/ITypeSymbolExtensions.IsIndexable.cs/#L7" class="edit-link">Edit this page</a>
+        </div>
+
+        
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

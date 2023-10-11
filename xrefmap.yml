@@ -1,0 +1,1689 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: NetFabric.CodeAnalysis
+  name: NetFabric.CodeAnalysis
+  href: api/NetFabric.CodeAnalysis.html
+  commentId: N:NetFabric.CodeAnalysis
+  fullName: NetFabric.CodeAnalysis
+  nameWithType: NetFabric.CodeAnalysis
+- uid: NetFabric.CodeAnalysis.AsyncEnumerableSymbols
+  name: AsyncEnumerableSymbols
+  href: api/NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html
+  commentId: T:NetFabric.CodeAnalysis.AsyncEnumerableSymbols
+  fullName: NetFabric.CodeAnalysis.AsyncEnumerableSymbols
+  nameWithType: AsyncEnumerableSymbols
+- uid: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.EnumeratorSymbols
+  name: EnumeratorSymbols
+  href: api/NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html#NetFabric_CodeAnalysis_AsyncEnumerableSymbols_EnumeratorSymbols
+  commentId: P:NetFabric.CodeAnalysis.AsyncEnumerableSymbols.EnumeratorSymbols
+  fullName: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.EnumeratorSymbols
+  nameWithType: AsyncEnumerableSymbols.EnumeratorSymbols
+- uid: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.EnumeratorSymbols*
+  name: EnumeratorSymbols
+  href: api/NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html#NetFabric_CodeAnalysis_AsyncEnumerableSymbols_EnumeratorSymbols_
+  commentId: Overload:NetFabric.CodeAnalysis.AsyncEnumerableSymbols.EnumeratorSymbols
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.EnumeratorSymbols
+  nameWithType: AsyncEnumerableSymbols.EnumeratorSymbols
+- uid: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.GetAsyncEnumerator
+  name: GetAsyncEnumerator
+  href: api/NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html#NetFabric_CodeAnalysis_AsyncEnumerableSymbols_GetAsyncEnumerator
+  commentId: P:NetFabric.CodeAnalysis.AsyncEnumerableSymbols.GetAsyncEnumerator
+  fullName: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.GetAsyncEnumerator
+  nameWithType: AsyncEnumerableSymbols.GetAsyncEnumerator
+- uid: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.GetAsyncEnumerator*
+  name: GetAsyncEnumerator
+  href: api/NetFabric.CodeAnalysis.AsyncEnumerableSymbols.html#NetFabric_CodeAnalysis_AsyncEnumerableSymbols_GetAsyncEnumerator_
+  commentId: Overload:NetFabric.CodeAnalysis.AsyncEnumerableSymbols.GetAsyncEnumerator
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.AsyncEnumerableSymbols.GetAsyncEnumerator
+  nameWithType: AsyncEnumerableSymbols.GetAsyncEnumerator
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols
+  name: AsyncEnumeratorSymbols
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html
+  commentId: T:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols
+  nameWithType: AsyncEnumeratorSymbols
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.Current
+  name: Current
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_Current
+  commentId: P:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.Current
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.Current
+  nameWithType: AsyncEnumeratorSymbols.Current
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.Current*
+  name: Current
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_Current_
+  commentId: Overload:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.Current
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.Current
+  nameWithType: AsyncEnumeratorSymbols.Current
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.DisposeAsync
+  name: DisposeAsync
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_DisposeAsync
+  commentId: P:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.DisposeAsync
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.DisposeAsync
+  nameWithType: AsyncEnumeratorSymbols.DisposeAsync
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.DisposeAsync*
+  name: DisposeAsync
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_DisposeAsync_
+  commentId: Overload:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.DisposeAsync
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.DisposeAsync
+  nameWithType: AsyncEnumeratorSymbols.DisposeAsync
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface
+  name: IsAsyncEnumeratorInterface
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_IsAsyncEnumeratorInterface
+  commentId: P:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface
+  nameWithType: AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface*
+  name: IsAsyncEnumeratorInterface
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_IsAsyncEnumeratorInterface_
+  commentId: Overload:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface
+  nameWithType: AsyncEnumeratorSymbols.IsAsyncEnumeratorInterface
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsValueType
+  name: IsValueType
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_IsValueType
+  commentId: P:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsValueType
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsValueType
+  nameWithType: AsyncEnumeratorSymbols.IsValueType
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsValueType*
+  name: IsValueType
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_IsValueType_
+  commentId: Overload:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsValueType
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.IsValueType
+  nameWithType: AsyncEnumeratorSymbols.IsValueType
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.MoveNextAsync
+  name: MoveNextAsync
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_MoveNextAsync
+  commentId: P:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.MoveNextAsync
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.MoveNextAsync
+  nameWithType: AsyncEnumeratorSymbols.MoveNextAsync
+- uid: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.MoveNextAsync*
+  name: MoveNextAsync
+  href: api/NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.html#NetFabric_CodeAnalysis_AsyncEnumeratorSymbols_MoveNextAsync_
+  commentId: Overload:NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.MoveNextAsync
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.AsyncEnumeratorSymbols.MoveNextAsync
+  nameWithType: AsyncEnumeratorSymbols.MoveNextAsync
+- uid: NetFabric.CodeAnalysis.CompilationExtensions
+  name: CompilationExtensions
+  href: api/NetFabric.CodeAnalysis.CompilationExtensions.html
+  commentId: T:NetFabric.CodeAnalysis.CompilationExtensions
+  fullName: NetFabric.CodeAnalysis.CompilationExtensions
+  nameWithType: CompilationExtensions
+- uid: NetFabric.CodeAnalysis.CompilationExtensions.GetExtensionMethodsWithName(Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.ITypeSymbol,System.String)
+  name: GetExtensionMethodsWithName(Compilation, ITypeSymbol, string)
+  href: api/NetFabric.CodeAnalysis.CompilationExtensions.html#NetFabric_CodeAnalysis_CompilationExtensions_GetExtensionMethodsWithName_Microsoft_CodeAnalysis_Compilation_Microsoft_CodeAnalysis_ITypeSymbol_System_String_
+  commentId: M:NetFabric.CodeAnalysis.CompilationExtensions.GetExtensionMethodsWithName(Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.ITypeSymbol,System.String)
+  name.vb: GetExtensionMethodsWithName(Compilation, ITypeSymbol, String)
+  fullName: NetFabric.CodeAnalysis.CompilationExtensions.GetExtensionMethodsWithName(Microsoft.CodeAnalysis.Compilation, Microsoft.CodeAnalysis.ITypeSymbol, string)
+  fullName.vb: NetFabric.CodeAnalysis.CompilationExtensions.GetExtensionMethodsWithName(Microsoft.CodeAnalysis.Compilation, Microsoft.CodeAnalysis.ITypeSymbol, String)
+  nameWithType: CompilationExtensions.GetExtensionMethodsWithName(Compilation, ITypeSymbol, string)
+  nameWithType.vb: CompilationExtensions.GetExtensionMethodsWithName(Compilation, ITypeSymbol, String)
+- uid: NetFabric.CodeAnalysis.CompilationExtensions.GetExtensionMethodsWithName*
+  name: GetExtensionMethodsWithName
+  href: api/NetFabric.CodeAnalysis.CompilationExtensions.html#NetFabric_CodeAnalysis_CompilationExtensions_GetExtensionMethodsWithName_
+  commentId: Overload:NetFabric.CodeAnalysis.CompilationExtensions.GetExtensionMethodsWithName
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.CompilationExtensions.GetExtensionMethodsWithName
+  nameWithType: CompilationExtensions.GetExtensionMethodsWithName
+- uid: NetFabric.CodeAnalysis.EnumerableSymbols
+  name: EnumerableSymbols
+  href: api/NetFabric.CodeAnalysis.EnumerableSymbols.html
+  commentId: T:NetFabric.CodeAnalysis.EnumerableSymbols
+  fullName: NetFabric.CodeAnalysis.EnumerableSymbols
+  nameWithType: EnumerableSymbols
+- uid: NetFabric.CodeAnalysis.EnumerableSymbols.EnumeratorSymbols
+  name: EnumeratorSymbols
+  href: api/NetFabric.CodeAnalysis.EnumerableSymbols.html#NetFabric_CodeAnalysis_EnumerableSymbols_EnumeratorSymbols
+  commentId: P:NetFabric.CodeAnalysis.EnumerableSymbols.EnumeratorSymbols
+  fullName: NetFabric.CodeAnalysis.EnumerableSymbols.EnumeratorSymbols
+  nameWithType: EnumerableSymbols.EnumeratorSymbols
+- uid: NetFabric.CodeAnalysis.EnumerableSymbols.EnumeratorSymbols*
+  name: EnumeratorSymbols
+  href: api/NetFabric.CodeAnalysis.EnumerableSymbols.html#NetFabric_CodeAnalysis_EnumerableSymbols_EnumeratorSymbols_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumerableSymbols.EnumeratorSymbols
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumerableSymbols.EnumeratorSymbols
+  nameWithType: EnumerableSymbols.EnumeratorSymbols
+- uid: NetFabric.CodeAnalysis.EnumerableSymbols.ForEachUsesIndexer
+  name: ForEachUsesIndexer
+  href: api/NetFabric.CodeAnalysis.EnumerableSymbols.html#NetFabric_CodeAnalysis_EnumerableSymbols_ForEachUsesIndexer
+  commentId: P:NetFabric.CodeAnalysis.EnumerableSymbols.ForEachUsesIndexer
+  fullName: NetFabric.CodeAnalysis.EnumerableSymbols.ForEachUsesIndexer
+  nameWithType: EnumerableSymbols.ForEachUsesIndexer
+- uid: NetFabric.CodeAnalysis.EnumerableSymbols.ForEachUsesIndexer*
+  name: ForEachUsesIndexer
+  href: api/NetFabric.CodeAnalysis.EnumerableSymbols.html#NetFabric_CodeAnalysis_EnumerableSymbols_ForEachUsesIndexer_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumerableSymbols.ForEachUsesIndexer
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumerableSymbols.ForEachUsesIndexer
+  nameWithType: EnumerableSymbols.ForEachUsesIndexer
+- uid: NetFabric.CodeAnalysis.EnumerableSymbols.GetEnumerator
+  name: GetEnumerator
+  href: api/NetFabric.CodeAnalysis.EnumerableSymbols.html#NetFabric_CodeAnalysis_EnumerableSymbols_GetEnumerator
+  commentId: P:NetFabric.CodeAnalysis.EnumerableSymbols.GetEnumerator
+  fullName: NetFabric.CodeAnalysis.EnumerableSymbols.GetEnumerator
+  nameWithType: EnumerableSymbols.GetEnumerator
+- uid: NetFabric.CodeAnalysis.EnumerableSymbols.GetEnumerator*
+  name: GetEnumerator
+  href: api/NetFabric.CodeAnalysis.EnumerableSymbols.html#NetFabric_CodeAnalysis_EnumerableSymbols_GetEnumerator_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumerableSymbols.GetEnumerator
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumerableSymbols.GetEnumerator
+  nameWithType: EnumerableSymbols.GetEnumerator
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols
+  name: EnumeratorSymbols
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html
+  commentId: T:NetFabric.CodeAnalysis.EnumeratorSymbols
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols
+  nameWithType: EnumeratorSymbols
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.Current
+  name: Current
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_Current
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.Current
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.Current
+  nameWithType: EnumeratorSymbols.Current
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.Current*
+  name: Current
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_Current_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.Current
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.Current
+  nameWithType: EnumeratorSymbols.Current
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.Dispose
+  name: Dispose
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_Dispose
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.Dispose
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.Dispose
+  nameWithType: EnumeratorSymbols.Dispose
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.Dispose*
+  name: Dispose
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_Dispose_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.Dispose
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.Dispose
+  nameWithType: EnumeratorSymbols.Dispose
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsEnumeratorInterface
+  name: IsEnumeratorInterface
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsEnumeratorInterface
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.IsEnumeratorInterface
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsEnumeratorInterface
+  nameWithType: EnumeratorSymbols.IsEnumeratorInterface
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsEnumeratorInterface*
+  name: IsEnumeratorInterface
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsEnumeratorInterface_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.IsEnumeratorInterface
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsEnumeratorInterface
+  nameWithType: EnumeratorSymbols.IsEnumeratorInterface
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsGenericsEnumeratorInterface
+  name: IsGenericsEnumeratorInterface
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsGenericsEnumeratorInterface
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.IsGenericsEnumeratorInterface
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsGenericsEnumeratorInterface
+  nameWithType: EnumeratorSymbols.IsGenericsEnumeratorInterface
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsGenericsEnumeratorInterface*
+  name: IsGenericsEnumeratorInterface
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsGenericsEnumeratorInterface_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.IsGenericsEnumeratorInterface
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsGenericsEnumeratorInterface
+  nameWithType: EnumeratorSymbols.IsGenericsEnumeratorInterface
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsRefLikeType
+  name: IsRefLikeType
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsRefLikeType
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.IsRefLikeType
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsRefLikeType
+  nameWithType: EnumeratorSymbols.IsRefLikeType
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsRefLikeType*
+  name: IsRefLikeType
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsRefLikeType_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.IsRefLikeType
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsRefLikeType
+  nameWithType: EnumeratorSymbols.IsRefLikeType
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsValueType
+  name: IsValueType
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsValueType
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.IsValueType
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsValueType
+  nameWithType: EnumeratorSymbols.IsValueType
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.IsValueType*
+  name: IsValueType
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_IsValueType_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.IsValueType
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.IsValueType
+  nameWithType: EnumeratorSymbols.IsValueType
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.MoveNext
+  name: MoveNext
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_MoveNext
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.MoveNext
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.MoveNext
+  nameWithType: EnumeratorSymbols.MoveNext
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.MoveNext*
+  name: MoveNext
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_MoveNext_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.MoveNext
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.MoveNext
+  nameWithType: EnumeratorSymbols.MoveNext
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.Reset
+  name: Reset
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_Reset
+  commentId: P:NetFabric.CodeAnalysis.EnumeratorSymbols.Reset
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.Reset
+  nameWithType: EnumeratorSymbols.Reset
+- uid: NetFabric.CodeAnalysis.EnumeratorSymbols.Reset*
+  name: Reset
+  href: api/NetFabric.CodeAnalysis.EnumeratorSymbols.html#NetFabric_CodeAnalysis_EnumeratorSymbols_Reset_
+  commentId: Overload:NetFabric.CodeAnalysis.EnumeratorSymbols.Reset
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.EnumeratorSymbols.Reset
+  nameWithType: EnumeratorSymbols.Reset
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions
+  name: ITypeSymbolExtensions
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html
+  commentId: T:NetFabric.CodeAnalysis.ITypeSymbolExtensions
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions
+  nameWithType: ITypeSymbolExtensions
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod(Microsoft.CodeAnalysis.ITypeSymbol,System.String,System.Type[])
+  name: GetPublicMethod(ITypeSymbol, string, params Type[])
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicMethod_Microsoft_CodeAnalysis_ITypeSymbol_System_String_System_Type___
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod(Microsoft.CodeAnalysis.ITypeSymbol,System.String,System.Type[])
+  name.vb: GetPublicMethod(ITypeSymbol, String, ParamArray Type())
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod(Microsoft.CodeAnalysis.ITypeSymbol, string, params System.Type[])
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod(Microsoft.CodeAnalysis.ITypeSymbol, String, ParamArray System.Type())
+  nameWithType: ITypeSymbolExtensions.GetPublicMethod(ITypeSymbol, string, params Type[])
+  nameWithType.vb: ITypeSymbolExtensions.GetPublicMethod(ITypeSymbol, String, ParamArray Type())
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod*
+  name: GetPublicMethod
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicMethod_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicMethod
+  nameWithType: ITypeSymbolExtensions.GetPublicMethod
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.ITypeSymbol[])
+  name: GetPublicReadIndexer(ITypeSymbol, params ITypeSymbol[])
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_ITypeSymbol___
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.ITypeSymbol[])
+  name.vb: GetPublicReadIndexer(ITypeSymbol, ParamArray ITypeSymbol())
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol, params Microsoft.CodeAnalysis.ITypeSymbol[])
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol, ParamArray Microsoft.CodeAnalysis.ITypeSymbol())
+  nameWithType: ITypeSymbolExtensions.GetPublicReadIndexer(ITypeSymbol, params ITypeSymbol[])
+  nameWithType.vb: ITypeSymbolExtensions.GetPublicReadIndexer(ITypeSymbol, ParamArray ITypeSymbol())
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol,System.Type[])
+  name: GetPublicReadIndexer(ITypeSymbol, params Type[])
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_Microsoft_CodeAnalysis_ITypeSymbol_System_Type___
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol,System.Type[])
+  name.vb: GetPublicReadIndexer(ITypeSymbol, ParamArray Type())
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol, params System.Type[])
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer(Microsoft.CodeAnalysis.ITypeSymbol, ParamArray System.Type())
+  nameWithType: ITypeSymbolExtensions.GetPublicReadIndexer(ITypeSymbol, params Type[])
+  nameWithType.vb: ITypeSymbolExtensions.GetPublicReadIndexer(ITypeSymbol, ParamArray Type())
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer*
+  name: GetPublicReadIndexer
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadIndexer_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadIndexer
+  nameWithType: ITypeSymbolExtensions.GetPublicReadIndexer
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty(Microsoft.CodeAnalysis.ITypeSymbol,System.String)
+  name: GetPublicReadProperty(ITypeSymbol, string)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadProperty_Microsoft_CodeAnalysis_ITypeSymbol_System_String_
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty(Microsoft.CodeAnalysis.ITypeSymbol,System.String)
+  name.vb: GetPublicReadProperty(ITypeSymbol, String)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty(Microsoft.CodeAnalysis.ITypeSymbol, string)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty(Microsoft.CodeAnalysis.ITypeSymbol, String)
+  nameWithType: ITypeSymbolExtensions.GetPublicReadProperty(ITypeSymbol, string)
+  nameWithType.vb: ITypeSymbolExtensions.GetPublicReadProperty(ITypeSymbol, String)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty*
+  name: GetPublicReadProperty
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_GetPublicReadProperty_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.GetPublicReadProperty
+  nameWithType: ITypeSymbolExtensions.GetPublicReadProperty
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.ITypeSymbol}@)
+  name: ImplementsInterface(ITypeSymbol, INamedTypeSymbol, out ImmutableArray<ITypeSymbol>)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_ImplementsInterface_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_INamedTypeSymbol_System_Collections_Immutable_ImmutableArray_Microsoft_CodeAnalysis_ITypeSymbol___
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.ITypeSymbol}@)
+  name.vb: ImplementsInterface(ITypeSymbol, INamedTypeSymbol, ImmutableArray(Of ITypeSymbol))
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.INamedTypeSymbol, out System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ITypeSymbol>)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.INamedTypeSymbol, System.Collections.Immutable.ImmutableArray(Of Microsoft.CodeAnalysis.ITypeSymbol))
+  nameWithType: ITypeSymbolExtensions.ImplementsInterface(ITypeSymbol, INamedTypeSymbol, out ImmutableArray<ITypeSymbol>)
+  nameWithType.vb: ITypeSymbolExtensions.ImplementsInterface(ITypeSymbol, INamedTypeSymbol, ImmutableArray(Of ITypeSymbol))
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.SpecialType,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.ITypeSymbol}@)
+  name: ImplementsInterface(ITypeSymbol, SpecialType, out ImmutableArray<ITypeSymbol>)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_ImplementsInterface_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_SpecialType_System_Collections_Immutable_ImmutableArray_Microsoft_CodeAnalysis_ITypeSymbol___
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.SpecialType,System.Collections.Immutable.ImmutableArray{Microsoft.CodeAnalysis.ITypeSymbol}@)
+  name.vb: ImplementsInterface(ITypeSymbol, SpecialType, ImmutableArray(Of ITypeSymbol))
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.SpecialType, out System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.ITypeSymbol>)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.SpecialType, System.Collections.Immutable.ImmutableArray(Of Microsoft.CodeAnalysis.ITypeSymbol))
+  nameWithType: ITypeSymbolExtensions.ImplementsInterface(ITypeSymbol, SpecialType, out ImmutableArray<ITypeSymbol>)
+  nameWithType.vb: ITypeSymbolExtensions.ImplementsInterface(ITypeSymbol, SpecialType, ImmutableArray(Of ITypeSymbol))
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface*
+  name: ImplementsInterface
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_ImplementsInterface_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.ImplementsInterface
+  nameWithType: ITypeSymbolExtensions.ImplementsInterface
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.IMethodSymbol@)
+  name: IsAsyncDisposable(ITypeSymbol, Compilation, out IMethodSymbol?)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncDisposable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_Microsoft_CodeAnalysis_IMethodSymbol__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.IMethodSymbol@)
+  name.vb: IsAsyncDisposable(ITypeSymbol, Compilation, IMethodSymbol)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, out Microsoft.CodeAnalysis.IMethodSymbol?)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, Microsoft.CodeAnalysis.IMethodSymbol)
+  nameWithType: ITypeSymbolExtensions.IsAsyncDisposable(ITypeSymbol, Compilation, out IMethodSymbol?)
+  nameWithType.vb: ITypeSymbolExtensions.IsAsyncDisposable(ITypeSymbol, Compilation, IMethodSymbol)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable*
+  name: IsAsyncDisposable
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncDisposable_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncDisposable
+  nameWithType: ITypeSymbolExtensions.IsAsyncDisposable
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  name: IsAsyncEnumerable(ITypeSymbol, Compilation)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation)
+  nameWithType: ITypeSymbolExtensions.IsAsyncEnumerable(ITypeSymbol, Compilation)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.AsyncEnumerableSymbols@)
+  name: IsAsyncEnumerable(ITypeSymbol, Compilation, out AsyncEnumerableSymbols?)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_AsyncEnumerableSymbols__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.AsyncEnumerableSymbols@)
+  name.vb: IsAsyncEnumerable(ITypeSymbol, Compilation, AsyncEnumerableSymbols)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, out NetFabric.CodeAnalysis.AsyncEnumerableSymbols?)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, NetFabric.CodeAnalysis.AsyncEnumerableSymbols)
+  nameWithType: ITypeSymbolExtensions.IsAsyncEnumerable(ITypeSymbol, Compilation, out AsyncEnumerableSymbols?)
+  nameWithType.vb: ITypeSymbolExtensions.IsAsyncEnumerable(ITypeSymbol, Compilation, AsyncEnumerableSymbols)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.AsyncEnumerableSymbols@,NetFabric.CodeAnalysis.IsAsyncEnumerableError@)
+  name: IsAsyncEnumerable(ITypeSymbol, Compilation, out AsyncEnumerableSymbols?, out IsAsyncEnumerableError)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_AsyncEnumerableSymbols__NetFabric_CodeAnalysis_IsAsyncEnumerableError__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.AsyncEnumerableSymbols@,NetFabric.CodeAnalysis.IsAsyncEnumerableError@)
+  name.vb: IsAsyncEnumerable(ITypeSymbol, Compilation, AsyncEnumerableSymbols, IsAsyncEnumerableError)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, out NetFabric.CodeAnalysis.AsyncEnumerableSymbols?, out NetFabric.CodeAnalysis.IsAsyncEnumerableError)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, NetFabric.CodeAnalysis.AsyncEnumerableSymbols, NetFabric.CodeAnalysis.IsAsyncEnumerableError)
+  nameWithType: ITypeSymbolExtensions.IsAsyncEnumerable(ITypeSymbol, Compilation, out AsyncEnumerableSymbols?, out IsAsyncEnumerableError)
+  nameWithType.vb: ITypeSymbolExtensions.IsAsyncEnumerable(ITypeSymbol, Compilation, AsyncEnumerableSymbols, IsAsyncEnumerableError)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable*
+  name: IsAsyncEnumerable
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsAsyncEnumerable_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsAsyncEnumerable
+  nameWithType: ITypeSymbolExtensions.IsAsyncEnumerable
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.IMethodSymbol@)
+  name: IsDisposable(ITypeSymbol, Compilation, out IMethodSymbol?)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsDisposable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_Microsoft_CodeAnalysis_IMethodSymbol__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,Microsoft.CodeAnalysis.IMethodSymbol@)
+  name.vb: IsDisposable(ITypeSymbol, Compilation, IMethodSymbol)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, out Microsoft.CodeAnalysis.IMethodSymbol?)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, Microsoft.CodeAnalysis.IMethodSymbol)
+  nameWithType: ITypeSymbolExtensions.IsDisposable(ITypeSymbol, Compilation, out IMethodSymbol?)
+  nameWithType.vb: ITypeSymbolExtensions.IsDisposable(ITypeSymbol, Compilation, IMethodSymbol)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable*
+  name: IsDisposable
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsDisposable_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsDisposable
+  nameWithType: ITypeSymbolExtensions.IsDisposable
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  name: IsEnumerable(ITypeSymbol, Compilation)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation)
+  nameWithType: ITypeSymbolExtensions.IsEnumerable(ITypeSymbol, Compilation)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.EnumerableSymbols@)
+  name: IsEnumerable(ITypeSymbol, Compilation, out EnumerableSymbols?)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_EnumerableSymbols__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.EnumerableSymbols@)
+  name.vb: IsEnumerable(ITypeSymbol, Compilation, EnumerableSymbols)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, out NetFabric.CodeAnalysis.EnumerableSymbols?)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, NetFabric.CodeAnalysis.EnumerableSymbols)
+  nameWithType: ITypeSymbolExtensions.IsEnumerable(ITypeSymbol, Compilation, out EnumerableSymbols?)
+  nameWithType.vb: ITypeSymbolExtensions.IsEnumerable(ITypeSymbol, Compilation, EnumerableSymbols)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.EnumerableSymbols@,NetFabric.CodeAnalysis.IsEnumerableError@)
+  name: IsEnumerable(ITypeSymbol, Compilation, out EnumerableSymbols?, out IsEnumerableError)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_NetFabric_CodeAnalysis_EnumerableSymbols__NetFabric_CodeAnalysis_IsEnumerableError__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation,NetFabric.CodeAnalysis.EnumerableSymbols@,NetFabric.CodeAnalysis.IsEnumerableError@)
+  name.vb: IsEnumerable(ITypeSymbol, Compilation, EnumerableSymbols, IsEnumerableError)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, out NetFabric.CodeAnalysis.EnumerableSymbols?, out NetFabric.CodeAnalysis.IsEnumerableError)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation, NetFabric.CodeAnalysis.EnumerableSymbols, NetFabric.CodeAnalysis.IsEnumerableError)
+  nameWithType: ITypeSymbolExtensions.IsEnumerable(ITypeSymbol, Compilation, out EnumerableSymbols?, out IsEnumerableError)
+  nameWithType.vb: ITypeSymbolExtensions.IsEnumerable(ITypeSymbol, Compilation, EnumerableSymbols, IsEnumerableError)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable*
+  name: IsEnumerable
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsEnumerable_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsEnumerable
+  nameWithType: ITypeSymbolExtensions.IsEnumerable
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  name: IsFloatingPointType(ITypeSymbol, Compilation)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsFloatingPointType_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation)
+  nameWithType: ITypeSymbolExtensions.IsFloatingPointType(ITypeSymbol, Compilation)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType*
+  name: IsFloatingPointType
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsFloatingPointType_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsFloatingPointType
+  nameWithType: ITypeSymbolExtensions.IsFloatingPointType
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol)
+  name: IsIndexable(ITypeSymbol)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol)
+  nameWithType: ITypeSymbolExtensions.IsIndexable(ITypeSymbol)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol,NetFabric.CodeAnalysis.IndexableSymbols@)
+  name: IsIndexable(ITypeSymbol, out IndexableSymbols?)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_NetFabric_CodeAnalysis_IndexableSymbols__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol,NetFabric.CodeAnalysis.IndexableSymbols@)
+  name.vb: IsIndexable(ITypeSymbol, IndexableSymbols)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol, out NetFabric.CodeAnalysis.IndexableSymbols?)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol, NetFabric.CodeAnalysis.IndexableSymbols)
+  nameWithType: ITypeSymbolExtensions.IsIndexable(ITypeSymbol, out IndexableSymbols?)
+  nameWithType.vb: ITypeSymbolExtensions.IsIndexable(ITypeSymbol, IndexableSymbols)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol,NetFabric.CodeAnalysis.IndexableSymbols@,NetFabric.CodeAnalysis.IsIndexableError@)
+  name: IsIndexable(ITypeSymbol, out IndexableSymbols?, out IsIndexableError)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_Microsoft_CodeAnalysis_ITypeSymbol_NetFabric_CodeAnalysis_IndexableSymbols__NetFabric_CodeAnalysis_IsIndexableError__
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol,NetFabric.CodeAnalysis.IndexableSymbols@,NetFabric.CodeAnalysis.IsIndexableError@)
+  name.vb: IsIndexable(ITypeSymbol, IndexableSymbols, IsIndexableError)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol, out NetFabric.CodeAnalysis.IndexableSymbols?, out NetFabric.CodeAnalysis.IsIndexableError)
+  fullName.vb: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable(Microsoft.CodeAnalysis.ITypeSymbol, NetFabric.CodeAnalysis.IndexableSymbols, NetFabric.CodeAnalysis.IsIndexableError)
+  nameWithType: ITypeSymbolExtensions.IsIndexable(ITypeSymbol, out IndexableSymbols?, out IsIndexableError)
+  nameWithType.vb: ITypeSymbolExtensions.IsIndexable(ITypeSymbol, IndexableSymbols, IsIndexableError)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable*
+  name: IsIndexable
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIndexable_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIndexable
+  nameWithType: ITypeSymbolExtensions.IsIndexable
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  name: IsIntegerType(ITypeSymbol, Compilation)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIntegerType_Microsoft_CodeAnalysis_ITypeSymbol_Microsoft_CodeAnalysis_Compilation_
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType(Microsoft.CodeAnalysis.ITypeSymbol,Microsoft.CodeAnalysis.Compilation)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType(Microsoft.CodeAnalysis.ITypeSymbol, Microsoft.CodeAnalysis.Compilation)
+  nameWithType: ITypeSymbolExtensions.IsIntegerType(ITypeSymbol, Compilation)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType*
+  name: IsIntegerType
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsIntegerType_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsIntegerType
+  nameWithType: ITypeSymbolExtensions.IsIntegerType
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType(Microsoft.CodeAnalysis.ITypeSymbol)
+  name: IsSpanOrReadOnlySpanType(ITypeSymbol)
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsSpanOrReadOnlySpanType_Microsoft_CodeAnalysis_ITypeSymbol_
+  commentId: M:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType(Microsoft.CodeAnalysis.ITypeSymbol)
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType(Microsoft.CodeAnalysis.ITypeSymbol)
+  nameWithType: ITypeSymbolExtensions.IsSpanOrReadOnlySpanType(ITypeSymbol)
+- uid: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType*
+  name: IsSpanOrReadOnlySpanType
+  href: api/NetFabric.CodeAnalysis.ITypeSymbolExtensions.html#NetFabric_CodeAnalysis_ITypeSymbolExtensions_IsSpanOrReadOnlySpanType_
+  commentId: Overload:NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.ITypeSymbolExtensions.IsSpanOrReadOnlySpanType
+  nameWithType: ITypeSymbolExtensions.IsSpanOrReadOnlySpanType
+- uid: NetFabric.CodeAnalysis.IndexableSymbols
+  name: IndexableSymbols
+  href: api/NetFabric.CodeAnalysis.IndexableSymbols.html
+  commentId: T:NetFabric.CodeAnalysis.IndexableSymbols
+  fullName: NetFabric.CodeAnalysis.IndexableSymbols
+  nameWithType: IndexableSymbols
+- uid: NetFabric.CodeAnalysis.IndexableSymbols.CountOrLength
+  name: CountOrLength
+  href: api/NetFabric.CodeAnalysis.IndexableSymbols.html#NetFabric_CodeAnalysis_IndexableSymbols_CountOrLength
+  commentId: P:NetFabric.CodeAnalysis.IndexableSymbols.CountOrLength
+  fullName: NetFabric.CodeAnalysis.IndexableSymbols.CountOrLength
+  nameWithType: IndexableSymbols.CountOrLength
+- uid: NetFabric.CodeAnalysis.IndexableSymbols.CountOrLength*
+  name: CountOrLength
+  href: api/NetFabric.CodeAnalysis.IndexableSymbols.html#NetFabric_CodeAnalysis_IndexableSymbols_CountOrLength_
+  commentId: Overload:NetFabric.CodeAnalysis.IndexableSymbols.CountOrLength
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.IndexableSymbols.CountOrLength
+  nameWithType: IndexableSymbols.CountOrLength
+- uid: NetFabric.CodeAnalysis.IndexableSymbols.Indexer
+  name: Indexer
+  href: api/NetFabric.CodeAnalysis.IndexableSymbols.html#NetFabric_CodeAnalysis_IndexableSymbols_Indexer
+  commentId: P:NetFabric.CodeAnalysis.IndexableSymbols.Indexer
+  fullName: NetFabric.CodeAnalysis.IndexableSymbols.Indexer
+  nameWithType: IndexableSymbols.Indexer
+- uid: NetFabric.CodeAnalysis.IndexableSymbols.Indexer*
+  name: Indexer
+  href: api/NetFabric.CodeAnalysis.IndexableSymbols.html#NetFabric_CodeAnalysis_IndexableSymbols_Indexer_
+  commentId: Overload:NetFabric.CodeAnalysis.IndexableSymbols.Indexer
+  isSpec: "True"
+  fullName: NetFabric.CodeAnalysis.IndexableSymbols.Indexer
+  nameWithType: IndexableSymbols.Indexer
+- uid: NetFabric.CodeAnalysis.IsAsyncEnumerableError
+  name: IsAsyncEnumerableError
+  href: api/NetFabric.CodeAnalysis.IsAsyncEnumerableError.html
+  commentId: T:NetFabric.CodeAnalysis.IsAsyncEnumerableError
+  fullName: NetFabric.CodeAnalysis.IsAsyncEnumerableError
+  nameWithType: IsAsyncEnumerableError
+- uid: NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingCurrent
+  name: MissingCurrent
+  href: api/NetFabric.CodeAnalysis.IsAsyncEnumerableError.html#NetFabric_CodeAnalysis_IsAsyncEnumerableError_MissingCurrent
+  commentId: F:NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingCurrent
+  fullName: NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingCurrent
+  nameWithType: IsAsyncEnumerableError.MissingCurrent
+- uid: NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingGetAsyncEnumerator
+  name: MissingGetAsyncEnumerator
+  href: api/NetFabric.CodeAnalysis.IsAsyncEnumerableError.html#NetFabric_CodeAnalysis_IsAsyncEnumerableError_MissingGetAsyncEnumerator
+  commentId: F:NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingGetAsyncEnumerator
+  fullName: NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingGetAsyncEnumerator
+  nameWithType: IsAsyncEnumerableError.MissingGetAsyncEnumerator
+- uid: NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingMoveNextAsync
+  name: MissingMoveNextAsync
+  href: api/NetFabric.CodeAnalysis.IsAsyncEnumerableError.html#NetFabric_CodeAnalysis_IsAsyncEnumerableError_MissingMoveNextAsync
+  commentId: F:NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingMoveNextAsync
+  fullName: NetFabric.CodeAnalysis.IsAsyncEnumerableError.MissingMoveNextAsync
+  nameWithType: IsAsyncEnumerableError.MissingMoveNextAsync
+- uid: NetFabric.CodeAnalysis.IsAsyncEnumerableError.None
+  name: None
+  href: api/NetFabric.CodeAnalysis.IsAsyncEnumerableError.html#NetFabric_CodeAnalysis_IsAsyncEnumerableError_None
+  commentId: F:NetFabric.CodeAnalysis.IsAsyncEnumerableError.None
+  fullName: NetFabric.CodeAnalysis.IsAsyncEnumerableError.None
+  nameWithType: IsAsyncEnumerableError.None
+- uid: NetFabric.CodeAnalysis.IsEnumerableError
+  name: IsEnumerableError
+  href: api/NetFabric.CodeAnalysis.IsEnumerableError.html
+  commentId: T:NetFabric.CodeAnalysis.IsEnumerableError
+  fullName: NetFabric.CodeAnalysis.IsEnumerableError
+  nameWithType: IsEnumerableError
+- uid: NetFabric.CodeAnalysis.IsEnumerableError.MissingCurrent
+  name: MissingCurrent
+  href: api/NetFabric.CodeAnalysis.IsEnumerableError.html#NetFabric_CodeAnalysis_IsEnumerableError_MissingCurrent
+  commentId: F:NetFabric.CodeAnalysis.IsEnumerableError.MissingCurrent
+  fullName: NetFabric.CodeAnalysis.IsEnumerableError.MissingCurrent
+  nameWithType: IsEnumerableError.MissingCurrent
+- uid: NetFabric.CodeAnalysis.IsEnumerableError.MissingGetEnumerator
+  name: MissingGetEnumerator
+  href: api/NetFabric.CodeAnalysis.IsEnumerableError.html#NetFabric_CodeAnalysis_IsEnumerableError_MissingGetEnumerator
+  commentId: F:NetFabric.CodeAnalysis.IsEnumerableError.MissingGetEnumerator
+  fullName: NetFabric.CodeAnalysis.IsEnumerableError.MissingGetEnumerator
+  nameWithType: IsEnumerableError.MissingGetEnumerator
+- uid: NetFabric.CodeAnalysis.IsEnumerableError.MissingMoveNext
+  name: MissingMoveNext
+  href: api/NetFabric.CodeAnalysis.IsEnumerableError.html#NetFabric_CodeAnalysis_IsEnumerableError_MissingMoveNext
+  commentId: F:NetFabric.CodeAnalysis.IsEnumerableError.MissingMoveNext
+  fullName: NetFabric.CodeAnalysis.IsEnumerableError.MissingMoveNext
+  nameWithType: IsEnumerableError.MissingMoveNext
+- uid: NetFabric.CodeAnalysis.IsEnumerableError.None
+  name: None
+  href: api/NetFabric.CodeAnalysis.IsEnumerableError.html#NetFabric_CodeAnalysis_IsEnumerableError_None
+  commentId: F:NetFabric.CodeAnalysis.IsEnumerableError.None
+  fullName: NetFabric.CodeAnalysis.IsEnumerableError.None
+  nameWithType: IsEnumerableError.None
+- uid: NetFabric.CodeAnalysis.IsIndexableError
+  name: IsIndexableError
+  href: api/NetFabric.CodeAnalysis.IsIndexableError.html
+  commentId: T:NetFabric.CodeAnalysis.IsIndexableError
+  fullName: NetFabric.CodeAnalysis.IsIndexableError
+  nameWithType: IsIndexableError
+- uid: NetFabric.CodeAnalysis.IsIndexableError.MissingCountOrLength
+  name: MissingCountOrLength
+  href: api/NetFabric.CodeAnalysis.IsIndexableError.html#NetFabric_CodeAnalysis_IsIndexableError_MissingCountOrLength
+  commentId: F:NetFabric.CodeAnalysis.IsIndexableError.MissingCountOrLength
+  fullName: NetFabric.CodeAnalysis.IsIndexableError.MissingCountOrLength
+  nameWithType: IsIndexableError.MissingCountOrLength
+- uid: NetFabric.CodeAnalysis.IsIndexableError.MissingIndexer
+  name: MissingIndexer
+  href: api/NetFabric.CodeAnalysis.IsIndexableError.html#NetFabric_CodeAnalysis_IsIndexableError_MissingIndexer
+  commentId: F:NetFabric.CodeAnalysis.IsIndexableError.MissingIndexer
+  fullName: NetFabric.CodeAnalysis.IsIndexableError.MissingIndexer
+  nameWithType: IsIndexableError.MissingIndexer
+- uid: NetFabric.CodeAnalysis.IsIndexableError.None
+  name: None
+  href: api/NetFabric.CodeAnalysis.IsIndexableError.html#NetFabric_CodeAnalysis_IsIndexableError_None
+  commentId: F:NetFabric.CodeAnalysis.IsIndexableError.None
+  fullName: NetFabric.CodeAnalysis.IsIndexableError.None
+  nameWithType: IsIndexableError.None
+- uid: NetFabric.Expressions
+  name: NetFabric.Expressions
+  href: api/NetFabric.Expressions.html
+  commentId: N:NetFabric.Expressions
+  fullName: NetFabric.Expressions
+  nameWithType: NetFabric.Expressions
+- uid: NetFabric.Expressions.ExpressionEx
+  name: ExpressionEx
+  href: api/NetFabric.Expressions.ExpressionEx.html
+  commentId: T:NetFabric.Expressions.ExpressionEx
+  fullName: NetFabric.Expressions.ExpressionEx
+  nameWithType: ExpressionEx
+- uid: NetFabric.Expressions.ExpressionEx.For(System.Linq.Expressions.Expression,NetFabric.Reflection.IndexableInfo,System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression})
+  name: For(Expression, IndexableInfo, Func<Expression, Expression>)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_For_System_Linq_Expressions_Expression_NetFabric_Reflection_IndexableInfo_System_Func_System_Linq_Expressions_Expression_System_Linq_Expressions_Expression__
+  commentId: M:NetFabric.Expressions.ExpressionEx.For(System.Linq.Expressions.Expression,NetFabric.Reflection.IndexableInfo,System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression})
+  name.vb: For(Expression, IndexableInfo, Func(Of Expression, Expression))
+  fullName: NetFabric.Expressions.ExpressionEx.For(System.Linq.Expressions.Expression, NetFabric.Reflection.IndexableInfo, System.Func<System.Linq.Expressions.Expression, System.Linq.Expressions.Expression>)
+  fullName.vb: NetFabric.Expressions.ExpressionEx.For(System.Linq.Expressions.Expression, NetFabric.Reflection.IndexableInfo, System.Func(Of System.Linq.Expressions.Expression, System.Linq.Expressions.Expression))
+  nameWithType: ExpressionEx.For(Expression, IndexableInfo, Func<Expression, Expression>)
+  nameWithType.vb: ExpressionEx.For(Expression, IndexableInfo, Func(Of Expression, Expression))
+- uid: NetFabric.Expressions.ExpressionEx.For(System.Linq.Expressions.Expression,System.Linq.Expressions.Expression,System.Linq.Expressions.Expression,System.Linq.Expressions.Expression)
+  name: For(Expression, Expression, Expression, Expression)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_For_System_Linq_Expressions_Expression_System_Linq_Expressions_Expression_System_Linq_Expressions_Expression_System_Linq_Expressions_Expression_
+  commentId: M:NetFabric.Expressions.ExpressionEx.For(System.Linq.Expressions.Expression,System.Linq.Expressions.Expression,System.Linq.Expressions.Expression,System.Linq.Expressions.Expression)
+  fullName: NetFabric.Expressions.ExpressionEx.For(System.Linq.Expressions.Expression, System.Linq.Expressions.Expression, System.Linq.Expressions.Expression, System.Linq.Expressions.Expression)
+  nameWithType: ExpressionEx.For(Expression, Expression, Expression, Expression)
+- uid: NetFabric.Expressions.ExpressionEx.For*
+  name: For
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_For_
+  commentId: Overload:NetFabric.Expressions.ExpressionEx.For
+  isSpec: "True"
+  fullName: NetFabric.Expressions.ExpressionEx.For
+  nameWithType: ExpressionEx.For
+- uid: NetFabric.Expressions.ExpressionEx.ForEach(NetFabric.Reflection.EnumerableInfo,System.Linq.Expressions.Expression,System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression})
+  name: ForEach(EnumerableInfo, Expression, Func<Expression, Expression>)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_ForEach_NetFabric_Reflection_EnumerableInfo_System_Linq_Expressions_Expression_System_Func_System_Linq_Expressions_Expression_System_Linq_Expressions_Expression__
+  commentId: M:NetFabric.Expressions.ExpressionEx.ForEach(NetFabric.Reflection.EnumerableInfo,System.Linq.Expressions.Expression,System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression})
+  name.vb: ForEach(EnumerableInfo, Expression, Func(Of Expression, Expression))
+  fullName: NetFabric.Expressions.ExpressionEx.ForEach(NetFabric.Reflection.EnumerableInfo, System.Linq.Expressions.Expression, System.Func<System.Linq.Expressions.Expression, System.Linq.Expressions.Expression>)
+  fullName.vb: NetFabric.Expressions.ExpressionEx.ForEach(NetFabric.Reflection.EnumerableInfo, System.Linq.Expressions.Expression, System.Func(Of System.Linq.Expressions.Expression, System.Linq.Expressions.Expression))
+  nameWithType: ExpressionEx.ForEach(EnumerableInfo, Expression, Func<Expression, Expression>)
+  nameWithType.vb: ExpressionEx.ForEach(EnumerableInfo, Expression, Func(Of Expression, Expression))
+- uid: NetFabric.Expressions.ExpressionEx.ForEach(System.Linq.Expressions.Expression,System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression})
+  name: ForEach(Expression, Func<Expression, Expression>)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_ForEach_System_Linq_Expressions_Expression_System_Func_System_Linq_Expressions_Expression_System_Linq_Expressions_Expression__
+  commentId: M:NetFabric.Expressions.ExpressionEx.ForEach(System.Linq.Expressions.Expression,System.Func{System.Linq.Expressions.Expression,System.Linq.Expressions.Expression})
+  name.vb: ForEach(Expression, Func(Of Expression, Expression))
+  fullName: NetFabric.Expressions.ExpressionEx.ForEach(System.Linq.Expressions.Expression, System.Func<System.Linq.Expressions.Expression, System.Linq.Expressions.Expression>)
+  fullName.vb: NetFabric.Expressions.ExpressionEx.ForEach(System.Linq.Expressions.Expression, System.Func(Of System.Linq.Expressions.Expression, System.Linq.Expressions.Expression))
+  nameWithType: ExpressionEx.ForEach(Expression, Func<Expression, Expression>)
+  nameWithType.vb: ExpressionEx.ForEach(Expression, Func(Of Expression, Expression))
+- uid: NetFabric.Expressions.ExpressionEx.ForEach*
+  name: ForEach
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_ForEach_
+  commentId: Overload:NetFabric.Expressions.ExpressionEx.ForEach
+  isSpec: "True"
+  fullName: NetFabric.Expressions.ExpressionEx.ForEach
+  nameWithType: ExpressionEx.ForEach
+- uid: NetFabric.Expressions.ExpressionEx.TypeIs(System.Linq.Expressions.Expression,System.Type,System.Linq.Expressions.ParameterExpression)
+  name: TypeIs(Expression, Type, ParameterExpression)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_TypeIs_System_Linq_Expressions_Expression_System_Type_System_Linq_Expressions_ParameterExpression_
+  commentId: M:NetFabric.Expressions.ExpressionEx.TypeIs(System.Linq.Expressions.Expression,System.Type,System.Linq.Expressions.ParameterExpression)
+  fullName: NetFabric.Expressions.ExpressionEx.TypeIs(System.Linq.Expressions.Expression, System.Type, System.Linq.Expressions.ParameterExpression)
+  nameWithType: ExpressionEx.TypeIs(Expression, Type, ParameterExpression)
+- uid: NetFabric.Expressions.ExpressionEx.TypeIs*
+  name: TypeIs
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_TypeIs_
+  commentId: Overload:NetFabric.Expressions.ExpressionEx.TypeIs
+  isSpec: "True"
+  fullName: NetFabric.Expressions.ExpressionEx.TypeIs
+  nameWithType: ExpressionEx.TypeIs
+- uid: NetFabric.Expressions.ExpressionEx.Using(System.Collections.Generic.IEnumerable{System.Linq.Expressions.ParameterExpression},System.Linq.Expressions.Expression)
+  name: Using(IEnumerable<ParameterExpression>, Expression)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_Using_System_Collections_Generic_IEnumerable_System_Linq_Expressions_ParameterExpression__System_Linq_Expressions_Expression_
+  commentId: M:NetFabric.Expressions.ExpressionEx.Using(System.Collections.Generic.IEnumerable{System.Linq.Expressions.ParameterExpression},System.Linq.Expressions.Expression)
+  name.vb: Using(IEnumerable(Of ParameterExpression), Expression)
+  fullName: NetFabric.Expressions.ExpressionEx.Using(System.Collections.Generic.IEnumerable<System.Linq.Expressions.ParameterExpression>, System.Linq.Expressions.Expression)
+  fullName.vb: NetFabric.Expressions.ExpressionEx.Using(System.Collections.Generic.IEnumerable(Of System.Linq.Expressions.ParameterExpression), System.Linq.Expressions.Expression)
+  nameWithType: ExpressionEx.Using(IEnumerable<ParameterExpression>, Expression)
+  nameWithType.vb: ExpressionEx.Using(IEnumerable(Of ParameterExpression), Expression)
+- uid: NetFabric.Expressions.ExpressionEx.Using(System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.Expression)
+  name: Using(ParameterExpression, Expression)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_Using_System_Linq_Expressions_ParameterExpression_System_Linq_Expressions_Expression_
+  commentId: M:NetFabric.Expressions.ExpressionEx.Using(System.Linq.Expressions.ParameterExpression,System.Linq.Expressions.Expression)
+  fullName: NetFabric.Expressions.ExpressionEx.Using(System.Linq.Expressions.ParameterExpression, System.Linq.Expressions.Expression)
+  nameWithType: ExpressionEx.Using(ParameterExpression, Expression)
+- uid: NetFabric.Expressions.ExpressionEx.Using*
+  name: Using
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_Using_
+  commentId: Overload:NetFabric.Expressions.ExpressionEx.Using
+  isSpec: "True"
+  fullName: NetFabric.Expressions.ExpressionEx.Using
+  nameWithType: ExpressionEx.Using
+- uid: NetFabric.Expressions.ExpressionEx.While(System.Linq.Expressions.Expression,System.Linq.Expressions.Expression)
+  name: While(Expression, Expression)
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_While_System_Linq_Expressions_Expression_System_Linq_Expressions_Expression_
+  commentId: M:NetFabric.Expressions.ExpressionEx.While(System.Linq.Expressions.Expression,System.Linq.Expressions.Expression)
+  fullName: NetFabric.Expressions.ExpressionEx.While(System.Linq.Expressions.Expression, System.Linq.Expressions.Expression)
+  nameWithType: ExpressionEx.While(Expression, Expression)
+- uid: NetFabric.Expressions.ExpressionEx.While*
+  name: While
+  href: api/NetFabric.Expressions.ExpressionEx.html#NetFabric_Expressions_ExpressionEx_While_
+  commentId: Overload:NetFabric.Expressions.ExpressionEx.While
+  isSpec: "True"
+  fullName: NetFabric.Expressions.ExpressionEx.While
+  nameWithType: ExpressionEx.While
+- uid: NetFabric.Reflection
+  name: NetFabric.Reflection
+  href: api/NetFabric.Reflection.html
+  commentId: N:NetFabric.Reflection
+  fullName: NetFabric.Reflection
+  nameWithType: NetFabric.Reflection
+- uid: NetFabric.Reflection.AsyncEnumerableInfo
+  name: AsyncEnumerableInfo
+  href: api/NetFabric.Reflection.AsyncEnumerableInfo.html
+  commentId: T:NetFabric.Reflection.AsyncEnumerableInfo
+  fullName: NetFabric.Reflection.AsyncEnumerableInfo
+  nameWithType: AsyncEnumerableInfo
+- uid: NetFabric.Reflection.AsyncEnumerableInfo.EnumeratorInfo
+  name: EnumeratorInfo
+  href: api/NetFabric.Reflection.AsyncEnumerableInfo.html#NetFabric_Reflection_AsyncEnumerableInfo_EnumeratorInfo
+  commentId: P:NetFabric.Reflection.AsyncEnumerableInfo.EnumeratorInfo
+  fullName: NetFabric.Reflection.AsyncEnumerableInfo.EnumeratorInfo
+  nameWithType: AsyncEnumerableInfo.EnumeratorInfo
+- uid: NetFabric.Reflection.AsyncEnumerableInfo.EnumeratorInfo*
+  name: EnumeratorInfo
+  href: api/NetFabric.Reflection.AsyncEnumerableInfo.html#NetFabric_Reflection_AsyncEnumerableInfo_EnumeratorInfo_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumerableInfo.EnumeratorInfo
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumerableInfo.EnumeratorInfo
+  nameWithType: AsyncEnumerableInfo.EnumeratorInfo
+- uid: NetFabric.Reflection.AsyncEnumerableInfo.GetAsyncEnumerator
+  name: GetAsyncEnumerator
+  href: api/NetFabric.Reflection.AsyncEnumerableInfo.html#NetFabric_Reflection_AsyncEnumerableInfo_GetAsyncEnumerator
+  commentId: P:NetFabric.Reflection.AsyncEnumerableInfo.GetAsyncEnumerator
+  fullName: NetFabric.Reflection.AsyncEnumerableInfo.GetAsyncEnumerator
+  nameWithType: AsyncEnumerableInfo.GetAsyncEnumerator
+- uid: NetFabric.Reflection.AsyncEnumerableInfo.GetAsyncEnumerator*
+  name: GetAsyncEnumerator
+  href: api/NetFabric.Reflection.AsyncEnumerableInfo.html#NetFabric_Reflection_AsyncEnumerableInfo_GetAsyncEnumerator_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumerableInfo.GetAsyncEnumerator
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumerableInfo.GetAsyncEnumerator
+  nameWithType: AsyncEnumerableInfo.GetAsyncEnumerator
+- uid: NetFabric.Reflection.AsyncEnumerableInfo.InvokeGetAsyncEnumerator(System.Object,System.Threading.CancellationToken)
+  name: InvokeGetAsyncEnumerator(object, CancellationToken)
+  href: api/NetFabric.Reflection.AsyncEnumerableInfo.html#NetFabric_Reflection_AsyncEnumerableInfo_InvokeGetAsyncEnumerator_System_Object_System_Threading_CancellationToken_
+  commentId: M:NetFabric.Reflection.AsyncEnumerableInfo.InvokeGetAsyncEnumerator(System.Object,System.Threading.CancellationToken)
+  name.vb: InvokeGetAsyncEnumerator(Object, CancellationToken)
+  fullName: NetFabric.Reflection.AsyncEnumerableInfo.InvokeGetAsyncEnumerator(object, System.Threading.CancellationToken)
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableInfo.InvokeGetAsyncEnumerator(Object, System.Threading.CancellationToken)
+  nameWithType: AsyncEnumerableInfo.InvokeGetAsyncEnumerator(object, CancellationToken)
+  nameWithType.vb: AsyncEnumerableInfo.InvokeGetAsyncEnumerator(Object, CancellationToken)
+- uid: NetFabric.Reflection.AsyncEnumerableInfo.InvokeGetAsyncEnumerator*
+  name: InvokeGetAsyncEnumerator
+  href: api/NetFabric.Reflection.AsyncEnumerableInfo.html#NetFabric_Reflection_AsyncEnumerableInfo_InvokeGetAsyncEnumerator_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumerableInfo.InvokeGetAsyncEnumerator
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumerableInfo.InvokeGetAsyncEnumerator
+  nameWithType: AsyncEnumerableInfo.InvokeGetAsyncEnumerator
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2
+  name: AsyncEnumerableWrapper<TEnumerable, TItem>
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html
+  commentId: T:NetFabric.Reflection.AsyncEnumerableWrapper`2
+  name.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem)
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem)
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem)
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.#ctor(`0,NetFabric.Reflection.AsyncEnumerableInfo)
+  name: AsyncEnumerableWrapper(TEnumerable, AsyncEnumerableInfo)
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2__ctor__0_NetFabric_Reflection_AsyncEnumerableInfo_
+  commentId: M:NetFabric.Reflection.AsyncEnumerableWrapper`2.#ctor(`0,NetFabric.Reflection.AsyncEnumerableInfo)
+  name.vb: New(TEnumerable, AsyncEnumerableInfo)
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.AsyncEnumerableWrapper(TEnumerable, NetFabric.Reflection.AsyncEnumerableInfo)
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).New(TEnumerable, NetFabric.Reflection.AsyncEnumerableInfo)
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.AsyncEnumerableWrapper(TEnumerable, AsyncEnumerableInfo)
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).New(TEnumerable, AsyncEnumerableInfo)
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.#ctor*
+  name: AsyncEnumerableWrapper
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2__ctor_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumerableWrapper`2.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.AsyncEnumerableWrapper
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).New
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.AsyncEnumerableWrapper
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).New
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.GetAsyncEnumerator(System.Threading.CancellationToken)
+  name: GetAsyncEnumerator(CancellationToken)
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2_GetAsyncEnumerator_System_Threading_CancellationToken_
+  commentId: M:NetFabric.Reflection.AsyncEnumerableWrapper`2.GetAsyncEnumerator(System.Threading.CancellationToken)
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.GetAsyncEnumerator(System.Threading.CancellationToken)
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).GetAsyncEnumerator(System.Threading.CancellationToken)
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.GetAsyncEnumerator(CancellationToken)
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).GetAsyncEnumerator(CancellationToken)
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.GetAsyncEnumerator*
+  name: GetAsyncEnumerator
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2_GetAsyncEnumerator_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumerableWrapper`2.GetAsyncEnumerator
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.GetAsyncEnumerator
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).GetAsyncEnumerator
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.GetAsyncEnumerator
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).GetAsyncEnumerator
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.Info
+  name: Info
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2_Info
+  commentId: P:NetFabric.Reflection.AsyncEnumerableWrapper`2.Info
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.Info
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).Info
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.Info
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).Info
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.Info*
+  name: Info
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2_Info_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumerableWrapper`2.Info
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.Info
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).Info
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.Info
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).Info
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.Instance
+  name: Instance
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2_Instance
+  commentId: P:NetFabric.Reflection.AsyncEnumerableWrapper`2.Instance
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.Instance
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).Instance
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.Instance
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).Instance
+- uid: NetFabric.Reflection.AsyncEnumerableWrapper`2.Instance*
+  name: Instance
+  href: api/NetFabric.Reflection.AsyncEnumerableWrapper-2.html#NetFabric_Reflection_AsyncEnumerableWrapper_2_Instance_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumerableWrapper`2.Instance
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumerableWrapper<TEnumerable, TItem>.Instance
+  fullName.vb: NetFabric.Reflection.AsyncEnumerableWrapper(Of TEnumerable, TItem).Instance
+  nameWithType: AsyncEnumerableWrapper<TEnumerable, TItem>.Instance
+  nameWithType.vb: AsyncEnumerableWrapper(Of TEnumerable, TItem).Instance
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo
+  name: AsyncEnumeratorInfo
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html
+  commentId: T:NetFabric.Reflection.AsyncEnumeratorInfo
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo
+  nameWithType: AsyncEnumeratorInfo
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.Current
+  name: Current
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_Current
+  commentId: P:NetFabric.Reflection.AsyncEnumeratorInfo.Current
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.Current
+  nameWithType: AsyncEnumeratorInfo.Current
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.Current*
+  name: Current
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_Current_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.Current
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.Current
+  nameWithType: AsyncEnumeratorInfo.Current
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.DisposeAsync
+  name: DisposeAsync
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_DisposeAsync
+  commentId: P:NetFabric.Reflection.AsyncEnumeratorInfo.DisposeAsync
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.DisposeAsync
+  nameWithType: AsyncEnumeratorInfo.DisposeAsync
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.DisposeAsync*
+  name: DisposeAsync
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_DisposeAsync_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.DisposeAsync
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.DisposeAsync
+  nameWithType: AsyncEnumeratorInfo.DisposeAsync
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.GetValueCurrent(System.Object)
+  name: GetValueCurrent(object)
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_GetValueCurrent_System_Object_
+  commentId: M:NetFabric.Reflection.AsyncEnumeratorInfo.GetValueCurrent(System.Object)
+  name.vb: GetValueCurrent(Object)
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.GetValueCurrent(object)
+  fullName.vb: NetFabric.Reflection.AsyncEnumeratorInfo.GetValueCurrent(Object)
+  nameWithType: AsyncEnumeratorInfo.GetValueCurrent(object)
+  nameWithType.vb: AsyncEnumeratorInfo.GetValueCurrent(Object)
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.GetValueCurrent*
+  name: GetValueCurrent
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_GetValueCurrent_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.GetValueCurrent
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.GetValueCurrent
+  nameWithType: AsyncEnumeratorInfo.GetValueCurrent
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeDisposeAsync(System.Object)
+  name: InvokeDisposeAsync(object)
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_InvokeDisposeAsync_System_Object_
+  commentId: M:NetFabric.Reflection.AsyncEnumeratorInfo.InvokeDisposeAsync(System.Object)
+  name.vb: InvokeDisposeAsync(Object)
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeDisposeAsync(object)
+  fullName.vb: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeDisposeAsync(Object)
+  nameWithType: AsyncEnumeratorInfo.InvokeDisposeAsync(object)
+  nameWithType.vb: AsyncEnumeratorInfo.InvokeDisposeAsync(Object)
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeDisposeAsync*
+  name: InvokeDisposeAsync
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_InvokeDisposeAsync_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.InvokeDisposeAsync
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeDisposeAsync
+  nameWithType: AsyncEnumeratorInfo.InvokeDisposeAsync
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeMoveNextAsync(System.Object)
+  name: InvokeMoveNextAsync(object)
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_InvokeMoveNextAsync_System_Object_
+  commentId: M:NetFabric.Reflection.AsyncEnumeratorInfo.InvokeMoveNextAsync(System.Object)
+  name.vb: InvokeMoveNextAsync(Object)
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeMoveNextAsync(object)
+  fullName.vb: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeMoveNextAsync(Object)
+  nameWithType: AsyncEnumeratorInfo.InvokeMoveNextAsync(object)
+  nameWithType.vb: AsyncEnumeratorInfo.InvokeMoveNextAsync(Object)
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeMoveNextAsync*
+  name: InvokeMoveNextAsync
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_InvokeMoveNextAsync_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.InvokeMoveNextAsync
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.InvokeMoveNextAsync
+  nameWithType: AsyncEnumeratorInfo.InvokeMoveNextAsync
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.IsAsyncEnumeratorInterface
+  name: IsAsyncEnumeratorInterface
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_IsAsyncEnumeratorInterface
+  commentId: P:NetFabric.Reflection.AsyncEnumeratorInfo.IsAsyncEnumeratorInterface
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.IsAsyncEnumeratorInterface
+  nameWithType: AsyncEnumeratorInfo.IsAsyncEnumeratorInterface
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.IsAsyncEnumeratorInterface*
+  name: IsAsyncEnumeratorInterface
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_IsAsyncEnumeratorInterface_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.IsAsyncEnumeratorInterface
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.IsAsyncEnumeratorInterface
+  nameWithType: AsyncEnumeratorInfo.IsAsyncEnumeratorInterface
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.IsValueType
+  name: IsValueType
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_IsValueType
+  commentId: P:NetFabric.Reflection.AsyncEnumeratorInfo.IsValueType
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.IsValueType
+  nameWithType: AsyncEnumeratorInfo.IsValueType
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.IsValueType*
+  name: IsValueType
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_IsValueType_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.IsValueType
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.IsValueType
+  nameWithType: AsyncEnumeratorInfo.IsValueType
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.MoveNextAsync
+  name: MoveNextAsync
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_MoveNextAsync
+  commentId: P:NetFabric.Reflection.AsyncEnumeratorInfo.MoveNextAsync
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.MoveNextAsync
+  nameWithType: AsyncEnumeratorInfo.MoveNextAsync
+- uid: NetFabric.Reflection.AsyncEnumeratorInfo.MoveNextAsync*
+  name: MoveNextAsync
+  href: api/NetFabric.Reflection.AsyncEnumeratorInfo.html#NetFabric_Reflection_AsyncEnumeratorInfo_MoveNextAsync_
+  commentId: Overload:NetFabric.Reflection.AsyncEnumeratorInfo.MoveNextAsync
+  isSpec: "True"
+  fullName: NetFabric.Reflection.AsyncEnumeratorInfo.MoveNextAsync
+  nameWithType: AsyncEnumeratorInfo.MoveNextAsync
+- uid: NetFabric.Reflection.EnumerableInfo
+  name: EnumerableInfo
+  href: api/NetFabric.Reflection.EnumerableInfo.html
+  commentId: T:NetFabric.Reflection.EnumerableInfo
+  fullName: NetFabric.Reflection.EnumerableInfo
+  nameWithType: EnumerableInfo
+- uid: NetFabric.Reflection.EnumerableInfo.EnumeratorInfo
+  name: EnumeratorInfo
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_EnumeratorInfo
+  commentId: P:NetFabric.Reflection.EnumerableInfo.EnumeratorInfo
+  fullName: NetFabric.Reflection.EnumerableInfo.EnumeratorInfo
+  nameWithType: EnumerableInfo.EnumeratorInfo
+- uid: NetFabric.Reflection.EnumerableInfo.EnumeratorInfo*
+  name: EnumeratorInfo
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_EnumeratorInfo_
+  commentId: Overload:NetFabric.Reflection.EnumerableInfo.EnumeratorInfo
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumerableInfo.EnumeratorInfo
+  nameWithType: EnumerableInfo.EnumeratorInfo
+- uid: NetFabric.Reflection.EnumerableInfo.ForEachUsesIndexer
+  name: ForEachUsesIndexer
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_ForEachUsesIndexer
+  commentId: P:NetFabric.Reflection.EnumerableInfo.ForEachUsesIndexer
+  fullName: NetFabric.Reflection.EnumerableInfo.ForEachUsesIndexer
+  nameWithType: EnumerableInfo.ForEachUsesIndexer
+- uid: NetFabric.Reflection.EnumerableInfo.ForEachUsesIndexer*
+  name: ForEachUsesIndexer
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_ForEachUsesIndexer_
+  commentId: Overload:NetFabric.Reflection.EnumerableInfo.ForEachUsesIndexer
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumerableInfo.ForEachUsesIndexer
+  nameWithType: EnumerableInfo.ForEachUsesIndexer
+- uid: NetFabric.Reflection.EnumerableInfo.GetEnumerator
+  name: GetEnumerator
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_GetEnumerator
+  commentId: P:NetFabric.Reflection.EnumerableInfo.GetEnumerator
+  fullName: NetFabric.Reflection.EnumerableInfo.GetEnumerator
+  nameWithType: EnumerableInfo.GetEnumerator
+- uid: NetFabric.Reflection.EnumerableInfo.GetEnumerator*
+  name: GetEnumerator
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_GetEnumerator_
+  commentId: Overload:NetFabric.Reflection.EnumerableInfo.GetEnumerator
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumerableInfo.GetEnumerator
+  nameWithType: EnumerableInfo.GetEnumerator
+- uid: NetFabric.Reflection.EnumerableInfo.InvokeGetEnumerator(System.Object)
+  name: InvokeGetEnumerator(object)
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_InvokeGetEnumerator_System_Object_
+  commentId: M:NetFabric.Reflection.EnumerableInfo.InvokeGetEnumerator(System.Object)
+  name.vb: InvokeGetEnumerator(Object)
+  fullName: NetFabric.Reflection.EnumerableInfo.InvokeGetEnumerator(object)
+  fullName.vb: NetFabric.Reflection.EnumerableInfo.InvokeGetEnumerator(Object)
+  nameWithType: EnumerableInfo.InvokeGetEnumerator(object)
+  nameWithType.vb: EnumerableInfo.InvokeGetEnumerator(Object)
+- uid: NetFabric.Reflection.EnumerableInfo.InvokeGetEnumerator*
+  name: InvokeGetEnumerator
+  href: api/NetFabric.Reflection.EnumerableInfo.html#NetFabric_Reflection_EnumerableInfo_InvokeGetEnumerator_
+  commentId: Overload:NetFabric.Reflection.EnumerableInfo.InvokeGetEnumerator
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumerableInfo.InvokeGetEnumerator
+  nameWithType: EnumerableInfo.InvokeGetEnumerator
+- uid: NetFabric.Reflection.EnumerableWrapper`2
+  name: EnumerableWrapper<TEnumerable, TItem>
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html
+  commentId: T:NetFabric.Reflection.EnumerableWrapper`2
+  name.vb: EnumerableWrapper(Of TEnumerable, TItem)
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem)
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem)
+- uid: NetFabric.Reflection.EnumerableWrapper`2.#ctor(`0,NetFabric.Reflection.EnumerableInfo)
+  name: EnumerableWrapper(TEnumerable, EnumerableInfo)
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2__ctor__0_NetFabric_Reflection_EnumerableInfo_
+  commentId: M:NetFabric.Reflection.EnumerableWrapper`2.#ctor(`0,NetFabric.Reflection.EnumerableInfo)
+  name.vb: New(TEnumerable, EnumerableInfo)
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.EnumerableWrapper(TEnumerable, NetFabric.Reflection.EnumerableInfo)
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).New(TEnumerable, NetFabric.Reflection.EnumerableInfo)
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.EnumerableWrapper(TEnumerable, EnumerableInfo)
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).New(TEnumerable, EnumerableInfo)
+- uid: NetFabric.Reflection.EnumerableWrapper`2.#ctor*
+  name: EnumerableWrapper
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2__ctor_
+  commentId: Overload:NetFabric.Reflection.EnumerableWrapper`2.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.EnumerableWrapper
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).New
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.EnumerableWrapper
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).New
+- uid: NetFabric.Reflection.EnumerableWrapper`2.GetEnumerator
+  name: GetEnumerator()
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2_GetEnumerator
+  commentId: M:NetFabric.Reflection.EnumerableWrapper`2.GetEnumerator
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.GetEnumerator()
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).GetEnumerator()
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.GetEnumerator()
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).GetEnumerator()
+- uid: NetFabric.Reflection.EnumerableWrapper`2.GetEnumerator*
+  name: GetEnumerator
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2_GetEnumerator_
+  commentId: Overload:NetFabric.Reflection.EnumerableWrapper`2.GetEnumerator
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.GetEnumerator
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).GetEnumerator
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.GetEnumerator
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).GetEnumerator
+- uid: NetFabric.Reflection.EnumerableWrapper`2.Info
+  name: Info
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2_Info
+  commentId: P:NetFabric.Reflection.EnumerableWrapper`2.Info
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.Info
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).Info
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.Info
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).Info
+- uid: NetFabric.Reflection.EnumerableWrapper`2.Info*
+  name: Info
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2_Info_
+  commentId: Overload:NetFabric.Reflection.EnumerableWrapper`2.Info
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.Info
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).Info
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.Info
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).Info
+- uid: NetFabric.Reflection.EnumerableWrapper`2.Instance
+  name: Instance
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2_Instance
+  commentId: P:NetFabric.Reflection.EnumerableWrapper`2.Instance
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.Instance
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).Instance
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.Instance
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).Instance
+- uid: NetFabric.Reflection.EnumerableWrapper`2.Instance*
+  name: Instance
+  href: api/NetFabric.Reflection.EnumerableWrapper-2.html#NetFabric_Reflection_EnumerableWrapper_2_Instance_
+  commentId: Overload:NetFabric.Reflection.EnumerableWrapper`2.Instance
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumerableWrapper<TEnumerable, TItem>.Instance
+  fullName.vb: NetFabric.Reflection.EnumerableWrapper(Of TEnumerable, TItem).Instance
+  nameWithType: EnumerableWrapper<TEnumerable, TItem>.Instance
+  nameWithType.vb: EnumerableWrapper(Of TEnumerable, TItem).Instance
+- uid: NetFabric.Reflection.EnumerationException
+  name: EnumerationException
+  href: api/NetFabric.Reflection.EnumerationException.html
+  commentId: T:NetFabric.Reflection.EnumerationException
+  fullName: NetFabric.Reflection.EnumerationException
+  nameWithType: EnumerationException
+- uid: NetFabric.Reflection.EnumerationException.#ctor(System.String,System.Exception)
+  name: EnumerationException(string, Exception)
+  href: api/NetFabric.Reflection.EnumerationException.html#NetFabric_Reflection_EnumerationException__ctor_System_String_System_Exception_
+  commentId: M:NetFabric.Reflection.EnumerationException.#ctor(System.String,System.Exception)
+  name.vb: New(String, Exception)
+  fullName: NetFabric.Reflection.EnumerationException.EnumerationException(string, System.Exception)
+  fullName.vb: NetFabric.Reflection.EnumerationException.New(String, System.Exception)
+  nameWithType: EnumerationException.EnumerationException(string, Exception)
+  nameWithType.vb: EnumerationException.New(String, Exception)
+- uid: NetFabric.Reflection.EnumerationException.#ctor*
+  name: EnumerationException
+  href: api/NetFabric.Reflection.EnumerationException.html#NetFabric_Reflection_EnumerationException__ctor_
+  commentId: Overload:NetFabric.Reflection.EnumerationException.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: NetFabric.Reflection.EnumerationException.EnumerationException
+  fullName.vb: NetFabric.Reflection.EnumerationException.New
+  nameWithType: EnumerationException.EnumerationException
+  nameWithType.vb: EnumerationException.New
+- uid: NetFabric.Reflection.EnumeratorInfo
+  name: EnumeratorInfo
+  href: api/NetFabric.Reflection.EnumeratorInfo.html
+  commentId: T:NetFabric.Reflection.EnumeratorInfo
+  fullName: NetFabric.Reflection.EnumeratorInfo
+  nameWithType: EnumeratorInfo
+- uid: NetFabric.Reflection.EnumeratorInfo.Current
+  name: Current
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_Current
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.Current
+  fullName: NetFabric.Reflection.EnumeratorInfo.Current
+  nameWithType: EnumeratorInfo.Current
+- uid: NetFabric.Reflection.EnumeratorInfo.Current*
+  name: Current
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_Current_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.Current
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.Current
+  nameWithType: EnumeratorInfo.Current
+- uid: NetFabric.Reflection.EnumeratorInfo.Dispose
+  name: Dispose
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_Dispose
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.Dispose
+  fullName: NetFabric.Reflection.EnumeratorInfo.Dispose
+  nameWithType: EnumeratorInfo.Dispose
+- uid: NetFabric.Reflection.EnumeratorInfo.Dispose*
+  name: Dispose
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_Dispose_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.Dispose
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.Dispose
+  nameWithType: EnumeratorInfo.Dispose
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeDispose(System.Object)
+  name: InvokeDispose(object)
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeDispose_System_Object_
+  commentId: M:NetFabric.Reflection.EnumeratorInfo.InvokeDispose(System.Object)
+  name.vb: InvokeDispose(Object)
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeDispose(object)
+  fullName.vb: NetFabric.Reflection.EnumeratorInfo.InvokeDispose(Object)
+  nameWithType: EnumeratorInfo.InvokeDispose(object)
+  nameWithType.vb: EnumeratorInfo.InvokeDispose(Object)
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeDispose*
+  name: InvokeDispose
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeDispose_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.InvokeDispose
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeDispose
+  nameWithType: EnumeratorInfo.InvokeDispose
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeGetCurrent(System.Object)
+  name: InvokeGetCurrent(object)
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeGetCurrent_System_Object_
+  commentId: M:NetFabric.Reflection.EnumeratorInfo.InvokeGetCurrent(System.Object)
+  name.vb: InvokeGetCurrent(Object)
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeGetCurrent(object)
+  fullName.vb: NetFabric.Reflection.EnumeratorInfo.InvokeGetCurrent(Object)
+  nameWithType: EnumeratorInfo.InvokeGetCurrent(object)
+  nameWithType.vb: EnumeratorInfo.InvokeGetCurrent(Object)
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeGetCurrent*
+  name: InvokeGetCurrent
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeGetCurrent_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.InvokeGetCurrent
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeGetCurrent
+  nameWithType: EnumeratorInfo.InvokeGetCurrent
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeMoveNext(System.Object)
+  name: InvokeMoveNext(object)
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeMoveNext_System_Object_
+  commentId: M:NetFabric.Reflection.EnumeratorInfo.InvokeMoveNext(System.Object)
+  name.vb: InvokeMoveNext(Object)
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeMoveNext(object)
+  fullName.vb: NetFabric.Reflection.EnumeratorInfo.InvokeMoveNext(Object)
+  nameWithType: EnumeratorInfo.InvokeMoveNext(object)
+  nameWithType.vb: EnumeratorInfo.InvokeMoveNext(Object)
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeMoveNext*
+  name: InvokeMoveNext
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeMoveNext_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.InvokeMoveNext
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeMoveNext
+  nameWithType: EnumeratorInfo.InvokeMoveNext
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeReset(System.Object)
+  name: InvokeReset(object)
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeReset_System_Object_
+  commentId: M:NetFabric.Reflection.EnumeratorInfo.InvokeReset(System.Object)
+  name.vb: InvokeReset(Object)
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeReset(object)
+  fullName.vb: NetFabric.Reflection.EnumeratorInfo.InvokeReset(Object)
+  nameWithType: EnumeratorInfo.InvokeReset(object)
+  nameWithType.vb: EnumeratorInfo.InvokeReset(Object)
+- uid: NetFabric.Reflection.EnumeratorInfo.InvokeReset*
+  name: InvokeReset
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_InvokeReset_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.InvokeReset
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.InvokeReset
+  nameWithType: EnumeratorInfo.InvokeReset
+- uid: NetFabric.Reflection.EnumeratorInfo.IsByRefLike
+  name: IsByRefLike
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsByRefLike
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.IsByRefLike
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsByRefLike
+  nameWithType: EnumeratorInfo.IsByRefLike
+- uid: NetFabric.Reflection.EnumeratorInfo.IsByRefLike*
+  name: IsByRefLike
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsByRefLike_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.IsByRefLike
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsByRefLike
+  nameWithType: EnumeratorInfo.IsByRefLike
+- uid: NetFabric.Reflection.EnumeratorInfo.IsEnumeratorInterface
+  name: IsEnumeratorInterface
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsEnumeratorInterface
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.IsEnumeratorInterface
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsEnumeratorInterface
+  nameWithType: EnumeratorInfo.IsEnumeratorInterface
+- uid: NetFabric.Reflection.EnumeratorInfo.IsEnumeratorInterface*
+  name: IsEnumeratorInterface
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsEnumeratorInterface_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.IsEnumeratorInterface
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsEnumeratorInterface
+  nameWithType: EnumeratorInfo.IsEnumeratorInterface
+- uid: NetFabric.Reflection.EnumeratorInfo.IsGenericsEnumeratorInterface
+  name: IsGenericsEnumeratorInterface
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsGenericsEnumeratorInterface
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.IsGenericsEnumeratorInterface
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsGenericsEnumeratorInterface
+  nameWithType: EnumeratorInfo.IsGenericsEnumeratorInterface
+- uid: NetFabric.Reflection.EnumeratorInfo.IsGenericsEnumeratorInterface*
+  name: IsGenericsEnumeratorInterface
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsGenericsEnumeratorInterface_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.IsGenericsEnumeratorInterface
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsGenericsEnumeratorInterface
+  nameWithType: EnumeratorInfo.IsGenericsEnumeratorInterface
+- uid: NetFabric.Reflection.EnumeratorInfo.IsValueType
+  name: IsValueType
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsValueType
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.IsValueType
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsValueType
+  nameWithType: EnumeratorInfo.IsValueType
+- uid: NetFabric.Reflection.EnumeratorInfo.IsValueType*
+  name: IsValueType
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_IsValueType_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.IsValueType
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.IsValueType
+  nameWithType: EnumeratorInfo.IsValueType
+- uid: NetFabric.Reflection.EnumeratorInfo.MoveNext
+  name: MoveNext
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_MoveNext
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.MoveNext
+  fullName: NetFabric.Reflection.EnumeratorInfo.MoveNext
+  nameWithType: EnumeratorInfo.MoveNext
+- uid: NetFabric.Reflection.EnumeratorInfo.MoveNext*
+  name: MoveNext
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_MoveNext_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.MoveNext
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.MoveNext
+  nameWithType: EnumeratorInfo.MoveNext
+- uid: NetFabric.Reflection.EnumeratorInfo.Reset
+  name: Reset
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_Reset
+  commentId: P:NetFabric.Reflection.EnumeratorInfo.Reset
+  fullName: NetFabric.Reflection.EnumeratorInfo.Reset
+  nameWithType: EnumeratorInfo.Reset
+- uid: NetFabric.Reflection.EnumeratorInfo.Reset*
+  name: Reset
+  href: api/NetFabric.Reflection.EnumeratorInfo.html#NetFabric_Reflection_EnumeratorInfo_Reset_
+  commentId: Overload:NetFabric.Reflection.EnumeratorInfo.Reset
+  isSpec: "True"
+  fullName: NetFabric.Reflection.EnumeratorInfo.Reset
+  nameWithType: EnumeratorInfo.Reset
+- uid: NetFabric.Reflection.IndexableInfo
+  name: IndexableInfo
+  href: api/NetFabric.Reflection.IndexableInfo.html
+  commentId: T:NetFabric.Reflection.IndexableInfo
+  fullName: NetFabric.Reflection.IndexableInfo
+  nameWithType: IndexableInfo
+- uid: NetFabric.Reflection.IndexableInfo.CountOrLength
+  name: CountOrLength
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_CountOrLength
+  commentId: P:NetFabric.Reflection.IndexableInfo.CountOrLength
+  fullName: NetFabric.Reflection.IndexableInfo.CountOrLength
+  nameWithType: IndexableInfo.CountOrLength
+- uid: NetFabric.Reflection.IndexableInfo.CountOrLength*
+  name: CountOrLength
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_CountOrLength_
+  commentId: Overload:NetFabric.Reflection.IndexableInfo.CountOrLength
+  isSpec: "True"
+  fullName: NetFabric.Reflection.IndexableInfo.CountOrLength
+  nameWithType: IndexableInfo.CountOrLength
+- uid: NetFabric.Reflection.IndexableInfo.Indexer
+  name: Indexer
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_Indexer
+  commentId: P:NetFabric.Reflection.IndexableInfo.Indexer
+  fullName: NetFabric.Reflection.IndexableInfo.Indexer
+  nameWithType: IndexableInfo.Indexer
+- uid: NetFabric.Reflection.IndexableInfo.Indexer*
+  name: Indexer
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_Indexer_
+  commentId: Overload:NetFabric.Reflection.IndexableInfo.Indexer
+  isSpec: "True"
+  fullName: NetFabric.Reflection.IndexableInfo.Indexer
+  nameWithType: IndexableInfo.Indexer
+- uid: NetFabric.Reflection.IndexableInfo.InvokeCountOrLength(System.Object)
+  name: InvokeCountOrLength(object)
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_InvokeCountOrLength_System_Object_
+  commentId: M:NetFabric.Reflection.IndexableInfo.InvokeCountOrLength(System.Object)
+  name.vb: InvokeCountOrLength(Object)
+  fullName: NetFabric.Reflection.IndexableInfo.InvokeCountOrLength(object)
+  fullName.vb: NetFabric.Reflection.IndexableInfo.InvokeCountOrLength(Object)
+  nameWithType: IndexableInfo.InvokeCountOrLength(object)
+  nameWithType.vb: IndexableInfo.InvokeCountOrLength(Object)
+- uid: NetFabric.Reflection.IndexableInfo.InvokeCountOrLength*
+  name: InvokeCountOrLength
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_InvokeCountOrLength_
+  commentId: Overload:NetFabric.Reflection.IndexableInfo.InvokeCountOrLength
+  isSpec: "True"
+  fullName: NetFabric.Reflection.IndexableInfo.InvokeCountOrLength
+  nameWithType: IndexableInfo.InvokeCountOrLength
+- uid: NetFabric.Reflection.IndexableInfo.InvokeIndexer(System.Object,System.Int32)
+  name: InvokeIndexer(object, int)
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_InvokeIndexer_System_Object_System_Int32_
+  commentId: M:NetFabric.Reflection.IndexableInfo.InvokeIndexer(System.Object,System.Int32)
+  name.vb: InvokeIndexer(Object, Integer)
+  fullName: NetFabric.Reflection.IndexableInfo.InvokeIndexer(object, int)
+  fullName.vb: NetFabric.Reflection.IndexableInfo.InvokeIndexer(Object, Integer)
+  nameWithType: IndexableInfo.InvokeIndexer(object, int)
+  nameWithType.vb: IndexableInfo.InvokeIndexer(Object, Integer)
+- uid: NetFabric.Reflection.IndexableInfo.InvokeIndexer*
+  name: InvokeIndexer
+  href: api/NetFabric.Reflection.IndexableInfo.html#NetFabric_Reflection_IndexableInfo_InvokeIndexer_
+  commentId: Overload:NetFabric.Reflection.IndexableInfo.InvokeIndexer
+  isSpec: "True"
+  fullName: NetFabric.Reflection.IndexableInfo.InvokeIndexer
+  nameWithType: IndexableInfo.InvokeIndexer
+- uid: NetFabric.Reflection.IsAsyncEnumerableError
+  name: IsAsyncEnumerableError
+  href: api/NetFabric.Reflection.IsAsyncEnumerableError.html
+  commentId: T:NetFabric.Reflection.IsAsyncEnumerableError
+  fullName: NetFabric.Reflection.IsAsyncEnumerableError
+  nameWithType: IsAsyncEnumerableError
+- uid: NetFabric.Reflection.IsAsyncEnumerableError.MissingCurrent
+  name: MissingCurrent
+  href: api/NetFabric.Reflection.IsAsyncEnumerableError.html#NetFabric_Reflection_IsAsyncEnumerableError_MissingCurrent
+  commentId: F:NetFabric.Reflection.IsAsyncEnumerableError.MissingCurrent
+  fullName: NetFabric.Reflection.IsAsyncEnumerableError.MissingCurrent
+  nameWithType: IsAsyncEnumerableError.MissingCurrent
+- uid: NetFabric.Reflection.IsAsyncEnumerableError.MissingGetAsyncEnumerator
+  name: MissingGetAsyncEnumerator
+  href: api/NetFabric.Reflection.IsAsyncEnumerableError.html#NetFabric_Reflection_IsAsyncEnumerableError_MissingGetAsyncEnumerator
+  commentId: F:NetFabric.Reflection.IsAsyncEnumerableError.MissingGetAsyncEnumerator
+  fullName: NetFabric.Reflection.IsAsyncEnumerableError.MissingGetAsyncEnumerator
+  nameWithType: IsAsyncEnumerableError.MissingGetAsyncEnumerator
+- uid: NetFabric.Reflection.IsAsyncEnumerableError.MissingMoveNextAsync
+  name: MissingMoveNextAsync
+  href: api/NetFabric.Reflection.IsAsyncEnumerableError.html#NetFabric_Reflection_IsAsyncEnumerableError_MissingMoveNextAsync
+  commentId: F:NetFabric.Reflection.IsAsyncEnumerableError.MissingMoveNextAsync
+  fullName: NetFabric.Reflection.IsAsyncEnumerableError.MissingMoveNextAsync
+  nameWithType: IsAsyncEnumerableError.MissingMoveNextAsync
+- uid: NetFabric.Reflection.IsAsyncEnumerableError.None
+  name: None
+  href: api/NetFabric.Reflection.IsAsyncEnumerableError.html#NetFabric_Reflection_IsAsyncEnumerableError_None
+  commentId: F:NetFabric.Reflection.IsAsyncEnumerableError.None
+  fullName: NetFabric.Reflection.IsAsyncEnumerableError.None
+  nameWithType: IsAsyncEnumerableError.None
+- uid: NetFabric.Reflection.IsEnumerableError
+  name: IsEnumerableError
+  href: api/NetFabric.Reflection.IsEnumerableError.html
+  commentId: T:NetFabric.Reflection.IsEnumerableError
+  fullName: NetFabric.Reflection.IsEnumerableError
+  nameWithType: IsEnumerableError
+- uid: NetFabric.Reflection.IsEnumerableError.MissingCurrent
+  name: MissingCurrent
+  href: api/NetFabric.Reflection.IsEnumerableError.html#NetFabric_Reflection_IsEnumerableError_MissingCurrent
+  commentId: F:NetFabric.Reflection.IsEnumerableError.MissingCurrent
+  fullName: NetFabric.Reflection.IsEnumerableError.MissingCurrent
+  nameWithType: IsEnumerableError.MissingCurrent
+- uid: NetFabric.Reflection.IsEnumerableError.MissingGetEnumerator
+  name: MissingGetEnumerator
+  href: api/NetFabric.Reflection.IsEnumerableError.html#NetFabric_Reflection_IsEnumerableError_MissingGetEnumerator
+  commentId: F:NetFabric.Reflection.IsEnumerableError.MissingGetEnumerator
+  fullName: NetFabric.Reflection.IsEnumerableError.MissingGetEnumerator
+  nameWithType: IsEnumerableError.MissingGetEnumerator
+- uid: NetFabric.Reflection.IsEnumerableError.MissingMoveNext
+  name: MissingMoveNext
+  href: api/NetFabric.Reflection.IsEnumerableError.html#NetFabric_Reflection_IsEnumerableError_MissingMoveNext
+  commentId: F:NetFabric.Reflection.IsEnumerableError.MissingMoveNext
+  fullName: NetFabric.Reflection.IsEnumerableError.MissingMoveNext
+  nameWithType: IsEnumerableError.MissingMoveNext
+- uid: NetFabric.Reflection.IsEnumerableError.None
+  name: None
+  href: api/NetFabric.Reflection.IsEnumerableError.html#NetFabric_Reflection_IsEnumerableError_None
+  commentId: F:NetFabric.Reflection.IsEnumerableError.None
+  fullName: NetFabric.Reflection.IsEnumerableError.None
+  nameWithType: IsEnumerableError.None
+- uid: NetFabric.Reflection.IsIndexableError
+  name: IsIndexableError
+  href: api/NetFabric.Reflection.IsIndexableError.html
+  commentId: T:NetFabric.Reflection.IsIndexableError
+  fullName: NetFabric.Reflection.IsIndexableError
+  nameWithType: IsIndexableError
+- uid: NetFabric.Reflection.IsIndexableError.MissingCountOrLength
+  name: MissingCountOrLength
+  href: api/NetFabric.Reflection.IsIndexableError.html#NetFabric_Reflection_IsIndexableError_MissingCountOrLength
+  commentId: F:NetFabric.Reflection.IsIndexableError.MissingCountOrLength
+  fullName: NetFabric.Reflection.IsIndexableError.MissingCountOrLength
+  nameWithType: IsIndexableError.MissingCountOrLength
+- uid: NetFabric.Reflection.IsIndexableError.MissingIndexer
+  name: MissingIndexer
+  href: api/NetFabric.Reflection.IsIndexableError.html#NetFabric_Reflection_IsIndexableError_MissingIndexer
+  commentId: F:NetFabric.Reflection.IsIndexableError.MissingIndexer
+  fullName: NetFabric.Reflection.IsIndexableError.MissingIndexer
+  nameWithType: IsIndexableError.MissingIndexer
+- uid: NetFabric.Reflection.IsIndexableError.None
+  name: None
+  href: api/NetFabric.Reflection.IsIndexableError.html#NetFabric_Reflection_IsIndexableError_None
+  commentId: F:NetFabric.Reflection.IsIndexableError.None
+  fullName: NetFabric.Reflection.IsIndexableError.None
+  nameWithType: IsIndexableError.None
+- uid: NetFabric.Reflection.TypeExtensions
+  name: TypeExtensions
+  href: api/NetFabric.Reflection.TypeExtensions.html
+  commentId: T:NetFabric.Reflection.TypeExtensions
+  fullName: NetFabric.Reflection.TypeExtensions
+  nameWithType: TypeExtensions
+- uid: NetFabric.Reflection.TypeExtensions.ImplementsInterface(System.Type,System.Type,System.Type[]@)
+  name: ImplementsInterface(Type, Type, out Type[]?)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_ImplementsInterface_System_Type_System_Type_System_Type____
+  commentId: M:NetFabric.Reflection.TypeExtensions.ImplementsInterface(System.Type,System.Type,System.Type[]@)
+  name.vb: ImplementsInterface(Type, Type, Type())
+  fullName: NetFabric.Reflection.TypeExtensions.ImplementsInterface(System.Type, System.Type, out System.Type[]?)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.ImplementsInterface(System.Type, System.Type, System.Type())
+  nameWithType: TypeExtensions.ImplementsInterface(Type, Type, out Type[]?)
+  nameWithType.vb: TypeExtensions.ImplementsInterface(Type, Type, Type())
+- uid: NetFabric.Reflection.TypeExtensions.ImplementsInterface*
+  name: ImplementsInterface
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_ImplementsInterface_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.ImplementsInterface
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.ImplementsInterface
+  nameWithType: TypeExtensions.ImplementsInterface
+- uid: NetFabric.Reflection.TypeExtensions.IsAsyncDisposable(System.Type,System.Reflection.MethodInfo@)
+  name: IsAsyncDisposable(Type, out MethodInfo?)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsAsyncDisposable_System_Type_System_Reflection_MethodInfo__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsAsyncDisposable(System.Type,System.Reflection.MethodInfo@)
+  name.vb: IsAsyncDisposable(Type, MethodInfo)
+  fullName: NetFabric.Reflection.TypeExtensions.IsAsyncDisposable(System.Type, out System.Reflection.MethodInfo?)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsAsyncDisposable(System.Type, System.Reflection.MethodInfo)
+  nameWithType: TypeExtensions.IsAsyncDisposable(Type, out MethodInfo?)
+  nameWithType.vb: TypeExtensions.IsAsyncDisposable(Type, MethodInfo)
+- uid: NetFabric.Reflection.TypeExtensions.IsAsyncDisposable*
+  name: IsAsyncDisposable
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsAsyncDisposable_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsAsyncDisposable
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsAsyncDisposable
+  nameWithType: TypeExtensions.IsAsyncDisposable
+- uid: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type)
+  name: IsAsyncEnumerable(Type)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsAsyncEnumerable_System_Type_
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type)
+  fullName: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type)
+  nameWithType: TypeExtensions.IsAsyncEnumerable(Type)
+- uid: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type,NetFabric.Reflection.AsyncEnumerableInfo@)
+  name: IsAsyncEnumerable(Type, out AsyncEnumerableInfo?)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsAsyncEnumerable_System_Type_NetFabric_Reflection_AsyncEnumerableInfo__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type,NetFabric.Reflection.AsyncEnumerableInfo@)
+  name.vb: IsAsyncEnumerable(Type, AsyncEnumerableInfo)
+  fullName: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type, out NetFabric.Reflection.AsyncEnumerableInfo?)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type, NetFabric.Reflection.AsyncEnumerableInfo)
+  nameWithType: TypeExtensions.IsAsyncEnumerable(Type, out AsyncEnumerableInfo?)
+  nameWithType.vb: TypeExtensions.IsAsyncEnumerable(Type, AsyncEnumerableInfo)
+- uid: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type,NetFabric.Reflection.AsyncEnumerableInfo@,NetFabric.Reflection.IsAsyncEnumerableError@)
+  name: IsAsyncEnumerable(Type, out AsyncEnumerableInfo?, out IsAsyncEnumerableError)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsAsyncEnumerable_System_Type_NetFabric_Reflection_AsyncEnumerableInfo__NetFabric_Reflection_IsAsyncEnumerableError__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type,NetFabric.Reflection.AsyncEnumerableInfo@,NetFabric.Reflection.IsAsyncEnumerableError@)
+  name.vb: IsAsyncEnumerable(Type, AsyncEnumerableInfo, IsAsyncEnumerableError)
+  fullName: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type, out NetFabric.Reflection.AsyncEnumerableInfo?, out NetFabric.Reflection.IsAsyncEnumerableError)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable(System.Type, NetFabric.Reflection.AsyncEnumerableInfo, NetFabric.Reflection.IsAsyncEnumerableError)
+  nameWithType: TypeExtensions.IsAsyncEnumerable(Type, out AsyncEnumerableInfo?, out IsAsyncEnumerableError)
+  nameWithType.vb: TypeExtensions.IsAsyncEnumerable(Type, AsyncEnumerableInfo, IsAsyncEnumerableError)
+- uid: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable*
+  name: IsAsyncEnumerable
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsAsyncEnumerable_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsAsyncEnumerable
+  nameWithType: TypeExtensions.IsAsyncEnumerable
+- uid: NetFabric.Reflection.TypeExtensions.IsDisposable(System.Type,System.Reflection.MethodInfo@)
+  name: IsDisposable(Type, out MethodInfo?)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsDisposable_System_Type_System_Reflection_MethodInfo__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsDisposable(System.Type,System.Reflection.MethodInfo@)
+  name.vb: IsDisposable(Type, MethodInfo)
+  fullName: NetFabric.Reflection.TypeExtensions.IsDisposable(System.Type, out System.Reflection.MethodInfo?)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsDisposable(System.Type, System.Reflection.MethodInfo)
+  nameWithType: TypeExtensions.IsDisposable(Type, out MethodInfo?)
+  nameWithType.vb: TypeExtensions.IsDisposable(Type, MethodInfo)
+- uid: NetFabric.Reflection.TypeExtensions.IsDisposable*
+  name: IsDisposable
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsDisposable_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsDisposable
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsDisposable
+  nameWithType: TypeExtensions.IsDisposable
+- uid: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type)
+  name: IsEnumerable(Type)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsEnumerable_System_Type_
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type)
+  fullName: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type)
+  nameWithType: TypeExtensions.IsEnumerable(Type)
+- uid: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type,NetFabric.Reflection.EnumerableInfo@)
+  name: IsEnumerable(Type, out EnumerableInfo?)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsEnumerable_System_Type_NetFabric_Reflection_EnumerableInfo__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type,NetFabric.Reflection.EnumerableInfo@)
+  name.vb: IsEnumerable(Type, EnumerableInfo)
+  fullName: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type, out NetFabric.Reflection.EnumerableInfo?)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type, NetFabric.Reflection.EnumerableInfo)
+  nameWithType: TypeExtensions.IsEnumerable(Type, out EnumerableInfo?)
+  nameWithType.vb: TypeExtensions.IsEnumerable(Type, EnumerableInfo)
+- uid: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type,NetFabric.Reflection.EnumerableInfo@,NetFabric.Reflection.IsEnumerableError@)
+  name: IsEnumerable(Type, out EnumerableInfo?, out IsEnumerableError)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsEnumerable_System_Type_NetFabric_Reflection_EnumerableInfo__NetFabric_Reflection_IsEnumerableError__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type,NetFabric.Reflection.EnumerableInfo@,NetFabric.Reflection.IsEnumerableError@)
+  name.vb: IsEnumerable(Type, EnumerableInfo, IsEnumerableError)
+  fullName: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type, out NetFabric.Reflection.EnumerableInfo?, out NetFabric.Reflection.IsEnumerableError)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsEnumerable(System.Type, NetFabric.Reflection.EnumerableInfo, NetFabric.Reflection.IsEnumerableError)
+  nameWithType: TypeExtensions.IsEnumerable(Type, out EnumerableInfo?, out IsEnumerableError)
+  nameWithType.vb: TypeExtensions.IsEnumerable(Type, EnumerableInfo, IsEnumerableError)
+- uid: NetFabric.Reflection.TypeExtensions.IsEnumerable*
+  name: IsEnumerable
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsEnumerable_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsEnumerable
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsEnumerable
+  nameWithType: TypeExtensions.IsEnumerable
+- uid: NetFabric.Reflection.TypeExtensions.IsFloatingPointType(System.Type)
+  name: IsFloatingPointType(Type)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsFloatingPointType_System_Type_
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsFloatingPointType(System.Type)
+  fullName: NetFabric.Reflection.TypeExtensions.IsFloatingPointType(System.Type)
+  nameWithType: TypeExtensions.IsFloatingPointType(Type)
+- uid: NetFabric.Reflection.TypeExtensions.IsFloatingPointType*
+  name: IsFloatingPointType
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsFloatingPointType_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsFloatingPointType
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsFloatingPointType
+  nameWithType: TypeExtensions.IsFloatingPointType
+- uid: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type)
+  name: IsIndexable(Type)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsIndexable_System_Type_
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type)
+  fullName: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type)
+  nameWithType: TypeExtensions.IsIndexable(Type)
+- uid: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type,NetFabric.Reflection.IndexableInfo@)
+  name: IsIndexable(Type, out IndexableInfo?)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsIndexable_System_Type_NetFabric_Reflection_IndexableInfo__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type,NetFabric.Reflection.IndexableInfo@)
+  name.vb: IsIndexable(Type, IndexableInfo)
+  fullName: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type, out NetFabric.Reflection.IndexableInfo?)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type, NetFabric.Reflection.IndexableInfo)
+  nameWithType: TypeExtensions.IsIndexable(Type, out IndexableInfo?)
+  nameWithType.vb: TypeExtensions.IsIndexable(Type, IndexableInfo)
+- uid: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type,NetFabric.Reflection.IndexableInfo@,NetFabric.Reflection.IsIndexableError@)
+  name: IsIndexable(Type, out IndexableInfo?, out IsIndexableError)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsIndexable_System_Type_NetFabric_Reflection_IndexableInfo__NetFabric_Reflection_IsIndexableError__
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type,NetFabric.Reflection.IndexableInfo@,NetFabric.Reflection.IsIndexableError@)
+  name.vb: IsIndexable(Type, IndexableInfo, IsIndexableError)
+  fullName: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type, out NetFabric.Reflection.IndexableInfo?, out NetFabric.Reflection.IsIndexableError)
+  fullName.vb: NetFabric.Reflection.TypeExtensions.IsIndexable(System.Type, NetFabric.Reflection.IndexableInfo, NetFabric.Reflection.IsIndexableError)
+  nameWithType: TypeExtensions.IsIndexable(Type, out IndexableInfo?, out IsIndexableError)
+  nameWithType.vb: TypeExtensions.IsIndexable(Type, IndexableInfo, IsIndexableError)
+- uid: NetFabric.Reflection.TypeExtensions.IsIndexable*
+  name: IsIndexable
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsIndexable_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsIndexable
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsIndexable
+  nameWithType: TypeExtensions.IsIndexable
+- uid: NetFabric.Reflection.TypeExtensions.IsIntegerType(System.Type)
+  name: IsIntegerType(Type)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsIntegerType_System_Type_
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsIntegerType(System.Type)
+  fullName: NetFabric.Reflection.TypeExtensions.IsIntegerType(System.Type)
+  nameWithType: TypeExtensions.IsIntegerType(Type)
+- uid: NetFabric.Reflection.TypeExtensions.IsIntegerType*
+  name: IsIntegerType
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsIntegerType_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsIntegerType
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsIntegerType
+  nameWithType: TypeExtensions.IsIntegerType
+- uid: NetFabric.Reflection.TypeExtensions.IsSpanOrReadOnlySpan(System.Type)
+  name: IsSpanOrReadOnlySpan(Type)
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsSpanOrReadOnlySpan_System_Type_
+  commentId: M:NetFabric.Reflection.TypeExtensions.IsSpanOrReadOnlySpan(System.Type)
+  fullName: NetFabric.Reflection.TypeExtensions.IsSpanOrReadOnlySpan(System.Type)
+  nameWithType: TypeExtensions.IsSpanOrReadOnlySpan(Type)
+- uid: NetFabric.Reflection.TypeExtensions.IsSpanOrReadOnlySpan*
+  name: IsSpanOrReadOnlySpan
+  href: api/NetFabric.Reflection.TypeExtensions.html#NetFabric_Reflection_TypeExtensions_IsSpanOrReadOnlySpan_
+  commentId: Overload:NetFabric.Reflection.TypeExtensions.IsSpanOrReadOnlySpan
+  isSpec: "True"
+  fullName: NetFabric.Reflection.TypeExtensions.IsSpanOrReadOnlySpan
+  nameWithType: TypeExtensions.IsSpanOrReadOnlySpan
