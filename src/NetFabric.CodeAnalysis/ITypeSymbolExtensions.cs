@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Immutable;
-using System.Linq;
 // ReSharper disable InvertIf
 
 namespace NetFabric.CodeAnalysis;
@@ -69,7 +68,20 @@ public static partial class ITypeSymbolExtensions
         return false;
     }
 
-    internal static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params ITypeSymbol[] parameterTypes)
+    /// <summary>
+    /// Gets a public readable indexer property with the specified parameter types from the given type symbol.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol from which to retrieve the indexer property.</param>
+    /// <param name="parameterTypes">An array of parameter types, represented by <see cref="ITypeSymbol"/>, that the indexer should accept (empty array for parameterless).</param>
+    /// <returns>
+    /// An <see cref="IPropertySymbol"/> representing the public readable indexer property if found; otherwise, returns <c>null</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method searches for a public readable indexer property within the given type symbol with the specified parameter types.
+    /// If a matching indexer property is found, and it has a getter, it returns an <see cref="IPropertySymbol"/> representing the indexer;
+    /// otherwise, it returns <c>null</c>.
+    /// </remarks>
+    public static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params ITypeSymbol[] parameterTypes)
     {
         foreach (var member in typeSymbol.GetMembers().OfType<IPropertySymbol>())
         {
@@ -103,7 +115,20 @@ public static partial class ITypeSymbolExtensions
         return null;
     }
 
-    internal static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params Type[] parameterTypes)
+    /// <summary>
+    /// Gets a public readable indexer property with the specified parameter types from the given type symbol.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol from which to retrieve the indexer property.</param>
+    /// <param name="parameterTypes">An array of parameter types that the indexer should accept (empty array for parameterless).</param>
+    /// <returns>
+    /// An <see cref="IPropertySymbol"/> representing the public readable indexer property if found; otherwise, returns <c>null</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method searches for a public readable indexer property within the given type symbol with the specified parameter types.
+    /// If a matching indexer property is found, and it has a getter, it returns an <see cref="IPropertySymbol"/> representing the indexer;
+    /// otherwise, it returns <c>null</c>.
+    /// </remarks>
+    public static IPropertySymbol? GetPublicReadIndexer(this ITypeSymbol typeSymbol, params Type[] parameterTypes)
     {
         foreach (var member in typeSymbol.GetMembers().OfType<IPropertySymbol>())
         {
@@ -137,7 +162,20 @@ public static partial class ITypeSymbolExtensions
         return null;
     }
 
-    internal static IPropertySymbol? GetPublicReadProperty(this ITypeSymbol typeSymbol, string name)
+    /// <summary>
+    /// Gets a public readable property with the specified name from the given type symbol.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol from which to retrieve the property.</param>
+    /// <param name="name">The name of the property to search for.</param>
+    /// <returns>
+    /// An <see cref="IPropertySymbol"/> representing the public readable property if found; otherwise, returns <c>null</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method searches for a public readable property with the specified name within the given type symbol.
+    /// If a matching property is found and it has a getter, it returns an <see cref="IPropertySymbol"/> representing the property;
+    /// otherwise, it returns <c>null</c>.
+    /// </remarks>
+    public static IPropertySymbol? GetPublicReadProperty(this ITypeSymbol typeSymbol, string name)
     {
         foreach (var member in typeSymbol.GetMembers(name).OfType<IPropertySymbol>())
         {
@@ -167,7 +205,21 @@ public static partial class ITypeSymbolExtensions
         return null;
     }
 
-    internal static IMethodSymbol? GetPublicMethod(this ITypeSymbol typeSymbol, string name, params Type[] parameters)
+    /// <summary>
+    /// Gets a public method with the specified name and parameter types from the given type symbol.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol from which to retrieve the method.</param>
+    /// <param name="name">The name of the method to search for.</param>
+    /// <param name="parameters">An array of parameter types that the method should accept (empty array for parameterless).</param>
+    /// <returns>
+    /// An <see cref="IMethodSymbol"/> representing the public method if found; otherwise, returns <c>null</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method searches for a public method with the specified name and parameter types within the given type symbol.
+    /// If a matching method is found, it returns an <see cref="IMethodSymbol"/> that represents the method;
+    /// otherwise, it returns <c>null</c>.
+    /// </remarks>
+    public static IMethodSymbol? GetPublicMethod(this ITypeSymbol typeSymbol, string name, params Type[] parameters)
     {
         foreach (var member in typeSymbol.GetMembers(name).OfType<IMethodSymbol>())
         {
@@ -229,13 +281,22 @@ public static partial class ITypeSymbolExtensions
         return true;
     }
 
+    /// <summary>
+    /// Determines whether the given type symbol represents a Span or ReadOnlySpan type.
+    /// </summary>
+    /// <param name="typeSymbol">The type symbol to be checked.</param>
+    /// <returns>
+    /// <c>true</c> if the type symbol represents a Span or ReadOnlySpan; otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method checks whether the provided <paramref name="typeSymbol"/> corresponds to a type that is compatible with
+    /// the Span and ReadOnlySpan types, which are used for efficient and safe data access in .NET.
+    /// </remarks>
     public static bool IsSpanOrReadOnlySpanType(this ITypeSymbol typeSymbol)
     {
         if (typeSymbol.MetadataName == "System.Span" || typeSymbol.MetadataName == "System.ReadOnlySpan")
         {
-            var containingNamespace = typeSymbol.ContainingNamespace.ToDisplayString();
-            return containingNamespace == "System" && 
-                typeSymbol is INamedTypeSymbol namedType && 
+            return typeSymbol is INamedTypeSymbol namedType && 
                 namedType.TypeArguments.Length == 1;
         }
 

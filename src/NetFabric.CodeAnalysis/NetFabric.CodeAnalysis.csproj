@@ -3,14 +3,11 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netstandard2.0;net6.0</TargetFrameworks>
     <PackageId>NetFabric.CodeAnalysis</PackageId>
-    <Version>5.0.0</Version>
+    <Version>5.1.0</Version>
     <Description>Extensions to Microsoft.CodeAnalysis.</Description>
     <PackageProjectUrl>https://netfabric.github.io/NetFabric.CodeAnalysis/</PackageProjectUrl>
     <PackageReleaseNotes>
-    Removed IsEnumerator() and IsAsyncEnumerator.
-    Error enums defined discrete values, not flags.
-    Added IsIndexable().
-    Fixed miscelaneous bugs.
+      Added extension methods to ITypeSymbol.
     </PackageReleaseNotes>
     <PackageTags>codeanalysis, roslyn, enumerable, asyncenumerable</PackageTags>
     <PackageIcon>Icon.png</PackageIcon>

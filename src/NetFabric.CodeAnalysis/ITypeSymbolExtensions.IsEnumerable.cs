@@ -89,7 +89,7 @@ public static partial class ITypeSymbolExtensions
     /// associated with it, which can be useful for various code analysis tasks.
     /// </remarks>
     public static bool IsEnumerable(this ITypeSymbol typeSymbol, Compilation compilation,
-    [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
+        [NotNullWhen(true)] out EnumerableSymbols? enumerableSymbols,
         out IsEnumerableError error)
     {
         var forEachUsesIndexer = typeSymbol.TypeKind == TypeKind.Array || typeSymbol.IsSpanOrReadOnlySpanType();
