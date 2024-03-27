@@ -7,6 +7,7 @@
 
 [![Reflection NuGet Version](https://img.shields.io/nuget/v/NetFabric.Reflection.svg?style=flat-square&label=Reflection%20nuget&logo=nuget)](https://www.nuget.org/packages/NetFabric.Reflection/)
 [![Reflection NuGet Downloads](https://img.shields.io/nuget/dt/NetFabric.Reflection.svg?style=flat-square&label=Reflection%20downloads&logo=nuget)](https://www.nuget.org/packages/NetFabric.Reflection/)
+[![BuiltWithDot.Net shield](https://builtwithdot.net/project/509/netfabric-codeanalysis-csharp-net-core/badge)](https://builtwithdot.net/project/509/netfabric-codeanalysis-csharp-net-core)
 
 # NetFabric.CodeAnalysis and NetFabric.Reflection Documentation
 
